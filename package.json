@@ -1,0 +1,21 @@
+{
+  "name": "tdp-recruitment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wojciechh-kainos/tdp-recruitment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wojciechh-kainos/tdp-recruitment/issues"
+  },
+  "homepage": "https://github.com/wojciechh-kainos/tdp-recruitment#readme"
+}

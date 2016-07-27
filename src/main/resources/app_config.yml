@@ -1,0 +1,9 @@
+server:
+  rootPath: /api/*
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 9002
+  adminConnectors:
+    - type: http
+      port: 9502

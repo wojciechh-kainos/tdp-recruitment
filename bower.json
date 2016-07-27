@@ -1,0 +1,22 @@
+{
+  "name": "tdp-recruitment",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "wojciechh-kainos <w.hnatyszyn@kainos.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/wojciechh-kainos/tdp-recruitment",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/main/resources/assets/js/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "ui-router#^0.3.1"
+  }
+}
