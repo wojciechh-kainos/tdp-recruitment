@@ -23,10 +23,9 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <!--<column name="offset" type="time" defaultValueNumeric="0">
-                <constraints nullable="false"/>
-            </column>-->
+
             <column name="start" type="time"/>
+
             <column name="end" type="time"/>
         </createTable>
     </changeSet>
@@ -62,7 +61,7 @@
 
             <column name="is_web" type="boolean" defaultValueBoolean="false"/>
 
-            <!-- od 1 do 6 -->
+            <!-- 1 to 6 -->
             <column name="band_level" type="int">
                 <constraints nullable="false"/>
             </column>
