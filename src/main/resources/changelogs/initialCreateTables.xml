@@ -41,7 +41,7 @@
             </column>
 
             <!-- Rekruter  -->
-            <column name="role" type="boolean" defaultValueBoolean="false"/>
+            <column name="admin" type="boolean" defaultValueBoolean="false"/>
 
             <column name="first_name" type="varchar(100)">
                 <constraints nullable="false"/>
