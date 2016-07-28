@@ -52,7 +52,7 @@
             </column>
 
             <column name="password" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
 
             <column name="is_dev" type="boolean" defaultValueBoolean="false"/>
