@@ -1,5 +1,7 @@
 package daoTests;
 
-public class SlotsDaoTest{
+import databaseHelper.BaseTest;
+
+public class SlotsDaoTest extends BaseTest{
 
 }

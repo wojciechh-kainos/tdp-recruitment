@@ -12,7 +12,11 @@ import io.dropwizard.hibernate.HibernateBundle;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.BeforeClass;
 
 /**
@@ -20,25 +24,31 @@ import org.junit.BeforeClass;
  */
 public class BaseTest {
 
-    private static Injector injector;
-    protected static PersonsDao personsDao;
+    protected static Injector injector;
     protected static SessionFactory sessionFactory;
 
-    public Injector getInjector() {
-        return injector;
-    }
+    private static ServiceRegistry serviceRegistry;
+    protected static PersonsDao personsDao;
+
+
+
 
     @BeforeClass
     public static void createInjector() {
 
-        AnnotationConfiguration config=new AnnotationConfiguration();
+        Configuration config = new Configuration();
         config.setProperty("hibernate.connection.url","jdbc:postgresql://localhost/postgres");
         config.setProperty("hibernate.connection.username","postgres");
         config.setProperty("hibernate.connection.driver_class","org.postgresql.Driver");
         config.setProperty("hibernate.current_session_context_class", "thread");
         config.setProperty("hibernate.show_sql", "false");
         config.addAnnotatedClass(Persons.class);
-        sessionFactory = config.buildSessionFactory();
+
+        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                config.getProperties()).build();
+
+        sessionFactory = config.buildSessionFactory(serviceRegistry);
+
         TdpRecruitmentModule module = new TdpRecruitmentModule();
         module.setSessionFactory(sessionFactory);
         injector = Guice.createInjector(module);

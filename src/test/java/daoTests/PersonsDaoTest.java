@@ -2,7 +2,6 @@ package daoTests;
 
 import databaseHelper.BaseTest;
 import domain.Persons;
-import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 public class PersonsDaoTest extends BaseTest{
 
-    SessionFactory sessionFactory;
     private Long id;
 
     @Before
