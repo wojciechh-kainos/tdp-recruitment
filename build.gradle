@@ -43,6 +43,9 @@ dependencies {
 
     compile 'org.postgresql:postgresql:9.4.1208.jre7'
 
+    /*Simple Java Mail*/
+    compile group: 'org.codemonkey.simplejavamail', name: 'simple-java-mail', version: '3.1.1'
+
     /* Google Guice - Dependency Injection */
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
 
