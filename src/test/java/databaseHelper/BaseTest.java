@@ -4,9 +4,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
+import dao.AvailabilityTypesDao;
 import dao.PersonsDao;
+import dao.SlotsDao;
+import dao.SlotsTimesDao;
 import domain.Persons;
 import domain.Slots;
+import domain.SlotsTimes;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import org.hibernate.Session;
@@ -29,9 +33,9 @@ public class BaseTest {
 
     private static ServiceRegistry serviceRegistry;
     protected static PersonsDao personsDao;
-
-
-
+    protected static SlotsDao slotsDao;
+    protected static SlotsTimesDao slotsTimesDao;
+    protected static AvailabilityTypesDao availabilityTypesDao;
 
     @BeforeClass
     public static void createInjector() {
@@ -53,6 +57,9 @@ public class BaseTest {
         module.setSessionFactory(sessionFactory);
         injector = Guice.createInjector(module);
         personsDao = injector.getInstance(PersonsDao.class);
+        slotsDao = injector.getInstance(SlotsDao.class);
+        slotsTimesDao = injector.getInstance(SlotsTimesDao.class);
+        availabilityTypesDao = injector.getInstance(AvailabilityTypesDao.class);
     }
 
     public Session getSession()

@@ -7,10 +7,8 @@ import java.util.Date;
 @Entity
 @Table(name = "slots")
 @NamedQueries({
-        @NamedQuery(name = "slots.findAll",
-                query = "select u from slots u"),
-        @NamedQuery(name = "slots.deleteAll",
-                query = "delete from slots")})
+        @NamedQuery(name = "Slots.delete",
+                query = "delete from Slots where id = :id")})
 public class Slots {
 
     @Id
