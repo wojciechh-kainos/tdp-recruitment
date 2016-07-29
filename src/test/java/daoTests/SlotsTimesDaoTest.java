@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +21,7 @@ public class SlotsTimesDaoTest {
     private SessionFactory sessionFactory;
     private SlotsTimesDao slotsTimesDao;
     private Injector injector;
+    private SlotsTimes slotsTimes;
 
     public SlotsTimesDaoTest() {
         AnnotationConfiguration config=new AnnotationConfiguration();
@@ -62,14 +64,23 @@ public class SlotsTimesDaoTest {
         Time time = new Time(8,0,0);
 
         slotsTimesDao = new SlotsTimesDao(sessionFactory);
-        SlotsTimes slotsTimes = new SlotsTimes();
+        slotsTimes = new SlotsTimes();
         slotsTimes.setStartTime(time);
         slotsTimes.setEndTime(time);
 
         long message = slotsTimesDao.create(slotsTimes);
 
-        assertEquals(true, true);
+        SlotsTimes anotherSlotsTimes = slotsTimesDao.getById(message);
 
+        assertEquals(message, anotherSlotsTimes.getId());
+
+        getSession().getTransaction().commit();
+    }
+
+    @After
+    public void tearDown(){
+        getSession().beginTransaction();
+        slotsTimesDao.delete(slotsTimes.getId());
         getSession().getTransaction().commit();
     }
 

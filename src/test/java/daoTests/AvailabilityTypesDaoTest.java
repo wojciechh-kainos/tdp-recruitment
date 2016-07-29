@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ public class AvailabilityTypesDaoTest {
     private SessionFactory sessionFactory;
     private AvailabilityTypesDao availabilityTypesDao;
     private Injector injector;
+    AvailabilityTypes availabilityTypes;
 
     public AvailabilityTypesDaoTest() {
         AnnotationConfiguration config=new AnnotationConfiguration();
@@ -51,20 +53,29 @@ public class AvailabilityTypesDaoTest {
         module.setSessionFactory(sessionFactory);
         injector = Guice.createInjector(module);
         availabilityTypesDao = injector.getInstance(AvailabilityTypesDao.class);
-//        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
+        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
     }
 
     @Test
     public void test(){
         getSession().beginTransaction();
 
-        AvailabilityTypes unit = new AvailabilityTypes();
-        unit.setType("Available");
-        availabilityTypesDao.create(unit);
+        availabilityTypes = new AvailabilityTypes();
+        availabilityTypes.setType("Available");
+        long message = availabilityTypesDao.create(availabilityTypes);
 
+        AvailabilityTypes anotherAvailabilityTypes = availabilityTypesDao.getById(message);
 
-        assertEquals(true, true);
+        assertEquals(message, anotherAvailabilityTypes.getId());
+        assertEquals("Available", anotherAvailabilityTypes.getType());
 
+        getSession().getTransaction().commit();
+    }
+
+    @After
+    public void tearDown(){
+        getSession().beginTransaction();
+        availabilityTypesDao.delete(availabilityTypes.getId());
         getSession().getTransaction().commit();
     }
 }
