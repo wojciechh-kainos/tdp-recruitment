@@ -23,7 +23,7 @@ public class DatabaseConfigurationHelper {
             BaseValidator.newValidator(),
             objectMapper, "dw");
 
-    public static DataSourceFactory getDatabseConfiguration() throws Exception {
+    public static DataSourceFactory getDatabaseConfiguration() throws Exception {
         if(dataSourceFactory == null){
             dataSourceFactory = parseConfiguration().getDataSourceFactory();
         }
