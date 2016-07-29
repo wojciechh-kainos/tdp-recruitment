@@ -26,8 +26,7 @@ public class EmailResource {
 
     @Path("/sendEmail")
     @GET
-    public void sendEmail() {
-
+    public String sendEmail() {
         final Email email = new Email();
 
         String host = config.getHost();
@@ -43,6 +42,11 @@ public class EmailResource {
         }
         email.setText("Testing e-mails");
 
-        new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
+        try {
+            new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
+        }catch(Exception e){
+            return "failed";
+        }
+        return "email Sent";
     }
 }
