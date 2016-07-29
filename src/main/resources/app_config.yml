@@ -21,7 +21,7 @@ database:
   properties:
     charSet: UTF-8
     hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.hbm2ddl.auto: create
+    hibernate.hbm2ddl.auto: validate
     hibernate.show_sql: true
 
   # the maximum amount of time to wait on an empty pool before throwing an exception
