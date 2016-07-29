@@ -43,7 +43,6 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
-
         environment.jersey().register(new EmailResource(configuration.getConfig()));
 //        module.setSessionFactory(hibernateBundle.getSessionFactory());
 
