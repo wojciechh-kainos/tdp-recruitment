@@ -10,6 +10,7 @@ import org.codemonkey.simplejavamail.email.Email;
 import javax.mail.Message;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by remigiuszk on 29/07/16.
@@ -26,7 +27,7 @@ public class EmailResource {
 
     @Path("/sendEmail")
     @GET
-    public String sendEmail() {
+    public Response sendEmail() {
         final Email email = new Email();
 
         String host = config.getHost();
@@ -45,8 +46,9 @@ public class EmailResource {
         try {
             new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
         }catch(Exception e){
-            return "failed";
+            return Response.status(Response.Status.CONFLICT).build();
         }
-        return "email Sent";
+        return Response.status(Response.Status.OK).build();
+
     }
 }
