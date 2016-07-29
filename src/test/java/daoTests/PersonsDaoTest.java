@@ -6,8 +6,7 @@ import domain.Persons;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
 
 public class PersonsDaoTest extends BaseTest{
 
@@ -39,7 +38,7 @@ public class PersonsDaoTest extends BaseTest{
         Persons personFromDb = personsDao.findById(newPersonId);
         getSession().getTransaction().commit();
 
-        assertTrue("New person should be added", person.getFirst_name().equals(personFromDb.getFirst_name()));
+        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
 
     }
 
