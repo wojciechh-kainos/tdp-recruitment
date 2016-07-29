@@ -1,5 +1,7 @@
 package daoTests;
 
+import dao.AvailabilityTypesDao;
+import dao.PersonsDao;
 import dao.SlotsDao;
 import dao.SlotsTimesDao;
 import databaseHelper.BaseTest;
@@ -19,6 +21,12 @@ import static junit.framework.TestCase.assertTrue;
 
 public class SlotsDaoTest extends BaseTest{
 
+
+    private PersonsDao personsDao;
+    private SlotsTimesDao slotsTimesDao;
+    private AvailabilityTypesDao availabilityTypesDao;
+    private SlotsDao slotsDao;
+
     private Long id;
     private Long personId;
     private Long slotTimeId;
@@ -26,6 +34,13 @@ public class SlotsDaoTest extends BaseTest{
 
     @Before
     public void setUp(){
+
+
+        personsDao = new PersonsDao(sessionFactory);
+        slotsTimesDao = new SlotsTimesDao(sessionFactory);
+        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
+        slotsDao = new SlotsDao(sessionFactory);
+
         personId = addPersonToDatabase();
 
         availabilityTypeId = addAvailabilityTypeToDatabase();

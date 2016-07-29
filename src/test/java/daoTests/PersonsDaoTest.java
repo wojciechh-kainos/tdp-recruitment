@@ -1,28 +1,23 @@
 package daoTests;
 
+import dao.PersonsDao;
 import databaseHelper.BaseTest;
 import domain.Persons;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
 
 public class PersonsDaoTest extends BaseTest{
 
-    private Long id;
+    private Long newPersonId;
+    private PersonsDao personsDao;
+    private Persons person;
 
     @Before
     public void setUp(){
-
-    }
-
-    @Test
-    public void testCreatePersons(){
-
-        getSession().beginTransaction();
-
-        Persons person = new Persons();
+        personsDao = new PersonsDao(sessionFactory);
+        person = new Persons();
         person.setFirst_name("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
         person.setLast_name("TEST_SURNAME");
@@ -30,22 +25,27 @@ public class PersonsDaoTest extends BaseTest{
         person.setActive(true);
         person.setAdmin(false);
         person.setBand_level(2);
-        id = personsDao.create(person);
+    }
 
+    @Test
+    public void testCreatePersons(){
+
+        getSession().beginTransaction();
+        newPersonId = personsDao.create(person);
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        Persons personFromDb = personsDao.findById(id);
-
+        Persons personFromDb = personsDao.findById(newPersonId);
         getSession().getTransaction().commit();
-        assertTrue("Person should be added", person.getFirst_name().equals(personFromDb.getFirst_name()));
+
+        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
 
     }
 
     @After
-    public void teadDown(){
+    public void tearDown(){
         getSession().beginTransaction();
-        personsDao.deleteById(id);
+        personsDao.deleteById(newPersonId);
         getSession().getTransaction().commit();
     }
 

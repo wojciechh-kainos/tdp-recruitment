@@ -15,6 +15,8 @@ public class AvailabilityTypesDao extends AbstractDAO<AvailabilityTypes>{
         return persist(availabilityTypes).getId();
     }
 
+    public AvailabilityTypes getById(long id){ return get(id);}
+
     public void delete(long id){
         namedQuery("AvailabilityTypes.delete").setParameter("id", id).executeUpdate();
     }
