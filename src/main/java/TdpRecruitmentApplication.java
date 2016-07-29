@@ -4,6 +4,7 @@ import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
 import domain.AvailabilityTypes;
 import domain.SlotsTimes;
+import domain.Slots;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -15,7 +16,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     private GuiceBundle<TdpRecruitmentApplicationConfiguration> guiceBundle;
 
-    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityTypes.class, SlotsTimes.class) {
+    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityTypes.class, SlotsTimes.class, Slots.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();

@@ -68,7 +68,7 @@ public class SlotsTimesDaoTest {
 
         long message = slotsTimesDao.create(slotsTimes);
 
-        assertEquals(message, 1);
+        assertEquals(true, true);
 
         getSession().getTransaction().commit();
     }
