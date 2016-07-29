@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import configuration.TdpRecruitmentModule;
 import dao.AvailabilityTypesDao;
+import databaseHelper.BaseTest;
 import domain.AvailabilityTypes;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -15,44 +16,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AvailabilityTypesDaoTest {
+public class AvailabilityTypesDaoTest extends BaseTest{
 
-    private SessionFactory sessionFactory;
     private AvailabilityTypesDao availabilityTypesDao;
-    private Injector injector;
     AvailabilityTypes availabilityTypes;
 
-    public AvailabilityTypesDaoTest() {
-        AnnotationConfiguration config=new AnnotationConfiguration();
-        config.setProperty("hibernate.connection.url","jdbc:postgresql://localhost/postgres");
-        config.setProperty("hibernate.connection.username","postgres");
-        config.setProperty("hibernate.connection.driver_class","org.postgresql.Driver");
-        config.setProperty("hibernate.current_session_context_class", "thread");
-        config.setProperty("hibernate.show_sql", "false");
-        config.addAnnotatedClass(AvailabilityTypes.class);
-
-        this.sessionFactory=config.buildSessionFactory();
-    }
-
-    public Session getSession()
-    {
-        Session session;
-
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (SessionException se) {
-            session = sessionFactory.openSession();
-        }
-
-        return session;
-    }
 
     @Before
     public void setUp(){
-        TdpRecruitmentModule module = new TdpRecruitmentModule();
-        module.setSessionFactory(sessionFactory);
-        injector = Guice.createInjector(module);
-        availabilityTypesDao = injector.getInstance(AvailabilityTypesDao.class);
         availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
     }
 
@@ -62,12 +33,12 @@ public class AvailabilityTypesDaoTest {
 
         availabilityTypes = new AvailabilityTypes();
         availabilityTypes.setType("Available");
-        long message = availabilityTypesDao.create(availabilityTypes);
+        long returnedId = availabilityTypesDao.create(availabilityTypes);
 
-        AvailabilityTypes anotherAvailabilityTypes = availabilityTypesDao.getById(message);
+        AvailabilityTypes anotherAvailabilityTypes = availabilityTypesDao.getById(returnedId);
 
-        assertEquals(message, anotherAvailabilityTypes.getId());
-        assertEquals("Available", anotherAvailabilityTypes.getType());
+        assertEquals("ReturnedId should be equal to added availabilityTypes id.", returnedId, anotherAvailabilityTypes.getId());
+        assertEquals("Types of returned availabilityTypes should be equal to added availabilityTypes.", "Available", anotherAvailabilityTypes.getType());
 
         getSession().getTransaction().commit();
     }

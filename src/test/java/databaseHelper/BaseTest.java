@@ -1,6 +1,8 @@
 package databaseHelper;
 
+import domain.AvailabilityTypes;
 import domain.Persons;
+import domain.SlotsTimes;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
@@ -27,6 +29,8 @@ public class BaseTest {
         config.setProperty("hibernate.current_session_context_class", "thread");
         config.setProperty("hibernate.show_sql", "false");
         config.addAnnotatedClass(Persons.class);
+        config.addAnnotatedClass(SlotsTimes.class);
+        config.addAnnotatedClass(AvailabilityTypes.class);
 
         serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();
