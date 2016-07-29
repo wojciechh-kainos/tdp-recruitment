@@ -22,11 +22,7 @@ public class SlotsDao extends AbstractDAO<Slots> {
         return persist(slot).getId();
     }
 
-    public List<Slots> findAll() {
-        return list(namedQuery("Slots.findAll"));
-    }
-
-    public void deleteAll(){
-        namedQuery("Slots.deleteAll").executeUpdate();
+    public void deleteById(Long id) {
+        namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
     }
 }
