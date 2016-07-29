@@ -38,3 +38,10 @@ database:
 
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
+
+smtpConfig:
+  host: smtp.gmail.com
+  port: 587
+  #just the part before @gmail.com
+  from: username
+  password: password

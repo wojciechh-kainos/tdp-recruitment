@@ -1,3 +1,4 @@
+import Resources.EmailResource;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
@@ -20,7 +21,6 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 //    };
 
     private final MigrationsBundle<TdpRecruitmentApplicationConfiguration> migrationsBundle = new MigrationsBundle<TdpRecruitmentApplicationConfiguration>() {
-        @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();
         }
@@ -43,6 +43,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
+        environment.jersey().register(new EmailResource(configuration.getConfig()));
 //        module.setSessionFactory(hibernateBundle.getSessionFactory());
 
 //        environment.jersey().register(guiceBundle.getInjector().getInstance(TdpInvestUnitResource.class));
