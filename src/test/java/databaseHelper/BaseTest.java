@@ -1,22 +1,12 @@
 package databaseHelper;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import configuration.TdpRecruitmentApplicationConfiguration;
-import configuration.TdpRecruitmentModule;
-import dao.PersonsDao;
 import domain.Persons;
-import domain.Slots;
-import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.hibernate.HibernateBundle;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.BeforeClass;
 
 /**
@@ -24,14 +14,8 @@ import org.junit.BeforeClass;
  */
 public class BaseTest {
 
-    protected static Injector injector;
     protected static SessionFactory sessionFactory;
-
     private static ServiceRegistry serviceRegistry;
-    protected static PersonsDao personsDao;
-
-
-
 
     @BeforeClass
     public static void createInjector() {
@@ -48,11 +32,6 @@ public class BaseTest {
                 config.getProperties()).build();
 
         sessionFactory = config.buildSessionFactory(serviceRegistry);
-
-        TdpRecruitmentModule module = new TdpRecruitmentModule();
-        module.setSessionFactory(sessionFactory);
-        injector = Guice.createInjector(module);
-        personsDao = injector.getInstance(PersonsDao.class);
     }
 
     public Session getSession()
