@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="marcint">
+        <createTable tableName="availability_types">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2" author="marcint">
+        <createTable tableName="slots_times">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="start" type="time"/>
+
+            <column name="end" type="time"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="marcint">
+        <createTable tableName="persons">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="admin" type="boolean" defaultValueBoolean="false"/>
+
+            <column name="is_dev" type="boolean" defaultValueBoolean="false"/>
+
+            <column name="is_test" type="boolean" defaultValueBoolean="false"/>
+
+            <column name="is_web" type="boolean" defaultValueBoolean="false"/>
+
+            <!-- 1 to 6 -->
+            <column name="band_level" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="activation_code" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="active" type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="marcint">
+        <createTable tableName="slots">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="day" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="person" type="bigint">
+                <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+
+            <column name="slot" type="bigint">
+                <constraints foreignKeyName="slot_id" referencedTableName="slots_times" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+
+            <column name="type" type="bigint">
+                <constraints foreignKeyName="type_id" referencedTableName="availability_types"
+                             referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

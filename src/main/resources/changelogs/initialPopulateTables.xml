@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="5" author="marcint">
+        <insert tableName="availability_types">
+            <column name="type" value="available"/>
+        </insert>
+        <insert tableName="availability_types">
+            <column name="type" value="full"/>
+        </insert>
+        <insert tableName="availability_types">
+            <column name="type" value="init"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="marcint">
+        <insert tableName="slots_times">
+            <column name="start" value="08:00:00"/>
+            <column name="end" value="08:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="08:30:00"/>
+            <column name="end" value="09:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="09:00:00"/>
+            <column name="end" value="09:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="09:30:00"/>
+            <column name="end" value="10:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="10:00:00"/>
+            <column name="end" value="10:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="10:30:00"/>
+            <column name="end" value="11:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="11:00:00"/>
+            <column name="end" value="11:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="11:30:00"/>
+            <column name="end" value="12:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="12:00:00"/>
+            <column name="end" value="12:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="12:30:00"/>
+            <column name="end" value="13:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="13:00:00"/>
+            <column name="end" value="13:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="13:30:00"/>
+            <column name="end" value="14:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="14:00:00"/>
+            <column name="end" value="14:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="14:30:00"/>
+            <column name="end" value="15:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="15:00:00"/>
+            <column name="end" value="15:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="15:30:00"/>
+            <column name="end" value="16:00:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="16:00:00"/>
+            <column name="end" value="16:30:00"/>
+        </insert>
+        <insert tableName="slots_times">
+            <column name="start" value="16:30:00"/>
+            <column name="end" value="17:00:00"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>
