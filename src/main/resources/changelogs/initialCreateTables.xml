@@ -40,9 +40,6 @@
                 <constraints unique="true" nullable="false"/>
             </column>
 
-            <!-- Rekruter  -->
-            <column name="admin" type="boolean" defaultValueBoolean="false"/>
-
             <column name="first_name" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
@@ -54,6 +51,8 @@
             <column name="password" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
+
+            <column name="admin" type="boolean" defaultValueBoolean="false"/>
 
             <column name="is_dev" type="boolean" defaultValueBoolean="false"/>
 
@@ -84,7 +83,12 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="slot_number" type="bigint">
+            <column name="person" type="bigint">
+                <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+
+            <column name="slot" type="bigint">
                 <constraints foreignKeyName="slot_id" referencedTableName="slots_times" referencedColumnNames="id"
                              nullable="false"/>
             </column>
@@ -92,11 +96,6 @@
             <column name="type" type="bigint">
                 <constraints foreignKeyName="type_id" referencedTableName="availability_types"
                              referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-
-            <column name="person" type="bigint">
-                <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id"
                              nullable="false"/>
             </column>
         </createTable>
