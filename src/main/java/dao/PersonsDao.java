@@ -14,11 +14,19 @@ public class PersonsDao extends AbstractDAO<Persons>{
         super(sessionFactory);
     }
 
-    public void create(Persons person) {
-
+    public long  create(Persons person) {
+        return persist(person).getId();
     }
 
     public List<Persons> findAll() {
         return null;
+    }
+
+    public Persons findById(Long id) {
+        return get(id);
+    }
+
+    public void deleteById(Long id) {
+        namedQuery("Persons.delete").setParameter("id", id).executeUpdate();
     }
 }

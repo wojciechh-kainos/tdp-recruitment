@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "persons")
+@NamedQueries({
+        @NamedQuery(name = "Persons.delete",
+                query = "delete from Persons where id = :id")})
 public class Persons {
 
     @Id
