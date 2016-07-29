@@ -1,13 +1,7 @@
 package databaseHelper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Resources;
-import configuration.TdpRecruitmentApplicationConfiguration;
 import domain.Persons;
-import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.jackson.Jackson;
-import io.dropwizard.validation.BaseValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
@@ -16,8 +10,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.BeforeClass;
 
-import java.io.File;
-import java.net.URI;
 
 /**
  * Created by malgorzatas on 29/07/16.
@@ -26,17 +18,12 @@ public class BaseTest {
 
     protected static SessionFactory sessionFactory;
     private static ServiceRegistry serviceRegistry;
-    private static final ObjectMapper objectMapper = Jackson.newObjectMapper();
-    private static final ConfigurationFactory<TdpRecruitmentApplicationConfiguration> factory = new ConfigurationFactory<>(
-            TdpRecruitmentApplicationConfiguration.class,
-            BaseValidator.newValidator(),
-            objectMapper, "dw");
 
     @BeforeClass
     public static void createInjector() throws Exception {
 
         Configuration config = new Configuration();
-        DataSourceFactory dbConfig = DatabaseConfigurationHelper.getDatabseConfiguration();
+        DataSourceFactory dbConfig = DatabaseConfigurationHelper.getDatabaseConfiguration();
         config.setProperty("hibernate.connection.url",dbConfig.getUrl());
         config.setProperty("hibernate.connection.username",dbConfig.getUser());
         config.setProperty("hibernate.connection.driver_class",dbConfig.getDriverClass());
@@ -52,7 +39,6 @@ public class BaseTest {
     public Session getSession()
     {
         Session session;
-
         try {
             session = sessionFactory.getCurrentSession();
         } catch (SessionException se) {
@@ -62,9 +48,4 @@ public class BaseTest {
         return session;
     }
 
-    private static TdpRecruitmentApplicationConfiguration parseConfiguration() throws Exception {
-        URI path = Resources.getResource("app_config.yml").toURI();
-        return factory.build(new File(path));
-
-    }
 }
