@@ -13,10 +13,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.BeforeClass;
 
-
-/**
- * Created by malgorzatas on 29/07/16.
- */
 public class BaseTest {
 
     protected static SessionFactory sessionFactory;

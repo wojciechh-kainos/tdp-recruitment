@@ -1,6 +1,5 @@
 package domain;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -26,37 +25,37 @@ public class Persons {
     private String email;
 
     @NotNull
-    private String first_name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @NotNull
-    private String last_name;
+    @Column(name = "last_name")
+    private String lastName;
 
     private String password;
 
     private Boolean admin;
 
-    private Boolean is_dev;
+    @Column(name = "is_dev")
+    private Boolean isDev;
 
-    private Boolean is_test;
+    @Column(name = "is_test")
+    private Boolean isTest;
 
-    private Boolean is_web;
+    @Column(name = "is_web")
+    private Boolean isWeb;
 
     @NotNull
-    private Integer band_level;
+    @Column(name = "band_level")
+    private Integer bandLevel;
 
-    private String activation_code;
+
+    @Column(name = "activation_code")
+    private String activationCode;
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-            //cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    //@Cascade(CascadeType.DELETE)
-//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-//            org.hibernate.annotations.CascadeType.DELETE,
-//            org.hibernate.annotations.CascadeType.MERGE,
-//            org.hibernate.annotations.CascadeType.PERSIST,
-//            org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 
 
@@ -87,20 +86,20 @@ public class Persons {
         this.email = email;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -119,44 +118,44 @@ public class Persons {
         this.admin = admin;
     }
 
-    public Boolean getIs_dev() {
-        return is_dev;
+    public Boolean getIsDev() {
+        return isDev;
     }
 
-    public void setIs_dev(Boolean is_dev) {
-        this.is_dev = is_dev;
+    public void setIsDev(Boolean isDev) {
+        this.isDev = isDev;
     }
 
-    public Boolean getIs_test() {
-        return is_test;
+    public Boolean getIsTest() {
+        return isTest;
     }
 
-    public void setIs_test(Boolean is_test) {
-        this.is_test = is_test;
+    public void setIsTest(Boolean isTest) {
+        this.isTest = isTest;
     }
 
-    public Boolean getIs_web() {
-        return is_web;
+    public Boolean getIsWeb() {
+        return isWeb;
     }
 
-    public void setIs_web(Boolean is_web) {
-        this.is_web = is_web;
+    public void setIsWeb(Boolean isWeb) {
+        this.isWeb = isWeb;
     }
 
-    public Integer getBand_level() {
-        return band_level;
+    public Integer getBandLevel() {
+        return bandLevel;
     }
 
-    public void setBand_level(Integer band_level) {
-        this.band_level = band_level;
+    public void setBandLevel(Integer bandLevel) {
+        this.bandLevel = bandLevel;
     }
 
-    public String getActivation_code() {
-        return activation_code;
+    public String getActivationCode() {
+        return activationCode;
     }
 
-    public void setActivation_code(String activation_code) {
-        this.activation_code = activation_code;
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
     public Set<Slots> getSlotsList() {

@@ -18,7 +18,6 @@ import java.sql.Date;
 import java.sql.Time;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 
 public class PersonsDaoTest extends BaseTest{
 
@@ -37,13 +36,13 @@ public class PersonsDaoTest extends BaseTest{
     public void setUp(){
         personsDao = new PersonsDao(sessionFactory);
         person = new Persons();
-        person.setFirst_name("TEST_NAME");
+        person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
-        person.setLast_name("TEST_SURNAME");
-        person.setActivation_code("ACTIVE");
+        person.setLastName("TEST_SURNAME");
+        person.setActivationCode("ACTIVE");
         person.setActive(true);
         person.setAdmin(false);
-        person.setBand_level(2);
+        person.setBandLevel(2);
 
         slotsDao = new SlotsDao(sessionFactory);
         slotsTimesDao = new SlotsTimesDao(sessionFactory);

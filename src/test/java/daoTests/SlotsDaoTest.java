@@ -81,13 +81,13 @@ public class SlotsDaoTest extends BaseTest{
     private Persons addPersonToDatabase() {
         getSession().beginTransaction();
         Persons person = new Persons();
-        person.setFirst_name("TEST_NAME");
+        person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
-        person.setLast_name("TEST_SURNAME");
-        person.setActivation_code("ACTIVE");
+        person.setLastName("TEST_SURNAME");
+        person.setActivationCode("ACTIVE");
         person.setActive(true);
         person.setAdmin(false);
-        person.setBand_level(2);
+        person.setBandLevel(2);
         Long id = personsDao.create(person);
         getSession().getTransaction().commit();
 

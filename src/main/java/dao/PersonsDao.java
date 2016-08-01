@@ -18,10 +18,6 @@ public class PersonsDao extends AbstractDAO<Persons>{
         return persist(person).getId();
     }
 
-    public List<Persons> findAll() {
-        return null;
-    }
-
     public Persons getById(Long id) {
         return get(id);
     }

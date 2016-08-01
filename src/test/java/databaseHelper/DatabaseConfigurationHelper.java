@@ -11,10 +11,6 @@ import io.dropwizard.validation.BaseValidator;
 import java.io.File;
 import java.net.URI;
 
-/**
- * Created by malgorzatas on 29/07/16.
- */
-
 public class DatabaseConfigurationHelper {
 
     private static DataSourceFactory dataSourceFactory = null;
