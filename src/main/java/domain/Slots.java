@@ -21,14 +21,20 @@ public class Slots {
     private Date slotsDate;
 
     @NotNull
-    private Long person;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person")
+    private Persons person;
 
     @NotNull
-    private Long slot;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "slot")
+    private SlotsTimes slot;
 
 
     @NotNull
-    private Long type;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type")
+    private AvailabilityTypes type;
 
     public Slots() {
     }
@@ -49,27 +55,27 @@ public class Slots {
         this.slotsDate = slotsDate;
     }
 
-    public Long getPerson() {
+    public Persons getPerson() {
         return person;
     }
 
-    public void setPerson(Long person) {
+    public void setPerson(Persons person) {
         this.person = person;
     }
 
-    public Long getSlot() {
+    public SlotsTimes getSlot() {
         return slot;
     }
 
-    public void setSlot(Long slot) {
+    public void setSlot(SlotsTimes slot) {
         this.slot = slot;
     }
 
-    public Long getType() {
+    public AvailabilityTypes getType() {
         return type;
     }
 
-    public void setType(Long type) {
+    public void setType(AvailabilityTypes type) {
         this.type = type;
     }
 }

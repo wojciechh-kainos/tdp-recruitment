@@ -22,7 +22,7 @@ public class PersonsDao extends AbstractDAO<Persons>{
         return null;
     }
 
-    public Persons findById(Long id) {
+    public Persons getById(Long id) {
         return get(id);
     }
 

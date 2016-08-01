@@ -1,7 +1,15 @@
 package domain;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "persons")
@@ -39,6 +47,18 @@ public class Persons {
     private String activation_code;
 
     private Boolean active;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+            //cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    //@Cascade(CascadeType.DELETE)
+//    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+//            org.hibernate.annotations.CascadeType.DELETE,
+//            org.hibernate.annotations.CascadeType.MERGE,
+//            org.hibernate.annotations.CascadeType.PERSIST,
+//            org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
+
+    private Set<Slots> slotsList = new HashSet<Slots>();
+
 
     public Persons() {
     }
@@ -137,6 +157,14 @@ public class Persons {
 
     public void setActivation_code(String activation_code) {
         this.activation_code = activation_code;
+    }
+
+    public Set<Slots> getSlotsList() {
+        return slotsList;
+    }
+
+    public void setSlotsList(Set<Slots> slotsList) {
+        this.slotsList = slotsList;
     }
 
 }

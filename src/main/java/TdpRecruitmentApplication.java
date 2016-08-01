@@ -3,6 +3,7 @@ import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
 import domain.AvailabilityTypes;
+import domain.Persons;
 import domain.SlotsTimes;
 import domain.Slots;
 import io.dropwizard.Application;
@@ -16,7 +17,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     private GuiceBundle<TdpRecruitmentApplicationConfiguration> guiceBundle;
 
-    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityTypes.class, SlotsTimes.class, Slots.class) {
+    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityTypes.class, SlotsTimes.class, Slots.class, Persons.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();
