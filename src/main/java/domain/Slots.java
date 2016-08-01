@@ -2,7 +2,8 @@ package domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "slots")
@@ -16,7 +17,8 @@ public class Slots {
     private Long id;
 
     @NotNull
-    private Date day;
+    @Column(name = "slots_date")
+    private Date slotsDate;
 
     @NotNull
     private Long person;
@@ -39,12 +41,12 @@ public class Slots {
         this.id = id;
     }
 
-    public Date getDay() {
-        return day;
+    public Date getSlotsDate() {
+        return slotsDate;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public void setSlotsDate(Date slotsDate) {
+        this.slotsDate = slotsDate;
     }
 
     public Long getPerson() {

@@ -1,12 +1,9 @@
 package databaseHelper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Resources;
-import configuration.TdpRecruitmentApplicationConfiguration;
 import domain.AvailabilityTypes;
 import domain.Persons;
+import domain.Slots;
 import domain.SlotsTimes;
-import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -23,7 +20,6 @@ import org.junit.BeforeClass;
 public class BaseTest {
 
     protected static SessionFactory sessionFactory;
-    private static ServiceRegistry serviceRegistry;
 
     @BeforeClass
     public static void createInjector() throws Exception {
@@ -37,8 +33,9 @@ public class BaseTest {
         config.addAnnotatedClass(Persons.class);
         config.addAnnotatedClass(SlotsTimes.class);
         config.addAnnotatedClass(AvailabilityTypes.class);
+        config.addAnnotatedClass(Slots.class);
 
-        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();
 
         sessionFactory = config.buildSessionFactory(serviceRegistry);

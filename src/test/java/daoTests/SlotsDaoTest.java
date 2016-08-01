@@ -9,12 +9,15 @@ import domain.AvailabilityTypes;
 import domain.Persons;
 import domain.Slots;
 import domain.SlotsTimes;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import sun.util.resources.LocaleData;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
+import java.util.Locale;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -94,12 +97,12 @@ public class SlotsDaoTest extends BaseTest{
     }
 
     @Test
-    public void testCreatePersons(){
+    public void testCreateSlots(){
 
         getSession().beginTransaction();
 
         Slots slot = new Slots();
-        slot.setDay(new Date());
+        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
         slot.setPerson(personId);
         slot.setSlot(slotTimeId);
         slot.setType(availabilityTypeId);
@@ -119,7 +122,7 @@ public class SlotsDaoTest extends BaseTest{
     }
 
     @After
-    public void teadDown(){
+    public void tearDown(){
         getSession().beginTransaction();
         slotsDao.deleteById(id);
         getSession().getTransaction().commit();
