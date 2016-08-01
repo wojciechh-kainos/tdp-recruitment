@@ -1,15 +1,8 @@
 package daoTests;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import configuration.TdpRecruitmentModule;
 import dao.SlotsTimesDao;
 import databaseHelper.BaseTest;
 import domain.SlotsTimes;
-import org.hibernate.Session;
-import org.hibernate.SessionException;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +43,7 @@ public class SlotsTimesDaoTest extends BaseTest{
     @After
     public void tearDown(){
         getSession().beginTransaction();
-        slotsTimesDao.delete(slotsTimes.getId());
+        slotsTimesDao.deleteById(slotsTimes.getId());
         getSession().getTransaction().commit();
     }
 

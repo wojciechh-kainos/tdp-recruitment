@@ -17,7 +17,7 @@ public class SlotsTimesDao extends AbstractDAO<SlotsTimes> {
 
     public SlotsTimes getById(long id){ return get(id);}
 
-    public void delete(long id){
+    public void deleteById(long id){
         namedQuery("SlotsTimes.delete").setParameter("id", id).executeUpdate();
     }
 }

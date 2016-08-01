@@ -1,15 +1,8 @@
 package daoTests;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import configuration.TdpRecruitmentModule;
 import dao.AvailabilityTypesDao;
 import databaseHelper.BaseTest;
 import domain.AvailabilityTypes;
-import org.hibernate.Session;
-import org.hibernate.SessionException;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class AvailabilityTypesDaoTest extends BaseTest{
 
     private AvailabilityTypesDao availabilityTypesDao;
-    AvailabilityTypes availabilityTypes;
+    private AvailabilityTypes availabilityTypes;
 
 
     @Before
@@ -46,7 +39,7 @@ public class AvailabilityTypesDaoTest extends BaseTest{
     @After
     public void tearDown(){
         getSession().beginTransaction();
-        availabilityTypesDao.delete(availabilityTypes.getId());
+        availabilityTypesDao.deleteById(availabilityTypes.getId());
         getSession().getTransaction().commit();
     }
 }
