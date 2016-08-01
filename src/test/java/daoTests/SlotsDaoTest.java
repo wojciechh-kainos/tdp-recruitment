@@ -13,11 +13,9 @@ import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sun.util.resources.LocaleData;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Locale;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -31,9 +29,10 @@ public class SlotsDaoTest extends BaseTest{
     private SlotsDao slotsDao;
 
     private Long id;
-    private Long personId;
-    private Long slotTimeId;
-    private Long availabilityTypeId;
+
+    private Persons person;
+    private SlotsTimes slotsTime;
+    private AvailabilityTypes availabilityType;
 
     @Before
     public void setUp(){
@@ -44,43 +43,43 @@ public class SlotsDaoTest extends BaseTest{
         availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
         slotsDao = new SlotsDao(sessionFactory);
 
-        personId = addPersonToDatabase();
-
-        availabilityTypeId = addAvailabilityTypeToDatabase();
-
-        slotTimeId = addSlotTimeToDatabase();
+        person = addPersonToDatabase();
+        availabilityType = addAvailabilityTypeToDatabase();
+        slotsTime = addSlotTimeToDatabase();
     }
 
-    private Long addSlotTimeToDatabase() {
+    private SlotsTimes addSlotTimeToDatabase() {
         getSession().beginTransaction();
-
         Time time = new Time(8,0,0);
-
         SlotsTimes slotsTimes = new SlotsTimes();
         slotsTimes.setStartTime(time);
         slotsTimes.setEndTime(time);
-
         Long id = slotsTimesDao.create(slotsTimes);
-
         getSession().getTransaction().commit();
 
-        return id;
+        getSession().beginTransaction();
+        SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
+        getSession().getTransaction().commit();
+
+        return slotsTimeFromDb;
     }
 
-    private Long addAvailabilityTypeToDatabase() {
+    private AvailabilityTypes addAvailabilityTypeToDatabase() {
         getSession().beginTransaction();
-
         AvailabilityTypes unit = new AvailabilityTypes();
         unit.setType("Available");
         Long id = availabilityTypesDao.create(unit);
-
         getSession().getTransaction().commit();
-        return id;
+
+        getSession().beginTransaction();
+        AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
+        getSession().getTransaction().commit();
+
+        return availabilityTypeFromDb;
     }
 
-    private Long addPersonToDatabase() {
+    private Persons addPersonToDatabase() {
         getSession().beginTransaction();
-
         Persons person = new Persons();
         person.setFirst_name("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
@@ -90,10 +89,13 @@ public class SlotsDaoTest extends BaseTest{
         person.setAdmin(false);
         person.setBand_level(2);
         Long id = personsDao.create(person);
-
         getSession().getTransaction().commit();
 
-        return id;
+        getSession().beginTransaction();
+        Persons personFromDb = personsDao.getById(id);
+        getSession().getTransaction().commit();
+
+        return personFromDb;
     }
 
     @Test
@@ -103,9 +105,9 @@ public class SlotsDaoTest extends BaseTest{
 
         Slots slot = new Slots();
         slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
-        slot.setPerson(personId);
-        slot.setSlot(slotTimeId);
-        slot.setType(availabilityTypeId);
+        slot.setPerson(person);
+        slot.setSlot(slotsTime);
+        slot.setType(availabilityType);
 
         id = slotsDao.create(slot);
 
@@ -117,7 +119,7 @@ public class SlotsDaoTest extends BaseTest{
 
         getSession().getTransaction().commit();
 
-        assertTrue("Slot should be added", slot.getPerson().equals(slotFromDb.getPerson()));
+        assertTrue("Slot should be added", slot.getId().equals(slotFromDb.getId()));
 
     }
 
@@ -125,6 +127,8 @@ public class SlotsDaoTest extends BaseTest{
     public void tearDown(){
         getSession().beginTransaction();
         slotsDao.deleteById(id);
+        personsDao.deleteById(person.getId());
+
         getSession().getTransaction().commit();
     }
 }
