@@ -50,6 +50,58 @@ public class PersonsDaoTest extends BaseTest{
         availabilityType = addAvailabilityTypeToDatabase();
         slotsTime = addSlotTimeToDatabase();
     }
+
+    @Test
+    public void testCreatePersonsWithSlots(){
+
+        Slots slot = new Slots();
+        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
+        slot.setSlot(slotsTime);
+        slot.setType(availabilityType);
+
+        getSession().beginTransaction();
+
+        getSession().save(person);
+        slot.setPerson(person);
+        person.getSlotsList().add(slot);
+        getSession().save(slot);
+
+        Long personId = personsDao.create(person);
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        personFromDb = personsDao.getById(personId);
+        getSession().getTransaction().commit();
+
+        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
+        assertEquals("New person slots list should contain ids of all slots.", person.getSlotsList().size(), personFromDb.getSlotsList().size());
+    }
+
+    @Test
+    public void testCreatePersons(){
+
+        getSession().beginTransaction();
+        Long id = personsDao.create(person);
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        personFromDb = personsDao.getById(id);
+        getSession().getTransaction().commit();
+
+        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
+    }
+
+    @After
+    public void tearDown(){
+        getSession().beginTransaction();
+        personFromDb.getSlotsList().forEach(s -> slotsDao.deleteById(s.getId()));
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        personsDao.deleteById(personFromDb.getId());
+        getSession().getTransaction().commit();
+    }
+
     private SlotsTimes addSlotTimeToDatabase() {
         getSession().beginTransaction();
         Time time = new Time(8,0,0);
@@ -78,55 +130,5 @@ public class PersonsDaoTest extends BaseTest{
         getSession().getTransaction().commit();
 
         return availabilityTypeFromDb;
-    }
-    @Test
-    public void testCreatePersons(){
-
-        getSession().beginTransaction();
-        Long id = personsDao.create(person);
-        getSession().getTransaction().commit();
-
-        getSession().beginTransaction();
-        personFromDb = personsDao.getById(id);
-        getSession().getTransaction().commit();
-
-        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
-    }
-
-    @Test
-    public void testCreatePersonsWithSlots(){
-
-        Slots slot = new Slots();
-        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
-        slot.setSlot(slotsTime);
-        slot.setType(availabilityType);
-
-        getSession().beginTransaction();
-
-        getSession().save(person);
-        slot.setPerson(person);
-        person.getSlotsList().add(slot);
-        getSession().save(slot);
-
-        Long personId = personsDao.create(person);
-        getSession().getTransaction().commit();
-
-        getSession().beginTransaction();
-        personFromDb = personsDao.getById(personId);
-        getSession().getTransaction().commit();
-
-        assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
-        assertEquals("New person slots list should contain ids of all slots.", person.getSlotsList().size(), personFromDb.getSlotsList().size());
-    }
-
-    @After
-    public void tearDown(){
-        getSession().beginTransaction();
-        personFromDb.getSlotsList().forEach(s -> slotsDao.deleteById(s.getId()));
-        getSession().getTransaction().commit();
-
-        getSession().beginTransaction();
-        personsDao.deleteById(personFromDb.getId());
-        getSession().getTransaction().commit();
     }
 }

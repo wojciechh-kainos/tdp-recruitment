@@ -48,6 +48,39 @@ public class SlotsDaoTest extends BaseTest{
         slotsTime = addSlotTimeToDatabase();
     }
 
+    @Test
+    public void testCreateSlots(){
+
+        getSession().beginTransaction();
+
+        Slots slot = new Slots();
+        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
+        slot.setPerson(person);
+        slot.setSlot(slotsTime);
+        slot.setType(availabilityType);
+
+        id = slotsDao.create(slot);
+
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+
+        Slots slotFromDb = slotsDao.findById(id);
+
+        getSession().getTransaction().commit();
+
+        assertTrue("Slot should be added", slot.getId().equals(slotFromDb.getId()));
+
+    }
+
+    @After
+    public void tearDown(){
+        getSession().beginTransaction();
+        slotsDao.deleteById(id);
+        personsDao.deleteById(person.getId());
+        getSession().getTransaction().commit();
+    }
+
     private SlotsTimes addSlotTimeToDatabase() {
         getSession().beginTransaction();
         Time time = new Time(8,0,0);
@@ -96,39 +129,5 @@ public class SlotsDaoTest extends BaseTest{
         getSession().getTransaction().commit();
 
         return personFromDb;
-    }
-
-    @Test
-    public void testCreateSlots(){
-
-        getSession().beginTransaction();
-
-        Slots slot = new Slots();
-        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
-        slot.setPerson(person);
-        slot.setSlot(slotsTime);
-        slot.setType(availabilityType);
-
-        id = slotsDao.create(slot);
-
-        getSession().getTransaction().commit();
-
-        getSession().beginTransaction();
-
-        Slots slotFromDb = slotsDao.findById(id);
-
-        getSession().getTransaction().commit();
-
-        assertTrue("Slot should be added", slot.getId().equals(slotFromDb.getId()));
-
-    }
-
-    @After
-    public void tearDown(){
-        getSession().beginTransaction();
-        slotsDao.deleteById(id);
-        personsDao.deleteById(person.getId());
-
-        getSession().getTransaction().commit();
     }
 }
