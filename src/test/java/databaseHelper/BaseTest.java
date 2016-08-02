@@ -19,7 +19,7 @@ import org.junit.BeforeClass;
 
 public class BaseTest {
 
-    protected static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     protected static PersonsDao personsDao;
     protected static SlotsDao slotsDao;
     protected static SlotsTimesDao slotsTimesDao;
@@ -65,7 +65,7 @@ public class BaseTest {
         return session;
     }
 
-    public SlotsTimes getSlotTimeFromDb(Long id) {
+    protected SlotsTimes getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
         SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
@@ -74,7 +74,7 @@ public class BaseTest {
         return slotsTimeFromDb;
     }
 
-    public AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
+    protected AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
         AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
