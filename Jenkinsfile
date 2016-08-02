@@ -13,9 +13,6 @@ node {
     stage 'bower install'
     sh 'bower install --allow-root'
 
-    stage 'migrate'
-    sh 'gradle migrate'
-
     stage 'test'
     sh 'gradle test'
 
