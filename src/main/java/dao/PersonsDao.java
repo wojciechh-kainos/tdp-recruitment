@@ -14,7 +14,7 @@ public class PersonsDao extends AbstractDAO<Persons>{
         super(sessionFactory);
     }
 
-    public long  create(Persons person) {
+    public long create(Persons person) {
         return persist(person).getId();
     }
 
