@@ -5,8 +5,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eu.appsatori.fatjar'
 
-
-sourceCompatibility = 1.5
 mainClassName = "TdpRecruitmentApplication"
 
 buildscript {
@@ -28,6 +26,22 @@ project.ext {
 repositories {
     mavenCentral()
 }
+
+sourceSets {
+
+    main {
+        compileClasspath = configurations.compile + configurations.compileOnly
+    }
+
+    test {
+        compileClasspath = compileClasspath + configurations.compileOnly
+    }
+
+    selenium {
+        compileClasspath = compileClasspath + configurations.compileOnly
+    }
+}
+
 
 dependencies {
     compile (

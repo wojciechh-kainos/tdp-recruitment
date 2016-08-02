@@ -6,8 +6,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <include file="changelogs/initialCreateTables.xml"/>
-    <include file="changelogs/initialPopulateTables.xml"/>
-    <include file="changelogs/initialChangeEndName.xml"/>
-    <include file="changelogs/initialChangeColumnDayNameInSlots.xml"/>
+    <changeSet id="7" author="marcint">
+        <renameColumn tableName="slots_times" oldColumnName="end" newColumnName="end_time"></renameColumn>
+        <renameColumn tableName="slots_times" oldColumnName="start" newColumnName="start_time"></renameColumn>
+    </changeSet>
+
 </databaseChangeLog>
