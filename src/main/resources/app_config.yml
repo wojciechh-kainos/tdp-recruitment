@@ -15,7 +15,7 @@ database:
   user: postgres
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost/postgres
+  url: jdbc:postgresql://localhost/tdprecruitment
 
   # any properties specific to your JDBC driver:
   properties:

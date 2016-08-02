@@ -27,6 +27,10 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly
+}
+
 sourceSets {
 
     main {
