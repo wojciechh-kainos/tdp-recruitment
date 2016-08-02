@@ -3,7 +3,6 @@ package daoTests;
 import dao.SlotsTimesDao;
 import databaseHelper.BaseTest;
 import domain.SlotsTimes;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,8 +11,8 @@ import java.sql.Time;
 import static org.junit.Assert.assertEquals;
 
 public class SlotsTimesDaoTest extends BaseTest{
+
     private SlotsTimesDao slotsTimesDao;
-    private SlotsTimes slotsTimes;
 
     @Before
     public void setUp(){
@@ -24,26 +23,13 @@ public class SlotsTimesDaoTest extends BaseTest{
     public void test(){
         getSession().beginTransaction();
 
-        Time time = new Time(8,0,0);
+        SlotsTimes firstSlotTimeFromDb = slotsTimesDao.getById(1);
 
-        slotsTimesDao = new SlotsTimesDao(sessionFactory);
-        slotsTimes = new SlotsTimes();
-        slotsTimes.setStartTime(time);
-        slotsTimes.setEndTime(time);
+        assertEquals("First slotTime from db should start at correct time",
+                firstSlotTimeFromDb.getStartTime(), new Time(8,0,0) );
+        assertEquals("First slotTime from db should end at correct time",
+                firstSlotTimeFromDb.getEndTime(), new Time(8,30,0) );
 
-        long returnedId = slotsTimesDao.create(slotsTimes);
-
-        SlotsTimes anotherSlotsTimes = slotsTimesDao.getById(returnedId);
-
-        assertEquals("ReturnedId should be equal to added availabilityTypes id.", returnedId, anotherSlotsTimes.getId());
-
-        getSession().getTransaction().commit();
-    }
-
-    @After
-    public void tearDown(){
-        getSession().beginTransaction();
-        slotsTimesDao.deleteById(slotsTimes.getId());
         getSession().getTransaction().commit();
     }
 

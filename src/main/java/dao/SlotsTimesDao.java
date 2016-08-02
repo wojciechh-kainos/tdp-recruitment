@@ -11,13 +11,5 @@ public class SlotsTimesDao extends AbstractDAO<SlotsTimes> {
         super(sessionFactory);
     }
 
-    public long create(SlotsTimes slotsTimes){
-        return persist(slotsTimes).getId();
-    }
-
     public SlotsTimes getById(long id){ return get(id);}
-
-    public void deleteById(long id){
-        namedQuery("SlotsTimes.delete").setParameter("id", id).executeUpdate();
-    }
 }

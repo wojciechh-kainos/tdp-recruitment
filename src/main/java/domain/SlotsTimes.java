@@ -6,9 +6,6 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "slots_times")
-@NamedQueries(
-        @NamedQuery(name = "SlotsTimes.delete", query = "delete from SlotsTimes where id = :id")
-)
 public class SlotsTimes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

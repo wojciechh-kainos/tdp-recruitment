@@ -19,8 +19,9 @@ import java.sql.Time;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class PersonsDaoTest extends BaseTest{
+public class PersonsDaoTest extends BaseTest {
 
+    private static final Long FIRST = new Long(1) ;
     private PersonsDao personsDao;
     private Persons person;
 
@@ -33,7 +34,7 @@ public class PersonsDaoTest extends BaseTest{
     private Persons personFromDb;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         personsDao = new PersonsDao(sessionFactory);
         person = new Persons();
         person.setFirstName("TEST_NAME");
@@ -47,12 +48,12 @@ public class PersonsDaoTest extends BaseTest{
         slotsDao = new SlotsDao(sessionFactory);
         slotsTimesDao = new SlotsTimesDao(sessionFactory);
         availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
-        availabilityType = addAvailabilityTypeToDatabase();
-        slotsTime = addSlotTimeToDatabase();
+        availabilityType = getAvailabilityTypeFromDb(FIRST);
+        slotsTime = getSlotTimeFromDb(FIRST);
     }
 
     @Test
-    public void testCreatePersonsWithSlots(){
+    public void testCreatePersonsWithSlots() {
 
         Slots slot = new Slots();
         slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
@@ -78,7 +79,7 @@ public class PersonsDaoTest extends BaseTest{
     }
 
     @Test
-    public void testCreatePersons(){
+    public void testCreatePersons() {
 
         getSession().beginTransaction();
         Long id = personsDao.create(person);
@@ -92,7 +93,7 @@ public class PersonsDaoTest extends BaseTest{
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         getSession().beginTransaction();
         personFromDb.getSlotsList().forEach(s -> slotsDao.deleteById(s.getId()));
         getSession().getTransaction().commit();
@@ -102,14 +103,8 @@ public class PersonsDaoTest extends BaseTest{
         getSession().getTransaction().commit();
     }
 
-    private SlotsTimes addSlotTimeToDatabase() {
-        getSession().beginTransaction();
-        Time time = new Time(8,0,0);
-        SlotsTimes slotsTimes = new SlotsTimes();
-        slotsTimes.setStartTime(time);
-        slotsTimes.setEndTime(time);
-        Long id = slotsTimesDao.create(slotsTimes);
-        getSession().getTransaction().commit();
+
+    private SlotsTimes getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
         SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
@@ -118,12 +113,7 @@ public class PersonsDaoTest extends BaseTest{
         return slotsTimeFromDb;
     }
 
-    private AvailabilityTypes addAvailabilityTypeToDatabase() {
-        getSession().beginTransaction();
-        AvailabilityTypes unit = new AvailabilityTypes();
-        unit.setType("Available");
-        Long id = availabilityTypesDao.create(unit);
-        getSession().getTransaction().commit();
+    private AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
         AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
@@ -131,4 +121,5 @@ public class PersonsDaoTest extends BaseTest{
 
         return availabilityTypeFromDb;
     }
+
 }

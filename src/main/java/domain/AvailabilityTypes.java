@@ -5,9 +5,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "availability_types")
-@NamedQueries(
-        @NamedQuery(name = "AvailabilityTypes.delete", query = "delete from AvailabilityTypes where id = :id")
-)
 public class AvailabilityTypes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

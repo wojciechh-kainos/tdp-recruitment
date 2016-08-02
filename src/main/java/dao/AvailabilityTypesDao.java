@@ -11,13 +11,6 @@ public class AvailabilityTypesDao extends AbstractDAO<AvailabilityTypes>{
         super(sessionFactory);
     }
 
-    public long create(AvailabilityTypes availabilityTypes){
-        return persist(availabilityTypes).getId();
-    }
-
     public AvailabilityTypes getById(long id){ return get(id);}
 
-    public void deleteById(long id){
-        namedQuery("AvailabilityTypes.delete").setParameter("id", id).executeUpdate();
-    }
 }

@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -23,10 +22,12 @@ import static junit.framework.TestCase.assertTrue;
 public class SlotsDaoTest extends BaseTest{
 
 
+    private static final Long FIRST = new Long(1);
     private PersonsDao personsDao;
     private SlotsTimesDao slotsTimesDao;
     private AvailabilityTypesDao availabilityTypesDao;
     private SlotsDao slotsDao;
+
 
     private Long id;
 
@@ -44,8 +45,8 @@ public class SlotsDaoTest extends BaseTest{
         slotsDao = new SlotsDao(sessionFactory);
 
         person = addPersonToDatabase();
-        availabilityType = addAvailabilityTypeToDatabase();
-        slotsTime = addSlotTimeToDatabase();
+        availabilityType = getAvailabilityTypeFromDb(FIRST);
+        slotsTime = getSlotTimeFromDb(FIRST);
     }
 
     @Test
@@ -81,14 +82,7 @@ public class SlotsDaoTest extends BaseTest{
         getSession().getTransaction().commit();
     }
 
-    private SlotsTimes addSlotTimeToDatabase() {
-        getSession().beginTransaction();
-        Time time = new Time(8,0,0);
-        SlotsTimes slotsTimes = new SlotsTimes();
-        slotsTimes.setStartTime(time);
-        slotsTimes.setEndTime(time);
-        Long id = slotsTimesDao.create(slotsTimes);
-        getSession().getTransaction().commit();
+    private SlotsTimes getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
         SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
@@ -97,12 +91,7 @@ public class SlotsDaoTest extends BaseTest{
         return slotsTimeFromDb;
     }
 
-    private AvailabilityTypes addAvailabilityTypeToDatabase() {
-        getSession().beginTransaction();
-        AvailabilityTypes unit = new AvailabilityTypes();
-        unit.setType("Available");
-        Long id = availabilityTypesDao.create(unit);
-        getSession().getTransaction().commit();
+    private AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
         AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
