@@ -1,9 +1,5 @@
 package daoTests;
 
-import dao.AvailabilityTypesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import dao.SlotsTimesDao;
 import databaseHelper.BaseTest;
 import domain.AvailabilityTypes;
 import domain.Persons;
@@ -23,27 +19,13 @@ public class SlotsDaoTest extends BaseTest{
 
 
     private static final Long FIRST = new Long(1);
-    private PersonsDao personsDao;
-    private SlotsTimesDao slotsTimesDao;
-    private AvailabilityTypesDao availabilityTypesDao;
-    private SlotsDao slotsDao;
-
-
     private Long id;
-
     private Persons person;
     private SlotsTimes slotsTime;
     private AvailabilityTypes availabilityType;
 
     @Before
     public void setUp(){
-
-
-        personsDao = new PersonsDao(sessionFactory);
-        slotsTimesDao = new SlotsTimesDao(sessionFactory);
-        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
-        slotsDao = new SlotsDao(sessionFactory);
-
         person = addPersonToDatabase();
         availabilityType = getAvailabilityTypeFromDb(FIRST);
         slotsTime = getSlotTimeFromDb(FIRST);
@@ -80,24 +62,6 @@ public class SlotsDaoTest extends BaseTest{
         slotsDao.deleteById(id);
         personsDao.deleteById(person.getId());
         getSession().getTransaction().commit();
-    }
-
-    private SlotsTimes getSlotTimeFromDb(Long id) {
-
-        getSession().beginTransaction();
-        SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
-        getSession().getTransaction().commit();
-
-        return slotsTimeFromDb;
-    }
-
-    private AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
-
-        getSession().beginTransaction();
-        AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
-        getSession().getTransaction().commit();
-
-        return availabilityTypeFromDb;
     }
 
     private Persons addPersonToDatabase() {

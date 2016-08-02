@@ -1,9 +1,5 @@
 package daoTests;
 
-import dao.AvailabilityTypesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import dao.SlotsTimesDao;
 import databaseHelper.BaseTest;
 import domain.AvailabilityTypes;
 import domain.Persons;
@@ -15,27 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import static junit.framework.TestCase.assertEquals;
 
 public class PersonsDaoTest extends BaseTest {
 
     private static final Long FIRST = new Long(1) ;
-    private PersonsDao personsDao;
     private Persons person;
-
-    private SlotsDao slotsDao;
-    private SlotsTimesDao slotsTimesDao;
-    private AvailabilityTypesDao availabilityTypesDao;
-
     private SlotsTimes slotsTime;
     private AvailabilityTypes availabilityType;
     private Persons personFromDb;
 
     @Before
     public void setUp() {
-        personsDao = new PersonsDao(sessionFactory);
         person = new Persons();
         person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
@@ -45,9 +33,6 @@ public class PersonsDaoTest extends BaseTest {
         person.setAdmin(false);
         person.setBandLevel(2);
 
-        slotsDao = new SlotsDao(sessionFactory);
-        slotsTimesDao = new SlotsTimesDao(sessionFactory);
-        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
         availabilityType = getAvailabilityTypeFromDb(FIRST);
         slotsTime = getSlotTimeFromDb(FIRST);
     }
@@ -103,23 +88,5 @@ public class PersonsDaoTest extends BaseTest {
         getSession().getTransaction().commit();
     }
 
-
-    private SlotsTimes getSlotTimeFromDb(Long id) {
-
-        getSession().beginTransaction();
-        SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
-        getSession().getTransaction().commit();
-
-        return slotsTimeFromDb;
-    }
-
-    private AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
-
-        getSession().beginTransaction();
-        AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
-        getSession().getTransaction().commit();
-
-        return availabilityTypeFromDb;
-    }
 
 }

@@ -1,5 +1,9 @@
 package databaseHelper;
 
+import dao.AvailabilityTypesDao;
+import dao.PersonsDao;
+import dao.SlotsDao;
+import dao.SlotsTimesDao;
 import domain.AvailabilityTypes;
 import domain.Persons;
 import domain.Slots;
@@ -16,6 +20,10 @@ import org.junit.BeforeClass;
 public class BaseTest {
 
     protected static SessionFactory sessionFactory;
+    protected static PersonsDao personsDao;
+    protected static SlotsDao slotsDao;
+    protected static SlotsTimesDao slotsTimesDao;
+    protected static AvailabilityTypesDao availabilityTypesDao;
 
     @BeforeClass
     public static void createInjector() throws Exception {
@@ -37,6 +45,14 @@ public class BaseTest {
         sessionFactory = config.buildSessionFactory(serviceRegistry);
     }
 
+    @BeforeClass
+    public static void createDao(){
+        personsDao = new PersonsDao(sessionFactory);
+        slotsDao = new SlotsDao(sessionFactory);
+        slotsTimesDao = new SlotsTimesDao(sessionFactory);
+        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
+    }
+
     public Session getSession()
     {
         Session session;
@@ -47,6 +63,24 @@ public class BaseTest {
         }
 
         return session;
+    }
+
+    public SlotsTimes getSlotTimeFromDb(Long id) {
+
+        getSession().beginTransaction();
+        SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
+        getSession().getTransaction().commit();
+
+        return slotsTimeFromDb;
+    }
+
+    public AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
+
+        getSession().beginTransaction();
+        AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
+        getSession().getTransaction().commit();
+
+        return availabilityTypeFromDb;
     }
 
 }
