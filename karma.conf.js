@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: 'src/main/resources/assets/js/',
 
 
     // frameworks to use
@@ -71,4 +71,4 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity
   })
-}
+};
