@@ -1,6 +1,7 @@
 define(['angular' 
 , 'application/interviewer/tdprInterviewerModule' 
-, 'application/interviewer/controllers/tdprInterviewerHomeController' ],
+, 'application/interviewer/controllers/tdprInterviewerHomeController' 
+, 'application/interviewer/services/tdprSlotsService' ],
  function (angular, tdprInterviewerModule) { 
    tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) { 
           $stateProvider 

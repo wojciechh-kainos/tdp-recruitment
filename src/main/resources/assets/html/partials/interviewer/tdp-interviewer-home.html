@@ -1,24 +1,42 @@
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>MONDAY</th>
-            <th>TUESDAY</th>
-            <th>WEDNESDAY</th>
-            <th>THURSDAY</th>
-            <th>FRIDAY</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="slotsForDay in slotsForWeek">
-            <td>09.00-09.30</td>
-            <td ng-repeat="slot in slotsForDay">{{slot}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>MONDAY</th>
+                <th>TUESDAY</th>
+                <th>WEDNESDAY</th>
+                <th>THURSDAY</th>
+                <th>FRIDAY</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="slotsForDay in slotsForWeek">
+                <td>{{slotTimes[$index]}}</td>
+                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot}">
+                    <input type="checkbox" ng-model="slot" >
+                    <p ng-show="slot">AVAILABLE</p>
+                    <p ng-hide="slot">BUSY</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" ng-click="submit()">SUBMIT SLOTS</button>
 
-<style>
-    table, td, tr {
-        border: 1px solid black;
-    }
-</style>
+    <style>
+        .container {
+            text-align: center;
+        }
+        table {
+            display: inline-block;
+        }
+
+        table, td, tr {
+            border: 1px solid black;
+        }
+        .available-slot {
+            background-color: #87D37C;
+        }
+
+    </style>
+</div>
