@@ -3,10 +3,10 @@ server:
   applicationContextPath: /
   applicationConnectors:
     - type: http
-      port: 9002
+      port: 8888
   adminConnectors:
     - type: http
-      port: 9502
+      port: 8889
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver
