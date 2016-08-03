@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>MONDAY</th>
+            <th>TUESDAY</th>
+            <th>WEDNESDAY</th>
+            <th>THURSDAY</th>
+            <th>FRIDAY</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="slotsForDay in slotsForWeek">
+            <td>09.00-09.30</td>
+            <td ng-repeat="slot in slotsForDay">{{slot}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    table, td, tr {
+        border: 1px solid black;
+    }
+</style>
