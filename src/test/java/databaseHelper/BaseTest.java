@@ -32,6 +32,7 @@ public class BaseTest {
         DataSourceFactory dbConfig = DatabaseConfigurationHelper.getDatabaseConfiguration();
         config.setProperty("hibernate.connection.url",dbConfig.getUrl());
         config.setProperty("hibernate.connection.username",dbConfig.getUser());
+        config.setProperty("hibernate.connection.password",dbConfig.getPassword());
         config.setProperty("hibernate.connection.driver_class",dbConfig.getDriverClass());
         config.setProperty("hibernate.current_session_context_class", "thread");
         config.addAnnotatedClass(Persons.class);
