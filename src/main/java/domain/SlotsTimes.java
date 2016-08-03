@@ -6,10 +6,6 @@ import java.sql.Time;
 
 @Entity
 @Table(name = "slots_times")
-@NamedQueries({
-        @NamedQuery(name = "SlotsTimes.getAll",
-                query = "select s from SlotsTimes s")})
-
 public class SlotsTimes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
