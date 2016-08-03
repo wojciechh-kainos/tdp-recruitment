@@ -12,6 +12,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import resources.PersonResources;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -49,6 +50,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
         module.setSessionFactory(hibernateBundle.getSessionFactory());
+        environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResources.class));
 
 //        environment.jersey().register(guiceBundle.getInjector().getInstance(TdpInvestUnitResource.class));
 

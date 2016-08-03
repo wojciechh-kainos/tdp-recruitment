@@ -25,4 +25,8 @@ public class PersonsDao extends AbstractDAO<Persons>{
     public void deleteById(Long id) {
         namedQuery("Persons.delete").setParameter("id", id).executeUpdate();
     }
+
+    public List<Persons> findAll(){
+        return namedQuery("Persons.findAll").list();
+    }
 }
