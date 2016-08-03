@@ -14,6 +14,12 @@ define(['angular'
                 }
             }).state("tdpr.recruiter.home", {
             url: "/home",
+            resolve: {
+                tdprPersonsService: "personsService",
+                personServiceFetchPersons: function (tdprPersonsService) {
+                    tdprPersonsService.fetchPersons();
+                }
+            },
             views: {
                 "main@recruiter": {
                     templateUrl: "/js/application/recruiter/views/tdpr-recruiter-home.html"
