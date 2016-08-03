@@ -19,10 +19,7 @@
     "angular": "^1.5.8",
     "angular-ui-router": "ui-router#^0.3.1",
     "requirejs": "^2.2.0",
-<<<<<<< HEAD
-    "bootstrap": "^3.3.6"
-=======
+    "bootstrap": "^3.3.6",
     "angular-mocks": "^1.5.8"
->>>>>>> 923e1c688565f4949dbcf427a71c2053878c768b
   }
 }
