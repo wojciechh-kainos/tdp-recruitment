@@ -12,9 +12,10 @@ database:
   driverClass: org.postgresql.Driver
 
   # the username
-  user: postgres
+  user: tdp
 
-  password: postgres
+  # the password
+  password: tdp
 
   # the JDBC URL
   url: jdbc:postgresql://localhost/tdprecruitment
