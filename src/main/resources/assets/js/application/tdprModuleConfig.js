@@ -3,9 +3,8 @@ define(['angular'
 ], function(angular, module) {
     module.config(function($stateProvider) {
         $stateProvider
-            .state("base", {
+            .state("tdpr", {
                 abstract: true,
-                url: "/"
             });
 
     });
