@@ -12,6 +12,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import resources.GetSlotsTimesResource;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -62,7 +63,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 //                .buildAuthFilter()));
 
 //        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(TdpIUser.class));
-//        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(GetSlotsTimesResource.class);
 
 
     }
