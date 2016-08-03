@@ -7,17 +7,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 modelInput: '=',
                 slotsTimes: '=',
                 startWeekDay: '=',
-                every: '=',
                 selectedDay: '='
             },
             link: function (scope, element, attributes) {
-                var _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                var daysLength = 7;
-                var zoomedInEvery = 10;
+                var _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                var daysLength = _days.length;
 
                 var timeElementsCount;
                 var previousStartWeekDay;
-                var previousEvery;
 
                 /* Create and output array of time labels for table header */
                 function _createHeaderArray(weekStart) {
@@ -98,14 +95,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     if (newValue !== undefined) {
                         if (newValue === null) {
                             scope.startWeekDay = previousStartWeekDay;
-                            scope.every = previousEvery;
                             daysLength = 7;
                             _init();
                         } else {
                             daysLength = 1;
                             previousStartWeekDay = scope.startWeekDay;
-                            previousEvery = scope.every;
-                            scope.every = zoomedInEvery;
                             scope.startWeekDay = newValue.dayValue;
                         }
                     }
