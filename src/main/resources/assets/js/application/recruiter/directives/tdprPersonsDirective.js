@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("personsDirective", function () {
         return {
             restrict: 'A',
-            templateUrl: 'html/partials/tdpr-directive-persons.html',
+            templateUrl: 'js/application/recruiter/views/tdpr-directive-persons.html',
             scope: {
                 selectedPersonTable: '=',
                 timeElements: '=',

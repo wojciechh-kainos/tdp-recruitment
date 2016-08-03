@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("myTimetable", function () {
         return {
             restrict: 'A',
-            templateUrl: 'html/partials/tdpr-directive-table.html',
+            templateUrl: 'js/application/recruiter/views/tdpr-directive-table.html',
             scope: {
                 modelInput: '=',
                 slotsTimes: '=',

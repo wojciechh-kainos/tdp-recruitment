@@ -7,7 +7,7 @@ define(['angular'
         $stateProvider.
             state("recruiter", {
             url: "/recruiter",
-            templateUrl: "html/partials/tdpr-table.html",
+            templateUrl: "js/application/recruiter/views/tdpr-table.html",
             controller: "tdprWeekTableController"
         });
     });

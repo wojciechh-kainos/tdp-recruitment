@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("availabilityDirective", function () {
         return {
             restrict: 'A',
-            templateUrl: 'html/partials/tdpr-directive-availability.html',
+            templateUrl: 'js/application/recruiter/views/tdpr-directive-availability.html',
             link: function (scope, element, attributes) {
 
                 function _init() {
