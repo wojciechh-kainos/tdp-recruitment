@@ -1,0 +1,88 @@
+.tiny-header {
+    height: 10px;
+}
+
+.rotate {
+    transform: /* Magic Numbers */ translate(0px, 0px) /* 45 is really 360 - 45 */ rotate(270deg);
+    width: 15px;
+    text-align: right;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+.rotate > span {
+    white-space: nowrap;
+    /*padding: 5px 10px;
+    border-bottom: 1px solid #ccc;*/
+}
+
+.cell-avail-unavailable {
+    border-top-width: 0px;
+}
+
+.cell-avail-available {
+    background-color: #00b3ee;
+    border: 1px;
+}
+
+.cell-avail-init {
+    background: red;
+}
+
+.cell-avail-full {
+    background: darkred;
+}
+
+.cell-avail-busy {
+    background: orange;
+}
+
+.cell-selected {
+    background-color: cyan;
+}
+
+.person-name {
+    min-width: 140px;
+}
+
+.my-timetable {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    background: #fff;
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.my-timetable td {
+    cursor: pointer;
+    border-right: 1px dotted;
+    border-bottom: 1px dashed;
+    max-width: 10px;
+}
+
+.cell-last-column {
+    border-right: 3px dotted deepskyblue !important;
+    margin-right: 50px;
+}
+
+.my-timetable td:hover {
+    background: orange;
+}
+
+.my-timetable .selected {
+    background: #2cab54;
+}
+
+.my-timetable th {
+    font-size: 0.8em;
+    color: #808080;
+    cursor: pointer;
+    border: 2px solid dodgerblue;
+    text-align: center;
+}
