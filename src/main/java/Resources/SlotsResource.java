@@ -29,7 +29,7 @@ public class SlotsResource {
     @GET
     @Path("/week")
     @UnitOfWork
-    List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
+    public List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
                                   @QueryParam("startDate") String startDate,
                                   @QueryParam("endDate") String endDate) throws ParseException {
 
