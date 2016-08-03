@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprRecruiterGetSlotsTimesService', ['$http', function ($http) {
+    tdprRecruiterModule.service('tdprRecruiterGetSlotsTimesService', ['$http', '$q', function ($http, $q) {
         var service = {};
         var data = {};
 
@@ -20,7 +20,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         service.getSlotsTimes = function(){
             return $http.get('/api/slots_times/all').then(function(response){
                 data = getFormatedSlots(response.data);
-                return response;
+                return response.data;
             },
             function(error){
                 console.log(error);

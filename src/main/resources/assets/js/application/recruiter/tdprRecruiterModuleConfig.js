@@ -1,6 +1,7 @@
 define(['angular'
     , 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/controllers/tdprWeekTableController'
+    , 'application/recruiter/services/personsService'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
