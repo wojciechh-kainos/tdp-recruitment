@@ -25,7 +25,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             function(error){
                 console.log(error);
                 console.log("get slots times failed");
-                return {};
+                return $q.reject(error.message);
             });
         };
 
