@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="10" author="radoslawl">
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-04"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-05"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="2"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="4"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-07"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-08"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-08"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="2"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-11"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-12"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="person" value="2"/>
+            <column name="slot" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="person" value="2"/>
+            <column name="slot" value="2"/>
+            <column name="type" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
