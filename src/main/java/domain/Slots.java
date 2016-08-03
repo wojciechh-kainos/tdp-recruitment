@@ -8,8 +8,8 @@ import java.sql.Date;
 @Entity
 @Table(name = "slots")
 @NamedQueries({
-        @NamedQuery(name = "Slots.delete",
-                query = "delete from Slots where id = :id")})
+        @NamedQuery(name = "Slots.delete", query = "delete from Slots where id = :id")
+})
 public class Slots {
 
     @Id
