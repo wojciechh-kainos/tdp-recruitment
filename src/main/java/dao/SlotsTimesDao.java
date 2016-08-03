@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import domain.SlotsTimes;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
-import java.util.List;
 
 public class SlotsTimesDao extends AbstractDAO<SlotsTimes> {
     @Inject
@@ -13,9 +12,4 @@ public class SlotsTimesDao extends AbstractDAO<SlotsTimes> {
     }
 
     public SlotsTimes getById(long id){ return get(id);}
-
-    public List<SlotsTimes> getAll() {
-        return list(namedQuery("SlotsTimes.getAll"));
-    }
-
 }
