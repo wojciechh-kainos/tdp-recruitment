@@ -24,12 +24,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         var day = new Date(weekStart.getTime() + (i * 60 * 60 * 24) * 1000);
 
                         timeElementsCount = 0;
-
+                        
                         for (var key in scope.slotsTimes) {
                             if (!scope.slotsTimes.hasOwnProperty(key)) continue;
 
-                            var startTime = scope.slotsTimes[key].start.split(":");
-                            var endTime = scope.slotsTimes[key].end.split(":");
+                            var startTime = scope.slotsTimes[key].startTime.split(":");
+                            var endTime = scope.slotsTimes[key].endTime.split(":");
 
                             var dateStartObject = new Date(new Date(day).setHours(startTime[0])).setMinutes(startTime[1]);
                             var dateEndObject = new Date(new Date(day).setHours(endTime[0])).setMinutes(endTime[1]);
@@ -88,6 +88,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 scope.$watch("startWeekDay", function (newValue, oldValue) {
+                    _init();
+                });
+
+                scope.$watch("slotsTimes", function (newValue, oldValue) {
                     _init();
                 });
 
