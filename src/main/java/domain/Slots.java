@@ -9,8 +9,7 @@ import java.sql.Date;
 @Table(name = "slots")
 @NamedQueries({
         @NamedQuery(name = "Slots.delete", query = "delete from Slots where id = :id"),
-        @NamedQuery(name = "Slots.getForPersonForWeek", query = "select * from slots s where (s.slotsDate between :startDate and :endDate)" +
-                " and (s.person.id = :personId)")
+        @NamedQuery(name = "Slots.getForPersonForWeek", query = "select s from Slots s where (s.slotsDate between :startDate and :endDate)")
 })
 
 public class Slots {

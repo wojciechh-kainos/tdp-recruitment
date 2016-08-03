@@ -1,3 +1,4 @@
+import Resources.SlotsResource;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
@@ -49,6 +50,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
         module.setSessionFactory(hibernateBundle.getSessionFactory());
+        environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
 
 //        environment.jersey().register(guiceBundle.getInjector().getInstance(TdpInvestUnitResource.class));
 
