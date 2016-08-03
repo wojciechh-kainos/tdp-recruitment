@@ -1,8 +1,5 @@
 package domain;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,8 +10,9 @@ import java.util.Set;
 @Entity
 @Table(name = "persons")
 @NamedQueries({
-        @NamedQuery(name = "Persons.delete",
-                query = "delete from Persons where id = :id")})
+        @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
+        @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
+})
 public class Persons {
 
     @Id
@@ -55,8 +53,8 @@ public class Persons {
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
-    private Set<Slots> slotsList = new HashSet<Slots>();
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+//    private Set<Slots> slotsList = new HashSet<Slots>();
 
 
     public Persons() {
@@ -158,12 +156,12 @@ public class Persons {
         this.activationCode = activationCode;
     }
 
-    public Set<Slots> getSlotsList() {
-        return slotsList;
-    }
-
-    public void setSlotsList(Set<Slots> slotsList) {
-        this.slotsList = slotsList;
-    }
+//    public Set<Slots> getSlotsList() {
+//        return slotsList;
+//    }
+//
+//    public void setSlotsList(Set<Slots> slotsList) {
+//        this.slotsList = slotsList;
+//    }
 
 }
