@@ -10,7 +10,10 @@ import io.dropwizard.hibernate.UnitOfWork;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Path("/slots")
+@Produces(MediaType.APPLICATION_JSON)
 public class SlotsResource {
 
     SlotsDao dao;

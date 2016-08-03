@@ -55,7 +55,7 @@ public class Persons {
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 
 
