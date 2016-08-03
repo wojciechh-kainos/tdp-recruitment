@@ -1,16 +1,34 @@
 define(['angular'
-    , 'application/tdprModule'
     , 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/controllers/tdprWeekTableController'
-], function (angular, module) {
-    module.config(function ($stateProvider) {
-        $stateProvider.
-            state("recruiter", {
-            url: "/recruiter",
-            templateUrl: "js/application/recruiter/views/tdpr-table.html",
-            controller: "tdprWeekTableController"
-        });
-    });
+], function (angular, tdprRecruiterModule) {
 
-    return module;
+    tdprRecruiterModule.config(function ($stateProvider) {
+        $stateProvider
+            .state("tdpr.recruiter", {
+                abstract: true,
+                views: {
+                    "@": {
+                        templateUrl: "/js/application/recruiter/views/tdpr-recruiter-index.html"
+                    }
+                }
+            }).state("tdpr.recruiter.home", {
+            url: "/home",
+            views: {
+                "main@recruiter": {
+                    templateUrl: "/js/application/recruiter/views/tdpr-recruiter-home.html"
+                }
+            }
+        }).state("tdpr.recruiter.table", {
+            url: "/recruiter",
+            views: {
+                "main@recruiter": {
+                    templateUrl: "js/application/recruiter/views/tdpr-table.html",
+                    controller: "tdprWeekTableController"
+                }
+            }
+        })
+    });
+    return tdprRecruiterModule;
+
 });
