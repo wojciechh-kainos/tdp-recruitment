@@ -3,7 +3,13 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         var persons;
         
         this.fetchPersons = function(){
-            $http.get().then(
+            var conf = {
+                params: {
+                    dateStart: '2010-01-11',
+                    dateEnd: '2012-02-11'
+                }
+            };
+            return $http.get('/api', conf).then(
                 function (response) {
                     persons = response.data;
                 },
@@ -12,7 +18,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                 }
             )
         };
-        
+
         this.getPersons = function () {
             return persons;
         }
