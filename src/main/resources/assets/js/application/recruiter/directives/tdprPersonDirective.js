@@ -21,7 +21,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         if (!person.slots.hasOwnProperty(slotKey)) continue;
                         day = new Date(person.slots[slotKey].day);
 
-                         slotId = person.slots[slotKey].slot;
+                        slotId = person.slots[slotKey].slot;
 
                         // Add entry if there isn't day yet
                         if (!slotDayLists.hasOwnProperty(day)) {

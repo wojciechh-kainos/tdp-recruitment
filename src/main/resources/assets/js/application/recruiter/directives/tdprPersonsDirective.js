@@ -9,8 +9,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 startWeekDay: '='
             },
             link: function (scope, element, attributes) {
-                var peopleList = [];
-
                 scope.activePerson = null;
                 scope.AvailabilityEnum = Object.freeze(
                     {
@@ -45,21 +43,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             for (var j = 0; j < childrenCount; j++) {
 
                                 if (checkArray[i].children[j].length > 0) {
-                                    //array.push(_returnTableRows(checkArray[i].children[j]));
                                     array[checkArray[i].children[j].id] = _returnTableRows(checkArray[i].children[j]);
                                 } else {
-                                    //array.push(checkArray[i].children[j]);
                                     array[checkArray[i].children[j].id] = checkArray[i].children[j];
                                 }
                             }
                         } else {
-                            // if( checkArray[i].delete ){
-                            //     checkArray[i].delete('isExpanded');
-                            //     checkArray[i].delete('isActive');
-                            //     checkArray[i].delete('selected');
-                            // }
-
-                            //array.push(checkArray[i]);
                             array[checkArray[i].id] = checkArray[i];
                         }
                     }
@@ -93,7 +82,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     scope.getActivePerson = _getActivePerson;
                     scope.changeActive = _changeActive;
                 }
-
 
                 scope.$watch('selectedPersonTable', function (newValue, oldValue) {
                     _refreshList(newValue);
