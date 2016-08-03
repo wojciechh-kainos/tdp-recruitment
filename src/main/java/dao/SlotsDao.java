@@ -29,7 +29,9 @@ public class SlotsDao extends AbstractDAO<Slots> {
     }
 
     public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
-        return list(namedQuery("Slots.getForPersonForWeek").setParameter("personId", personId).setDate("startDate", start)
+        return list(namedQuery("Slots.getForPersonForWeek")
+                .setParameter("personId", personId)
+                .setDate("startDate", start)
                 .setDate("endDate", end));
     }
 }
