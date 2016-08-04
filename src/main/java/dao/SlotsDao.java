@@ -22,11 +22,11 @@ public class SlotsDao extends AbstractDAO<Slots> {
         super(sessionFactory);
     }
 
-    public Slots findById(Long id){
+    public Slots findById(Long id) {
         return get(id);
     }
 
-    public long create(Slots slot){
+    public long create(Slots slot) {
         return persist(slot).getId();
     }
 
@@ -34,7 +34,7 @@ public class SlotsDao extends AbstractDAO<Slots> {
         namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slots> findBetween(String startDate, String endDate){
+    public List<Slots> findBetween(String startDate, String endDate) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
@@ -45,10 +45,24 @@ public class SlotsDao extends AbstractDAO<Slots> {
         return criteria.list();
     }
 
-    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value){
-        if (value != null){
+    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value) {
+        if (value != null) {
             criteria.add(expression);
         }
+    }
+
+    public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
+        namedQuery("Slots.deleteForPersonBetweenDates")
+                .setParameter("personId", personId)
+                .setDate("fromDate", from)
+                .setDate("toDate", to)
+                .executeUpdate();
+    }
+
+    public void updateForPersonAndWeek(Slots[] slots, Long personId, Date from, Date to) {
+        deleteForPersonBetweenDates(personId, from, to);
+        for (Slots slot : slots) persist(slot);
+    }
 
     public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
         return list(namedQuery("Slots.getForPersonForWeek")

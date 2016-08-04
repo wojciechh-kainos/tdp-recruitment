@@ -30,10 +30,30 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             }
 
 
-        });
-    }
+            });
+        };
+
+        $scope.updateSlots = function () {
+            var slots = [];
+            for (var i = 0; i < $scope.slotsForWeek.length; i++) {
+                for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
+                    if ($scope.slotsForWeek[i][j].available) {
+                        var slot = {
+                            slotsDate: getDayOfTheWeek(new Date(), j),
+                            person: null,
+                            slot: {id: i + 1},
+                            type: {id: 1}
+                        };
+                        slots.push(slot);
+                    }
+                }
+            }
+            var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+            tdprSlotsService.updateSlots(slots, id, startDate, endDate);
+        };
 
     getSlots(id);
 
-  });
+    });
 });
