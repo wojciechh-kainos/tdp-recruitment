@@ -67,7 +67,7 @@
 }
 
 .cell-last-column {
-    border-right: 4px solid mediumblue !important;
+    border-right: 4px solid dodgerblue !important;
     margin-right: 50px;
 }
 
@@ -87,6 +87,7 @@
     text-align: center;
 }
 
-.my-timetable .big-header, .my-timetable .tiny-header:nth-of-type(18n+1) {
-    border-right: 4px solid mediumblue;
+.my-timetable th:first-child, .my-timetable .person-name, .my-timetable .big-header, .my-timetable .tiny-header:nth-of-type(18n+1) {
+    border-right: 4px solid dodgerblue;
+
 }
