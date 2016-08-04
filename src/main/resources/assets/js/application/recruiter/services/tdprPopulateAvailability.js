@@ -1,6 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPopulateAvailability', [function () {
-        this.populateAvailability = function (person, timeElements, availabilityEnum) {
+    tdprRecruiterModule.service('tdprPopulateAvailability', ['AvailabilityEnum', function (AvailabilityEnum) {
+        this.populateAvailability = function (person, timeElements) {
             var array = [];
             var slotDayLists = {};
 
@@ -19,7 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 var available = person.slots[slotKey].type ? person.slots[slotKey].type : "unavailable";
-                var type = availabilityEnum[available];
+                var type = AvailabilityEnum[available];
 
                 slotDayLists[day][slotId] = {type: person.slots[slotKey].type, tooltipText: type.tooltipText};
             }
