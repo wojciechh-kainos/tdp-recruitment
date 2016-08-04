@@ -1,6 +1,6 @@
 <form>
-    <label ng-repeat="job in jobProfiles" for="{{job}}">
-        <input type="radio" ng-model="jobProfile" name="jobProfile" id="{{job}}" ng-click="changeJobProfile($index)">
+    <label ng-repeat="job in jobProfiles">
+        <input type="radio" ng-model="jobProfile" name="jobProfile" ng-click="changeJobProfile($index)">
         {{job}}
     </label><br/>
 </form>
