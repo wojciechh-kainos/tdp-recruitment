@@ -1,28 +1,37 @@
 
+
 <div class="container">
 
     <h1>YOUR AVAILABILITY</h1>
+    <div>
+        <button class="navigate" ng-click="showPreviousWeek()">Previous week</button>
+        <p class="navigate">{{startDate}} - {{endDate}}</p>
+        <button class="navigate" ng-click="showNextWeek()">Next week</button>
+    </div>
+
+
+
 
     <table>
         <thead>
-            <tr>
-                <th></th>
-                <th>MONDAY</th>
-                <th>TUESDAY</th>
-                <th>WEDNESDAY</th>
-                <th>THURSDAY</th>
-                <th>FRIDAY</th>
-            </tr>
+        <tr>
+            <th></th>
+            <th>MONDAY</th>
+            <th>TUESDAY</th>
+            <th>WEDNESDAY</th>
+            <th>THURSDAY</th>
+            <th>FRIDAY</th>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="slotsForDay in slotsForWeek">
-                <td>{{slotTimes[$index]}}</td>
-                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}">
-                    <input type="checkbox" ng-model="slot.available">
-                    <p ng-show="slot.available">AVAILABLE</p>
-                    <p ng-hide="slot.available">BUSY</p>
-                </td>
-            </tr>
+        <tr ng-repeat="slotsForDay in slotsForWeek">
+            <td>{{slotTimes[$index]}}</td>
+            <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}">
+                <input type="checkbox" ng-model="slot.available">
+                <p ng-show="slot.available">AVAILABLE</p>
+                <p ng-hide="slot.available">BUSY</p>
+            </td>
+        </tr>
         </tbody>
     </table>
     <button type="button" ng-click="updateSlots()">SUBMIT SLOTS</button>
@@ -43,6 +52,10 @@
         }
         .available-slot {
             background-color: #87D37C;
+        }
+
+        .navigate {
+             display: inline;
         }
 
     </style>
