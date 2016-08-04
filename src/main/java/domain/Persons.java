@@ -19,6 +19,21 @@ public class Persons {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Persons(String email, String firstName, String lastName, Boolean isDev, Boolean isTest, Boolean isWeb, Integer bandLevel) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = null;
+        this.admin = false;
+        this.isDev = isDev;
+        this.isTest = isTest;
+        this.isWeb = isWeb;
+        this.bandLevel = bandLevel;
+        this.activationCode = null;
+        this.active = true;
+        this.slotsList = null;
+    }
+
     @NotNull
     private String email;
 

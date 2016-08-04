@@ -6,6 +6,7 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.hibernate.validator.constraints.NotEmpty;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,8 +31,16 @@ public class PersonResources {
 
     @POST
     @Path("/create")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @UnitOfWork
-    public Response createPerson(Persons person) {
+    public Response createPerson(@FormParam("email") @NotEmpty String email,
+                                 @FormParam("firstname") @NotEmpty String firstName,
+                                 @FormParam("lastname") @NotEmpty String lastName,
+                                 @FormParam("isdev") Boolean isDev,
+                                 @FormParam("istest") Boolean isTest,
+                                 @FormParam("isweb") Boolean isWeb,
+                                 @FormParam("bandlevel") Integer bandLevel) {
+        Persons person = new Persons(email, firstName, lastName, isDev, isTest, isWeb, bandLevel);
         personsDao.create(person);
         return Response.status(Response.Status.CREATED).build();
     }
