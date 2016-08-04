@@ -67,7 +67,7 @@
 }
 
 .cell-last-column {
-    border-right: 3px dotted deepskyblue !important;
+    border-right: 4px solid dodgerblue !important;
     margin-right: 50px;
 }
 
@@ -85,4 +85,9 @@
     cursor: pointer;
     border: 2px solid dodgerblue;
     text-align: center;
+}
+
+.my-timetable th:first-child, .my-timetable .person-name, .my-timetable .big-header, .my-timetable .tiny-header:nth-of-type(18n+1) {
+    border-right: 4px solid dodgerblue;
+
 }
