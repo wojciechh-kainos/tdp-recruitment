@@ -33,7 +33,7 @@ public class PersonResources {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @UnitOfWork
-    public Response createPerson(@FormParam("email") @NotEmpty String email,
+    public String createPerson(@FormParam("email") @NotEmpty String email,
                                  @FormParam("firstname") @NotEmpty String firstName,
                                  @FormParam("lastname") @NotEmpty String lastName,
                                  @FormParam("isdev") Boolean isDev,
@@ -42,7 +42,8 @@ public class PersonResources {
                                  @FormParam("bandlevel") Integer bandLevel) {
         Persons person = new Persons(email, firstName, lastName, isDev, isTest, isWeb, bandLevel);
         personsDao.create(person);
-        return Response.status(Response.Status.CREATED).build();
+
+        return "Interviewer created";
     }
 
     @GET
