@@ -30,7 +30,7 @@ define(['angular'
             url: "/recruiter",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-table.html",
+                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-table.html",
                     controller: "tdprWeekTableController"
                 }
             }
