@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+}
+
+#content {
+    /* Margin bottom by footer height */
+    min-height: 100%;
+    padding-bottom: 80px;
+}
+
+footer {
+    position: relative;
+    margin-top: -60px;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+    clear: both;
+    padding-top: 10px;
+}
+
+.content {
+    overflow: auto;
+    max-height: 75vh;
+}
+
+html {
+    background: #f9f9f9;
+    font-family: 'Roboto Condensed';
+}
+
+h1 {
+    width: 100%;
+    margin-bottom: 0;
+    color: #2cab54;
+}
+
+h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #aaa;
+    font-size: 0.9em;
+    color: #808080;
+}
