@@ -10,4 +10,6 @@
     <include file="changelogs/initialPopulateTables.xml"/>
     <include file="changelogs/initialChangeEndName.xml"/>
     <include file="changelogs/initialChangeColumnDayNameInSlots.xml"/>
+    <include file="changelogs/initialPopulatePersonsTable.xml"/>
+    <include file="changelogs/initialPopulateSlotsTable.xml"/>
 </databaseChangeLog>

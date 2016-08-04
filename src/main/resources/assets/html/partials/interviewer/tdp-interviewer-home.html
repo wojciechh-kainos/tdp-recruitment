@@ -1,0 +1,49 @@
+
+<div class="container">
+
+    <h1>YOUR AVAILABILITY</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>MONDAY</th>
+                <th>TUESDAY</th>
+                <th>WEDNESDAY</th>
+                <th>THURSDAY</th>
+                <th>FRIDAY</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="slotsForDay in slotsForWeek">
+                <td>{{slotTimes[$index]}}</td>
+                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}">
+                    <input type="checkbox" ng-model="slot.available">
+                    <p ng-show="slot.available">AVAILABLE</p>
+                    <p ng-hide="slot.available">BUSY</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" ng-click="updateSlots()">SUBMIT SLOTS</button>
+
+    <style>
+        h1 {
+            font-size: 48px;
+        }
+        .container {
+            text-align: center;
+        }
+        table {
+            display: inline-block;
+        }
+
+        table, td, tr {
+            border: 1px solid black;
+        }
+        .available-slot {
+            background-color: #87D37C;
+        }
+
+    </style>
+</div>

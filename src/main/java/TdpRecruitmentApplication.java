@@ -1,3 +1,4 @@
+import Resources.SlotsResource;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
@@ -49,21 +50,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
         module.setSessionFactory(hibernateBundle.getSessionFactory());
-
-//        environment.jersey().register(guiceBundle.getInjector().getInstance(TdpInvestUnitResource.class));
-
-//        TdpIAuthenticator authenticator = new UnitOfWorkAwareProxyFactory(hibernateBundle).create(TdpIAuthenticator.class,
-//                TdpIUserDAO.class, guiceBundle.getInjector().getInstance(TdpIUserDAO.class));
-
-//        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<TdpIUser>()
-//                .setAuthenticator(authenticator)
-//                .setAuthorizer(guiceBundle.getInjector().getInstance(TdpIAuthorizer.class))
-//                .setUnauthorizedHandler(new TdpIUnauthorizedHandler())
-//                .buildAuthFilter()));
-
-//        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(TdpIUser.class));
-//        environment.jersey().register(RolesAllowedDynamicFeature.class);
-
+        environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
 
     }
 
