@@ -24,7 +24,7 @@ public class Slots {
     private Date slotsDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person")
     private Persons person;
 

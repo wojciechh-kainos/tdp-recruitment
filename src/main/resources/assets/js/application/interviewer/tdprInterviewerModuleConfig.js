@@ -9,7 +9,7 @@ define(['angular' 
                 abstract: true ,
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", { 
-                url: "/home", 
+                url: "/home/{id}", 
                 views: { 
                     "@": { 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
