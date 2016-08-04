@@ -33,25 +33,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         });
     }
 
-
-    $scope.updateSlots = function() {
-        var slots = [];
-        for (var i = 0; i < $scope.slotsForWeek.length; i++) {
-            for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                if ($scope.slotsForWeek[i][j].available) {
-                    var slot = {
-                        slotsDate: getDayOfTheWeek(new Date(), j),
-                        person: {id: 1},
-                        slot: {id: i + 1},
-                        type: {id: 1}
-                    }
-                    slots.push(slot);
-                }
-            }
-        }
-        //tdprSlotsService.updateSlots(slots, id, getDayOfTheWeek(new Date(), 0), getDayOfTheWeek(new Date(), 4));
-    };
-
     getSlots(id);
 
   });

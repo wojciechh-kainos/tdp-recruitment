@@ -2,7 +2,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
     tdprInterviewerModule.service("tdprSlotsService", function($http) {
 
         this.getSlots = function(startDate, endDate, personId) {
-//            return $http.get("/api/slots/week?" + "id=" + personId + "&startDate=04-01-2010&endDate=09-01-2010");
             return $http.get("/api/slots/week?" + "id=" + personId + "&startDate=" + startDate + "&endDate=" + endDate);
         };
 
