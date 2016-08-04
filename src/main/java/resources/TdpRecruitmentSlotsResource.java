@@ -16,13 +16,13 @@ import java.util.List;
 
 @Path("/slots")
 @Produces(MediaType.APPLICATION_JSON)
-public class tdpRecruitmentSlotsResource {
+public class TdpRecruitmentSlotsResource {
 
     private SlotsDao slotsDao;
     private PersonsDao personsDao;
 
     @Inject
-    public tdpRecruitmentSlotsResource(SlotsDao slotsDao, PersonsDao personsDao) {
+    public TdpRecruitmentSlotsResource(SlotsDao slotsDao, PersonsDao personsDao) {
         this.slotsDao = slotsDao;
         this.personsDao = personsDao;
     }
