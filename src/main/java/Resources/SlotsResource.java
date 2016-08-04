@@ -3,6 +3,7 @@ package Resources;
 /**
  * Created by remigiuszk on 03/08/16.
  */
+
 import dao.SlotsDao;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
