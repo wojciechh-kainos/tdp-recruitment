@@ -59,7 +59,7 @@ public class PersonsDaoTest extends BaseTest {
 
         getSession().beginTransaction();
         personFromDb = personsDao.getById(personId);
-        getSession().getTransaction().commit(); //asdasdasdasdasd przesunac na koniec
+        getSession().getTransaction().commit();
 
         assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
         assertEquals("New person slots list should contain ids of all slots.", person.getSlotsList().size(), personFromDb.getSlotsList().size());
