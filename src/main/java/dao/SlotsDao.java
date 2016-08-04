@@ -16,16 +16,29 @@ public class SlotsDao extends AbstractDAO<Slots> {
         super(sessionFactory);
     }
 
-    public Slots findById(Long id){
+    public Slots findById(Long id) {
         return get(id);
     }
 
-    public long create(Slots slot){
+    public long create(Slots slot) {
         return persist(slot).getId();
     }
 
     public void deleteById(Long id) {
         namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
+    }
+
+    public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
+        namedQuery("Slots.deleteForPersonBetweenDates")
+                .setParameter("personId", personId)
+                .setDate("fromDate", from)
+                .setDate("toDate", to)
+                .executeUpdate();
+    }
+
+    public void updateForPersonAndWeek(Slots[] slots, Long personId, Date from, Date to) {
+        deleteForPersonBetweenDates(personId, from, to);
+        for (Slots slot : slots) persist(slot);
     }
 
     public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {

@@ -8,11 +8,13 @@ import java.sql.Date;
 @Entity
 @Table(name = "slots")
 @NamedQueries({
-        @NamedQuery(name = "Slots.delete", query = "delete from Slots where id = :id"),
+        @NamedQuery(name = "Slots.delete",
+                query = "delete from Slots where id = :id"),
         @NamedQuery(name = "Slots.getForPersonForWeek", query = "select s from Slots s" +
-                " where (s.slotsDate between :startDate and :endDate) and (s.person.id = :personId)")
+                " where (s.slotsDate between :startDate and :endDate) and (s.person.id = :personId)"),
+        @NamedQuery(name = "Slots.deleteForPersonBetweenDates",
+                query = "delete from Slots where person.id = :personId and slotsDate between :fromDate and :toDate")
 })
-
 public class Slots {
 
     @Id
