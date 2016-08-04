@@ -2,12 +2,14 @@ package daoTests;
 
 import databaseHelper.BaseTest;
 import domain.SlotsTimes;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Time;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class SlotsTimesDaoTest extends BaseTest{
 
     @Test

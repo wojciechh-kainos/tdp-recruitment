@@ -1,0 +1,15 @@
+#!groovy
+
+node {
+    stage 'checkout'
+    checkout scm
+
+    stage 'assemble'
+    sh 'gradle assemble'
+
+    stage 'test'
+    sh 'gradle test'
+
+    stage 'migrate'
+    sh 'gradle migrate'
+}
