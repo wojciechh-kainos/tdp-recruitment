@@ -20,6 +20,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
         });
 
-        $scope.startDateWeek = new Date("2016-08-01");
+        $scope.startDateWeek = personsService.getCurrentWeek();
     })
 });

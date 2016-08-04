@@ -10,31 +10,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             },
             link: function (scope, element, attributes) {
                 scope.activePerson = null;
-                scope.AvailabilityEnum = Object.freeze(
-                    {
-                        unavailable: {
-                            priority: 1,
-                            name: "unavailable",
-                            className: "cell-avail-unavailable",
-                            tooltipText: "unavailable "
-                        },
-                        available: {
-                            priority: 2,
-                            name: "available",
-                            className: "cell-avail-available",
-                            tooltipText: "available "
-                        },
-                        init: {priority: 3, name: "init", className: "cell-avail-init", tooltipText: "init call"},
-                        full: {priority: 4, name: "full", className: "cell-avail-full", tooltipText: "full "}
-                    });
 
                 /* Returns sorted rows for table */
                 function _returnTableRows(checkArray) {
                     var array = {};
 
-                    if (scope.activePerson !== null) {
-
-                    }
+                    // Possibly add here check for job profile
 
                     for (var i = 0; i < checkArray.length; i++) {
                         array[checkArray[i].person.id] = checkArray[i];

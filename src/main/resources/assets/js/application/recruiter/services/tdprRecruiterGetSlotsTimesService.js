@@ -3,7 +3,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         var service = {};
         var data = {};
 
-        function getFormatedSlots (slots) {
+        function getFormattedSlots (slots) {
             var array = {};
 
             for(var i=0; i<slots.length; i++) {
@@ -19,12 +19,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.getSlotsTimes = function(){
             return $http.get('/api/slots_times/all').then(function(response){
-                data = getFormatedSlots(response.data);
+                data = getFormattedSlots(response.data);
                 return response.data;
             },
             function(error){
-                console.log(error);
-                console.log("get slots times failed");
                 return $q.reject(error.message);
             });
         };

@@ -1,13 +1,16 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('personsService', function ($http, dateFilter) {
         var persons;
-        
+        var weekStart;
+        var weekEnd;
+        var currentDay = new Date();
+
         this.fetchPersons = function(){
             var format = 'yyyy-MM-dd';
 
-            var now = new Date();
-            var weekStart = new Date();
-            var weekEnd = new Date();
+            var now = currentDay;
+            weekStart = new Date();
+            weekEnd = new Date();
 
             weekStart.setDate(now.getDate() - now.getDay() + 1);
             weekEnd.setDate(now.getDate() + (7 - now.getDay()));
@@ -17,10 +20,13 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                     return response;
                 },
                 function (error) {
-                    console.log(error);
                     return error;
                 }
             )
+        };
+
+        this.getCurrentWeek = function() {
+            return new Date(new Date(new Date(weekStart.setHours(2)).setMinutes(0)).setSeconds(0));
         };
 
         this.getPersons = function () {
