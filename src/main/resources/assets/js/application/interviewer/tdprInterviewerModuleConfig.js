@@ -18,7 +18,7 @@ define(['angular' 
                 }
             }); 
 
-          $urlRouterProvider.otherwise("/interviewer/home");
+          $urlRouterProvider.otherwise("/interviewer/home/1");
         }); 
 
     return tdprInterviewerModule; 
