@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("personsDirective", function () {
+    tdprRecruiterModule.directive("personsDirective", function (JobProfileEnum) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-persons.html',
@@ -20,16 +20,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     // Possibly add here check for job profile
 
                     for (var i = 0; i < checkArray.length; i++) {
-                    var type;
-                    if(scope.jobProfile == "dev"){
-                        type = "isDev";
-                    }
-                    if(scope.jobProfile == "web"){
-                        type = "isWeb";
-                    }
-                    if(scope.jobProfile == "test"){
-                        type = "isTest";
-                    }
+                    var type = JobProfileEnum[scope.jobProfile];
                         if(checkArray[i].person[type] == true)
                         array[checkArray[i].person.id] = checkArray[i];
                     }

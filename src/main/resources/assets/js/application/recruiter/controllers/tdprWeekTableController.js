@@ -13,7 +13,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.timeData = {};
 
 
-        $scope.jobProfile = "web";
+        $scope.jobProfile = "test";
         personsData.then(function () {
             $scope.staticData = personsService.getPersons();
         });
