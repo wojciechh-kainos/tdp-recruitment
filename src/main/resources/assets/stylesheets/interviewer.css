@@ -1,0 +1,32 @@
+ h1 {
+    font-size: 48px;
+}
+.container {
+    text-align: center;
+}
+table {
+    display: inline-block;
+}
+
+table, td, tr {
+    border: 1px solid black;
+}
+.available-slot {
+    background-color: #87D37C;
+}
+.availability-table tbody td, .availability-table thead th{
+    width: 120px;
+    height: 30px;
+}
+.availability-table th{
+    text-align: center;
+        border: 2px solid black;
+
+}
+.slotTime{
+    font-weight: bold;
+    font-size: 18px;
+    border: 2px solid black;
+    background-color: #89C4F4;
+
+}
