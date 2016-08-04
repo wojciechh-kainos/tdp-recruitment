@@ -21,6 +21,13 @@ define(['angular'
                     controller: "tdprWeekTableController"
                 }
             }
+        }).state("tdpr.recruiter.add", {
+            url: "/add",
+            views: {
+                "main@recruiter": {
+                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html"
+                }
+            }
         })
     });
     return tdprRecruiterModule;
