@@ -5,7 +5,7 @@ import domain.Slots;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class SlotsDao extends AbstractDAO<Slots> {
@@ -30,8 +30,8 @@ public class SlotsDao extends AbstractDAO<Slots> {
     public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
         namedQuery("Slots.deleteForPersonBetweenDates")
                 .setParameter("personId", personId)
-                .setParameter("fromDate", from)
-                .setParameter("toDate", to)
+                .setDate("fromDate", from)
+                .setDate("toDate", to)
                 .executeUpdate();
     }
 
