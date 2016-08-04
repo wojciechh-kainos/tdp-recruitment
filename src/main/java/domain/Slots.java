@@ -10,7 +10,7 @@ import java.sql.Date;
 @NamedQueries({
         @NamedQuery(name = "Slots.delete",
                 query = "delete from Slots where id = :id"),
-        @NamedQuery(name = "Slots.deleteWeek",
+        @NamedQuery(name = "Slots.deleteForPersonBetweenDates",
                 query = "delete from Slots where person = :personId and slotsDate between :fromDate and :toDate")
 })
 public class Slots {

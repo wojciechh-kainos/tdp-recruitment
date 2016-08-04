@@ -27,8 +27,8 @@ public class SlotsDao extends AbstractDAO<Slots> {
         namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
     }
 
-    public void deleteForPersonAndWeek(Long personId, Date from, Date to) {
-        namedQuery("Slots.deleteWeek")
+    public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
+        namedQuery("Slots.deleteForPersonBetweenDates")
                 .setParameter("personId", personId)
                 .setParameter("fromDate", from)
                 .setParameter("toDate", to)
@@ -36,7 +36,7 @@ public class SlotsDao extends AbstractDAO<Slots> {
     }
 
     public void updateForPersonAndWeek(List<Slots> slots, Long personId, Date from, Date to) {
-        deleteForPersonAndWeek(personId, from, to);
+        deleteForPersonBetweenDates(personId, from, to);
         slots.forEach(this::persist);
     }
 }
