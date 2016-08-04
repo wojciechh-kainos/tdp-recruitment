@@ -8,13 +8,14 @@ import domain.SlotsTimes;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Date;
 
 import static junit.framework.TestCase.assertTrue;
 
-
+@Ignore
 public class SlotsDaoTest extends BaseTest{
 
 
