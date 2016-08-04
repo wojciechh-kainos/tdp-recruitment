@@ -1,3 +1,3 @@
-define(['angular', 'uiRouter'], function(angular) {
-    return angular.module("tdprRecruiterModule", ['ui.router']);
+define(['angular', 'uiRouter', 'ui-bootstrap'], function(angular) {
+    return angular.module("tdprRecruiterModule", ['ui.router', 'ui.bootstrap']);
 });

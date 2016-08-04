@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "requirejs": "^2.2.0"
+  },
   "devDependencies": {
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
