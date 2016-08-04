@@ -33,7 +33,6 @@ public class Slots {
     @JoinColumn(name = "slot")
     private SlotsTimes slot;
 
-
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type")
