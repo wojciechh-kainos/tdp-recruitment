@@ -53,8 +53,8 @@ public class Persons {
 
     private Boolean active;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
-//    private Set<Slots> slotsList = new HashSet<Slots>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private Set<Slots> slotsList = new HashSet<Slots>();
 
 
     public Persons() {
@@ -156,12 +156,12 @@ public class Persons {
         this.activationCode = activationCode;
     }
 
-//    public Set<Slots> getSlotsList() {
-//        return slotsList;
-//    }
-//
-//    public void setSlotsList(Set<Slots> slotsList) {
-//        this.slotsList = slotsList;
-//    }
+    public Set<Slots> getSlotsList() {
+        return slotsList;
+    }
+
+    public void setSlotsList(Set<Slots> slotsList) {
+        this.slotsList = slotsList;
+    }
 
 }
