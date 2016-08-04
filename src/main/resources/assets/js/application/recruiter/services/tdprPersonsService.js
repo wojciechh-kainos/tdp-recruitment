@@ -1,5 +1,5 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('personsService', function ($http, dateFilter) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter) {
         var persons;
         var weekStart;
         var weekEnd;
