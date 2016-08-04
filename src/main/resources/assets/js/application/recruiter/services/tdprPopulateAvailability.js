@@ -7,6 +7,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             var day;
             var slotId;
 
+            var nameText = person.person.firstName + " " + person.person.lastName;
+
             for (var slotKey in person.slots) {
                 if (!person.slots.hasOwnProperty(slotKey)) continue;
                 day = new Date(person.slots[slotKey].day);
@@ -21,7 +23,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 var available = person.slots[slotKey].type ? person.slots[slotKey].type : "unavailable";
                 var type = AvailabilityEnum[available];
 
-                slotDayLists[day][slotId] = {type: person.slots[slotKey].type, tooltipText: type.tooltipText};
+                slotDayLists[day][slotId] = {
+                    type: person.slots[slotKey].type,
+                    tooltipText: nameText + ", " + type.tooltipText
+                };
             }
 
             var index = 0;
@@ -54,7 +59,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 // Add empty record to array with slot id and date
-                array.push({slotId: timeElements[timeKey].slotId, day: day, index: index++});
+                array.push({slotId: timeElements[timeKey].slotId, day: day, index: index++, tooltipText: nameText});
             }
 
             return array;
