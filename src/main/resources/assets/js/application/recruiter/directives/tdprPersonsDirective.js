@@ -46,10 +46,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 function _refreshList(table) {
-                    console.log(table);
-
                     scope.peopleList = _returnTableRows(table);
-                    console.log(scope.peopleList);
                 }
 
                 function _init() {
@@ -58,7 +55,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 function _changeJobProfile(newValue){
-                    console.log(newValue);
                     scope.jobProfile = newValue;
                 }
 
