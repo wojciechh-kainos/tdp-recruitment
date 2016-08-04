@@ -20,6 +20,7 @@ require.config({
         'angularMocks': 'lib/angular-mocks/angular-mocks',
         'uiRouter': 'lib/angular-ui-router/release/angular-ui-router',
         'requireJS': 'lib/requirejs/require',
+        'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
         'karma-requireJS': 'lib/karma-require'
 
     },
@@ -28,6 +29,7 @@ require.config({
             exports: 'angular'
         },
         'angularMocks': ['angular'],
+        'ui-bootstrap': ['angular'],
         'uiRouter': ['angular']
     },
     // dynamically load all test files
