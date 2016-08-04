@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/recruiter/services/personsService'], function (angular) {
+define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsService'], function (angular) {
     describe('personsService', function () {
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
@@ -6,9 +6,9 @@ define(['angular', 'angularMocks', 'application/recruiter/services/personsServic
         var service;
         var data = [2, 2];
 
-        beforeEach(inject(function (_personsService_, _$httpBackend_) {
+        beforeEach(inject(function (_tdprPersonsService_, _$httpBackend_) {
             $httpBackend = _$httpBackend_;
-            service = _personsService_;
+            service = _tdprPersonsService_;
         }));
 
         describe('fetchPersons', function () {

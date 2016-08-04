@@ -5,22 +5,22 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/directives/tdprTableDirective'
     , 'application/recruiter/directives/tdprFilterDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
-    , 'application/recruiter/services/personsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, personsService) {
+    , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService) {
         var slotsData = tdprRecruiterGetSlotsTimesService.getSlotsTimes();
-        var personsData = personsService.fetchPersons();
+        var personsData = tdprPersonsService.fetchPersons();
 
         $scope.staticData = [];
         $scope.timeData = {};
 
         personsData.then(function () {
-            $scope.staticData = personsService.getPersons();
+            $scope.staticData = tdprPersonsService.getPersons();
         });
 
         slotsData.then(function () {
             $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
         });
 
-        $scope.startDateWeek = personsService.getCurrentWeek();
+        $scope.startDateWeek = tdprPersonsService.getCurrentWeek();
     })
 });

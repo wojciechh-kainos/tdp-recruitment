@@ -16,7 +16,7 @@ node {
     stage 'test'
     sh 'gradle test'
 
-//    stage 'karma test'
-//    sh './node_modules/karma/bin/karma start karma.conf.js'
+    stage 'karma test'
+    sh './node_modules/karma/bin/karma start karma.conf.js'
 
 }

@@ -63,9 +63,4 @@ public class PersonResources {
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
-
-
-
-
 }

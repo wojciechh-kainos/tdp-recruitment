@@ -13,12 +13,12 @@ import java.util.List;
 
 @Path("/slots_times")
 @Produces(MediaType.APPLICATION_JSON)
-public class GetSlotsTimesResource {
+public class SlotsTimesResource {
 
     private SlotsTimesDao slotsTimesDao;
 
     @Inject
-    public GetSlotsTimesResource(SlotsTimesDao slotsTimesDao) {
+    public SlotsTimesResource(SlotsTimesDao slotsTimesDao) {
         this.slotsTimesDao = slotsTimesDao;
     }
 
