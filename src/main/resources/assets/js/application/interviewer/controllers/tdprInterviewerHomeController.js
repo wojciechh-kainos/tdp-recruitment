@@ -2,14 +2,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
   tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter) {
     $scope.slotTimes = ["9.00-9.30", "9.30-10.00", "10.00-10.30", "10.30-11.00", "11.00-11.30", "11.30-12.00", "12.00-12.30",
      "12.30-13.00", "13.00-13.30", "13.30-14.00", "14.00-14.30", "14.30-15.00", "15.00-15.30", "15.30-16.00", "16.00-16.30","16.30-17.00", "17.00-17.30", "17.30-18.00"];
-//    $scope.slotsForWeek=[[false,true,true,true,false],
-//    [false,true,true,true,false],
-//    [false,true,true,true,false],
-//    [false,true,true,true,false]
-//    ];
-
-
-    var weekDayMap = {"Mon":0, "Tue":1, "Wed":2, "Thu":3, "Fri":4};
 
     var slotsForWeek = new Array(18);
     for(var i=0; i<slotsForWeek.length; i++){
@@ -19,28 +11,28 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         }
     };
 
+      function getDayOfTheWeek(d, i) {
+          var day = d.getDay(),
+              diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+          return new Date(d.setDate(diff+i)); //i = 0 - monday
+      }
+
     var getSlots = function(personId) {
-//        var startDate = $filter('date')(getMonday(new Date()), "dd-MM-yyyy");
-//        var endDate = $filter('date')(getMonday(new Date()), "dd-MM-yyyy");
-        var startDate = "01-08-2016";
-        var endDate = "06-08-2016";
-         tdprSlotsService.getSlots(startDate, endDate, personId).then(function(response){
+        var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
+        var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+
+        tdprSlotsService.getSlots(startDate, endDate, personId).then(function(response){
 
             for(var slot in response.data){
-            var dayNumber;
-                for(day in weekDayMap){
-                    if ($filter('date')(slot.day, "EEE")===day){
-                        slotsForWeek[slot.id-1][weekDayMap[day]] = true;
-                    }
-                }
-
+                slotsForWeek[response.data[slot].slot.id-1][new Date(response.data[slot].slotsDate).getDay() - 1] = true;
             }
-          
+
             $scope.slotsForWeek = slotsForWeek;
 
         });
     }
 
     getSlots(1);
+
   });
 });
