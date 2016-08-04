@@ -50,4 +50,20 @@ public class tdpRecruitmentSlotsResource {
 
         return Response.status(Response.Status.CREATED).build();
     }
+    
+    @GET
+    @Path("/week")
+    @UnitOfWork
+    public List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
+                                  @QueryParam("startDate") String startDate,
+                                  @QueryParam("endDate") String endDate) throws ParseException {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        Date start = formatter.parse(startDate);
+        Date end = formatter.parse(endDate);
+
+        List<Slots> list = dao.getForPersonForWeek(id, start, end);
+        return list;
+    }
 }
