@@ -6,75 +6,83 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <property name="lastMonday" value="date_trunc('week', now())" dbms="postgresql"/>
+
     <changeSet id="10" author="radoslawl">
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-04"/>
+            <column name="slots_date" valueComputed="${lastMonday}"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-05"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '1' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '2' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '2' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="2"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '3' day"/>
+            <column name="person" value="1"/>
+            <column name="slot" value="2"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slots">
+            <column name="slots_date" valueComputed="${lastMonday} + interval '4' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="4"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-07"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '7' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-08"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '8' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-08"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '9' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="2"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-11"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '10' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-12"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '11' day"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '14' day"/>
             <column name="person" value="2"/>
             <column name="slot" value="1"/>
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2010-01-06"/>
+            <column name="slots_date" valueComputed="${lastMonday} + interval '15' day"/>
             <column name="person" value="2"/>
             <column name="slot" value="2"/>
             <column name="type" value="1"/>
