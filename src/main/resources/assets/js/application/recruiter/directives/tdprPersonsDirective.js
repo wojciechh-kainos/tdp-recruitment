@@ -37,20 +37,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     }
 
                     for (var i = 0; i < checkArray.length; i++) {
-                        var childrenCount = checkArray[i].children.length;
-
-                        if (childrenCount > 0) {
-                            for (var j = 0; j < childrenCount; j++) {
-
-                                if (checkArray[i].children[j].length > 0) {
-                                    array[checkArray[i].children[j].id] = _returnTableRows(checkArray[i].children[j]);
-                                } else {
-                                    array[checkArray[i].children[j].id] = checkArray[i].children[j];
-                                }
-                            }
-                        } else {
-                            array[checkArray[i].id] = checkArray[i];
-                        }
+                        array[checkArray[i].person.id] = checkArray[i];
                     }
 
                     return array;
@@ -75,7 +62,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
                 function _refreshList(table) {
                     scope.peopleList = _returnTableRows(table);
-
                 }
 
                 function _init() {

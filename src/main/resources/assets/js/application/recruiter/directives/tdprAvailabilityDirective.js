@@ -22,7 +22,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     }
 
                     if (scope.activePerson !== null) {
-                        if (scope.$parent.person.id == scope.$parent.$parent.activePerson.id) {
+                        if (scope.$parent.person.person.id == scope.$parent.$parent.activePerson.person.id) {
                             element.addClass("cell-selected");
                         }
                     }
