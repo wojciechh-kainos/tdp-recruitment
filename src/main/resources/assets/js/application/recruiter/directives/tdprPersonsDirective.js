@@ -9,7 +9,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 startWeekDay: '='
             },
             link: function (scope, element, attributes) {
+
                 scope.activePerson = null;
+                scope.jobProfile = "";
 
                 /* Returns sorted rows for table */
                 function _returnTableRows(checkArray) {
@@ -18,6 +20,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     // Possibly add here check for job profile
 
                     for (var i = 0; i < checkArray.length; i++) {
+                    var type;
+                    if(scope.jobProfile == "dev"){
+                        type = "isDev";
+                    }
+                    if(scope.jobProfile == "web"){
+                        type = "isWeb";
+                    }
+                    if(scope.jobProfile == "test"){
+                        type = "isTest";
+                    }
+                        if(checkArray[i].person[type] == true)
                         array[checkArray[i].person.id] = checkArray[i];
                     }
 
@@ -50,12 +63,20 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     scope.changeActive = _changeActive;
                 }
 
+                function _changeJobProfile(newValue){
+                    scope.jobProfile = newValue;
+                }
+
                 scope.$watch('selectedPersonTable', function (newValue, oldValue) {
                     _refreshList(newValue);
                 });
 
                 scope.$parent.$watch('startWeekDay', function (newValue, oldValue) {
                     _init();
+                });
+
+                scope.$parent.$parent.$watch('jobProfile', function (newValue, oldValue) {
+                    _changeJobProfile(newValue);
                 });
             }
         };
