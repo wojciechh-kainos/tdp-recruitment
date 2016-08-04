@@ -17,15 +17,15 @@
         <tbody>
             <tr ng-repeat="slotsForDay in slotsForWeek">
                 <td>{{slotTimes[$index]}}</td>
-                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot}">
-                    <input type="checkbox" ng-model="slot" >
-                    <p ng-show="slot">AVAILABLE</p>
-                    <p ng-hide="slot">BUSY</p>
+                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}">
+                    <input type="checkbox" ng-model="slot.available"">
+                    <p ng-show="slot.available">AVAILABLE</p>
+                    <p ng-hide="slot.available">BUSY</p>
                 </td>
             </tr>
         </tbody>
     </table>
-    <button type="button" ng-click="submit()">SUBMIT SLOTS</button>
+    <button type="button" ng-click="updateSlots()">SUBMIT SLOTS</button>
 
     <style>
         h1 {

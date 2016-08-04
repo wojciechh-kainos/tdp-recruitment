@@ -5,11 +5,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
 
     var id = $stateParams.id;
 
-    var slotsForWeek = new Array(18);
-    for(var i=0; i<slotsForWeek.length; i++){
-            slotsForWeek[i]=new Array(5);
-        for(var j=0; j<slotsForWeek[i].length; j++){
-            slotsForWeek[i][j] = false;
+    $scope.slotsForWeek = new Array(18);
+    for(var i=0; i<$scope.slotsForWeek.length; i++){
+            $scope.slotsForWeek[i]=new Array(5);
+        for(var j=0; j<$scope.slotsForWeek[i].length; j++){
+            $scope.slotsForWeek[i][j] = {available: false};
         }
     };
 
@@ -26,18 +26,20 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         tdprSlotsService.getSlots(startDate, endDate, personId).then(function(response){
 
             for(var slot in response.data){
-                slotsForWeek[response.data[slot].slot.id-1][new Date(response.data[slot].slotsDate).getDay() - 1] = true;
+                $scope.slotsForWeek[response.data[slot].slot.id-1][new Date(response.data[slot].slotsDate).getDay() - 1].available = true;
             }
 
-            $scope.slotsForWeek = slotsForWeek;
 
         });
     }
-    var updateSlots = function() {
+
+
+    $scope.updateSlots = function() {
+        console.log($scope.slotsForWeek);
         var slots = [];
-        for (var i = 0; i < slotsForWeek.length; i++) {
-            for (var j = 0; j < slotsForWeek[i].length; j++) {
-                if (slotsForWeek[i][j]) {
+        for (var i = 0; i < $scope.slotsForWeek.length; i++) {
+            for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
+                if ($scope.slotsForWeek[i][j].available) {
                     var slot = {
                         slotsDate: getDayOfTheWeek(new Date(), j),
                         person: {id: 1},
@@ -48,7 +50,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                 }
             }
         }
-        tdprSlotsService.updateSlots(slots, personId, getDayOfTheWeek(new Date(), 0), getDayOfTheWeek(new Date(), 4));
+        console.log(slots);
+        //tdprSlotsService.updateSlots(slots, id, getDayOfTheWeek(new Date(), 0), getDayOfTheWeek(new Date(), 4));
     };
 
     getSlots(id);
