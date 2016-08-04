@@ -4,7 +4,7 @@ define(['angular'
     module.config(function($stateProvider) {
         $stateProvider
             .state("tdpr", {
-                abstract: true,
+                abstract: true
             });
 
     });

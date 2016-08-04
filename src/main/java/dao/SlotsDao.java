@@ -1,6 +1,7 @@
 package dao;
 
 import com.google.inject.Inject;
+import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
@@ -15,11 +16,11 @@ public class SlotsDao extends AbstractDAO<Slots> {
         super(sessionFactory);
     }
 
-    public Slots findById(Long id){
+    public Slots findById(Long id) {
         return get(id);
     }
 
-    public long create(Slots slot){
+    public long create(Slots slot) {
         return persist(slot).getId();
     }
 
@@ -38,5 +39,12 @@ public class SlotsDao extends AbstractDAO<Slots> {
     public void updateForPersonAndWeek(Slots[] slots, Long personId, Date from, Date to) {
         deleteForPersonBetweenDates(personId, from, to);
         for (Slots slot : slots) persist(slot);
+    }
+
+    public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
+        return list(namedQuery("Slots.getForPersonForWeek")
+                .setParameter("personId", personId)
+                .setDate("startDate", start)
+                .setDate("endDate", end));
     }
 }

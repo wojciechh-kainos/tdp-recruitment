@@ -6,7 +6,6 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,8 +27,7 @@ public class tdpRecruitmentSlotsResource {
         this.personsDao = personsDao;
     }
 
-
-    @POST
+    @PUT
     @Path("/update/{person_id}/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -50,20 +48,19 @@ public class tdpRecruitmentSlotsResource {
 
         return Response.status(Response.Status.CREATED).build();
     }
-    
+
     @GET
     @Path("/week")
     @UnitOfWork
     public List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
-                                  @QueryParam("startDate") String startDate,
-                                  @QueryParam("endDate") String endDate) throws ParseException {
+                                         @QueryParam("startDate") String startDate,
+                                         @QueryParam("endDate") String endDate) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);
 
-        List<Slots> list = slotsDao.getForPersonForWeek(id, start, end);
-        return list;
+        return slotsDao.getForPersonForWeek(id, start, end);
     }
 }
