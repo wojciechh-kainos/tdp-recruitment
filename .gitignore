@@ -17,3 +17,5 @@ src/main/resources/assets/js/lib/
 .gradle/
 build/
 classes/
+
+.DS_Store
