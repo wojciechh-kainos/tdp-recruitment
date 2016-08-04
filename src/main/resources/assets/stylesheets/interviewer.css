@@ -4,8 +4,9 @@
 .container {
     text-align: center;
 }
-table {
+.availability-table {
     display: inline-block;
+    margin-top: 20px;
 }
 
 table, td, tr {
@@ -29,4 +30,13 @@ table, td, tr {
     border: 2px solid black;
     background-color: #89C4F4;
 
+}
+
+.navigate {
+     display: inline;
+}
+
+#submit-slots{
+    width: 725px;
+    margin: auto;
 }
