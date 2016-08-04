@@ -35,7 +35,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
 
 
     $scope.updateSlots = function() {
-        console.log($scope.slotsForWeek);
         var slots = [];
         for (var i = 0; i < $scope.slotsForWeek.length; i++) {
             for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
@@ -50,7 +49,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                 }
             }
         }
-        console.log(slots);
         //tdprSlotsService.updateSlots(slots, id, getDayOfTheWeek(new Date(), 0), getDayOfTheWeek(new Date(), 4));
     };
 
