@@ -27,8 +27,11 @@ define(['angular'
             className: "cell-avail-init",
             tooltipText: "init call"
         }
-
-    });
+    }).constant('JobProfileEnum', {
+              dev: "isDev",
+              web: "isWeb",
+              test: "isTest"
+          });
 
     return tdprConstantsModule;
 });
