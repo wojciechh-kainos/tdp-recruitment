@@ -12,6 +12,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     _init();
                 });
 
+                scope.$watch("person", function(){
+                    _init();
+                });
+
                 scope.$parent.$parent.$watch("startWeekDay", function () {
                     _init();
                 });
