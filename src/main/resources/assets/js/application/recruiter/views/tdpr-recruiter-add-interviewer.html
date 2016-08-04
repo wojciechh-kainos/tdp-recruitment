@@ -1,42 +1,22 @@
 <h1>Add new interviewer</h1>
 
-<form action="api/person/create" method="post">
-    Email:<br>
-    <input type="text" name="email"><br>
-    First name:<br>
-    <input type="text" name="firstname"><br>
-    Last name:<br>
-    <input type="text" name="lastname"><br><br>
+<form novalidate class="simple-form">
+E-mail: <input type="email" ng-model="person.email" /><br />
+First name: <input type="text" ng-model="person.first_name" /><br />
+Last name: <input type="text" ng-model="person.last_name" /><br />
 
-    Is developer?
-    <select name="isdev">
-        <option value="true">true</option>
-        <option value="false">false</option>
-    </select>
-    <br>
+Deweloper?: <input type="radio" ng-model="person.is_dev" value="true" />tak
+<input type="radio" ng-model="person.is_dev" value="false" />nie<br />
 
-    Is tester?
-    <select name="istest">
-        <option value="true">true</option>
-        <option value="false">false</option>
-    </select>
-    <br>
+Tester?: <input type="radio" ng-model="person.is_test" value="true" />tak
+<input type="radio" ng-model="person.is_test" value="false" />nie<br />
 
-    Is web ops?
-    <select name="isweb">
-        <option value="true">true</option>
-        <option value="false">false</option>
-    </select>
-    <br>
+Web Ops?: <input type="radio" ng-model="person.is_web" value="true" />tak
+<input type="radio" ng-model="person.is_web" value="false" />nie<br />
 
-    Band level:
-    <select name="bandlevel">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-    <br>
-    <input type="submit" value="Submit">
+Band level: <input type="text" ng-model="person.band_level" /><br />
+
+
+<input type="submit" ng-click="create(person)" value="Submit" />
 </form>
+<pre>user = {{person | json}}</pre>

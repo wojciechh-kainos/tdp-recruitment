@@ -31,6 +31,11 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
         this.getPersons = function () {
             return persons;
-        }
+        };
+
+        this.createPerson = function(person){
+            return $http.put("/api/person/create/", person);
+        };
+
     })
 });

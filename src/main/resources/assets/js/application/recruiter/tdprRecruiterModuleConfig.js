@@ -1,6 +1,7 @@
 define(['angular'
     , 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/controllers/tdprWeekTableController'
+    , 'application/recruiter/controllers/tdprAddInterviewerController'
     , 'application/recruiter/services/tdprPersonsService'
 ], function (angular, tdprRecruiterModule) {
 
@@ -25,7 +26,8 @@ define(['angular'
             url: "/add",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html"
+                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html",
+                    controller: "tdprAddInterviewerController"
                 }
             }
         })
