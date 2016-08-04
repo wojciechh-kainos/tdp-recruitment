@@ -22,8 +22,8 @@ define(['angular'
                     controller: "tdprWeekTableController"
                 }
             }
-        }).state("tdpr.recruiter.add", {
-            url: "/add",
+        }).state("tdpr.recruiter.addInterviewer", {
+            url: "/add-interviewer",
             views: {
                 "main@recruiter": {
                     templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html",
