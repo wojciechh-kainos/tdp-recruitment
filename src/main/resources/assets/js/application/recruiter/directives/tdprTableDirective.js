@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("myTimetable", function () {
+    tdprRecruiterModule.directive("myTimetable", function (dateFilter) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-table.html',
@@ -12,6 +12,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             link: function (scope, element, attributes) {
                 var _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                 var daysLength = _days.length;
+                var dateFormat = 'yyyy-MM-dd';
 
                 var timeElementsCount;
                 var previousStartWeekDay;
@@ -59,7 +60,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         /* Advance one day */
                         var time = weekStart.getTime() + (i * 60 * 60 * 24) * 1000;
 
-                        array.push({day: time, dayName: _days[i], dayValue: new Date(time)});
+                        array.push({
+                            day: time,
+                            dayName: _days[i],
+                            dayValue: new Date(time),
+                            dayString: _days[i] + " " + dateFilter(new Date(time), dateFormat)
+                        });
                     }
 
                     return array;
@@ -99,7 +105,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     if (newValue !== undefined) {
                         if (newValue === null) {
                             scope.startWeekDay = previousStartWeekDay;
-                            daysLength = 7;
+                            daysLength = _days.length;
                             _init();
                         } else {
                             daysLength = 1;
