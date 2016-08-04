@@ -41,9 +41,6 @@ public class SlotsResource {
         Date start = formatter.parse(date_from);
         Date end = formatter.parse(date_to);
 
-        Persons person = personsDao.getById(person_id);
-        for (Slots slot : slots) slot.setPerson(person);
-
         slotsDao.updateForPersonAndWeek(slots, person_id, start, end);
 
         return Response.status(Response.Status.CREATED).build();

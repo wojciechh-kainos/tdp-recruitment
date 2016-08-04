@@ -40,7 +40,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                     if ($scope.slotsForWeek[i][j].available) {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j),
-                            person: null,
+                            person: {id: id},
                             slot: {id: i + 1},
                             type: {id: 1}
                         };
