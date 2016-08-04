@@ -35,8 +35,8 @@ public class SlotsDao extends AbstractDAO<Slots> {
                 .executeUpdate();
     }
 
-    public void updateForPersonAndWeek(List<Slots> slots, Long personId, Date from, Date to) {
+    public void updateForPersonAndWeek(Slots[] slots, Long personId, Date from, Date to) {
         deleteForPersonBetweenDates(personId, from, to);
-        slots.forEach(this::persist);
+        for (Slots slot : slots) persist(slot);
     }
 }

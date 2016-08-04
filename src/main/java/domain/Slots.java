@@ -11,7 +11,7 @@ import java.sql.Date;
         @NamedQuery(name = "Slots.delete",
                 query = "delete from Slots where id = :id"),
         @NamedQuery(name = "Slots.deleteForPersonBetweenDates",
-                query = "delete from Slots where person = :personId and slotsDate between :fromDate and :toDate")
+                query = "delete from Slots where person.id = :personId and slotsDate between :fromDate and :toDate")
 })
 public class Slots {
 
