@@ -63,7 +63,7 @@ public class tdpRecruitmentSlotsResource {
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);
 
-        List<Slots> list = dao.getForPersonForWeek(id, start, end);
+        List<Slots> list = slotsDao.getForPersonForWeek(id, start, end);
         return list;
     }
 }
