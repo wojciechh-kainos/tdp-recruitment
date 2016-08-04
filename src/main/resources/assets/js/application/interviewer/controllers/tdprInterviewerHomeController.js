@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function(angular, tdprInterviewerModule) {
-  tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter, $stateParams,$state,$timeout) {
+  tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter, $stateParams,$timeout) {
     $scope.slotTimes = [];
         tdprSlotsService.getSlotsTimes().then(function(response) {
             for(var i = 0; i < response.data.length; i++) {
@@ -68,7 +68,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "dd-MM-yyyy");
             var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function(){
-                            $state.go("tdpr.interviewer.home");
                             $scope.showSubmitSuccess = true;
                             $timeout(function(){$scope.showSubmitSuccess=false;}, 2000);
                         });
