@@ -9,7 +9,6 @@ import io.dropwizard.hibernate.UnitOfWork;
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,21 +28,13 @@ public class PersonResources {
         this.slotsDao = slotsDao;
     }
 
-    @POST
+    @PUT
     @Path("/create")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public String createPerson(@FormParam("email") @NotEmpty String email,
-                                 @FormParam("firstname") @NotEmpty String firstName,
-                                 @FormParam("lastname") @NotEmpty String lastName,
-                                 @FormParam("isdev") Boolean isDev,
-                                 @FormParam("istest") Boolean isTest,
-                                 @FormParam("isweb") Boolean isWeb,
-                                 @FormParam("bandlevel") Integer bandLevel) {
-        Persons person = new Persons(email, firstName, lastName, isDev, isTest, isWeb, bandLevel);
+    public Persons createPerson(Persons person) {
         personsDao.create(person);
-
-        return "Interviewer created";
+        return person;
     }
 
     @GET

@@ -2,21 +2,20 @@
 
 <form novalidate class="simple-form">
 E-mail: <input type="email" ng-model="person.email" /><br />
-First name: <input type="text" ng-model="person.first_name" /><br />
-Last name: <input type="text" ng-model="person.last_name" /><br />
+First name: <input type="text" ng-model="person.firstName" /><br />
+Last name: <input type="text" ng-model="person.lastName" /><br />
 
-Deweloper?: <input type="radio" ng-model="person.is_dev" value="true" />tak
-<input type="radio" ng-model="person.is_dev" value="false" />nie<br />
+Deweloper?: <input type="radio" ng-model="person.isDev" value="true" />tak
+<input type="radio" ng-model="person.isDev" value="false" />nie<br />
 
-Tester?: <input type="radio" ng-model="person.is_test" value="true" />tak
-<input type="radio" ng-model="person.is_test" value="false" />nie<br />
+Tester?: <input type="radio" ng-model="person.isTest" value="true" />tak
+<input type="radio" ng-model="person.isTest" value="false" />nie<br />
 
-Web Ops?: <input type="radio" ng-model="person.is_web" value="true" />tak
-<input type="radio" ng-model="person.is_web" value="false" />nie<br />
+Web Ops?: <input type="radio" ng-model="person.isWeb" value="true" />tak
+<input type="radio" ng-model="person.isWeb" value="false" />nie<br />
 
-Band level: <input type="text" ng-model="person.band_level" /><br />
+Band level: <input type="text" ng-model="person.bandLevel" /><br />
 
 
 <input type="submit" ng-click="create(person)" value="Submit" />
 </form>
-<pre>user = {{person | json}}</pre>
