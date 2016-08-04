@@ -24,6 +24,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 var type = AvailabilityEnum[available];
 
                 slotDayLists[day][slotId] = {
+                    typeName: available.priority,
                     type: person.slots[slotKey].type,
                     tooltipText: nameText + ", " + type.tooltipText
                 };
@@ -49,6 +50,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         array.push({
                             slotId: timeElements[timeKey].slotId,
                             day: day,
+                            typeName: available.priority,
                             type: slotDayLists[day][slotId].type,
                             tooltipText: slotDayLists[day][slotId].tooltipText,
                             index: index++
@@ -59,7 +61,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 // Add empty record to array with slot id and date
-                array.push({slotId: timeElements[timeKey].slotId, day: day, index: index++, tooltipText: nameText});
+                array.push({
+                    slotId: timeElements[timeKey].slotId,
+                    day: day,
+                    index: index++,
+                    tooltipText: nameText
+                });
             }
 
             return array;
