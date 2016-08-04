@@ -8,8 +8,11 @@ import java.sql.Date;
 @Entity
 @Table(name = "slots")
 @NamedQueries({
-        @NamedQuery(name = "Slots.delete", query = "delete from Slots where id = :id")
+        @NamedQuery(name = "Slots.delete", query = "delete from Slots where id = :id"),
+        @NamedQuery(name = "Slots.getForPersonForWeek", query = "select s from Slots s" +
+                " where (s.slotsDate between :startDate and :endDate) and (s.person.id = :personId)")
 })
+
 public class Slots {
 
     @Id
@@ -21,7 +24,7 @@ public class Slots {
     private Date slotsDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person")
     private Persons person;
 
@@ -29,7 +32,6 @@ public class Slots {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "slot")
     private SlotsTimes slot;
-
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)

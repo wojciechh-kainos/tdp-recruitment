@@ -1,3 +1,4 @@
+import Resources.SlotsResource;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
@@ -14,6 +15,10 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import resources.SlotsTimesResource;
 import resources.PersonResources;
+
+import javax.ws.rs.HEAD;
+
+import static org.postgresql.hostchooser.HostRequirement.master;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -53,6 +58,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         module.setSessionFactory(hibernateBundle.getSessionFactory());
         environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResources.class));
         environment.jersey().register(SlotsTimesResource.class);
+        environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
 
 //        TdpIAuthenticator authenticator = new UnitOfWorkAwareProxyFactory(hibernateBundle).create(TdpIAuthenticator.class,
 //                TdpIUserDAO.class, guiceBundle.getInjector().getInstance(TdpIUserDAO.class));

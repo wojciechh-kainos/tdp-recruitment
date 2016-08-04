@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="9" author="radoslawl">
+
+        <insert tableName="persons">
+            <column name="email" value="a@a.com"/>
+            <column name="first_name" value="Marek"/>
+            <column name="last_name" value="Dzik"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="b@b.com"/>
+            <column name="first_name" value="Janek"/>
+            <column name="last_name" value="Smyk"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="c@c.com"/>
+            <column name="first_name" value="Tomek"/>
+            <column name="last_name" value="Zbik"/>
+            <column name="band_level" value="5"/>
+            <column name="active" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="d@d.com"/>
+            <column name="first_name" value="Daniel"/>
+            <column name="last_name" value="Krzyk"/>
+            <column name="band_level" value="4"/>
+            <column name="active" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="e@e.com"/>
+            <column name="first_name" value="Radek"/>
+            <column name="last_name" value="Kwik"/>
+            <column name="band_level" value="2"/>
+            <column name="active" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="f@f.com"/>
+            <column name="first_name" value="Adam"/>
+            <column name="last_name" value="Wzdryg"/>
+            <column name="band_level" value="2"/>
+            <column name="active" value="true"/>
+            <column name="is_web" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="g@g.com"/>
+            <column name="first_name" value="Monika"/>
+            <column name="last_name" value="Apsik"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_web" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="h@h.com"/>
+            <column name="first_name" value="Halina"/>
+            <column name="last_name" value="Miodzik"/>
+            <column name="band_level" value="5"/>
+            <column name="active" value="true"/>
+            <column name="is_web" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="i@i.com"/>
+            <column name="first_name" value="Martyna"/>
+            <column name="last_name" value="Karmik"/>
+            <column name="band_level" value="5"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+            <column name="is_web" value="true"/>
+        </insert>
+        <insert tableName="persons">
+            <column name="email" value="j@j.com"/>
+            <column name="first_name" value="Wladyslaw"/>
+            <column name="last_name" value="Kowalski"/>
+            <column name="band_level" value="3"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+            <column name="is_web" value="true"/>
+            <column name="is_test" value="true"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
