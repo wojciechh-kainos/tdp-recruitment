@@ -50,7 +50,6 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
     @Override
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
         module.setSessionFactory(hibernateBundle.getSessionFactory());
-
         environment.jersey().register(guiceBundle.getInjector().getInstance(TdpRecruitmentSlotsResource.class));
     }
 
