@@ -63,4 +63,13 @@ public class PersonResources {
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @GET
+    @Path("/all1")
+    @UnitOfWork
+    public List fetchAllPersons(){
+        List<Persons> personses = personsDao.findAll();
+        personses.forEach(p -> p.getSlotsList());
+        return personses;
+    }
 }

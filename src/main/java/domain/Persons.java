@@ -1,5 +1,7 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -53,7 +55,8 @@ public class Persons {
 
     private Boolean active;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 
 
