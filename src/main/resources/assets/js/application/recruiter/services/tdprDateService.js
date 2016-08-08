@@ -3,7 +3,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         this.resetDate = function (dateToReset) {
             var date = new Date(dateToReset);
 
-            date.setHours(2);
+            date.setHours(0);
             date.setMinutes(0);
             date.setSeconds(0);
             date.setMilliseconds(0);

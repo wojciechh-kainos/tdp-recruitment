@@ -2,11 +2,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprRecruiterGetSlotsTimesService', ['$http', '$q', function ($http, $q) {
         var service = {};
         var data = {};
+        var slotsTimeElementCount = 0;
 
         function getFormattedSlots (slots) {
             var array = {};
 
-            for(var i=0; i<slots.length; i++) {
+            slotsTimeElementCount = slots.length;
+
+            for(var i=0; i<slotsTimeElementCount; i++) {
                 array[ slots[i].id ] = slots[i];
             }
 
@@ -15,6 +18,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.getSlots = function() {
             return data;
+        };
+
+        service.getSlotsTimesCount = function() {
+            return slotsTimeElementCount;
         };
 
         service.getSlotsTimes = function(){

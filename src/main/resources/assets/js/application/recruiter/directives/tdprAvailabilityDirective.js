@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("availabilityDirective", function (AvailabilityEnum) {
+    tdprRecruiterModule.directive("availabilityDirective", function (AvailabilityEnum, tdprRecruiterGetSlotsTimesService) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-availability.html',
@@ -9,7 +9,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     var available = scope.availabilityObject.type ? scope.availabilityObject.type : "unavailable";
                     var type = AvailabilityEnum[available];
 
-                    var elementsCount = scope.$parent.$parent.$parent.timeElementsCount;
+                    var elementsCount = tdprRecruiterGetSlotsTimesService.getSlotsTimesCount();
 
                     element[0].className = "";
                     element.addClass(type.className);

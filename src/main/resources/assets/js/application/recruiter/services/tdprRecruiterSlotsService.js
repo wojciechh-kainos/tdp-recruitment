@@ -1,7 +1,12 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum) {
         var updateSlots = function(slots, personId, startDate, endDate) {
-            return $http.put("/api/slots/update/" + personId +"/" + startDate + "/" + endDate, slots);
+            return $http.put("/api/slots/update/" + personId +"/" + startDate + "/" + endDate, slots).then(function (response) {
+                return response;
+            }, function (err) {
+                err.message = "Failed to update slots for person.";
+                return $q.reject(err);
+            });
         };
 
         var reformatSlots = function (slots, day) {
@@ -23,7 +28,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             return array;
         };
 
-        var prepareAndUpdateSlots = function (slots, personId, day) {
+        this.prepareAndUpdateSlots = function (slots, personId, day) {
             var formattedData = dateFilter(day, "dd-MM-yyyy");
 
             return updateSlots(
@@ -32,10 +37,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 formattedData,
                 formattedData
             );
-        };
-
-        this.prepareAndUpdateSlots = function (slots, personId, day) {
-            return prepareAndUpdateSlots(slots, personId, day);
         };
 
         this.updateSlots = function(slots, personId, startDate, endDate){
