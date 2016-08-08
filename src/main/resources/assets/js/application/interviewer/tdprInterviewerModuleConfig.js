@@ -1,7 +1,9 @@
 define(['angular' 
-, 'application/interviewer/tdprInterviewerModule' 
-, 'application/interviewer/controllers/tdprInterviewerHomeController' 
-, 'application/interviewer/services/tdprSlotsService' ],
+, 'application/interviewer/tdprInterviewerModule'
+, 'application/interviewer/controllers/tdprInterviewerHomeController'
+, 'application/interviewer/controllers/tdprInterviewerDetailsController'
+, 'application/interviewer/services/tdprSlotsService'
+, 'application/interviewer/services/tdprPersonService'],
  function (angular, tdprInterviewerModule) { 
    tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) { 
           $stateProvider 
@@ -16,7 +18,15 @@ define(['angular' 
                         controller: "tdprInterviewerHomeController" 
                     } 
                 }
-            }); 
+            }).state("tdpr.interviewer.details", {
+              url: "/details/{id}",
+              views: {
+                  "@": {
+                      templateUrl: "/html/partials/interviewer/tdpr-interviewer-details.html",
+                      controller: "tdprInterviewerDetailsController"
+                  }
+              }
+          }); 
 
           $urlRouterProvider.otherwise("/interviewer/home/1");
         }); 

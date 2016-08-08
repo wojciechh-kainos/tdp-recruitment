@@ -1,3 +1,4 @@
-/**
- * Created by dawidk on 08/08/16.
- */
+define(['angular', 'application/interviewer/tdprInterviewerModule'], function(angular, tdprInterviewerModule) {
+    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function($scope, tdprPersonService) {
+    });
+});
