@@ -11,30 +11,25 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
         }));
 
         describe('createPathParams', function(){
-            it('should return path params when getting at least personId, one role and day', function(){
-                var pathParams = service.createPathParams(1,["isDev"], '2015-12-13');
-                var expectedPathParams = 'personId=1&isDev=true&date=2015-12-13';
+            it('should return path params when getting at least one role, start day and end day', function(){
+                var pathParams = service.createPathParams(["isDev"], '2015-12-13', '2015-12-17');
+                var expectedPathParams = 'startDate=2015-12-13&endDate=2015-12-17&isDev=true';
                 expect(pathParams).toEqual(expectedPathParams);
             });
 
-            it('should return path params when getting at least personId, one role and day', function(){
-                var pathParams = service.createPathParams(1,["isDev", "isOps"], '2015-12-13');
-                var expectedPathParams = 'personId=1&isDev=true&isOps=true&date=2015-12-13';
+            it('should return path params when getting at least two roles, start day and end day', function(){
+                var pathParams = service.createPathParams(["isDev", "isOps"], '2015-12-13', '2015-12-17');
+                var expectedPathParams = 'startDate=2015-12-13&endDate=2015-12-17&isDev=true&isOps=true';
                 expect(pathParams).toEqual(expectedPathParams);
-            });
-
-            it('should return false when personId not set', function(){
-                var pathParams = service.createPathParams(["isDev"], '2015-12-13');
-                expect(pathParams).toEqual(false);
             });
 
             it("should return false when roles not set", function(){
-                var pathParams = service.createPathParams(1, '2015-12-13');
+                var pathParams = service.createPathParams('2015-12-13', '2015-12-17');
                 expect(pathParams).toEqual(false);
             });
 
-            it("should return false when day not set", function(){
-                var pathParams = service.createPathParams(1, ["isDev"]);
+            it("should return false when days are not set", function(){
+                var pathParams = service.createPathParams(["isDev"]);
                 expect(pathParams).toEqual(false);
             });
         });

@@ -2,15 +2,18 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprRecruiterViewPairsOfInterviewersService', ['$http', '$q', function ($http, $q) {
         var service = {};
 
-        service.createPathParams = function(personId, roles, day){
-            if(personId === null || personId == "")
-                return false;
+        service.createPathParams = function(roles, startDay, endDay){
+
             if(roles.length == 0 || roles === null)
                 return false;
-            if(day == null || day == "")
+            if(startDay == null || startDay == "" || startDay == undefined)
+                return false;
+            if(endDay == null || endDay == "" || endDay == undefined)
                 return false;
 
-            var pathParams = "personId=" + personId;
+            var pathParams = "startDate=" + startDay;
+            pathParams += "&endDate=" + endDay;
+
             for(var i = 0; i < roles.length; i++){
                 switch(roles[i]){
                     case "isDev": pathParams += "&isDev=true"; break;
@@ -18,12 +21,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     case "isOps": pathParams += "&isOps=true"; break;
                 }
             }
-            pathParams += "&date=" + day;
+
             return pathParams;
         }
 
-        service.getPairs = function(personId, roles, day){
-            var pathParams = this.createPathParams(personId, roles, day);
+        service.getPairs = function(roles, startDay, endDay){
+            var pathParams = this.createPathParams(roles, startDay, endDay);
             if(!pathParams)
                 return false;
 
