@@ -9,7 +9,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-        var reformatSlots = function (slots, day) {
+        var reformatSlots = function (slots, day, personId) {
             var array = [];
             var dateObj = tdprDateService.resetDate(day);
 
@@ -19,7 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 if (compareDay.getTime() === dateObj.getTime()) {
                     array.push({
                         slotsDate: tdprDateService.resetDate(compareDay),
-                        person: null,
+                        person: {id: personId},
                         slot: {id: slots[i].slot},
                         type: {id: AvailabilityEnum[slots[i].type ? slots[i].type : "unavailable"].priority}
                     });
@@ -32,7 +32,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var formattedData = dateFilter(day, "dd-MM-yyyy");
 
             return updateSlots(
-                reformatSlots(slots, day),
+                reformatSlots(slots, day, personId),
                 personId,
                 formattedData,
                 formattedData
