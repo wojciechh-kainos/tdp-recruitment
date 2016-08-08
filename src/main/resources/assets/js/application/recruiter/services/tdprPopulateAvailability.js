@@ -26,7 +26,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 slotDayLists[day][slotId] = {
                     typeName: available.priority,
                     type: person.slots[slotKey].type,
-                    tooltipText: nameText + ", " + type.tooltipText
+                    tooltipText: type.tooltipText
                 };
             }
 
@@ -64,8 +64,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 array.push({
                     slotId: timeElements[timeKey].slotId,
                     day: day,
-                    index: index++,
-                    tooltipText: nameText
+                    index: index++
                 });
             }
 

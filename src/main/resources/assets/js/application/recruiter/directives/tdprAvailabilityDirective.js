@@ -9,10 +9,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     var available = scope.availabilityObject.type ? scope.availabilityObject.type : "unavailable";
                     var type = AvailabilityEnum[available];
 
+                    var elementsCount = scope.$parent.$parent.$parent.timeElementsCount;
+
                     element[0].className = "";
                     element.addClass(type.className);
 
-                    if (scope.availabilityObject.slotId == scope.$parent.$parent.$parent.timeElementsCount) {
+                    if (scope.availabilityObject.index % elementsCount == elementsCount-1) {
                         element.addClass("cell-last-column");
                     }
 
