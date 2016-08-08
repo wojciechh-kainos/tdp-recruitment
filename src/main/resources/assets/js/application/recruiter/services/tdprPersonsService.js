@@ -1,11 +1,11 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, tdprDateService) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q, tdprDateService) {
         var persons;
         var weekStart;
         var weekEnd;
         var currentDay = new Date();
 
-        this.fetchPersons = function(){
+        this.fetchPersons = function () {
             var format = 'yyyy-MM-dd';
 
             var now = currentDay;
@@ -31,6 +31,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.getPersons = function () {
             return persons;
-        }
+        };
+
+        this.createPerson = function (person) {
+            return $http.put("/api/person/create/", person).then(function (response) {
+                return response;
+            }, function (err) {
+                err.message = "Interviewer adding failed.";
+                return $q.reject(err);
+            });
+        };
+
     })
 });
