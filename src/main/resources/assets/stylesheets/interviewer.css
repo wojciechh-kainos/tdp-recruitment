@@ -40,3 +40,8 @@ table, td, tr {
     width: 725px;
     margin: auto;
 }
+
+.alert {
+    position: fixed;
+    top:0;
+}

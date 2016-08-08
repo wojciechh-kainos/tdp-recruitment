@@ -3,20 +3,15 @@ package resources;
 import com.google.inject.Inject;
 import dao.PersonsDao;
 import dao.SlotsDao;
+import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.jvnet.hk2.internal.Collector;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/person")
@@ -35,7 +30,7 @@ public class PersonResources {
     @GET
     @Path("/all")
     @UnitOfWork
-    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate){
+    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) {
         List<Persons> persons = personsDao.findAll();
         List<Slots> slots = slotsDao.findBetween(startDate, endDate);
 
@@ -45,22 +40,44 @@ public class PersonResources {
                     Map<String, Object> item = new HashMap<>();
                     item.put("person", person);
                     item.put("slots", slots
-                        .stream()
-                        .filter(slot -> slot.getPerson().getId() == person.getId())
-                        .map(slot -> {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("id", slot.getId());
-                            map.put("person", slot.getPerson().getId());
-                            map.put("day", slot.getSlotsDate());
-                            map.put("slot", slot.getSlot().getId());
-                            map.put("type", slot.getType().getType());
+                            .stream()
+                            .filter(slot -> slot.getPerson().getId() == person.getId())
+                            .map(slot -> {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("id", slot.getId());
+                                map.put("person", slot.getPerson().getId());
+                                map.put("day", slot.getSlotsDate());
+                                map.put("slot", slot.getSlot().getId());
+                                map.put("type", slot.getType().getType());
 
-                            return map;
-                        })
-                        .collect(Collectors.toCollection(ArrayList::new)));
+                                return map;
+                            })
+                            .collect(Collectors.toCollection(ArrayList::new)));
 
                     return item;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @GET
+    @Path("/getNote")
+    @UnitOfWork
+    public Notes getNote(@QueryParam("id") Long personId,
+                         @QueryParam("date") Date startDate){
+        Persons person = new Persons();
+        person.setId(personId);
+        Notes note = new Notes(1L, person,"dsadasd",startDate);
+        return note;
+    }
+
+    @PUT
+    @Path("/updateNote")
+    @UnitOfWork
+    public Notes updateNote(@QueryParam("id") Long personId,
+                            @QueryParam("date") Date startDate){
+        Persons person = new Persons();
+        person.setId(personId);
+        Notes note = new Notes(1L, person,"dsadasd",startDate);
+        return note;
     }
 }
