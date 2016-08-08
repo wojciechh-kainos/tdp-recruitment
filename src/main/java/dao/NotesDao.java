@@ -6,6 +6,7 @@ import domain.Persons;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
+import java.util.Date;
 import java.util.List;
 
 public class NotesDao extends AbstractDAO<Notes>{
@@ -19,8 +20,9 @@ public class NotesDao extends AbstractDAO<Notes>{
         return persist(note).getId();
     }
 
-    public Notes getById(Long personId) {
-        return get(personId);
+    public Notes getByIdAndDate(Long personId,Date startDate) {
+        return uniqueResult( namedQuery("Notes.getNoteByPersonIdAndDate")
+              .setParameter("id", personId)
+              .setDate("date", startDate));
     }
-
 }

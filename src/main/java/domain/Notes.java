@@ -2,12 +2,15 @@ package domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "notes")
+@NamedQueries({
+    @NamedQuery(name = "Notes.getNoteByPersonIdAndDate", query = "select n from Notes n where person.id = :id and date = :date")
+})
 public class Notes {
 
     @Id
@@ -15,7 +18,8 @@ public class Notes {
     private Long id;
 
     @NotNull
-    @JoinColumn(name = "persons")
+    @JoinColumn(name = "person")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persons person;
 
     @NotNull
@@ -28,6 +32,12 @@ public class Notes {
 
     public Notes(Long id, Persons person, String description, Date date) {
         this.id = id;
+        this.person = person;
+        this.description = description;
+        this.date = date;
+    }
+
+    public Notes(Persons person, String description, Date date) {
         this.person = person;
         this.description = description;
         this.date = date;

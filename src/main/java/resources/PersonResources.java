@@ -1,6 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
+import dao.NotesDao;
 import dao.PersonsDao;
 import dao.SlotsDao;
 import domain.Notes;
@@ -11,6 +12,8 @@ import org.jvnet.hk2.internal.Collector;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,11 +23,14 @@ public class PersonResources {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
+    private NotesDao notesDao;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao){
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao){
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
+        this.notesDao = notesDao;
     }
 
     @GET
@@ -63,21 +69,16 @@ public class PersonResources {
     @Path("/getNote")
     @UnitOfWork
     public Notes getNote(@QueryParam("id") Long personId,
-                         @QueryParam("date") Date startDate){
-        Persons person = new Persons();
-        person.setId(personId);
-        Notes note = new Notes(1L, person,"dsadasd",startDate);
-        return note;
+                         @QueryParam("date") String startDate) throws ParseException {
+        Date date = formatter.parse(startDate);
+        return notesDao.getByIdAndDate(personId,date);
     }
 
     @PUT
     @Path("/updateNote")
+    @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Notes updateNote(@QueryParam("id") Long personId,
-                            @QueryParam("date") Date startDate){
-        Persons person = new Persons();
-        person.setId(personId);
-        Notes note = new Notes(1L, person,"dsadasd",startDate);
-        return note;
+    public Long updateNote(Notes note){
+        return notesDao.create(note);
     }
 }
