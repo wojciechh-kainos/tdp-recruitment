@@ -1,4 +1,4 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
+define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprDateService', function () {
         this.resetDate = function (dateToReset) {
             var date = new Date(dateToReset);
@@ -18,6 +18,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             date.setMinutes(min);
 
             return date;
-        }
+        };
     });
 });

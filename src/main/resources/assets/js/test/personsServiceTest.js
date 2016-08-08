@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsService'], function (angular) {
+define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsService', 'application/recruiter/services/tdprDateService'], function (angular) {
     describe('personsService', function () {
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
