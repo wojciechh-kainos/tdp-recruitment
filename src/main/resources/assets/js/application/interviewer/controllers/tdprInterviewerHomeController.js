@@ -58,7 +58,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                             slotsDate: getDayOfTheWeek(new Date(), j + relativeDayNumber),
                             person: null,
                             slot: {id: i + 1},
-                            type: {id: $scope.slotsForWeek[i][j].type}
+                            type: {id: $scope.slotsForWeek[i][j].type.id}
                         };
                         slots.push(slot);
                     }

@@ -4,32 +4,41 @@
 <div class="container">
     <h1>YOUR AVAILABILITY</h1>
     <h3>(click on slots to change availability)</h3>
-    <div>
+    <div class="row">
         <button class="btn btn-default navigate pull-left" ng-click="showPreviousWeek()">Previous week</button>
 
         <h4 class="navigate">{{startDate}} - {{endDate}}</h4>
         <button class="btn btn-default navigate pull-right" ng-click="showNextWeek()">Next week</button>
     </div>
+
+    <div class="legend">
+        <label><input type="radio" ng-model="currentType" value="1"/> <span class="available-slot legend-block"></span> Availability</label>
+        <label><input type="radio" ng-model="currentType" value="4"/> <span class="unavailable-slot legend-block"></span> Unavailability</label>
+        <label><input type="radio" ng-model="currentType" value="5"/> <span class="maybe-available-slot legend-block"></span> Maybe</label>
+    </div>
+
     <table class="availability-table">
         <thead>
-            <tr>
-                <th>HOURS</th>
-                <th>MONDAY</th>
-                <th>TUESDAY</th>
-                <th>WEDNESDAY</th>
-                <th>THURSDAY</th>
-                <th>FRIDAY</th>
-            </tr>
+        <tr>
+            <th>HOURS</th>
+            <th>MONDAY</th>
+            <th>TUESDAY</th>
+            <th>WEDNESDAY</th>
+            <th>THURSDAY</th>
+            <th>FRIDAY</th>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="slotsForDay in slotsForWeek">
-                <td class="slotTime">{{slotTimes[$index]}}</td>
-                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.type}" ng-click="slot.type.id === currentType ? slot = null : slot.type.id = currentType">
-                </td>
-            </tr>
+        <tr ng-repeat="slotsForDay in slotsForWeek">
+            <td class="slotTime">{{slotTimes[$index]}}</td>
+            <td ng-repeat="slot in slotsForDay track by $index"
+                ng-class="{'available-slot': slot.type.id == 1, 'unavailable-slot': slot.type.id == 4, 'maybe-available-slot': slot.type.id == 5}"
+                ng-click="slot.type.id == currentType ? slot = null : slot.type.id = currentType">
+            </td>
+        </tr>
         </tbody>
     </table>
     <div>
-         <button class="btn btn-primary" type="button" ng-click="updateSlots()">SUBMIT CHANGES</button>
+        <button class="btn btn-primary" type="button" ng-click="updateSlots()">SUBMIT CHANGES</button>
     </div>
 </div>
