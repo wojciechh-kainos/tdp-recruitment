@@ -1,5 +1,7 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -31,8 +33,10 @@ public class Persons {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private Boolean admin;
 
     @Column(name = "is_dev")
@@ -49,6 +53,7 @@ public class Persons {
     private Integer bandLevel;
 
 
+    @JsonIgnore
     @Column(name = "activation_code")
     private String activationCode;
 
@@ -58,8 +63,10 @@ public class Persons {
     @Column(name = "default_finish_hour")
     private Time defaultFinishHour;
 
+    @JsonIgnore
     private Boolean active;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 
