@@ -3,7 +3,8 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         this.resetDate = function (dateToReset) {
             var date = new Date(dateToReset);
 
-            date.setHours(2);
+            // Compensate for timezone differences
+            date.setHours(date.getTimezoneOffset() / (-60.0));
             date.setMinutes(0);
             date.setSeconds(0);
             date.setMilliseconds(0);
