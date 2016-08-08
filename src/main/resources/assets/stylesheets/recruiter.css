@@ -47,16 +47,12 @@
     width:200px;
     left:0;
     top:auto;*/
-    border-right: 0px none black;
-    border-top-width:3px; /*only relevant for first row*/
-    margin-top:0px; /*compensate for top border*/
 }
 
 #whole-table  {
     width: 100%;
     overflow-x:scroll;
     overflow-y:visible;
-    padding-bottom:1px;
 }
 
 .my-timetable {

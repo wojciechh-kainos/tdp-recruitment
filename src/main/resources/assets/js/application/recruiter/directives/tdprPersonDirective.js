@@ -4,25 +4,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             link: function (scope, element, attributes) {
-                function reformatSlots(slots, day) {
-                    var array = [];
-                    var dateObj = tdprDateService.resetDate(day);
 
-
-                    for (var i = 0; i < slots.length; i++) {
-                        var compareDay = tdprDateService.resetDate(slots[i].day);
-
-                        if (compareDay.getTime() === dateObj.getTime()) {
-                            array.push({
-                                slotsDate: tdprDateService.resetDate(compareDay),
-                                person: null,
-                                slot: {id: slots[i].slot},
-                                type: {id: AvailabilityEnum[slots[i].type ? slots[i].type : "unavailable"].priority}
-                            });
-                        }
-                    }
-                    return array;
-                }
 
                 var changeType = function (objectArray) {
                     if (objectArray.type === undefined) {
@@ -46,11 +28,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                         }
                     }
 
-                    tdprRecruiterSlotsService.updateSlots(
-                        reformatSlots(scope.person.slots, objectArray.day),
+                    tdprRecruiterSlotsService.prepareAndUpdateSlots(
+                        scope.person.slots,
                         scope.person.person.id,
-                        dateFilter(objectArray.day, "dd-MM-yyyy"),
-                        dateFilter(objectArray.day, "dd-MM-yyyy")
+                        objectArray.day
                     );
 
                     _init();
