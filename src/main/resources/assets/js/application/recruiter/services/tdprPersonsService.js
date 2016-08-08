@@ -1,5 +1,5 @@
-define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter) {
+define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, tdprDateService) {
         var persons;
         var weekStart;
         var weekEnd;
@@ -26,7 +26,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.getCurrentWeek = function() {
-            return new Date(new Date(new Date(weekStart.setHours(2)).setMinutes(0)).setSeconds(0));
+            return tdprDateService.resetDate(weekStart);
         };
 
         this.getPersons = function () {

@@ -1,5 +1,5 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPopulateAvailability', ['AvailabilityEnum', function (AvailabilityEnum) {
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.service('tdprPopulateAvailability', ['AvailabilityEnum', 'tdprDateService', function (AvailabilityEnum, tdprDateService) {
         this.populateAvailability = function (person, timeElements) {
             var array = [];
             var slotDayLists = {};
@@ -11,7 +11,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
             for (var slotKey in person.slots) {
                 if (!person.slots.hasOwnProperty(slotKey)) continue;
-                day = new Date(person.slots[slotKey].day);
+                day = tdprDateService.resetDate(person.slots[slotKey].day);
 
                 slotId = person.slots[slotKey].slot;
 

@@ -1,26 +1,20 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability', 'application/recruiter/services/tdprRecruiterSlotsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability, dateFilter, tdprRecruiterSlotsService, AvailabilityEnum) {
+    tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability, dateFilter, tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             link: function (scope, element, attributes) {
-                var dateFormat = 'yyyy-MM-dd';
-
-                function reformatDate(dateToFormat) {
-                    return new Date(new Date(new Date( new Date(dateToFormat).setHours(2)).setMinutes(0)).setSeconds(0)).setMilliseconds(0)
-                }
-
                 function reformatSlots(slots, day) {
                     var array = [];
-                    var dateObj = reformatDate(day);
+                    var dateObj = tdprDateService.resetDate(day);
 
 
                     for (var i = 0; i < slots.length; i++) {
-                        var compareDay = reformatDate(slots[i].day);
+                        var compareDay = tdprDateService.resetDate(slots[i].day);
 
-                        if (compareDay == dateObj) {
+                        if (compareDay.getTime() === dateObj.getTime()) {
                             array.push({
-                                slotsDate: new Date(compareDay),
+                                slotsDate: tdprDateService.resetDate(compareDay),
                                 person: null,
                                 slot: {id: slots[i].slot},
                                 type: {id: AvailabilityEnum[slots[i].type ? slots[i].type : "unavailable"].priority}
@@ -37,10 +31,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                     for (var i = 0; i < scope.person.slots.length; i++) {
                         if (objectArray.slotId == scope.person.slots[i].slot) {
-                            var dateObj = reformatDate(objectArray.day);
-                            var compareDay = reformatDate(scope.person.slots[i].day);
+                            var dateObj = tdprDateService.resetDate(objectArray.day);
+                            var compareDay = tdprDateService.resetDate(scope.person.slots[i].day);
 
-                            if (compareDay == dateObj) {
+                            if (compareDay.getTime() === dateObj.getTime()) {
                                 if (scope.person.slots[i].type === "available") {
                                     scope.person.slots[i].type = "full";
                                 } else if (scope.person.slots[i].type === "full") {

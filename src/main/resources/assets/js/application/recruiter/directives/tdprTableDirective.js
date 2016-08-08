@@ -1,5 +1,5 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("myTimetable", function (dateFilter) {
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.directive("myTimetable", function (dateFilter, tdprDateService) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-table.html',
@@ -32,8 +32,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             var startTime = scope.slotsTimes[key].startTime.split(":");
                             var endTime = scope.slotsTimes[key].endTime.split(":");
 
-                            var dateStartObject = new Date(new Date(day).setHours(startTime[0])).setMinutes(startTime[1]);
-                            var dateEndObject = new Date(new Date(day).setHours(endTime[0])).setMinutes(endTime[1]);
+                            var dateStartObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), startTime[0], startTime[1]);
+                            var dateEndObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), endTime[0], endTime[1]);
 
                             array.push({
                                 text: startTime[0] + ":" + startTime[1],
@@ -43,7 +43,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                                 minute: startTime[1],
                                 dateStart: dateStartObject,
                                 dateEnd: dateEndObject,
-                                day: day
+                                day: day,
+                                dayIndex: i
                             });
                             timeElementsCount++;
                         }
