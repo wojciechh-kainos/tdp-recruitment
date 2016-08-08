@@ -1,0 +1,59 @@
+<div class="well col-lg-6 col-lg-offset-3 p-a">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Developer:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="details.isDev">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">WebOps:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="details.isWebOps">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Tester:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="details.isTester">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Band level:</label>
+            <div class="col-lg-2">
+                <div class="ui-select">
+                    <select id="user_time_zone" class="form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Default starting hour:</label>
+            <div class="col-lg-2">
+                <input type="time" name="input" ng-model="details.startHour"
+                       placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Default finishing hour:</label>
+            <div class="col-lg-2">
+                <input type="time" name="input" ng-model="details.finishHour"
+                       placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label"></label>
+            <div class="col-lg-8">
+                <input type="button" class="btn btn-primary" value="Save Changes">
+                <input type="reset" class="btn btn-default" value="Cancel">
+            </div>
+        </div>
+    </form>
+</div>
