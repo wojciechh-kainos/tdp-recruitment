@@ -1,10 +1,9 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability', 'application/recruiter/services/tdprRecruiterSlotsService'], function (angular, tdprRecruiterModule) {
+define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability', 'application/recruiter/services/tdprRecruiterSlotsService'], function (tdprRecruiterModule) {
     tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability, dateFilter, tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             link: function (scope, element, attributes) {
-
 
                 var changeType = function (objectArray) {
                     if (objectArray.type === undefined) {
