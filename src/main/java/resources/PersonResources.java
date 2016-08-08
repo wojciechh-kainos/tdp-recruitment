@@ -8,10 +8,7 @@ import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.jvnet.hk2.internal.Collector;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,5 +59,12 @@ public class PersonResources {
                     return item;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @GET
+    @Path("/{id}")
+    @UnitOfWork
+    public Persons getPersonById(@PathParam("id") Long id){
+         return personsDao.getById(id);
     }
 }
