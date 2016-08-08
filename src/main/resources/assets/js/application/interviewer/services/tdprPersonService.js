@@ -1,3 +1,8 @@
-/**
- * Created by dawidk on 08/08/16.
- */
+define(['angular', 'application/interviewer/tdprInterviewerModule'], function(angular, tdprInterviewerModule) {
+    tdprInterviewerModule.service("tdprPersonService", function($http) {
+
+        this.getPersonById = function(id) {
+            return $http.get("/api/person/" + id);
+        };
+    })
+});
