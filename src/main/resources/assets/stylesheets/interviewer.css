@@ -15,6 +15,15 @@ table, td, tr {
 .available-slot {
     background-color: #87D37C;
 }
+
+.maybe-available-slot{
+    background-color: #B0BEC5;
+}
+
+.unavailable-slot{
+    background-color: #F44336;
+}
+
 .availability-table tbody td, .availability-table thead th{
     width: 120px;
     height: 30px;
