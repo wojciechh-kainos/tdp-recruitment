@@ -11,6 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         $scope.startDate;
         $scope.endDate;
+        $scope.currentType = 1; // 1 - available, 2 - full, 3 - init, 4 - unavailable, 5 - maybe
 
         var id = $stateParams.id;
 
@@ -21,7 +22,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 $scope.slotsForWeek[i] = new Array(5);
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    $scope.slotsForWeek[i][j] = {type: false};
+                    $scope.slotsForWeek[i][j] = {type: 0};
                 }
             }
         };
@@ -40,10 +41,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
             $scope.startDate = startDate;
             $scope.endDate = endDate;
-            tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
 
+            tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
                 for (var slot in response.data) {
-                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].available = true;
+                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = response.data[slot].type;
                 }
             });
         };
@@ -52,12 +53,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             var slots = [];
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    if ($scope.slotsForWeek[i][j].available) {
+                    if ($scope.slotsForWeek[i][j].type) {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j + relativeDayNumber),
                             person: null,
                             slot: {id: i + 1},
-                            type: {id: 1}
+                            type: {id: $scope.slotsForWeek[i][j].type}
                         };
                         slots.push(slot);
                     }

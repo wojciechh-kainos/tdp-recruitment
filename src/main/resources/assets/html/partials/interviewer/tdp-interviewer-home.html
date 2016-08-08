@@ -24,7 +24,7 @@
         <tbody>
             <tr ng-repeat="slotsForDay in slotsForWeek">
                 <td class="slotTime">{{slotTimes[$index]}}</td>
-                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}" ng-click="slot.available = !slot.available">
+                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.type}" ng-click="slot.type.id === currentType ? slot = null : slot.type.id = currentType">
                 </td>
             </tr>
         </tbody>
