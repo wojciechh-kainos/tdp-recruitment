@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="12" author="dawidkre">
+        <addColumn tableName="persons">
+            <column name="default_start_hour" type="time"></column>
+            <column name="default_finish_hour" type="time"></column>
+        </addColumn>
+
+        <update tableName="persons">
+            <column name="default_start_hour" value="08:00:00"/>
+            <column name="default_finish_hour" value="16:00:00"/>
+            <where>id=1</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="09:00:00"/>
+            <column name="default_finish_hour" value="17:00:00"/>
+            <where>id=2</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="09:00:00"/>
+            <column name="default_finish_hour" value="17:00:00"/>
+            <where>id=3</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="10:00:00"/>
+            <column name="default_finish_hour" value="18:00:00"/>
+            <where>id=4</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="09:30:00"/>
+            <column name="default_finish_hour" value="17:30:00"/>
+            <where>id=5</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="10:00:00"/>
+            <column name="default_finish_hour" value="18:00:00"/>
+            <where>id=6</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="10:00:00"/>
+            <column name="default_finish_hour" value="18:00:00"/>
+            <where>id=7</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="08:00:00"/>
+            <column name="default_finish_hour" value="16:00:00"/>
+            <where>id=8</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="08:30:00"/>
+            <column name="default_finish_hour" value="16:30:00"/>
+            <where>id=9</where>
+        </update>
+        <update tableName="persons">
+            <column name="default_start_hour" value="08:15:00"/>
+            <column name="default_finish_hour" value="16:15:00"/>
+            <where>id=10</where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog>
