@@ -3,6 +3,7 @@ define(['angular'
     , 'application/recruiter/controllers/tdprWeekTableController'
     , 'application/recruiter/controllers/tdprAddInterviewerController'
     , 'application/recruiter/services/tdprPersonsService'
+    , 'application/recruiter/filters/tdprSlotsByTimeFilter'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
