@@ -43,13 +43,9 @@
 
 .person-name {
     min-width: 200px;
-    /*position:absolute;
-    width:200px;
-    left:0;
-    top:auto;*/
 }
 
-#whole-table  {
+#timetable  {
     width: 100%;
     overflow-x:scroll;
     overflow-y:visible;
