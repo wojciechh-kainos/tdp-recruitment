@@ -68,8 +68,8 @@ public class PersonResources {
     @Path("/all1")
     @UnitOfWork
     public List fetchAllPersons(){
-        List<Persons> personses = personsDao.findAll();
-        personses.forEach(p -> p.getSlotsList());
-        return personses;
+        return personsDao.findAll();
+
+
     }
 }

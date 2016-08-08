@@ -19,7 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.getSlotsTimes = function(){
             return $http.get('/api/slots_times/all').then(function(response){
-                data = getFormattedSlots(response.data);
+                data = response.data;
                 return response.data;
             },
             function(error){
