@@ -55,8 +55,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
                     if ($scope.slotsForWeek[i][j].type) {
                         var slot = {
-                            slotsDate: getDayOfTheWeek(new Date(), j + relativeDayNumber),
-                            person: null,
+                            slotsDate: getDayOfTheWeek(new Date(), j),
+                            person: {id: id},
                             slot: {id: i + 1},
                             type: {id: $scope.slotsForWeek[i][j].type.id}
                         };
