@@ -2,7 +2,7 @@
 <tr><td ng-repeat="day in days" >
     <table>
         <tr>
-            <td ng-repeat="slotTime in slotTimes">{{$index}} {{day}}</td>
+            <slot ng-repeat="slotTime in slotTimes" slot-data="getSlot(slotTime.id, day)">{{$index}} {{day}}</slot>
         </tr>
     </table></td>
 </tr>

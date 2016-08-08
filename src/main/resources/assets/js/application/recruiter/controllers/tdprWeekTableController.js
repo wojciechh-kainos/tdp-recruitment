@@ -1,10 +1,11 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'
-    , 'application/recruiter/directives/tdprAvailabilityDirective'
+define(['angular', 'application/recruiter/tdprRecruiterModule' 
+    , 'application/recruiter/directives/tdprAvailabilityDirective'  //directives deps should be moved to moduleConfig
     , 'application/recruiter/directives/tdprPersonDirective'
     , 'application/recruiter/directives/tdprPersonsDirective'
     , 'application/recruiter/directives/tdprTableDirective'
     , 'application/recruiter/directives/tdprFilterDirective'
     , 'application/recruiter/directives/tdprPersonRowDirective'
+    , 'application/recruiter/directives/tdprSlotDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService) {
@@ -16,6 +17,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         personsData.then(function () {
             $scope.staticData = tdprPersonsService.getPersons();
+            $scope.mylist = $scope.staticData[0].slots;
         });
 
         slotsData.then(function () {
