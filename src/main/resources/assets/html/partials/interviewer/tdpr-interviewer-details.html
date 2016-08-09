@@ -1,28 +1,29 @@
-<div class="well col-lg-6 col-lg-offset-3 p-a">
-    <form class="form-horizontal" role="form">
+<br>
+<div class="well">
+    <form class="form-horizontal col-lg-offset-3" role="form">
         <div class="form-group">
-            <label class="col-lg-3 control-label">Developer:</label>
+            <label class="col-lg-4 control-label">Developer:</label>
             <div class="col-lg-1">
-                <input type="checkbox" ng-model="details.isDev">
+                <input type="checkbox" ng-model="person.isDev">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-3 control-label">WebOps:</label>
+            <label class="col-lg-4 control-label">WebOps:</label>
             <div class="col-lg-1">
-                <input type="checkbox" ng-model="details.isWebOps">
+                <input type="checkbox" ng-model="person.isWeb">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-3 control-label">Tester:</label>
+            <label class="col-lg-4 control-label">Tester:</label>
             <div class="col-lg-1">
-                <input type="checkbox" ng-model="details.isTester">
+                <input type="checkbox" ng-model="person.isTest">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-3 control-label">Band level:</label>
+            <label class="col-lg-4 control-label">Band level:</label>
             <div class="col-lg-2">
                 <div class="ui-select">
-                    <select id="user_time_zone" class="form-control">
+                    <select class="form-control" ng-model="person.bandLevel">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -33,26 +34,25 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group">
-            <label class="col-lg-3 control-label">Default starting hour:</label>
+            <label class="col-lg-4 control-label">Default starting hour:</label>
             <div class="col-lg-2">
-                <input type="time" name="input" ng-model="details.startHour"
+                <input type="time" name="input" ng-model="person.defaultStartHour"
                        placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-3 control-label">Default finishing hour:</label>
+            <label class="col-lg-4 control-label">Default finishing hour:</label>
             <div class="col-lg-2">
-                <input type="time" name="input" ng-model="details.finishHour"
+                <input type="time" name="input" ng-model="person.defaultFinishHour"
                        placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-3 control-label"></label>
-            <div class="col-lg-8">
-                <input type="button" class="btn btn-primary" value="Save Changes">
-                <input type="reset" class="btn btn-default" value="Cancel">
+            <label class="col-lg-2 control-label"></label>
+            <div class="col-lg-6">
+                <input type="button" class="btn btn-primary" value="Save Changes" ng-click="updateDetails()">
+                <input type="button" class="btn btn-default" value="Cancel" ng-click="goHome()">
             </div>
         </div>
     </form>
