@@ -20,27 +20,6 @@
     border-top-width: 0px;
 }
 
-.cell-avail-available {
-    background-color: #00b3ee;
-    border: 1px;
-}
-
-.cell-avail-init {
-    background: red;
-}
-
-.cell-avail-full {
-    background: darkred;
-}
-
-.cell-avail-busy {
-    background: orange;
-}
-
-.cell-selected {
-    background-color: cyan;
-}
-
 .person-name {
     min-width: 200px;
 }

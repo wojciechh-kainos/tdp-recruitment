@@ -24,7 +24,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         }));
 
         describe('fetchPersons', function () {
-            it('should call backend with date from current week', function () { //test should be updated later
+            it('should call backend with date from current week', function () {
                 $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200);
 
                 service.fetchPersons().then(function (response) {
@@ -33,6 +33,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
 
                 $httpBackend.flush();
             });
+
             it('should set service persons field', function () {
                 $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200, data);
 
@@ -40,8 +41,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
                     expect(service.getPersons()).toEqual(data);
                 });
                 $httpBackend.flush();
-            })
-
+            });
         })
     })
 });
