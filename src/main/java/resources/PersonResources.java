@@ -9,6 +9,8 @@ import io.dropwizard.hibernate.UnitOfWork;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jvnet.hk2.internal.Collector;
 
+import services.MailService;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -23,11 +25,13 @@ public class PersonResources {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
+    private MailService mailService;
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao) {
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
+        this.mailService = mailService;
     }
 
     @PUT
@@ -36,6 +40,7 @@ public class PersonResources {
     @UnitOfWork
     public Persons createPerson(Persons person) {
         personsDao.create(person);
+        mailService.sendEmail(person.getEmail(), person.getId());
         return person;
     }
 
