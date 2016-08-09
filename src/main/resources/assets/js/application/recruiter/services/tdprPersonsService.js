@@ -1,4 +1,4 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
+define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q, tdprDateService) {
         var persons;
         var weekStart;
