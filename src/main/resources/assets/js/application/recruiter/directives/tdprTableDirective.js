@@ -12,7 +12,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             link: function (scope, element, attributes) {
                 var _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                 var daysLength = _days.length;
-                var dateFormat = 'yyyy-MM-dd';
+                var dateFormat = 'EEEE yyyy-MM-dd';
 
                 var timeElementsCount;
                 var previousStartWeekDay;
@@ -59,13 +59,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                     for (var i = 0; i < daysLength; i++) {
                         /* Advance one day */
-                        var time = weekStart.getTime() + (i * 60 * 60 * 24) * 1000;
+                        var date = new Date(weekStart.getTime() + (i * 60 * 60 * 24) * 1000);
 
                         array.push({
-                            day: time,
-                            dayName: _days[i],
-                            dayValue: new Date(time),
-                            dayString: _days[i] + " " + dateFilter(new Date(time), dateFormat)
+                            day: date.getTime(),
+                            dayName: dateFilter(date, "EEEE"),
+                            dayValue: date,
+                            dayString: dateFilter(date, dateFormat)
                         });
                     }
 
