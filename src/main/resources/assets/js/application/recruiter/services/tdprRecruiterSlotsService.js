@@ -32,6 +32,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             return array;
         };
 
+        this.reformatSlots = function (slots, day, personId) {
+            return reformatSlots(slots, day, personId);
+        };
+
         this.prepareAndUpdateSlots = function (slots, personId, day) {
             var formattedData = dateFilter(day, "dd-MM-yyyy");
 

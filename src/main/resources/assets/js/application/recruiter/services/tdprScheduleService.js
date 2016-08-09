@@ -47,7 +47,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 }
             }
 
-            tdprRecruiterSlotsService.prepareAndUpdateSlots(
+            return tdprRecruiterSlotsService.prepareAndUpdateSlots(
                 slots,
                 person.id,
                 objectArray.day
