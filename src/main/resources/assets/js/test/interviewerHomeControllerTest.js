@@ -62,8 +62,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 getSlotsDeferred.resolve({
                     data: [{slot: {id: 1}, type: {id: 61}, slotsDate: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
                         {slot: {id: 4}, type: {id: 62}, slotsDate: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
-                        {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}]
-                }); // 6th slot, monday
+                        {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}] // 6th slot, monday
+                });
 
                 $scope.getSlots();
                 $scope.$apply();
