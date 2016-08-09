@@ -9,7 +9,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 startWeekDay: '='
             },
             link: function (scope, element, attributes) {
-                scope.activePerson = null;
                 scope.jobProfile = "";
 
                 /* Returns sorted rows for table */
@@ -27,30 +26,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     return array;
                 }
 
-                function _changeActive(person) {
-                    if (scope.activePerson === null) {
-                        scope.activePerson = person;
-                        return;
-                    }
-
-                    if (scope.activePerson.id === person.id) {
-                        scope.activePerson = null;
-                    } else {
-                        scope.activePerson = person;
-                    }
-                }
-
-                function _getActivePerson() {
-                    return scope.activePerson;
-                }
-
                 function _refreshList(table) {
                     scope.peopleList = _returnTableRows(table);
                 }
 
                 function _init() {
-                    scope.getActivePerson = _getActivePerson;
-                    scope.changeActive = _changeActive;
+                    _refreshList(scope.selectedPersonTable);
                 }
 
                 function _changeJobProfile(newValue) {
@@ -61,13 +42,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     _refreshList(newValue);
                 });
 
-                scope.$parent.$watch('startWeekDay', function (newValue, oldValue) {
+                scope.$parent.$watch('startWeekDay', function () {
                     _init();
                 });
 
                 scope.$parent.$parent.$watch('jobProfile', function (newValue, oldValue) {
                     _changeJobProfile(newValue);
-                    _refreshList(scope.selectedPersonTable);
+                    _init();
                 });
             }
         };

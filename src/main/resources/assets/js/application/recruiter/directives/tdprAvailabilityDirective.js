@@ -18,25 +18,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         element.addClass("cell-last-column");
                     }
 
-                    if (scope.activePerson !== null) {
-                        if (scope.$parent.person.person.id == scope.$parent.$parent.activePerson.person.id) {
-                            element.addClass("cell-selected");
-                        }
-                    }
-
                     scope.tooltipText = scope.availabilityObject.tooltipText;
                 }
 
 
-                scope.$watch("availabilityObject", function (newValue, oldValue) {
+                scope.$watch("availabilityObject", function () {
                     _init();
                 });
-
-
-                scope.$watch('activePerson', function () {
-                    _init();
-                });
-
             }
         };
     });

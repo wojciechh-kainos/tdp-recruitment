@@ -1,4 +1,4 @@
-define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability',  'application/recruiter/services/tdprScheduleService'], function (tdprRecruiterModule) {
+define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability', 'application/recruiter/services/tdprScheduleService'], function (tdprRecruiterModule) {
     tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability, tdprScheduleService) {
         return {
             restrict: 'A',
@@ -19,7 +19,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                     _init();
                 });
 
-                scope.$watch("person", function(){
+                scope.$watch("person", function () {
                     _init();
                 });
 

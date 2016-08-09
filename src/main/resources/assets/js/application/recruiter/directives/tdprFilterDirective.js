@@ -7,8 +7,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 scope.jobProfiles = ["web", "dev", "test"];
                 scope.jobProfile = "";
 
-                scope.changeJobProfile = function(index) {
-                   scope.jobProfile = scope.jobProfiles[index];
+                scope.changeJobProfile = function (index) {
+                    scope.jobProfile = scope.jobProfiles[index];
                 };
             }
         };
