@@ -1,7 +1,6 @@
 package resources;
 
 import com.google.inject.Inject;
-import dao.PersonsDao;
 import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
@@ -12,11 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -43,7 +38,7 @@ public class PairResource {
         List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
         List<Persons> persons = personsInSlots(slots);
 
-        return findPairsForPerson(slots, persons.get(0));
+        return findAllPairsForPerson(slots, persons.get(0));
     }
 
     private static Predicate<Slots> predicateSlots(Persons person){
@@ -65,7 +60,7 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List findPairsForPerson(List<Slots> slots, Persons person){
+    private List<Slots> findAllPairsForPerson(List<Slots> slots, Persons person){
         List<Slots> remainingSlots = slotsByPerson(slots, predicateSlots(person).negate());
         List<Slots> searchSlots = slotsByPerson(slots, predicateSlots(person));
 
@@ -78,16 +73,6 @@ public class PairResource {
                                     && rs.getType().getId() == 1)
                             .collect(Collectors.toCollection(ArrayList::new))
                             .size() > 0)
-                .map(item -> {
-                    Map<String, Object> map = new HashMap<>();
-
-                    map.put("searchPersonId", person.getId());
-                    map.put("matchPersonId", item.getPerson().getId());
-                    map.put("slotId", item.getSlot().getId());
-                    map.put("slotDate", item.getSlotsDate());
-
-                    return map;
-                })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
