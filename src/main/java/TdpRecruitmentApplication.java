@@ -12,6 +12,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import resources.PairResource;
 import resources.SlotsTimesResource;
 import resources.PersonResources;
 
@@ -60,6 +61,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResources.class));
         environment.jersey().register(SlotsTimesResource.class);
         environment.jersey().register(guiceBundle.getInjector().getInstance(TdpRecruitmentSlotsResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(PairResource.class));
 
 //        TdpIAuthenticator authenticator = new UnitOfWorkAwareProxyFactory(hibernateBundle).create(TdpIAuthenticator.class,
 //                TdpIUserDAO.class, guiceBundle.getInjector().getInstance(TdpIUserDAO.class));
