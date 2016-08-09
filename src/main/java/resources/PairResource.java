@@ -73,7 +73,9 @@ public class PairResource {
                 .stream()
                 .filter(rs -> searchSlots
                             .stream()
-                            .filter(ss -> rs.getSlot().equals(ss.getSlot()) && rs.getSlotsDate().equals(ss.getSlotsDate()))
+                            .filter(ss -> rs.getSlot().equals(ss.getSlot())
+                                    && rs.getSlotsDate().equals(ss.getSlotsDate())
+                                    && rs.getType().getId() == 1)
                             .collect(Collectors.toCollection(ArrayList::new))
                             .size() > 0)
                 .map(item -> {
