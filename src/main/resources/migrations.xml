@@ -13,4 +13,6 @@
     <include file="changelogs/initialPopulatePersonsTable.xml"/>
     <include file="changelogs/initialPopulateSlotsTable.xml"/>
     <include file="changelogs/initialAddDefaultWorkingHoursPersonsTable.xml"/>
+    <include file="changelogs/initialPopulateAvailabilityTypes.xml"/>
+
 </databaseChangeLog>

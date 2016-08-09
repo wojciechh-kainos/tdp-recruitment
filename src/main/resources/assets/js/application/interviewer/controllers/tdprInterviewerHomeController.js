@@ -1,51 +1,52 @@
-define(['angular', 'application/interviewer/tdprInterviewerModule'], function(angular, tdprInterviewerModule) {
-  tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter, $stateParams,$timeout, $state, Notification) {
-    $scope.slotTimes = [];
-        tdprSlotsService.getSlotsTimes().then(function(response) {
-            for(var i = 0; i < response.data.length; i++) {
-                var startTime = response.data[i].startTime.slice(0,5);
-                var endTime = response.data[i].endTime.slice(0,5);
+define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, Notification) {
+        $scope.slotTimes = [];
+        tdprSlotsService.getSlotsTimes().then(function (response) {
+            for (var i = 0; i < response.data.length; i++) {
+                var startTime = response.data[i].startTime.slice(0, 5);
+                var endTime = response.data[i].endTime.slice(0, 5);
                 $scope.slotTimes.push(startTime + "-" + endTime);
             }
-    });
+        });
 
         $scope.startDate;
         $scope.endDate;
+        $scope.relativeDayNumber = 0;
+        $scope.slotsForWeek = new Array(18);
+        $scope.AvailabilityEnum = AvailabilityEnum;
+        $scope.currentType = AvailabilityEnum.available.id;
+        $scope.mousedown = false;
 
+        $scope.$log = $log;
 
         var id = $stateParams.id;
 
-        var relativeDayNumber = 0;
-        $scope.slotsForWeek = new Array(18);
-
-        var clearTable = function() {
-            for(var i=0; i<$scope.slotsForWeek.length; i++){
-                $scope.slotsForWeek[i]=new Array(5);
-                for(var j=0; j<$scope.slotsForWeek[i].length; j++){
-                    $scope.slotsForWeek[i][j] = {available: false};
+        $scope.clearTable = function () {
+            for (var i = 0; i < $scope.slotsForWeek.length; i++) {
+                $scope.slotsForWeek[i] = new Array(5);
+                for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
+                    $scope.slotsForWeek[i][j] = {type: AvailabilityEnum.empty.id};
                 }
-            };
-        }
+            }
+        };
 
-        clearTable();
-
+        $scope.clearTable();
 
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-            return new Date(d.setDate(diff+i)); //i = 0 - monday
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff + i)); // i = 0 - monday
         }
 
-        var getSlots = function(personId, relDayNumber) {
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), relDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), relDayNumber + 4), "dd-MM-yyyy");
+        $scope.getSlots = function (personId) {
+            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
 
             $scope.startDate = startDate;
             $scope.endDate = endDate;
-            tdprSlotsService.getSlots(startDate, endDate, personId).then(function(response){
-
-                for(var slot in response.data){
-                    $scope.slotsForWeek[response.data[slot].slot.id-1][new Date(response.data[slot].slotsDate).getDay() - 1].available = true;
+            tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
+                for (var slot in response.data) {
+                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = String(response.data[slot].type.id);
                 }
             });
         };
@@ -54,12 +55,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             var slots = [];
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    if ($scope.slotsForWeek[i][j].available) {
+                    if ($scope.slotsForWeek[i][j].type !== AvailabilityEnum.empty.id) {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j),
                             person: {id: id},
                             slot: {id: i + 1},
-                            type: {id: 1}
+                            type: {id: $scope.slotsForWeek[i][j].type}
                         };
                         slots.push(slot);
                     }
@@ -71,23 +72,27 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                 Notification.success({message: 'Changes saved!', delay: 2000});});
         };
 
-        $scope.showPreviousWeek = function() {
-            relativeDayNumber = relativeDayNumber - 7;
-            clearTable();
-            getSlots(id, relativeDayNumber);
-        }
+        $scope.showPreviousWeek = function () {
+            $scope.relativeDayNumber -= 7;
+            $scope.clearTable();
+            $scope.getSlots(id);
+        };
 
-        $scope.showNextWeek = function() {
-            relativeDayNumber = relativeDayNumber + 7;
-            clearTable();
-            getSlots(id, relativeDayNumber);
-        }
+        $scope.showNextWeek = function () {
+            $scope.relativeDayNumber += 7;
+            $scope.clearTable();
+            $scope.getSlots(id);
+        };
 
+        $scope.getSlots(id);
+
+        $scope.markSlots = function(slot) {
+            slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
+        };
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
         }
 
-        getSlots(id, relativeDayNumber);
 
     });
 });
