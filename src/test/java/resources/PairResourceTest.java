@@ -49,11 +49,11 @@ public class PairResourceTest {
         SlotsTimes sameSlotsTime = createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
         SlotsTimes differentSlotsTime = createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
 
-        Persons firstPerson = createPersons((long) 1, "FIRST");
+        Persons firstPerson = createPersons((long)1, "FIRST");
         mockSlots.add(createSlot((long)1, sameSlotsTime, firstPerson, sameDate));
         mockSlots.add(createSlot((long)2, sameSlotsTime, firstPerson, differentDate));
 
-        Persons secondPerson = createPersons((long) 2, "SECOND");
+        Persons secondPerson = createPersons((long)2, "SECOND");
         mockSlots.add(expectedSlot = createSlot((long)3, sameSlotsTime, secondPerson, sameDate));
         mockSlots.add(createSlot((long)4, differentSlotsTime, secondPerson, sameDate));
 
@@ -77,10 +77,7 @@ public class PairResourceTest {
         slot.setSlot(slotsTimes);
         slot.setPerson(person);
         slot.setSlotsDate(date);
-
-        person.setSlotsList(new HashSet<Slots>(){{
-            add(slot);
-        }});
+        person.getSlotsList().add(slot);
         return slot;
     }
 
