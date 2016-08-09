@@ -14,7 +14,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     element[0].className = "";
                     element.addClass(type.className);
 
-                    if (scope.availabilityObject.index % elementsCount == elementsCount-1) {
+                    if (scope.availabilityObject.index % elementsCount === elementsCount - 1) {
                         element.addClass("cell-last-column");
                     }
 
