@@ -1,6 +1,5 @@
 define(['angular'
     , 'application/constants/tdprConstantsModule'
-    , 'lodash'
 ], function (angular, tdprConstantsModule) {
 
     tdprConstantsModule.constant('AvailabilityEnum', {
