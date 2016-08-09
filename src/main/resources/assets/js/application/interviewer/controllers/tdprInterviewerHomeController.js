@@ -6,6 +6,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         $scope.displayedEndDate;
         $scope.slotsForWeek = new Array(18);
 
+        var note;
         var id = $stateParams.id;
         var relativeDayNumber = 0;
 
@@ -29,9 +30,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         }
 
        $scope.showPreviousWeek = function() {
-            clearTable();
-
             relativeDayNumber = relativeDayNumber - 7;
+
+            clearTable();
             getSlots(id, relativeDayNumber);
 
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "dd-MM-yyyy");
@@ -39,9 +40,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         }
 
         $scope.showNextWeek = function() {
-            clearTable();
-
             relativeDayNumber = relativeDayNumber + 7;
+
+            clearTable();
             getSlots(id, relativeDayNumber);
 
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "dd-MM-yyyy");
@@ -71,17 +72,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                             $timeout(function(){$scope.showSubmitSuccess=false;}, 2000);
                         });
 
-
-            getNote(id, startDate);
-//            var note = {
-//                          id: 1,
-//                          person: {
-//                            id: id
-//                          },
-//                          description: $scope.noteContent.description,
-//                          date: startDate
-//                       };
-
             var note = {
                          "id": $scope.noteContent.id,
                          "person": {
@@ -89,7 +79,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                          },
                          "description": $scope.noteContent.description,
                          "date": $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "yyyy-MM-dd")
-                       }
+             }
 
             sendNote(note);
          };
@@ -106,12 +96,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             tdprPersonService.getNote(personId, date).then(function(response) {
                 $scope.noteContent = response.data;
                 if(response.status == 204) {
-                console.log("No note found!");
                     $scope.noteContent.id = null;
                 }
             }, function(failure) {
-                console.log("No note available! Status: " + failure.status);
-                $scope.noteContent.id = null;
+                console.log("getNote problem: Status: " + failure.status);
             })
         }
 
