@@ -1,39 +1,84 @@
- h1 {
-    font-size: 48px;
+
+
+.background {
+    background-image: url("image.jpeg");
+    background-repeat: no-repeat;
+
+    background-size: cover;
+
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#interviewer-header {
+   font-size: 48px;
+   color: #375D81;
 }
 .container {
     text-align: center;
+    font-family: 'Lato', sans-serif;
+
 }
 .availability-table {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #375D81;
 }
 
-table, td, tr {
-    border: 1px solid black;
-}
 .available-slot {
     background-color: #87D37C;
 }
+
 .availability-table tbody td, .availability-table thead th{
     width: 120px;
     height: 30px;
 }
-.availability-table th{
-    text-align: center;
-        border: 2px solid black;
 
+.availability-table th{
+    color: white;
+    text-align: center;
+    background-color: #375D81;
 }
-.slotTime{
+
+.availability-table td{
+    border: 1px solid #375D81;
+    border-bottom: 0px;
+}
+.availability-table td:hover{
+    cursor: pointer;
+    background-color: #87D37C;
+}
+
+#hours-th {
+    color: #375D81;
+    background-color: white;
+    border-radius: 5px;
+}
+.slot-time{
     font-weight: bold;
     font-size: 18px;
-    border: 2px solid black;
-    background-color: #89C4F4;
-
+    background-color: #ABC8E2;
+    color: white;
+}
+.slot-time:hover{
+    background-color: #5C97BF;
 }
 
 .navigate {
      display: inline;
+     color: #3498DB;
+     position: absolute;
+
 }
 
 #submit-slots{
@@ -44,4 +89,59 @@ table, td, tr {
 .alert {
     position: fixed;
     top:0;
+}
+
+#date-container p{
+    font-size: 20px;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+h4 {
+    color: #bdc3c7;
+}
+
+#btn-left{
+    left:35%;
+    transform: translate(-50%, -50%);
+}
+#btn-right{
+    left:65%;
+    transform: translate(-50%, -50%);
+}
+
+.button {
+    border-radius: 5px;
+    border: 1px solid #3498DB;
+    background-color: white;
+    width: 110px;
+    padding: 5px, 10px, 5px, 10px;
+}
+
+.button:hover {
+    background-color: #3498DB;
+    color: white;
+}
+
+#submit-button{
+    border-radius: 5px;
+    width: 200px;
+    height: 100px
+    padding: 5px, 10px, 5px, 10px;
+    background-color: #375D81;
+    color: white;
+    border: 1px solid #375D81;
+}
+#submit-button:hover{
+    background-color: white;
+    color: #375D81;
+    cursor: pointer;
+}
+
+#date-container {
+    margin-top: 30px;
+}
+
+button {
+    outline:none;
 }
