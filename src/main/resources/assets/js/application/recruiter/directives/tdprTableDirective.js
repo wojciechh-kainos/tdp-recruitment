@@ -6,16 +6,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             scope: {
                 modelInput: '=',
                 slotsTimes: '=',
-                startWeekDay: '=',
-                selectedDay: '='
+                startWeekDay: '='
             },
             link: function (scope, element, attributes) {
                 var _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                 var daysLength = _days.length;
                 var dateFormat = 'EEEE yyyy-MM-dd';
-
                 var timeElementsCount;
-                var previousStartWeekDay;
 
                 /* Create and output array of time labels for table header */
                 function _createHeaderArray(weekStart) {
@@ -72,26 +69,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     return array;
                 }
 
-                function _selectActive(day) {
-                    if (scope.selectedDay === null || scope.selectedDay === undefined) {
-                        scope.selectedDay = day;
-                        return;
-                    }
-
-                    if (scope.selectedDay.day === day.day) {
-                        scope.selectedDay = null;
-                    } else {
-                        scope.selectedDay = day;
-                    }
-                }
-
-
                 function _init() {
                     scope.timeElements = _createHeaderArray(scope.startWeekDay);
                     scope.dayNames = _prepareDateHeader(scope.startWeekDay);
-
                     scope.timeElementsCount = timeElementsCount;
-                    scope.selectActive = _selectActive;
                 }
 
                 scope.$watch("startWeekDay", function (newValue, oldValue) {
@@ -100,20 +81,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                 scope.$watch("slotsTimes", function (newValue, oldValue) {
                     _init();
-                });
-
-                scope.$watch("selectedDay", function (newValue, oldValue) {
-                    if (newValue !== undefined) {
-                        if (newValue === null) {
-                            scope.startWeekDay = previousStartWeekDay;
-                            daysLength = _days.length;
-                            _init();
-                        } else {
-                            daysLength = 1;
-                            previousStartWeekDay = scope.startWeekDay;
-                            scope.startWeekDay = newValue.dayValue;
-                        }
-                    }
                 });
             }
         };

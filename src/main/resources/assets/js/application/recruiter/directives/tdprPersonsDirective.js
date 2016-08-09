@@ -9,7 +9,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 startWeekDay: '='
             },
             link: function (scope, element, attributes) {
-
                 scope.activePerson = null;
                 scope.jobProfile = "";
 
@@ -20,9 +19,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     // Possibly add here check for job profile
 
                     for (var i = 0; i < checkArray.length; i++) {
-                    var type = JobProfileEnum[scope.jobProfile];
-                        if(checkArray[i].person[type] == true)
-                        array[checkArray[i].person.id] = checkArray[i];
+                        var type = JobProfileEnum[scope.jobProfile];
+                        if (checkArray[i].person[type] == true)
+                            array[checkArray[i].person.id] = checkArray[i];
                     }
 
                     return array;
@@ -54,7 +53,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     scope.changeActive = _changeActive;
                 }
 
-                function _changeJobProfile(newValue){
+                function _changeJobProfile(newValue) {
                     scope.jobProfile = newValue;
                 }
 
