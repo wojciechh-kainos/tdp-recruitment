@@ -1,12 +1,7 @@
 <h1>TIMETABLE</h1>
 
-<div>
-    <form>
-        <label ng-repeat="job in jobProfiles" for="{{job}}">
-            <input type="radio" ng-model="jobProfile" name="jobProfile" id="{{job}}" ng-click="changeJobProfile($index)">
-            {{job}}
-        </label><br/>
-    </form>
-</div>
+<div filter-directive></div>
 
 <div data-my-timetable data-start-week-day="startDateWeek" data-model-input="staticData" data-slots-times="timeData" data-selected-day="selectedDay"></div>
+
+<a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
