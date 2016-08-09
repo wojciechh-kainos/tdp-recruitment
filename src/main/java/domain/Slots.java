@@ -1,12 +1,14 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import serializers.SlotsSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
-
+@JsonSerialize(using = SlotsSerializer.class)
 @Entity
 @Table(name = "slots")
 @NamedQueries({
