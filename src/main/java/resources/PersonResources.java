@@ -8,8 +8,6 @@ import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.jvnet.hk2.internal.Collector;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
@@ -31,6 +29,15 @@ public class PersonResources {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.notesDao = notesDao;
+    }
+
+    @PUT
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons createPerson(Persons person) {
+        personsDao.create(person);
+        return person;
     }
 
     @GET
