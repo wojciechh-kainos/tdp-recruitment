@@ -44,21 +44,6 @@ public class PersonResources {
                 .map(person -> {
                     Map<String, Object> item = new HashMap<>();
                     item.put("person", person);
-                    item.put("slots", slots
-                        .stream()
-                        .filter(slot -> slot.getPerson().getId() == person.getId())
-                        .map(slot -> {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("id", slot.getId());
-                            map.put("person", slot.getPerson().getId());
-                            map.put("day", slot.getSlotsDate());
-                            map.put("slot", slot.getSlot().getId());
-                            map.put("type", slot.getType().getType());
-
-                            return map;
-                        })
-                        .collect(Collectors.toCollection(ArrayList::new)));
-
                     return item;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
