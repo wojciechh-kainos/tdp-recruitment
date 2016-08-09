@@ -41,10 +41,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
             $scope.startDate = startDate;
             $scope.endDate = endDate;
-
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
                 for (var slot in response.data) {
-                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = response.data[slot].type;
+                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = String(response.data[slot].type.id);
                 }
             });
         };
@@ -58,7 +57,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                             slotsDate: getDayOfTheWeek(new Date(), j),
                             person: {id: id},
                             slot: {id: i + 1},
-                            type: {id: $scope.slotsForWeek[i][j].type.id}
+                            type: {id: $scope.slotsForWeek[i][j].type}
                         };
                         slots.push(slot);
                     }
