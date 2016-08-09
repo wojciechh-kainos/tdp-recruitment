@@ -39,7 +39,6 @@ public class PersonResources {
     public Persons createPerson(Persons person) {
         personsDao.create(person);
         mailService.sendEmail(person.getEmail(), person.getId());
-        System.out.print("lolololololololol");
         return person;
     }
 
