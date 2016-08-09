@@ -41,3 +41,10 @@ database:
 
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
+
+smtpConfig:
+  host: mail.kainos.com
+  port: 25
+  from: no-reply@kainos.com
+
+domain: http://localhost:8888/#/interviewer/home/
