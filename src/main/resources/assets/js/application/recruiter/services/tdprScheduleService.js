@@ -1,7 +1,7 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', '_', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService, _) {
+    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
         var service = {};
-
+        
         service.changeSlotType = function (objectArray, slots, person, changeTo) {
             var changedFlag = false;
 

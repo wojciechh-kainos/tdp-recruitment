@@ -28,6 +28,9 @@ require.config({
         'angular': {
             exports: 'angular'
         },
+        'lodash':  {
+            exports: '_'
+        },
         'angularMocks': ['angular'],
         'ui-bootstrap': ['angular'],
         'uiRouter': ['angular']

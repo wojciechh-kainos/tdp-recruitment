@@ -13,6 +13,9 @@ require.config({
         'angular': {
             exports: 'angular'
         },
+        'lodash':  {
+            exports: '_'
+        },
         'ui-bootstrap': ['angular'],
         'uiRouter': ['angular']
     },

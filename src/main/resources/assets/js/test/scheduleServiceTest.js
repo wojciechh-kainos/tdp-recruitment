@@ -48,8 +48,6 @@ define(['angular', 'angularMocks',
                         tooltipText: "maybe "
                     }
                 });
-
-                $provide.constant('_', window._);
             });
         });
 
