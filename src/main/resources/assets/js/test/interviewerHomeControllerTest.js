@@ -8,6 +8,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var personId;
         var slotsService;
         var getSlotsDeferred;
+        var AvailabilityEnum;
 
         beforeEach(inject(function ($controller, tdprSlotsService, _$rootScope_, _$filter_, $q) {
             personId = 42;
@@ -17,12 +18,18 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             getSlotsDeferred = $q.defer();
             var slotsTimesDeferred = $q.defer();
             var updateSlotsDeferred = $q.defer();
+            AvailabilityEnum = {empty: {id: '0'}, available: {id: '1'}};
 
             spyOn(slotsService, 'getSlotsTimes').and.returnValue(slotsTimesDeferred.promise);
             spyOn(slotsService, 'getSlots').and.returnValue(getSlotsDeferred.promise);
             spyOn(slotsService, 'updateSlots').and.returnValue(updateSlotsDeferred.promise);
 
-            $controller('tdprInterviewerHomeController', { $scope: $scope, tdprSlotsService: slotsService, $stateParams: {id: personId} });
+            $controller('tdprInterviewerHomeController', {
+                $scope: $scope,
+                tdprSlotsService: slotsService,
+                AvailabilityEnum: AvailabilityEnum,
+                $stateParams: {id: personId}
+            });
 
             slotsTimesDeferred.resolve({data: []});
             updateSlotsDeferred.resolve({data: []});
@@ -36,8 +43,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             expect(slotsService.getSlots).toHaveBeenCalled();
         });
 
-        it('should initialize currentType to 1', function () {
-            expect($scope.currentType).toEqual('1');
+        it('should set currentType to available at init', function () {
+            expect($scope.currentType).toEqual(AvailabilityEnum.available.id);
         });
 
         describe('getSlots', function () {
@@ -52,14 +59,16 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             });
 
             it('should store values received from service in slotsForWeek array', function () {
-                getSlotsDeferred.resolve({data: [{slot: {id: 1}, type: {id: 61}, slotsDate: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
-                    {slot: {id: 4}, type: {id: 62}, slotsDate: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
-                    {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}]}); // 6th slot, monday
+                getSlotsDeferred.resolve({
+                    data: [{slot: {id: 1}, type: {id: 61}, slotsDate: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
+                        {slot: {id: 4}, type: {id: 62}, slotsDate: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
+                        {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}]
+                }); // 6th slot, monday
 
                 $scope.getSlots();
                 $scope.$apply();
 
-                expect($scope.slotsForWeek[0][0]).toEqual({type: '0'});
+                expect($scope.slotsForWeek[0][0]).toEqual({type: AvailabilityEnum.empty.id});
                 expect($scope.slotsForWeek[0][1]).toEqual({type: '61'});
                 expect($scope.slotsForWeek[3][4]).toEqual({type: '62'});
                 expect($scope.slotsForWeek[5][0]).toEqual({type: '63'});
@@ -68,7 +77,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
         describe('updateSlots', function () {
             it('should parse slots from table to proper json format', function () {
-                $scope.slotsForWeek[0][0] = {type: {id: 1}};
+                $scope.slotsForWeek[0][0] = {type: {id: 42}};
                 getSlotsDeferred.resolve({});
 
                 var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
@@ -81,24 +90,25 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                     slotsDate: jasmine.any(Date),
                     person: {id: personId},
                     slot: {id: 1},
-                    type: {id: {id: 1}}
+                    type: {id: {id: 42}}
                 }], personId, startDate, endDate);
             });
         });
 
         describe('clearTable', function () {
-           it('should set type of all objects in table to 0', function () {
-               $scope.slotsForWeek[4][2] = {type: {id: 4}};
+            it('should set type of all objects in table to 0', function () {
+                $scope.slotsForWeek[4][2] = {type: {id: 42}};
+                $scope.slotsForWeek[2][4] = {type: {id: 42}};
 
-               $scope.clearTable();
-               $scope.$apply();
+                $scope.clearTable();
+                $scope.$apply();
 
-               $scope.slotsForWeek.forEach(function (days) {
-                   days.forEach(function (slot) {
-                      expect(slot).toEqual({type: '0'});
-                   });
-               });
-           });
+                $scope.slotsForWeek.forEach(function (days) {
+                    days.forEach(function (slot) {
+                        expect(slot).toEqual({type: AvailabilityEnum.empty.id});
+                    });
+                });
+            });
         });
 
         describe('showPreviousWeek', function () {
