@@ -6,6 +6,7 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jvnet.hk2.internal.Collector;
 
 import javax.ws.rs.*;
@@ -24,15 +25,24 @@ public class PersonResources {
     private SlotsDao slotsDao;
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao){
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
+    }
+
+    @PUT
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons createPerson(Persons person) {
+        personsDao.create(person);
+        return person;
     }
 
     @GET
     @Path("/all")
     @UnitOfWork
-    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate){
+    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) {
         List<Persons> persons = personsDao.findAll();
         List<Slots> slots = slotsDao.findBetween(startDate, endDate);
 

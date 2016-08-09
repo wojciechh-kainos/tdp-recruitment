@@ -1,11 +1,11 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q) {
         var persons;
         var weekStart;
         var weekEnd;
         var currentDay = new Date();
 
-        this.fetchPersons = function(){
+        this.fetchPersons = function () {
             var format = 'yyyy-MM-dd';
 
             var now = currentDay;
@@ -25,12 +25,22 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             )
         };
 
-        this.getCurrentWeek = function() {
+        this.getCurrentWeek = function () {
             return new Date(new Date(new Date(weekStart.setHours(2)).setMinutes(0)).setSeconds(0));
         };
 
         this.getPersons = function () {
             return persons;
-        }
+        };
+
+        this.createPerson = function (person) {
+            return $http.put("/api/person/create/", person).then(function (response) {
+                return response;
+            }, function (err) {
+                err.message = "Interviewer adding failed.";
+                return $q.reject(err);
+            });
+        };
+
     })
 });
