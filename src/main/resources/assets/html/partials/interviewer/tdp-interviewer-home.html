@@ -12,9 +12,12 @@
     </div>
 
     <div class="legend">
-        <label><input type="radio" ng-model="currentType" value="1"/> <span class="available-slot legend-block"></span> Availability</label>
-        <label><input type="radio" ng-model="currentType" value="4"/> <span class="unavailable-slot legend-block"></span> Unavailability</label>
-        <label><input type="radio" ng-model="currentType" value="5"/> <span class="maybe-available-slot legend-block"></span> Maybe</label>
+        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.available.id}}"/>
+            <span class="{{AvailabilityEnum.available.className}} legend-block"></span> Availability</label>
+        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.unavailable.id}}"/>
+            <span class="{{AvailabilityEnum.unavailable.className}} legend-block"></span> Unavailability</label>
+        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.maybe.id}}"/>
+            <span class="{{AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
     </div>
 
     <table class="availability-table">
@@ -32,8 +35,10 @@
         <tr ng-repeat="slotsForDay in slotsForWeek">
             <td class="slotTime">{{slotTimes[$index]}}</td>
             <td ng-repeat="slot in slotsForDay track by $index"
-                ng-class="{'available-slot': slot.type === '1', 'unavailable-slot': slot.type === '4', 'maybe-available-slot': slot.type === '5'}"
-                ng-click="slot.type === currentType ? slot = null : slot.type = currentType">
+                ng-class="{'{{AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
+                    '{{AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
+                    '{{AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
+                ng-click="slot.type === currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = currentType">
             </td>
         </tr>
         </tbody>

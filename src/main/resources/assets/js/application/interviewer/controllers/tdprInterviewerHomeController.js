@@ -1,5 +1,5 @@
-define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout) {
+define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum) {
         $scope.slotTimes = [];
         tdprSlotsService.getSlotsTimes().then(function (response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -11,9 +11,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         $scope.startDate;
         $scope.endDate;
-        $scope.currentType = '1'; // 1 - available, 2 - full, 3 - init, 4 - unavailable, 5 - maybe
         $scope.relativeDayNumber = 0;
         $scope.slotsForWeek = new Array(18);
+        $scope.AvailabilityEnum = AvailabilityEnum;
+        $scope.currentType = AvailabilityEnum.available.id;
 
         var id = $stateParams.id;
 
@@ -21,7 +22,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 $scope.slotsForWeek[i] = new Array(5);
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    $scope.slotsForWeek[i][j] = {type: '0'};
+                    $scope.slotsForWeek[i][j] = {type: AvailabilityEnum.empty.id};
                 }
             }
         };
@@ -51,7 +52,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             var slots = [];
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    if ($scope.slotsForWeek[i][j].type !== '0') {
+                    if ($scope.slotsForWeek[i][j].type !== AvailabilityEnum.empty.id) {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j),
                             person: {id: id},

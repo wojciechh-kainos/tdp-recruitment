@@ -42,13 +42,12 @@ h2 {
     color: #808080;
 }
 
-.cell-avail-empty{
+.cell-avail-empty {
     background-color: #ffffff;
 }
 
 .cell-avail-available {
     background-color: #87D37C;
-    border: 1px;
 }
 
 .cell-avail-unavailable {
@@ -70,7 +69,3 @@ h2 {
 .cell-selected {
     background-color: cyan;
 }
-
-
-
-
