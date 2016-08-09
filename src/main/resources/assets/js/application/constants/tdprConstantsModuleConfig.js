@@ -3,35 +3,47 @@ define(['angular'
 ], function (angular, tdprConstantsModule) {
 
     tdprConstantsModule.constant('AvailabilityEnum', {
-        unavailable: {
-            priority: 1,
-            name: "unavailable",
-            className: "cell-avail-unavailable",
+        empty: {
+            id: '0',
+            name: "empty",
+            className: "cell-avail-empty",
             tooltipText: ""
         },
         available: {
-            priority: 2,
+            id: '1',
             name: "available",
             className: "cell-avail-available",
-            tooltipText: "available "
+            tooltipText: "available"
+        },
+        full: {
+            id: '2',
+            name: "full",
+            className: "cell-avail-full",
+            tooltipText: "full"
         },
         init: {
-            priority: 3,
+            id: '3',
             name: "init",
             className: "cell-avail-init",
             tooltipText: "init call"
         },
-        full: {
-            priority: 4,
-            name: "full",
-            className: "cell-avail-full",
-            tooltipText: "full "
+        unavailable: {
+            id: '4',
+            name: "unavailable",
+            className: "cell-avail-unavailable",
+            tooltipText: ""
+        },
+        maybe: {
+            id: '5',
+            name: "maybe",
+            className: "cell-avail-maybe",
+            tooltipText: "maybe"
         }
     }).constant('JobProfileEnum', {
-              dev: "isDev",
-              web: "isWeb",
-              test: "isTest"
-          });
+        dev: "isDev",
+        web: "isWeb",
+        test: "isTest"
+    });
 
     return tdprConstantsModule;
 });
