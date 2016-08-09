@@ -12,12 +12,12 @@
     </div>
 
     <div class="legend">
-        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.available.id}}"/>
-            <span class="{{AvailabilityEnum.available.className}} legend-block"></span> Available</label>
-        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.unavailable.id}}"/>
-            <span class="{{AvailabilityEnum.unavailable.className}} legend-block"></span> Unavailable</label>
-        <label><input type="radio" ng-model="currentType" value="{{AvailabilityEnum.maybe.id}}"/>
-            <span class="{{AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.available.id}}"/>
+            <span class="{{::AvailabilityEnum.available.className}} legend-block"></span> Available</label>
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.unavailable.id}}"/>
+            <span class="{{::AvailabilityEnum.unavailable.className}} legend-block"></span> Unavailable</label>
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.maybe.id}}"/>
+            <span class="{{::AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
     </div>
 
     <table class="availability-table">
@@ -35,9 +35,9 @@
         <tr ng-repeat="slotsForDay in slotsForWeek">
             <td class="slotTime">{{slotTimes[$index]}}</td>
             <td ng-repeat="slot in slotsForDay track by $index"
-                ng-class="{'{{AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
-                    '{{AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
-                    '{{AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
+                ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
+                    '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
+                    '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
                 ng-click="slot.type === currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = currentType">
             </td>
         </tr>
