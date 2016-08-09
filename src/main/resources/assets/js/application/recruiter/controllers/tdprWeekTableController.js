@@ -1,5 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
+    , 'application/recruiter/directives/tdprJobProfilesDirecrive'
     , 'application/recruiter/directives/tdprAvailabilityDirective'
     , 'application/recruiter/directives/tdprPersonDirective'
     , 'application/recruiter/directives/tdprPersonsDirective'
@@ -15,10 +16,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.jobProfiles = ["web", "dev", "test"];
         $scope.jobProfile = "";
 
-        $scope.isDev = false;
-        $scope.isOps = false;
-        $scope.isTest = true;
-
         $scope.changeJobProfile = function(index) {
                $scope.jobProfile = $scope.jobProfiles[index];
         };
@@ -32,5 +29,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         });
 
         $scope.startDateWeek = tdprPersonsService.getCurrentWeek();
+
     })
 });
