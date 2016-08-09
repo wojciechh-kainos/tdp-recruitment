@@ -20,12 +20,26 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                         if (compareDay.getTime() === dateObj.getTime()) {
                             // Cycle through possibly options for slots type
 
-                            if (slots[key].type === "available") {
-                                slots[key].type = "full";
-                            } else if (slots[key].type === "full") {
-                                slots[key].type = "init";
-                            } else if (slots[key].type === "init") {
-                                // Reset slot
+                            var currentType = slots[key].type;
+                            var currentTypeId = AvailabilityEnum[currentType].id;
+
+                            var newTypeId = currentTypeId + 1;
+                            var newTypeKey;
+
+                            for(var typeKey in AvailabilityEnum) {
+                                if (!AvailabilityEnum.hasOwnProperty(typeKey)) continue;
+
+                                if (AvailabilityEnum[typeKey].id === newTypeId) {
+                                    newTypeKey = typeKey;
+                                    break;
+                                }
+                            }
+
+                            if (newTypeKey !== undefined) {
+                                // There is still availability type to cycle through
+                                slots[key].type = AvailabilityEnum[newTypeKey].name;
+                            } else {
+                                // There is no more availability types, so we need to clear slot
                                 slots[key] = {};
                             }
                         }

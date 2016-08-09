@@ -6,7 +6,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             link: function (scope, element, attributes) {
 
                 function _init() {
-                    var available = scope.availabilityObject.type ? scope.availabilityObject.type : "unavailable";
+                    var available = scope.availabilityObject.type ? scope.availabilityObject.type : "empty";
                     var type = AvailabilityEnum[available];
 
                     var elementsCount = tdprRecruiterGetSlotsTimesService.getSlotsTimesCount();

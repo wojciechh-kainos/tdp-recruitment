@@ -18,12 +18,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                 var compareDay = tdprDateService.resetDate(slots[key].day);
 
+                var slotType = slots[key].type ? slots[key].type : "empty";
+
                 if (compareDay.getTime() === dateObj.getTime()) {
                     array.push({
                         slotsDate: tdprDateService.resetDate(compareDay),
                         person: {id: personId},
                         slot: {id: slots[key].slot},
-                        type: {id: AvailabilityEnum[slots[key].type ? slots[key].type : "unavailable"].priority}
+                        type: {id: AvailabilityEnum[slotType].id}
                     });
                 }
             }
