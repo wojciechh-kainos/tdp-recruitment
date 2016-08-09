@@ -20,7 +20,7 @@
             <span class="{{::AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
     </div>
 
-    <table class="availability-table">
+    <table class="availability-table" ng-mousedown="mousedown = true" ng-mouseup="mousedown = false">
         <thead>
         <tr>
             <th>HOURS</th>
@@ -38,7 +38,8 @@
                 ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
-                ng-click="slot.type === currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = currentType">
+                ng-mousedown="markSlots(slot)"
+                ng-mouseover="mousedown ? markSlots(slot) : '' " >
             </td>
         </tr>
         </tbody>

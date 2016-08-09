@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum, $log) {
         $scope.slotTimes = [];
         tdprSlotsService.getSlotsTimes().then(function (response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -15,6 +15,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.slotsForWeek = new Array(18);
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
+        $scope.mousedown = false;
+
+        $scope.$log = $log;
 
         var id = $stateParams.id;
 
@@ -86,6 +89,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.getSlots(id);
+
+        $scope.markSlots = function(slot) {
+            slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
+        };
 
     });
 });
