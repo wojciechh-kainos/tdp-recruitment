@@ -1,7 +1,8 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
+    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', '_', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService, _) {
+        var service = {};
 
-        var changeSlotType = function (objectArray, slots, person, changeTo) {
+        service.changeSlotType = function (objectArray, slots, person, changeTo) {
             var changedFlag = false;
 
             for (var key in slots) {
@@ -41,10 +42,10 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
             );
         };
 
-        var changeSlotTypeCycleThrough = function (objectArray, slots, person) {
+        service.changeSlotTypeCycleThrough = function (objectArray, slots, person) {
             if (objectArray.type === undefined) {
                 // Add available slot for future changes
-                return changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
+                return service.changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
             } else {
                 var currentType = objectArray.type;
                 var currentTypeId = AvailabilityEnum[currentType].id;
@@ -62,16 +63,10 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                     }
                 }
 
-                return changeSlotType(objectArray, slots, person, newType);
+                return service.changeSlotType(objectArray, slots, person, newType);
             }
         };
 
-        this.changeSlotType = function (objectArray, slots, person, changeTo) {
-            return changeSlotType(objectArray, slots, person, changeTo)
-        };
-
-        this.changeSlotTypeCycleThrough = function (objectArray, slots, person) {
-            return changeSlotTypeCycleThrough(objectArray, slots, person)
-        };
-    })
+        return service;
+    }])
 });

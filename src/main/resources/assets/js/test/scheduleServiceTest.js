@@ -1,4 +1,5 @@
 define(['angular', 'angularMocks',
+    'lodash',
     'application/recruiter/services/tdprScheduleService',
     'application/recruiter/services/tdprDateService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
@@ -47,6 +48,8 @@ define(['angular', 'angularMocks',
                         tooltipText: "maybe "
                     }
                 });
+
+                $provide.constant('_', window._);
             });
         });
 

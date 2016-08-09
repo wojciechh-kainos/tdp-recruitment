@@ -6,7 +6,8 @@ require.config({
     paths: {
         'angular': 'lib/angular/angular',
         'uiRouter': 'lib/angular-ui-router/release/angular-ui-router.min',
-        'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls'
+        'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
+        'lodash': 'lib/lodash/dist/lodash'
     },
     shim: {
         'angular': {

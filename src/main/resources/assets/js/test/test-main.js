@@ -21,8 +21,8 @@ require.config({
         'uiRouter': 'lib/angular-ui-router/release/angular-ui-router',
         'requireJS': 'lib/requirejs/require',
         'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
-        'karma-requireJS': 'lib/karma-require'
-
+        'karma-requireJS': 'lib/karma-require',
+        'lodash': 'lib/lodash/dist/lodash'
     },
     shim: {
         'angular': {
