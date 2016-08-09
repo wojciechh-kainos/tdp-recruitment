@@ -8,15 +8,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             replace: true,
             scope: {
                 person: '=',
-                slotTimes: '=',
-                slotsList: '='
+                slotTimes: '='
             },
             link: function (scope, element, attributes) {
                 scope.days = [1,2,3,4,5];
                 
-                scope.getSlot = function (slotId, day) {
-                    return scope.slotsList.find(function (slot) {
-                        return (slotId === slot.slot) && (new Date(slot.day).getDay() === day);
+                scope.getSlot = function (slotNumber, day) {
+                    return scope.person.slotsList.find(function (slot) {
+                        return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day);
                     });
                 }
             }
