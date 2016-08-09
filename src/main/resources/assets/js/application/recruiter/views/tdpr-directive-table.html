@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <th>Interviewer</th>
-        <th class="tiny-header" data-ng-repeat="item in timeElements track by $index"><div class="rotate">
+        <th class="tiny-header" ng-repeat="item in timeElements"><div class="rotate">
             <span uib-tooltip="{{item.tooltipText}}" tooltip-animation="false" tooltip-append-to-body="true">{{item.text}}</span></div>
         </th>
     </tr>

@@ -14,6 +14,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.staticData = [];
         $scope.timeData = {};
+        $scope.days = [getDayOfTheWeek(new Date(), 0),2,3,4,5];
+        $scope.monday = {};
+
+        function getDayOfTheWeek(d, i) {
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+            return new Date(d.setDate(diff+i)); //i = 0 - monday
+        }
     var i = 0;
         personsData.then(function () {
             $scope.persons = tdprPersonsService.getPersons();
@@ -21,6 +29,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         slotsData.then(function () {
             $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
+            $scope.timeData = $scope.timeData.slice(0,2);
         });
 
         $scope.startDateWeek = tdprPersonsService.getCurrentWeek();

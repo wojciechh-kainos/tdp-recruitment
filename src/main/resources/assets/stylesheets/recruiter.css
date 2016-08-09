@@ -8,6 +8,8 @@
     text-align: right;
     margin-top: 25px;
     margin-bottom: 5px;
+    display: inline-block;
+
 }
 
 .rotate > span {
@@ -19,9 +21,13 @@
 .slot{
     /*min-width: 10px;*/
     /*min-height: 10px;*/
-    padding: 5px;
+    width: 16px;
+    height: 20px;
 }
 
+.slot:hover {
+    background-color: black;
+}
 .person-row{
     /*height: 10px;*/
 }
@@ -52,7 +58,11 @@
 }
 
 .person-name {
-    min-width: 140px;
+    width: 140px;
+    position:absolute;
+    left:0;
+    text-align: right;
+    margin: 0;
 }
 
 .my-timetable {
@@ -101,3 +111,18 @@
     border-right: 4px solid dodgerblue;
 
 }
+
+.table1-container {
+    min-width: 800px;
+    overflow-x: scroll;
+    margin-left:140px;
+    overflow-y:visible;
+    padding-bottom:1px;
+
+}
+
+.container {
+    position: relative;
+}
+
+

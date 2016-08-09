@@ -1,14 +1,34 @@
-<h1>TIMETABLE</h1>
+<div class="container">
 
-<div filter-directive></div>
+    <h1>TIMETABLE</h1>
 
-<div data-my-timetable data-start-week-day="startDateWeek" data-model-input="staticData" data-slots-times="timeData" data-selected-day="selectedDay"></div>
+    <!--<div filter-directive></div>-->
 
+    <!--<div data-my-timetable data-start-week-day="startDateWeek" data-model-input="staticData" data-slots-times="timeData"-->
+         <!--data-selected-day="selectedDay"></div>-->
 
-<table>
-    <person-row slot-times="timeData" person="person" ng-repeat="person in persons"></person-row>
-</table>
+    <div class="table1-container">
+    <table class="table2">
+        <thead>
+            <tr>
+                <td></td>
+                <td ng-repeat="day in days">{{day | date: 'EEEE dd.MM.yyyy'}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ng-repeat="day in days">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td ng-repeat="slotTime in timeData" ><span class="rotate">{{slotTime.startTime | limitTo:5}} </span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr person-row slot-times="timeData" person="person" days="days" ng-repeat="person in persons"></tr>
+        </tbody>
+    </table>
 
-
-
-{{mylist}}
+    </div>
+</div>
