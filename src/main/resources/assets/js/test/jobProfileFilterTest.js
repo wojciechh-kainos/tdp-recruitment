@@ -25,24 +25,15 @@ define(['angular', 'angularMocks','application/recruiter/filters/tdprRecruiterJo
 
         describe('test job profile filter', function () {
             it("should return two person when isDev marked", function(){
-                isDev = true;
-                isOps= false;
-                isTest = false;
-                expect(filter('jobProfileFilter')(personDataForTesting, isDev, isOps, isTest).length).toEqual(2);
+                expect(filter('jobProfileFilter')(personDataForTesting, 'isDev').length).toEqual(2);
             })
 
             it("should return one person when isTest marked", function(){
-                isDev = false;
-                isOps= false;
-                isTest = true;
-                expect(filter('jobProfileFilter')(personDataForTesting, isDev, isOps, isTest).length).toEqual(1);
+                expect(filter('jobProfileFilter')(personDataForTesting, 'isTest').length).toEqual(1);
             })
 
             it("should return nothing when isOps marked", function(){
-                isDev = false;
-                isOps= true;
-                isTest = false;
-                expect(filter('jobProfileFilter')(personDataForTesting, isDev, isOps, isTest).length).toEqual(0);
+                expect(filter('jobProfileFilter')(personDataForTesting, 'isOps').length).toEqual(0);
             })
         })
     })
