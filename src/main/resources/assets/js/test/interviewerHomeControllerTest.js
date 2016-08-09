@@ -57,6 +57,60 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 }], 42, startDate, endDate);
             });
         });
+
+        describe('showPreviousWeek', function () {
+            it('should decrease relativeDayNumber by 7', function () {
+                $scope.showPreviousWeek();
+                $scope.$apply();
+
+                expect($scope.relativeDayNumber).toEqual(-7);
+            });
+
+            it('should clear table', function () {
+                spyOn($scope, 'clearTable').and.callThrough();
+
+                $scope.showPreviousWeek();
+                $scope.$apply();
+
+                expect($scope.clearTable).toHaveBeenCalled();
+            });
+
+            it('should get slots for new week', function () {
+                spyOn($scope, 'getSlots').and.callThrough();
+
+                $scope.showPreviousWeek();
+                $scope.$apply();
+
+                expect($scope.getSlots).toHaveBeenCalled();
+            });
+        });
+
+        describe('showNextWeek', function () {
+            it('should increase relativeDayNumber by 7', function () {
+                $scope.showNextWeek();
+                $scope.$apply();
+
+                expect($scope.relativeDayNumber).toEqual(7);
+            });
+
+            it('should clear table', function () {
+                spyOn($scope, 'clearTable').and.callThrough();
+
+                $scope.showNextWeek();
+                $scope.$apply();
+
+                expect($scope.clearTable).toHaveBeenCalled();
+            });
+
+            it('should get slots for new week', function () {
+                spyOn($scope, 'getSlots').and.callThrough();
+
+                $scope.showNextWeek();
+                $scope.$apply();
+
+                expect($scope.getSlots).toHaveBeenCalled();
+            });
+        });
     });
 
     // copied from tdprInterviewHomeController
