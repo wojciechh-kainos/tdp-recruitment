@@ -15,18 +15,6 @@ table, td, tr {
     border: 1px solid black;
 }
 
-.available-slot {
-    background-color: #87D37C;
-}
-
-.maybe-available-slot {
-    background-color: #B0BEC5;
-}
-
-.unavailable-slot {
-    background-color: #F44336;
-}
-
 .legend label {
     margin-right: 3rem;
 }
