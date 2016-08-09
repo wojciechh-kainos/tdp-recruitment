@@ -6,17 +6,18 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
 import org.jvnet.hk2.internal.Collector;
+import org.omg.CORBA.PERSIST_STORE;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/person")
@@ -27,7 +28,7 @@ public class PersonResources {
     private SlotsDao slotsDao;
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao){
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
     }
@@ -35,24 +36,20 @@ public class PersonResources {
     @GET
     @Path("/all")
     @UnitOfWork
-    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate){
-        List<Persons> persons = personsDao.findAll();
-        List<Slots> slots = slotsDao.findBetween(startDate, endDate);
+    public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+        Date start = DateTime.parse(startDate).toDate();
+        Date end = DateTime.parse(endDate).toDate();
 
-        return persons
-                .stream()
-                .map(person -> {
-                    Map<String, Object> item = new HashMap<>();
-                    item.put("person", person);
-                    return item;
-                })
-                .collect(Collectors.toCollection(ArrayList::new));
+        List<Persons> persons = personsDao.findAll();
+        persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
+
+        return persons;
     }
 
     @GET
     @Path("/all1")
     @UnitOfWork
-    public List fetchAllPersons(){
+    public List fetchAllPersons() {
         return personsDao.findAll();
 
 
