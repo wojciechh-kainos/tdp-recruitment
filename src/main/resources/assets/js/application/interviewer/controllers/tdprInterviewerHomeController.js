@@ -11,7 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         $scope.startDate;
         $scope.endDate;
-        $scope.currentType = 1; // 1 - available, 2 - full, 3 - init, 4 - unavailable, 5 - maybe
+        $scope.currentType = '1'; // 1 - available, 2 - full, 3 - init, 4 - unavailable, 5 - maybe
 
         var id = $stateParams.id;
 
@@ -32,7 +32,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
                 diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-            return new Date(d.setDate(diff + i)); //i = 0 - monday
+            return new Date(d.setDate(diff + i)); // i = 0 - monday
         }
 
         var getSlots = function (personId, relDayNumber) {
