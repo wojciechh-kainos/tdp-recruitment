@@ -12,8 +12,11 @@ public class TdpRecruitmentEmailConfiguration {
     @NotNull
     private String from;
 
-    @NotNull
+
     private String password;
+
+    @NotNull
+    private String domain;
 
 
     public String getHost() {
@@ -42,6 +45,14 @@ public class TdpRecruitmentEmailConfiguration {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public void setPassword(String password) {
