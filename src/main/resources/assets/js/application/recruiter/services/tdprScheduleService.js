@@ -2,22 +2,32 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
     tdprRecruiterModule.service('tdprScheduleService', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
         this.changeSlotType = function (objectArray, slots, person) {
             if (objectArray.type === undefined) {
-                return;
-            }
+                // Add slot for future changes
+                slots.push({
+                    day: objectArray.day,
+                    person: person.id,
+                    slot: objectArray.slotId,
+                    type: AvailabilityEnum.available.name
+                });
+            } else {
+                for (var key in slots) {
+                    if (!slots.hasOwnProperty(key)) continue;
 
-            for (var i = 0; i < slots.length; i++) {
-                if (objectArray.slotId == slots[i].slot) {
-                    var dateObj = tdprDateService.resetDate(objectArray.day);
-                    var compareDay = tdprDateService.resetDate(slots[i].day);
+                    if (objectArray.slotId == slots[key].slot) {
+                        var dateObj = tdprDateService.resetDate(objectArray.day);
+                        var compareDay = tdprDateService.resetDate(slots[key].day);
 
-                    if (compareDay.getTime() === dateObj.getTime()) {
-                        // Cycle through possibly options for slots type
-                        if (slots[i].type === "available") {
-                            slots[i].type = "full";
-                        } else if (slots[i].type === "full") {
-                            slots[i].type = "init";
-                        } else {
-                            slots[i].type = "available";
+                        if (compareDay.getTime() === dateObj.getTime()) {
+                            // Cycle through possibly options for slots type
+
+                            if (slots[key].type === "available") {
+                                slots[key].type = "full";
+                            } else if (slots[key].type === "full") {
+                                slots[key].type = "init";
+                            } else if (slots[key].type === "init") {
+                                // Reset slot
+                                slots[key] = {};
+                            }
                         }
                     }
                 }

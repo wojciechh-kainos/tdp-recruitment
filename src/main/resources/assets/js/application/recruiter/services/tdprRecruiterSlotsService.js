@@ -13,15 +13,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var array = [];
             var dateObj = tdprDateService.resetDate(day);
 
-            for (var i = 0; i < slots.length; i++) {
-                var compareDay = tdprDateService.resetDate(slots[i].day);
+            for (var key in slots) {
+                if (!slots.hasOwnProperty(key)) continue;
+
+                var compareDay = tdprDateService.resetDate(slots[key].day);
 
                 if (compareDay.getTime() === dateObj.getTime()) {
                     array.push({
                         slotsDate: tdprDateService.resetDate(compareDay),
                         person: {id: personId},
-                        slot: {id: slots[i].slot},
-                        type: {id: AvailabilityEnum[slots[i].type ? slots[i].type : "unavailable"].priority}
+                        slot: {id: slots[key].slot},
+                        type: {id: AvailabilityEnum[slots[key].type ? slots[key].type : "unavailable"].priority}
                     });
                 }
             }
