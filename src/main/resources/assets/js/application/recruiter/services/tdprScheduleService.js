@@ -1,7 +1,7 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
         var service = {};
-        
+
         service.changeSlotType = function (objectArray, slots, person, changeTo) {
             var changedFlag = false;
 
@@ -48,7 +48,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 return service.changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
             } else {
                 var currentType = objectArray.type;
-                var currentTypeId = AvailabilityEnum[currentType].id;
+                var currentTypeId = parseInt(AvailabilityEnum[currentType].id);
 
                 var newTypeId = currentTypeId + 1;
                 var newType;
@@ -57,7 +57,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 for (var typeKey in AvailabilityEnum) {
                     if (!AvailabilityEnum.hasOwnProperty(typeKey)) continue;
 
-                    if (AvailabilityEnum[typeKey].id === newTypeId) {
+                    if (AvailabilityEnum[typeKey].id === newTypeId.toString()) {
                         newType = typeKey;
                         break;
                     }
