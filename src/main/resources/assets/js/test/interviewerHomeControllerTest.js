@@ -5,10 +5,12 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
         var $scope;
         var $filter;
+        var personId;
         var slotsService;
         var getSlotsDeferred;
 
         beforeEach(inject(function ($controller, tdprSlotsService, _$rootScope_, _$filter_, $q) {
+            personId = 42;
             $filter = _$filter_;
             $scope = _$rootScope_.$new();
             slotsService = tdprSlotsService;
@@ -20,7 +22,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             spyOn(slotsService, 'getSlots').and.returnValue(getSlotsDeferred.promise);
             spyOn(slotsService, 'updateSlots').and.returnValue(updateSlotsDeferred.promise);
 
-            $controller('tdprInterviewerHomeController', { $scope: $scope, tdprSlotsService: slotsService, $stateParams: {id: 42} });
+            $controller('tdprInterviewerHomeController', { $scope: $scope, tdprSlotsService: slotsService, $stateParams: {id: personId} });
 
             slotsTimesDeferred.resolve({data: []});
             updateSlotsDeferred.resolve({data: []});
@@ -38,6 +40,32 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             expect($scope.currentType).toEqual('1');
         });
 
+        describe('getSlots', function () {
+            it('should call service with correct dates and personId', function () {
+                var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
+                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+
+                $scope.getSlots();
+                $scope.$apply();
+
+                expect(slotsService.getSlots).toHaveBeenCalledWith(startDate, endDate, personId);
+            });
+
+            it('should store values received from service in slotsForWeek array', function () {
+                getSlotsDeferred.resolve({data: [{slot: {id: 1}, type: {id: 61}, slotsDate: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
+                    {slot: {id: 4}, type: {id: 62}, slotsDate: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
+                    {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}]}); // 6th slot, monday
+
+                $scope.getSlots();
+                $scope.$apply();
+
+                expect($scope.slotsForWeek[0][0]).toEqual({type: '0'});
+                expect($scope.slotsForWeek[0][1]).toEqual({type: '61'});
+                expect($scope.slotsForWeek[3][4]).toEqual({type: '62'});
+                expect($scope.slotsForWeek[5][0]).toEqual({type: '63'});
+            });
+        });
+
         describe('updateSlots', function () {
             it('should parse slots from table to proper json format', function () {
                 $scope.slotsForWeek[0][0] = {type: {id: 1}};
@@ -51,10 +79,10 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
                 expect(slotsService.updateSlots).toHaveBeenCalledWith([{
                     slotsDate: jasmine.any(Date),
-                    person: {id: 42},
+                    person: {id: personId},
                     slot: {id: 1},
                     type: {id: {id: 1}}
-                }], 42, startDate, endDate);
+                }], personId, startDate, endDate);
             });
         });
 
@@ -67,7 +95,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
                $scope.slotsForWeek.forEach(function (days) {
                    days.forEach(function (slot) {
-                      expect(slot).toEqual({type: 0});
+                      expect(slot).toEqual({type: '0'});
                    });
                });
            });

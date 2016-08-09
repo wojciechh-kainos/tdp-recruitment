@@ -21,7 +21,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 $scope.slotsForWeek[i] = new Array(5);
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    $scope.slotsForWeek[i][j] = {type: 0};
+                    $scope.slotsForWeek[i][j] = {type: '0'};
                 }
             }
         };
@@ -51,7 +51,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             var slots = [];
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
-                    if ($scope.slotsForWeek[i][j].type) {
+                    if ($scope.slotsForWeek[i][j].type !== '0') {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j),
                             person: {id: id},
