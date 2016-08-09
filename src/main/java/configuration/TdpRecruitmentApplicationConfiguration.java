@@ -31,4 +31,18 @@ public class TdpRecruitmentApplicationConfiguration extends Configuration {
     public void setSmtpConfig(TdpRecruitmentEmailConfiguration smtpConfig) {
         this.smtpConfig = smtpConfig;
     }
+
+
+    @Valid
+    @NotNull
+    private String domain;
+
+    @JsonProperty("domain")
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 }

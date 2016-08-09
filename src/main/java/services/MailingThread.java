@@ -29,6 +29,7 @@ public class MailingThread extends Thread {
     public void run() {
 
         TdpRecruitmentEmailConfiguration config = this.config.getSmtpConfig();
+        String domain = this.config.getDomain();
         final Email email = new Email();
 
         String host = config.getHost();
@@ -45,7 +46,7 @@ public class MailingThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String tempText = text.replace("{{domain}}", config.getDomain());
+        String tempText = text.replace("{{domain}}", domain);
         String finalText = tempText.replace("{{id}}", personId.toString());
         email.setTextHTML(finalText);
         new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
