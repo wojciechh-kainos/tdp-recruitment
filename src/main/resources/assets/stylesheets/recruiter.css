@@ -16,13 +16,23 @@
     border-bottom: 1px solid #ccc;*/
 }
 
+.slot{
+    /*min-width: 10px;*/
+    /*min-height: 10px;*/
+    padding: 5px;
+}
+
+.person-row{
+    /*height: 10px;*/
+}
+
 .cell-avail-unavailable {
     border-top-width: 0px;
 }
 
 .cell-avail-available {
     background-color: #00b3ee;
-    border: 1px;
+
 }
 
 .cell-avail-init {
@@ -48,7 +58,7 @@
 .my-timetable {
     width: 100%;
     border-spacing: 0;
-    border-collapse: collapse;
+    border-collapse: separate;
 
     background: #fff;
 

@@ -6,5 +6,10 @@
 
 
 <table>
-    <person-row slot-times="timeData" slots-list="mylist"></person-row>
+    <person-row slot-times="timeData" slots-list="row.slots" ng-repeat="row in staticData"></person-row>
 </table>
+
+<button ng-click="szybkiguzik()">Szybki guzik</button>
+
+
+{{mylist}}

@@ -1,8 +1,6 @@
-
-<tr><td ng-repeat="day in days" >
-    <table>
-        <tr>
-            <slot ng-repeat="slotTime in slotTimes" slot-data="getSlot(slotTime.id, day)">{{$index}} {{day}}</slot>
-        </tr>
-    </table></td>
+<tr class="person-row">
+    <th>COKOLOWIEK</th>
+    <td ng-repeat="day in days">
+        <slot ng-repeat="slotTime in slotTimes" slot-data="getSlot(slotTime.id, day)"></slot>
+    </td>
 </tr>

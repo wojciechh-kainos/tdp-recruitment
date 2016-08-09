@@ -7,6 +7,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person-row.html',
             replace: true,
             scope: {
+                person: '=',
                 slotTimes: '=',
                 slotsList: '='
             },

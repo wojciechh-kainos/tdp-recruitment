@@ -14,10 +14,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.staticData = [];
         $scope.timeData = {};
-
+    var i = 0;
         personsData.then(function () {
             $scope.staticData = tdprPersonsService.getPersons();
-            $scope.mylist = $scope.staticData[0].slots;
+            $scope.mylist = $scope.staticData[i].slots;
         });
 
         slotsData.then(function () {
@@ -25,5 +25,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         });
 
         $scope.startDateWeek = tdprPersonsService.getCurrentWeek();
+        
+        $scope.szybkiguzik = function () {
+            i++;
+            $scope.mylist = $scope.staticData[i].slots;
+        }
     })
 });

@@ -9,15 +9,24 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
             },
             link: function (scope, element, attributes) {
-
-                    scope.$watch('slotData', function (newVal, oldVal) {
-                        if(typeof newVal === 'undefined'){
-                            scope.type = 'unavailable'
-                        } else {
-                            scope.type = newVal.type;
-                        }
-                    })
-
+                scope.isAvailable = function () {
+                  return !(typeof scope.slotData === 'undefined');
+                };
+                
+                scope.getStyle = function () {
+                    
+                  return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
+                };
+                
+                // scope.$watch('slotData', function (newVal, oldVal) {
+                //     if (typeof newVal === 'undefined') {
+                //         scope.type = 'unavailable'
+                //
+                //     } else {
+                //         scope.type = newVal.type;
+                //         element.addClass('cell-avail-available');
+                //     }
+                // });
             }
         }
     })
