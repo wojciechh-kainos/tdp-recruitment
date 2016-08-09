@@ -1,6 +1,6 @@
 define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInterviewerHomeController', 'application/interviewer/services/tdprSlotsService'], function (angular) {
 
-    describe('tdpInvestLoginController', function () {
+    describe('tdprInterviewerHomeController', function () {
         beforeEach(angular.mock.module('tdprInterviewerModule'));
 
         var $scope;
@@ -56,6 +56,21 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                     type: {id: {id: 1}}
                 }], 42, startDate, endDate);
             });
+        });
+
+        describe('clearTable', function () {
+           it('should set type of all objects in table to 0', function () {
+               $scope.slotsForWeek[4][2] = {type: {id: 4}};
+
+               $scope.clearTable();
+               $scope.$apply();
+
+               $scope.slotsForWeek.forEach(function (days) {
+                   days.forEach(function (slot) {
+                      expect(slot).toEqual({type: 0});
+                   });
+               });
+           });
         });
 
         describe('showPreviousWeek', function () {
