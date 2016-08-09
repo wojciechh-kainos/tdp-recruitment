@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function(angular, tdprInterviewerModule) {
-  tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter, $stateParams,$timeout) {
+  tdprInterviewerModule.controller("tdprInterviewerHomeController", function($scope, tdprSlotsService, $filter, $stateParams,$timeout, $state, Notification) {
     $scope.slotTimes = [];
         tdprSlotsService.getSlotsTimes().then(function(response) {
             for(var i = 0; i < response.data.length; i++) {
@@ -68,9 +68,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "dd-MM-yyyy");
             var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function(){
-                            $scope.showSubmitSuccess = true;
-                            $timeout(function(){$scope.showSubmitSuccess=false;}, 2000);
-                        });
+                Notification.success({message: 'Changes saved!', delay: 2000});});
         };
 
         $scope.showPreviousWeek = function() {
@@ -83,6 +81,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             relativeDayNumber = relativeDayNumber + 7;
             clearTable();
             getSlots(id, relativeDayNumber);
+        }
+
+        $scope.goDetails = function(){
+              $state.go('tdpr.interviewer.details', {'id' : id});
         }
 
         getSlots(id, relativeDayNumber);

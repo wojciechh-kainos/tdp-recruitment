@@ -17,12 +17,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         }
 
         $scope.updateDetails = function(){
-            var person = $scope.person;
+            var person = angular.copy($scope.person);
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
-            person.defaultStartHour = $filter('date')(angular.copy($scope.person.defaultStartHour), "HH:mm:ss");
-            person.defaultFinishHour = $filter('date')(angular.copy($scope.person.defaultFinishHour), "HH:mm:ss");
+            person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
+            person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
             tdprPersonService.updatePersonDetails(person).then(function(){
-                init();
+                //init();
                 Notification.success({message: 'Details updated!', delay: 2000});
             });
         }
