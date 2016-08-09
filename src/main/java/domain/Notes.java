@@ -19,7 +19,7 @@ public class Notes {
 
     @NotNull
     @JoinColumn(name = "person")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Persons person;
 
     @NotNull

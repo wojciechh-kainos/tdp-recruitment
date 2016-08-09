@@ -7,7 +7,7 @@
     <div>
         <button class="btn btn-default navigate pull-left" ng-click="showPreviousWeek()">Previous week</button>
 
-        <h4 class="navigate">{{startDate}} - {{endDate}}</h4>
+        <h4 class="navigate">{{displayedStartDate}} - {{displayedEndDate}}</h4>
         <button class="btn btn-default navigate pull-right" ng-click="showNextWeek()">Next week</button>
     </div>
     <table class="availability-table">
@@ -29,7 +29,17 @@
             </tr>
         </tbody>
     </table>
+    <hr>
+        <div>
+            <label>Note for this week:</label>
+        </div>
+        <div>
+            <input type="text" name="input" ng-model="noteContent.description" size="80">
+        </div>
+    <hr>
     <div>
          <button class="btn btn-primary" type="button" ng-click="updateSlots()">SUBMIT CHANGES</button>
     </div>
+    <hr>
+
 </div>
