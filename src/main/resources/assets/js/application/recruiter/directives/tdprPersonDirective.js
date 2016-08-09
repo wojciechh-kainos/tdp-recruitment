@@ -5,7 +5,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             link: function (scope, element, attributes) {
                 var changeType = function (objectArray) {
-                    tdprScheduleService.changeSlotType(objectArray, scope.person.slots, scope.person.person);
+                    tdprScheduleService.changeSlotTypeCycleThrough(objectArray, scope.person.slots, scope.person.person);
 
                     _init();
                 };

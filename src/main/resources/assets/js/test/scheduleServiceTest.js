@@ -148,7 +148,7 @@ define(['angular', 'angularMocks',
                     day: weekStart
                 };
 
-                tdprScheduleService.changeSlotType(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -209,7 +209,7 @@ define(['angular', 'angularMocks',
                     type: AvailabilityEnum.available.name
                 };
 
-                tdprScheduleService.changeSlotType(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -263,7 +263,7 @@ define(['angular', 'angularMocks',
                     type: AvailabilityEnum.maybe.name
                 };
 
-                tdprScheduleService.changeSlotType(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
