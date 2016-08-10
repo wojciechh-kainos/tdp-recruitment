@@ -25,10 +25,16 @@ define(['angular' 
                       templateUrl: "/html/partials/interviewer/tdpr-interviewer-details.html",
                       controller: "tdprInterviewerDetailsController"
                   }
+              },
+              resolve:{
+                  service: "tdprPersonService",
+                  promise: function(service, $stateParams){
+                      return service.getPersonDetails($stateParams.id);
+                  }
               }
           }); 
 
-          $urlRouterProvider.otherwise("/interviewer/home/1");
+          //$urlRouterProvider.otherwise("/interviewer/home/1");
         }); 
 
     return tdprInterviewerModule; 

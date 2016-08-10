@@ -4,19 +4,17 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         $scope.BandLevelEnum = BandLevelEnum;
 
         function init() {
-            tdprPersonService.getPersonDetails($stateParams.id).then(function (response) {
-                $scope.person = response.data;
-                $scope.person.bandLevel = response.data.bandLevel.toString();
+                $scope.person = tdprPersonService.getPerson();
+                $scope.person.bandLevel = $scope.person.bandLevel.toString();
 
-                if (response.data.defaultStartHour) {
-                    var startHour = response.data.defaultStartHour.split(':');
+                if ($scope.person.defaultStartHour) {
+                    var startHour = $scope.person.defaultStartHour.split(':');
                     $scope.person.defaultStartHour = new Date(1970, 0, 1, startHour[0], startHour[1], startHour[2]);
                 }
-                if (response.data.defaultFinishHour) {
-                    var finishHour = response.data.defaultFinishHour.split(':');
+                if ($scope.person.defaultFinishHour) {
+                    var finishHour = $scope.person.defaultFinishHour.split(':');
                     $scope.person.defaultFinishHour = new Date(1970, 0, 1, finishHour[0], finishHour[1], finishHour[2]);
                 }
-            });
         }
 
         $scope.updateDetails = function () {
