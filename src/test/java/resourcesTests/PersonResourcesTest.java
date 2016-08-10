@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import resources.PersonResources;
+import services.MailService;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -32,6 +33,8 @@ public class PersonResourcesTest {
     SlotsDao mockSlotsDao;
     @Mock
     PersonsDao mockPersonsDao;
+    @Mock
+    MailService mockMailService;
 
     private static List<Notes> stubNoteDB;
     private static Date date;
@@ -53,7 +56,7 @@ public class PersonResourcesTest {
 
     @Before
     public void setUp(){
-        resource = new PersonResources(mockPersonsDao, mockSlotsDao, mockNotesDao);
+        resource = new PersonResources(mockPersonsDao, mockSlotsDao, mockNotesDao, mockMailService);
     }
 
     @Test
