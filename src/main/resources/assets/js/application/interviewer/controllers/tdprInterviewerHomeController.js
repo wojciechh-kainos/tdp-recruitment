@@ -19,9 +19,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         var id = $stateParams.id;
 
-        $scope.clearTable();
-        $scope.getSlots(id);
-
         $scope.clearTable = function () {
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 $scope.slotsForWeek[i] = new Array(5);
@@ -90,6 +87,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
             return new Date(d.setDate(diff + i)); // i = 0 - monday
         }
+
+        $scope.clearTable();
+        $scope.getSlots(id);
 
     });
 });
