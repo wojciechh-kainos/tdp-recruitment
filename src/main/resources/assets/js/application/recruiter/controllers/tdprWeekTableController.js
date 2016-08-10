@@ -1,4 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
+    , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
+    , 'application/recruiter/directives/tdprJobProfilesDirecrive'
     , 'application/recruiter/directives/tdprAvailabilityDirective'
     , 'application/recruiter/directives/tdprPersonDirective'
     , 'application/recruiter/directives/tdprPersonsDirective'
@@ -6,9 +8,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/directives/tdprFilterDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService, tdprDateService) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService, JobProfileEnum, tdprDateService) {
         $scope.inputWeek = new Date();
         $scope.weekDay = new tdprPersonsService.changeCurrentWeek($scope.inputWeek);
+        $scope.jobProfile = JobProfileEnum.dev;
 
         var refresh = function () {
             tdprPersonsService.fetchPersons().then(function () {
@@ -27,12 +30,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         });
 
         $scope.$watch('weekDay', function (newValue, oldValue) {
-            if(tdprDateService.compareTime(newValue, oldValue) === false) {
+            if (tdprDateService.compareTime(newValue, oldValue) === false) {
                 refresh();
                 $scope.$broadcast("changedWeekDay", {weekDay: newValue});
             }
         });
-
 
         refresh();
 
