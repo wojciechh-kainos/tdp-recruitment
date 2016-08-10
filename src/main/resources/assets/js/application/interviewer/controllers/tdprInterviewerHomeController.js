@@ -180,8 +180,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), relDayNumber), "dd-MM-yyyy");
             var endDate = $filter('date')(getDayOfTheWeek(new Date(), relDayNumber + 4), "dd-MM-yyyy");
 
-            $scope.displayedStartDate = startDate;
-            $scope.displayedEndDate = endDate;
+            $scope.displayedStartDate = startDate.replace(/-/g,'.');
+            $scope.displayedEndDate = endDate.replace(/-/g,'.');
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function(response){
 
                 for(var slot in response.data){
