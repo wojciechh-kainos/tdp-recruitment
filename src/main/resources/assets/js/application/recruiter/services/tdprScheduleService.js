@@ -1,36 +1,26 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService) {
+    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', 'dateFilter', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService, dateFilter) {
         var service = {};
 
         service.changeSlotType = function (objectArray, slots, person, changeTo) {
-            var changedFlag = false;
+            var compareDate = dateFilter(objectArray.day, 'yyyy-MM-dd');
+            var compareSlot = parseInt(objectArray.slotId);
 
-            for (var key in slots) {
-                if (!slots.hasOwnProperty(key)) continue;
+            var findResult = _(slots).findIndex({'day': compareDate, 'slot': compareSlot});
 
-                if (objectArray.slotId == slots[key].slot) {
-                    var dateObj = tdprDateService.resetDate(objectArray.day);
-                    var compareDay = tdprDateService.resetDate(slots[key].day);
-
-                    if (compareDay.getTime() === dateObj.getTime()) {
-                        if (changeTo !== undefined) {
-                            // There is still availability type to cycle through
-                            slots[key].type = AvailabilityEnum[changeTo].name;
-                        } else {
-                            // There is no more availability types, so we need to clear slot
-                            slots[key] = {};
-                        }
-                        changedFlag = true;
-                        break;
-                    }
+            if (findResult !== -1) {
+                if (changeTo !== undefined) {
+                    // There is still availability type to change
+                    slots[findResult].type = AvailabilityEnum[changeTo].name;
+                } else {
+                    // There is no more availability types, so we need to clear slot
+                    slots[findResult] = {};
                 }
-            }
-
-            if (changedFlag === false) {
+            } else {
                 slots.push({
-                    day: objectArray.day,
+                    day: compareDate,
                     person: person.id,
-                    slot: objectArray.slotId,
+                    slot: compareSlot,
                     type: changeTo
                 });
             }
@@ -47,21 +37,8 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 // Add available slot for future changes
                 return service.changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
             } else {
-                var currentType = objectArray.type;
-                var currentTypeId = parseInt(AvailabilityEnum[currentType].id);
-
-                var newTypeId = currentTypeId + 1;
-                var newType;
-
-                // Cycle through possibly options for slots type
-                for (var typeKey in AvailabilityEnum) {
-                    if (!AvailabilityEnum.hasOwnProperty(typeKey)) continue;
-
-                    if (AvailabilityEnum[typeKey].id === newTypeId.toString()) {
-                        newType = typeKey;
-                        break;
-                    }
-                }
+                var newTypeId = parseInt(AvailabilityEnum[objectArray.type].id) + 1;
+                var newType = _(AvailabilityEnum).findKey({'id': newTypeId.toString()});
 
                 return service.changeSlotType(objectArray, slots, person, newType);
             }
