@@ -9,7 +9,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var personId;
         var Notification;
         var personService;
-        var personDetailsDeferred;
         var updatePersonDeferred;
 
         beforeEach(inject(function ($controller, tdprPersonService, _$rootScope_, _$state_, _$filter_, $q) {
@@ -18,34 +17,31 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             $filter = _$filter_;
             $scope = _$rootScope_.$new();
             personService = tdprPersonService;
-            personDetailsDeferred = $q.defer();
             updatePersonDeferred = $q.defer();
             Notification = { success: function () {} };
 
-            spyOn(personService, 'getPersonDetails').and.returnValue(personDetailsDeferred.promise);
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
+            spyOn(personService, 'getPerson').and.returnValue({
+                dummyData: 42,
+                bandLevel: "9001",
+                defaultStartHour: '05:15:01',
+                defaultFinishHour: '22:49:31'
+            });
 
             $controller('tdprInterviewerDetailsController', {
                 $scope: $scope,
+                BandLevelEnum: {},
                 tdprPersonService: personService,
                 Notification: Notification,
                 $stateParams: {id: personId}
             });
         }));
 
-        it('should call getPersonDetails at init', function () {
-            expect(personService.getPersonDetails).toHaveBeenCalledWith(personId);
+        it('should call getPerson at init', function () {
+            expect(personService.getPerson);
         });
 
         it('should store data received from service in model', function () {
-            personDetailsDeferred.resolve({
-                data: {
-                    bandLevel: 9001,
-                    defaultStartHour: '05:15:01',
-                    defaultFinishHour: '22:49:31'
-                }
-            });
-
             $scope.$apply();
 
             expect($scope.person.bandLevel).toEqual("9001");
@@ -66,12 +62,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         describe('updateDetails', function () {
             it('should call updatePersonDetails with proper json', function () {
                 updatePersonDeferred.resolve({});
-                $scope.person = {
-                    dummyData: 42,
-                    bandLevel: "9001",
-                    defaultStartHour: new Date(1970, 0, 1, 5, 15, 1),
-                    defaultFinishHour: new Date(1970, 0, 1, 22, 49, 31)
-                };
 
                 $scope.updateDetails();
 
