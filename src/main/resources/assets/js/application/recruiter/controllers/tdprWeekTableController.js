@@ -14,6 +14,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.staticData = [];
         $scope.timeData = {};
+        $scope.jobProfile = "isDev";
 
         personsData.then(function () {
             $scope.staticData = tdprPersonsService.getPersons();
