@@ -4,19 +4,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.days = tdprDateService.getCurrentWeek();
 
-        tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function () {
+        tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function () {  //from monday to friday
             $scope.persons = tdprPersonsService.getPersons();
-            console.log($scope.persons);
         });
 
         tdprSlotsTimesService.fetchSlotsTimes().then(function () {
             $scope.slotTimes = tdprSlotsTimesService.getSlotTimes();
         });
-
-        $scope.szybkiGuzik = function (i) {
-            $scope.slotTimes = tdprSlotsTimesService.getSlotTimes().slice(0, i);
-            
-        }
-        
     })
 });

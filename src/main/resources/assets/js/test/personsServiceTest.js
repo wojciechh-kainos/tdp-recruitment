@@ -15,7 +15,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
             it('should call backend with date from current week', function () { //test should be updated later
                 $httpBackend.expectGET('api/person/all?startDate=2016-08-01&endDate=2016-08-07').respond(200);
 
-                service.fetchPersons().then(function (response) {
+                service.fetchPersonsWithSlotsForDates(new Date("2016-08-01"), new Date("2016-08-07")).then(function (response) {
                 expect(response.status).toEqual(200);
                 });
 
@@ -24,7 +24,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
             it('should set service persons field', function () {
                 $httpBackend.expectGET('api/person/all?startDate=2016-08-01&endDate=2016-08-07').respond(200, data);
 
-                service.fetchPersons().then(function () {
+                service.fetchPersonsWithSlotsForDates(new Date("2016-08-01"), new Date("2016-08-07")).then(function () {
                     expect(service.getPersons()).toEqual(data);
                 });
                 $httpBackend.flush();

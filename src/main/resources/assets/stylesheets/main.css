@@ -25,14 +25,7 @@ footer {
 }
 
 html {
-    background: #f9f9f9;
-    font-family: 'Roboto Condensed';
-}
-
-h1 {
-    width: 100%;
-    margin-bottom: 0;
-    color: #2cab54;
+    background-color: transparent;
 }
 
 h2 {

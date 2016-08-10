@@ -1,4 +1,4 @@
-<th class="person-name" ng-click="changeActive(person)"><span uib-tooltip="{{person.person.email}}"
-                                                              tooltip-animation="false">{{person.person.firstName + " " + person.person.lastName}}</span>
-</th>
-<td availability-directive ng-repeat="availabilityObject in availabilityArray track by $index"></td>
+<th class="person-name">{{personData.firstName + ' ' + personData.lastName}}</th>
+<td ng-repeat="day in days">
+    <slot ng-repeat="slotTime in slotTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"></slot>
+</td>
