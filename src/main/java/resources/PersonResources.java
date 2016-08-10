@@ -6,6 +6,7 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.joda.time.DateTime;
 import org.jvnet.hk2.internal.Collector;
 
 import javax.ws.rs.GET;
@@ -17,10 +18,7 @@ import services.MailService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/person")
