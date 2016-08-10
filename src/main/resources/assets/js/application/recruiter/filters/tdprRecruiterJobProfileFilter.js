@@ -7,7 +7,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
             return persons.filter(function(person){
                 return person[jobProfile];
-            })
+            });
         }
     });
 })

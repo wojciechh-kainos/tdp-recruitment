@@ -8,13 +8,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/directives/tdprFilterDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService, JobProfileEnum) {
         var slotsData = tdprRecruiterGetSlotsTimesService.getSlotsTimes();
         var personsData = tdprPersonsService.fetchPersons();
 
         $scope.staticData = [];
         $scope.timeData = {};
-        $scope.jobProfile = "isDev";
+        $scope.jobProfile = JobProfileEnum["dev"];
 
         personsData.then(function () {
             $scope.staticData = tdprPersonsService.getPersons();
