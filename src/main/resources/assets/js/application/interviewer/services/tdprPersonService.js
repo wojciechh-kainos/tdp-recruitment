@@ -11,7 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         };
 
         this.updatePersonDetails = function(person){
-            return $http.put("/api/person/create", person);
+            return $http.put("/api/person/"+person.id, person);
         };
 
         this.getPerson = function(){

@@ -82,4 +82,13 @@ public class PersonsResource {
     public Persons getPersonById(@PathParam("id") Long id){
          return personsDao.getById(id);
     }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons updatePerson(Persons person) {
+        personsDao.update(person);
+        return person;
+    }
 }
