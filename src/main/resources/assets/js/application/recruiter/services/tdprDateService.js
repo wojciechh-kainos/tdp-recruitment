@@ -1,5 +1,5 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprDateService', function () {
+    tdprRecruiterModule.service('tdprDateService', function (dateFilter) {
         this.resetDate = function (dateToReset) {
             var date = new Date(dateToReset);
 
@@ -20,5 +20,9 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
             return date;
         };
+
+        this.formatDate = function (dateToFormat) {
+            return dateFilter(dateToFormat, "dd-MM-yyyy");
+        }
     });
 });

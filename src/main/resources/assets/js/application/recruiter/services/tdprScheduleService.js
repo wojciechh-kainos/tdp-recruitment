@@ -6,7 +6,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
             var compareDate = dateFilter(objectArray.day, 'yyyy-MM-dd');
             var compareSlot = parseInt(objectArray.slotId);
 
-            var findResult = _(slots).findIndex({'day': compareDate, 'slot': compareSlot});
+            var findResult = _.findIndex(slots, {'day': compareDate, 'slot': compareSlot});
 
             if (findResult !== -1) {
                 if (changeTo !== undefined) {
@@ -38,7 +38,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 return service.changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
             } else {
                 var newTypeId = parseInt(AvailabilityEnum[objectArray.type].id) + 1;
-                var newType = _(AvailabilityEnum).findKey({'id': newTypeId.toString()});
+                var newType = _.findKey(AvailabilityEnum, {'id': newTypeId.toString()});
 
                 return service.changeSlotType(objectArray, slots, person, newType);
             }

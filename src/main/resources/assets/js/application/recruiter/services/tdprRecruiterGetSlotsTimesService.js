@@ -9,9 +9,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
             slotsTimeElementCount = slots.length;
 
-            for (var i = 0; i < slotsTimeElementCount; i++) {
-                array[slots[i].id] = slots[i];
-            }
+            _.forEach(slots, function (value) {
+                array[value.id] = value;
+            });
 
             return array;
         }
