@@ -1,5 +1,7 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -30,6 +32,7 @@ public class Persons {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnore
     private String password;
 
     private Boolean admin;
@@ -47,7 +50,7 @@ public class Persons {
     @Column(name = "band_level")
     private Integer bandLevel;
 
-
+    @JsonIgnore
     @Column(name = "activation_code")
     private String activationCode;
 
