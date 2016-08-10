@@ -17,6 +17,7 @@ import java.sql.Time;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +33,7 @@ public class PairResourceTest {
     private AvailabilityTypes availabilityType;
     private PairResource resource;
     private List<Slots> mockSlots;
-    private Slots expectedSlot;
+    private List<SlotsTimes> expectedSlotsTimes;
 
     @Mock
     private static SlotsDao mockDao;
@@ -46,16 +47,23 @@ public class PairResourceTest {
         mockSlots = new ArrayList<>();
 
         createAvailableType((long)1, "available");
-        SlotsTimes sameSlotsTime = createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
-        SlotsTimes differentSlotsTime = createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
+        SlotsTimes sameSlotsTimeFirst = createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
+        SlotsTimes sameSlotsTimeSecond = createSlotTime((long) 2, new Time(8, 30, 0), new Time(9, 0, 0));
+        SlotsTimes sameSlotsTimeThird = createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
+        SlotsTimes differentSlotsTime = createSlotTime((long) 5, new Time(10, 0, 0), new Time(10, 30, 0));
+        expectedSlotsTimes = Arrays.asList(sameSlotsTimeFirst,sameSlotsTimeSecond, sameSlotsTimeThird);
 
         Persons firstPerson = createPersons((long)1, "FIRST");
-        mockSlots.add(createSlot((long)1, sameSlotsTime, firstPerson, sameDate));
-        mockSlots.add(createSlot((long)2, sameSlotsTime, firstPerson, differentDate));
+        mockSlots.add(createSlot((long)1, sameSlotsTimeFirst, firstPerson, sameDate));
+        mockSlots.add(createSlot((long)2, sameSlotsTimeSecond, firstPerson, sameDate));
+        mockSlots.add(createSlot((long)3, sameSlotsTimeThird, firstPerson, sameDate));
+        mockSlots.add(createSlot((long)4, sameSlotsTimeFirst, firstPerson, differentDate));
 
         Persons secondPerson = createPersons((long)2, "SECOND");
-        mockSlots.add(expectedSlot = createSlot((long)3, sameSlotsTime, secondPerson, sameDate));
-        mockSlots.add(createSlot((long)4, differentSlotsTime, secondPerson, sameDate));
+        mockSlots.add(createSlot((long)5, sameSlotsTimeFirst, secondPerson, sameDate));
+        mockSlots.add(createSlot((long)6, sameSlotsTimeSecond, secondPerson, sameDate));
+        mockSlots.add(createSlot((long)7, sameSlotsTimeThird, secondPerson, sameDate));
+        mockSlots.add(createSlot((long)8, differentSlotsTime, secondPerson, sameDate));
 
         resource = new PairResource(mockDao);
     }
@@ -64,10 +72,13 @@ public class PairResourceTest {
     public void testFindPairs(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
 
-        List<Slots> foundSlotsToPair = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List<Slots> searchedSlotsToPair = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
-        assertEquals("Found slots list should have one expected slot from pair", foundSlotsToPair.size(), 1);
-        assertEquals("Found slot should have the same id as expected", expectedSlot.getId(), foundSlotsToPair.get(0).getId());
+        assertEquals("Searched slots list should have three expected slot", searchedSlotsToPair.size(), 3);
+
+        assertTrue("Searched slots should have the same slotsTime as expected", searchedSlotsToPair.stream()
+                                                                                                  .map(searchedSlot -> searchedSlot.getSlot())
+                                                                                                    .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
     }
 
     private Slots createSlot(Long id, SlotsTimes slotsTimes, Persons person, Date date){
