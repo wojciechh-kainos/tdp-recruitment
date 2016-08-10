@@ -3,6 +3,9 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         return function(person, jobProfile){
              var response = [];
 
+             if(jobProfile == undefined)
+                return person;
+
              for(var i = 0; i < person.length; i++){
                  switch(jobProfile){
                     case 'isDev': {
