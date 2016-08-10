@@ -34,7 +34,8 @@
         <tbody>
         <tr ng-repeat="slotsForDay in slotsForWeek" >
             <td class="slotTime">{{slotTimes[$index]}}</td>
-            <td ng-repeat="slot in slotsForDay track by $index" class="mouse-pointer"
+            <td class="mouse-pointer"
+                ng-repeat="slot in slotsForDay track by $index"
                 ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
