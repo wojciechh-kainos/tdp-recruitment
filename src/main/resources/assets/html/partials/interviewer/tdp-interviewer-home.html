@@ -38,8 +38,8 @@
                 ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
-                ng-mousedown="markSlots(slot)"
-                ng-mouseover="mousedown ? markSlots(slot) : '' " >
+                ng-mousedown="relativeDayNumber>=0 ? markSlots(slot) : '' "
+                ng-mouseover="relativeDayNumber>=0 && mousedown ? markSlots(slot) : '' " >
             </td>
         </tr>
         </tbody>
