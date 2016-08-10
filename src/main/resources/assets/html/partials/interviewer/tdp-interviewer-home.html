@@ -5,7 +5,7 @@
 
 <div class="container">
     <h1 id="interviewer-header">Your availability</h1>
-    <h4>(click on slots to change availability)</h4>
+    <h4 id="description">(click on slots to change availability)</h4>
     <div id="date-container">
         <button class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
         <span class="navigate1">{{displayedStartDate}} - {{displayedEndDate}}</span>
@@ -64,7 +64,7 @@
             </div>
             <hr>
             <div>
-                <button class="btn btn-primary" type="button" ng-click="discardChanges()">DISCARD CHANGES</button>
+                <button id="discard-btn" class="btn btn-primary" type="button" ng-click="discardChanges()">DISCARD CHANGES</button>
                 <button class="btn btn-primary" type="button" ng-click="updateSlots()">SUBMIT CHANGES</button>
             </div>
             <hr>
