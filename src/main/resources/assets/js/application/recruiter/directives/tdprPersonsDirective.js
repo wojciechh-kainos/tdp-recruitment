@@ -13,17 +13,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
                 /* Returns sorted rows for table */
                 function _returnTableRows(checkArray) {
-                    var array = {};
-
                     // Possibly add here check for job profile
+                    var type = JobProfileEnum[scope.jobProfile];
 
-                    for (var i = 0; i < checkArray.length; i++) {
-                        var type = JobProfileEnum[scope.jobProfile];
-                        if (checkArray[i].person[type] == true)
-                            array[checkArray[i].person.id] = checkArray[i];
-                    }
-
-                    return array;
+                    return _.filter(checkArray, function (value, index) {
+                        return value.person[type] === true;
+                    });
                 }
 
                 function _refreshList(table) {

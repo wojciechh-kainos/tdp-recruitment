@@ -52,21 +52,18 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                 /* Function to create headers for week days with name of day and date */
                 function _prepareDateHeader(weekStart) {
-                    var array = [];
-
-                    for (var i = 0; i < daysLength; i++) {
+                    return _.times(daysLength, function (index) {
                         /* Advance one day */
-                        var date = new Date(weekStart.getTime() + (i * 60 * 60 * 24) * 1000);
+                        var date = new Date(weekStart.getTime() + (index * 60 * 60 * 24) * 1000);
 
-                        array.push({
+                        return {
                             day: date.getTime(),
-                            dayName: dateFilter(date, "EEEE"),
+                            dayName: dateFilter(date, "EEEE"), //EEEE is name of day
                             dayValue: date,
                             dayString: dateFilter(date, dateFormat)
-                        });
-                    }
+                        }
 
-                    return array;
+                    });
                 }
 
                 function _init() {
