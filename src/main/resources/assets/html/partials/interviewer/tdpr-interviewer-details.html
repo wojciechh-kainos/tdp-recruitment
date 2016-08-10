@@ -23,13 +23,7 @@
             <label class="col-lg-4 control-label">Band level:</label>
             <div class="col-lg-2">
                 <div class="ui-select">
-                    <select class="form-control" ng-model="person.bandLevel">
-                        <option value="1">1 - Principal</option>
-                        <option value="2">2 - Manager</option>
-                        <option value="3">3 - Consultant</option>
-                        <option value="4">4 - Senior associate</option>
-                        <option value="5">5 - Associate</option>
-                        <option value="6">6 - Trainee</option>
+                    <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum">
                     </select>
                 </div>
             </div>
@@ -39,6 +33,7 @@
             <div class="col-lg-5">
                 <input type="time" name="defaultStartHour" ng-model="person.defaultStartHour"
                        placeholder="HH:mm:ss" min="08:00:00" max="10:00:00" required />
+                <span ng-show="detailsForm.defaultStartHour.$error.time">Invalid. </span>
                 <span ng-show="detailsForm.defaultStartHour.$error.min || detailsForm.defaultStartHour.$error.max">Values between 8:00 and 10:00!</span>
             </div>
         </div>
@@ -47,6 +42,7 @@
             <div class="col-lg-5">
                 <input type="time" name="defaultFinishHour" ng-model="person.defaultFinishHour"
                        placeholder="HH:mm:ss" min="16:00:00" max="18:00:00" required />
+                <span ng-show="detailsForm.defaultFinishHour.$error.time">Invalid. </span>
                 <span ng-show="detailsForm.defaultFinishHour.$error.min || detailsForm.defaultFinishHour.$error.max">Values between 16:00 and 18:00!</span>
             </div>
         </div>

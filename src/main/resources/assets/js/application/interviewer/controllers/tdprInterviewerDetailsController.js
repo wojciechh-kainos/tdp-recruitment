@@ -1,5 +1,7 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification) {
+    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum) {
+
+        $scope.BandLevelEnum = BandLevelEnum;
 
         function init() {
             tdprPersonService.getPersonDetails($stateParams.id).then(function (response) {
