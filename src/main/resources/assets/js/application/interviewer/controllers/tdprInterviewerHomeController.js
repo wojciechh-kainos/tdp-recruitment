@@ -91,7 +91,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
-        }
+        };
 
 
     });
