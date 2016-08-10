@@ -66,7 +66,6 @@ public class Persons {
     @JsonIgnore
     private Boolean active;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 

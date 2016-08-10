@@ -24,12 +24,12 @@
             <div class="col-lg-2">
                 <div class="ui-select">
                     <select class="form-control" ng-model="person.bandLevel">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
+                        <option value="1">1 - Principal</option>
+                        <option value="2">2 - Manager</option>
+                        <option value="3">3 - Consultant</option>
+                        <option value="4">4 - Senior associate</option>
+                        <option value="5">5 - Associate</option>
+                        <option value="6">6 - Trainee</option>
                     </select>
                 </div>
             </div>
@@ -37,14 +37,14 @@
         <div class="form-group">
             <label class="col-lg-4 control-label">Default starting hour:</label>
             <div class="col-lg-2">
-                <input type="time" name="input" ng-model="person.defaultStartHour"
+                <input type="time" name="defaultStartHour" ng-model="person.defaultStartHour"
                        placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
             </div>
         </div>
         <div class="form-group">
             <label class="col-lg-4 control-label">Default finishing hour:</label>
             <div class="col-lg-2">
-                <input type="time" name="input" ng-model="person.defaultFinishHour"
+                <input type="time" name="defaultFinishHour" ng-model="person.defaultFinishHour"
                        placeholder="HH:mm:ss" min="00:00:00" max="24:00:00" required />
             </div>
         </div>
