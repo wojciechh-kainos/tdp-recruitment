@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
-public class PersonResources {
+public class PersonsResource {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
     private MailService mailService;
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService) {
+    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.mailService = mailService;
