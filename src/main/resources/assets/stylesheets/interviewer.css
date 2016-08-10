@@ -1,10 +1,10 @@
 
 
 .background {
-    background-image: url("image.jpeg");
-    background-repeat: no-repeat;
+  background-image: url("image.jpeg");
+  background-repeat: no-repeat;
 
-    background-size: cover;
+  background-size: cover;
 
   min-height: 100%;
   min-width: 1024px;
@@ -39,22 +39,22 @@
     background-color: #87D37C;
 }
 
-.availability-table tbody td, .availability-table thead th{
+.availability-table tbody td, .availability-table thead th {
     width: 120px;
     height: 30px;
 }
 
-.availability-table th{
+.availability-table th {
     color: white;
     text-align: center;
     background-color: #375D81;
 }
 
-.availability-table td{
+.availability-table td {
     border: 1px solid #375D81;
     border-bottom: 0px;
 }
-.availability-table td:hover{
+.availability-table td:hover {
     cursor: pointer;
     background-color: #87D37C;
 }
@@ -62,26 +62,28 @@
 #hours-th {
     color: #375D81;
     background-color: white;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
 }
+
 .slot-time{
     font-weight: bold;
     font-size: 18px;
     background-color: #ABC8E2;
     color: white;
 }
+
 .slot-time:hover{
-    background-color: #5C97BF;
+    background-color: white;
+    color: #375D81;
 }
 
 .navigate {
      display: inline;
      color: #3498DB;
      position: absolute;
-
 }
 
-#submit-slots{
+#submit-slots {
     width: 725px;
     margin: auto;
 }
@@ -91,21 +93,21 @@
     top:0;
 }
 
-#date-container p{
+#date-container p {
     font-size: 20px;
     left:50%;
     transform: translate(-50%, -50%);
 }
 
 h4 {
-    color: #bdc3c7;
+    color: white;
 }
 
-#btn-left{
+#btn-left {
     left:35%;
     transform: translate(-50%, -50%);
 }
-#btn-right{
+#btn-right {
     left:65%;
     transform: translate(-50%, -50%);
 }
@@ -113,7 +115,7 @@ h4 {
 .button {
     border-radius: 5px;
     border: 1px solid #3498DB;
-    background-color: white;
+    background-color: transparent;
     width: 110px;
     padding: 5px, 10px, 5px, 10px;
 }
@@ -123,7 +125,7 @@ h4 {
     color: white;
 }
 
-#submit-button{
+#submit-button {
     border-radius: 5px;
     width: 200px;
     height: 100px
@@ -132,7 +134,8 @@ h4 {
     color: white;
     border: 1px solid #375D81;
 }
-#submit-button:hover{
+
+#submit-button:hover {
     background-color: white;
     color: #375D81;
     cursor: pointer;
