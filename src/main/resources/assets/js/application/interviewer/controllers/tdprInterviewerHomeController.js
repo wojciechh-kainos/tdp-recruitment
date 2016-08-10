@@ -34,6 +34,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             $scope.textAreaStyle = {'background-color':LIGHTGREYCOLOUR};
         }
 
+        $scope.discardChanges = function() {
+            clearTable();
+            getSlots(id, relativeDayNumber);
+            var startDate = $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "dd-MM-yyyy");
+            getNote(id, startDate);
+            $scope.hasSlotChanged=false;
+            $scope.hasNoteChanged=false;
+        }
+
         $scope.changeSlotStatus = function() {
             $scope.hasSlotChanged = true;
         }
