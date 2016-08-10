@@ -16,38 +16,35 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
                 /* Create and output array of time labels for table header */
                 function _createHeaderArray(weekStart) {
-                    var array = [];
+                    return _.flatten(
+                        _.times(daysLength, function (index) {
+                            var day = new Date(weekStart.getTime() + (index * 60 * 60 * 24) * 1000);
 
-                    for (var i = 0; i < daysLength; i++) {
-                        var day = new Date(weekStart.getTime() + (i * 60 * 60 * 24) * 1000);
+                            var mapped = _.map(scope.slotsTimes, function (value, key) {
+                                var startTime = value.startTime.split(":");
+                                var endTime = value.endTime.split(":");
 
-                        timeElementsCount = 0;
-                        
-                        for (var key in scope.slotsTimes) {
-                            if (!scope.slotsTimes.hasOwnProperty(key)) continue;
+                                var dateStartObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), startTime[0], startTime[1]);
+                                var dateEndObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), endTime[0], endTime[1]);
 
-                            var startTime = scope.slotsTimes[key].startTime.split(":");
-                            var endTime = scope.slotsTimes[key].endTime.split(":");
-
-                            var dateStartObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), startTime[0], startTime[1]);
-                            var dateEndObject = tdprDateService.setHourMin(tdprDateService.resetDate(day), endTime[0], endTime[1]);
-
-                            array.push({
-                                text: startTime[0] + ":" + startTime[1],
-                                tooltipText: startTime[0] + ":" + startTime[1] + " - " + endTime[0] + ":" + endTime[1],
-                                slotId: key,
-                                hour: startTime[0],
-                                minute: startTime[1],
-                                dateStart: dateStartObject,
-                                dateEnd: dateEndObject,
-                                day: day,
-                                dayIndex: i
+                                return {
+                                    text: startTime[0] + ":" + startTime[1],
+                                    tooltipText: startTime[0] + ":" + startTime[1] + " - " + endTime[0] + ":" + endTime[1],
+                                    slotId: key,
+                                    hour: startTime[0],
+                                    minute: startTime[1],
+                                    dateStart: dateStartObject,
+                                    dateEnd: dateEndObject,
+                                    day: day,
+                                    dayIndex: index
+                                };
                             });
-                            timeElementsCount++;
-                        }
-                    }
 
-                    return array;
+                            timeElementsCount = _.size(mapped);
+
+                            return mapped;
+                        })
+                    );
                 }
 
                 /* Function to create headers for week days with name of day and date */
