@@ -14,7 +14,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTime
         describe('When error in request', function () {
             it('should return empty object', function(){
                 $httpBackend.expectGET('/api/slots_times/all').respond(400, '');
-                $service.getSlotsTimes().then(function(response){
+                $service.fetchSlotsTimes().then(function(response){
                     expect(response.error).toEqual("Failed");
                 });
                 $httpBackend.flush();
@@ -42,7 +42,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTime
                 {"id":17,"startTime":"16:00:00","endTime":"16:30:00"},
                 {"id":18,"startTime":"16:30:00","endTime":"17:00:00"}];
                 $httpBackend.expectGET('/api/slots_times/all').respond(200, expectedSlotsTimes);
-                $service.getSlotsTimes().then(function(response){
+                $service.fetchSlotsTimes().then(function(response){
                     expect(response).toEqual(expectedSlotsTimes);
                     expect(response.length).toEqual(18);
                 });
