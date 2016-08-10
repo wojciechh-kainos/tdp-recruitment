@@ -13,7 +13,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
 
         describe('When correct request', function () {
             it('should return specified object', function(){
-
                 var personId = 1;
                 var date = '01-08-2016';
 
@@ -48,7 +47,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
             });
 
             it('should return nothing', function(){
-
                 var personId = 1;
                 var dateWithoutNoteCreated = '01-08-2016';
                 var expectedResponse = {};
@@ -64,7 +62,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
 
         describe('When corrupted request', function () {
             it('should return error', function(){
-
                 var personId = 1;
                 var corruptedDate = '0';
 
@@ -82,7 +79,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
             });
 
             it('should return nothing', function() {
-
                 var personId = 1;
                 var dateWithoutNoteCreated = '01-08-2016';
                 var expectedResponse = {};
@@ -98,7 +94,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
 
         describe('When correct updateNote request', function () {
             it('should return id', function() {
-
                 var noteId = 1;
                 var personId = 2;
                 var description = "This is my test content!";
@@ -124,7 +119,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
             });
 
             it('should return error message', function() {
-
                 var noteId = 1;
                 var personId = 2;
                 var description = "This is my test content!";
@@ -151,7 +145,6 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                 });
                 $httpBackend.flush();
             });
-
         })
     })
 });
