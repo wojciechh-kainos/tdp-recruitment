@@ -45,8 +45,6 @@ public class PairResource {
         List<Persons> persons = personsInSlots(slots);
         List<Slots> filteredSlots = findTriplesInSlots(slots);
 
-
-        //return findAllPairsForPerson(filteredSlots, persons.get(0));
         return findPairsForAllPersons(filteredSlots, persons);
     }
 

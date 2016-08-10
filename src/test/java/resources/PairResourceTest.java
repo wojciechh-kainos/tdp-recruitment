@@ -2,10 +2,7 @@ package resources;
 
 
 import dao.SlotsDao;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,24 +43,24 @@ public class PairResourceTest {
         Date differentDate = new Date(calendar.getTimeInMillis());
         mockSlots = new ArrayList<>();
 
-        createAvailableType((long)1, "available");
-        SlotsTimes sameSlotsTimeFirst = createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
-        SlotsTimes sameSlotsTimeSecond = createSlotTime((long) 2, new Time(8, 30, 0), new Time(9, 0, 0));
-        SlotsTimes sameSlotsTimeThird = createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
-        SlotsTimes differentSlotsTime = createSlotTime((long) 5, new Time(10, 0, 0), new Time(10, 30, 0));
+        availabilityType = MockDataUtil.createAvailableType((long)1, "available");
+        SlotsTimes sameSlotsTimeFirst = MockDataUtil.createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
+        SlotsTimes sameSlotsTimeSecond = MockDataUtil.createSlotTime((long) 2, new Time(8, 30, 0), new Time(9, 0, 0));
+        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
+        SlotsTimes differentSlotsTime = MockDataUtil.createSlotTime((long) 5, new Time(10, 0, 0), new Time(10, 30, 0));
         expectedSlotsTimes = Arrays.asList(sameSlotsTimeFirst,sameSlotsTimeSecond, sameSlotsTimeThird);
 
-        Persons firstPerson = createPersons((long)1, "FIRST");
-        mockSlots.add(createSlot((long)1, sameSlotsTimeFirst, firstPerson, sameDate));
-        mockSlots.add(createSlot((long)2, sameSlotsTimeSecond, firstPerson, sameDate));
-        mockSlots.add(createSlot((long)3, sameSlotsTimeThird, firstPerson, sameDate));
-        mockSlots.add(createSlot((long)4, sameSlotsTimeFirst, firstPerson, differentDate));
+        Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
+        mockSlots.add(MockDataUtil.createSlot((long)1, sameSlotsTimeFirst, firstPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)2, sameSlotsTimeSecond, firstPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)3, sameSlotsTimeThird, firstPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)4, sameSlotsTimeFirst, firstPerson, differentDate, availabilityType));
 
-        Persons secondPerson = createPersons((long)2, "SECOND");
-        mockSlots.add(createSlot((long)5, sameSlotsTimeFirst, secondPerson, sameDate));
-        mockSlots.add(createSlot((long)6, sameSlotsTimeSecond, secondPerson, sameDate));
-        mockSlots.add(createSlot((long)7, sameSlotsTimeThird, secondPerson, sameDate));
-        mockSlots.add(createSlot((long)8, differentSlotsTime, secondPerson, sameDate));
+        Persons secondPerson = MockDataUtil.createPersons((long)2, "SECOND", isDev, isTest, isOps);
+        mockSlots.add(MockDataUtil.createSlot((long)5, sameSlotsTimeFirst, secondPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)6, sameSlotsTimeSecond, secondPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)7, sameSlotsTimeThird, secondPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot((long)8, differentSlotsTime, secondPerson, sameDate, availabilityType));
 
         resource = new PairResource(mockDao);
     }
@@ -72,53 +69,18 @@ public class PairResourceTest {
     public void testFindPairs(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
 
-        List<Slots> searchedSlotsToPair = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List listOfPairList = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
-        assertEquals("Searched slots list should have three expected slot", searchedSlotsToPair.size(), 3);
+        List<Pair> pairs = (List<Pair>) listOfPairList.get(0);
+        Pair pair = pairs.get(0);
 
-        assertTrue("Searched slots should have the same slotsTime as expected", searchedSlotsToPair.stream()
+        assertEquals("One pair of slots should be found", 1, pairs.size());
+
+        assertEquals("Searched slots list should have three expected slot", 3, pair.getSlots().size());
+
+        assertTrue("Searched slots should have the same slotsTime as expected", pair.getSlots().stream()
                                                                                                   .map(searchedSlot -> searchedSlot.getSlot())
                                                                                                     .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
-    }
-
-    private Slots createSlot(Long id, SlotsTimes slotsTimes, Persons person, Date date){
-        Slots slot = new Slots();
-        slot.setId(id);
-        slot.setType(availabilityType);
-        slot.setSlot(slotsTimes);
-        slot.setPerson(person);
-        slot.setSlotsDate(date);
-        person.getSlotsList().add(slot);
-        return slot;
-    }
-
-    private void createAvailableType(Long id, String type){
-        availabilityType = new AvailabilityTypes();
-        availabilityType.setType(type);
-        availabilityType.setId(id);
-    }
-
-    private SlotsTimes createSlotTime(Long id, Time startTime, Time endTime){
-        SlotsTimes slotsTimes = new SlotsTimes();
-        slotsTimes.setId(id);
-        slotsTimes.setStartTime(startTime);
-        slotsTimes.setEndTime(endTime);
-        return slotsTimes;
-    }
-
-    private Persons createPersons(Long id, String uniqueValue){
-        Persons person = new Persons();
-        person.setId(id);
-        person.setFirstName("NAME " + uniqueValue);
-        person.setLastName("SURNAME " + uniqueValue);
-        person.setEmail("EMAIL@EMAIL." + uniqueValue);
-        person.setAdmin(false);
-        person.setActive(true);
-        person.setBandLevel(2);
-        person.setIsDev(isDev);
-        person.setIsTest(isTest);
-        person.setIsWeb(isOps);
-        return person;
     }
 
 }
