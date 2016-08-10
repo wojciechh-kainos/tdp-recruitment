@@ -77,9 +77,9 @@ public class PersonResources {
     }
 
     @GET
-    @Path("/getNote")
+    @Path("/{personId}/getNote")
     @UnitOfWork
-    public Notes getNote(@QueryParam("id") Long personId,
+    public Notes getNote(@PathParam("personId") Long personId,
                          @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
         return notesDao.getByIdAndDate(personId,date);

@@ -2,7 +2,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
     tdprInterviewerModule.service("tdprPersonService", function($http) {
 
         this.getNote = function(personId, date) {
-            return $http.get("/api/person/getNote?" + "id=" + personId + "&date=" + date);
+            return $http.get("/api/person/" + personId + "/getNote?date=" + date);
         };
 
         this.updateNote = function(note) {

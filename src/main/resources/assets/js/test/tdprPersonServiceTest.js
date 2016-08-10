@@ -38,7 +38,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                      "date": "2016-08-01"
                 };
 
-                $httpBackend.expectGET('/api/person/getNote?id=' + personId + '&date=' + date).respond(200, expectedResponse);
+                $httpBackend.expectGET('/api/person/' + personId + '/getNote?' + 'date=' + date).respond(200, expectedResponse);
                 $service.getNote(personId, date).then(function(response){
                     expect(response.status).toEqual(200);
                     expect(response.data).toEqual(expectedResponse);
@@ -51,7 +51,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                 var dateWithoutNoteCreated = '01-08-2016';
                 var expectedResponse = {};
 
-                $httpBackend.expectGET('/api/person/getNote?id=' + personId + '&date=' + dateWithoutNoteCreated).respond(204, expectedResponse);
+                $httpBackend.expectGET('/api/person/' + personId + '/getNote?' + 'date=' + dateWithoutNoteCreated).respond(204, expectedResponse);
                 $service.getNote(personId, dateWithoutNoteCreated).then(function(response){
                     expect(response.status).toEqual(204);
                     expect(response.data).toEqual(expectedResponse);
@@ -70,7 +70,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                      "message": "There was an error processing your request. It has been logged (ID ce5e7bbf986c3c5d)."
                  };
 
-                $httpBackend.expectGET('/api/person/getNote?id=' + personId + '&date=' + corruptedDate).respond(500, expectedResponse);
+                $httpBackend.expectGET('/api/person/' + personId + '/getNote?' + 'date=' + corruptedDate).respond(500, expectedResponse);
                 $service.getNote(personId, corruptedDate).then(function(response){
                     expect(response.status).toEqual(500);
                     expect(response.data).toEqual(expectedResponse);
@@ -83,7 +83,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                 var dateWithoutNoteCreated = '01-08-2016';
                 var expectedResponse = {};
 
-                $httpBackend.expectGET('/api/person/getNote?id=' + personId + '&date=' + dateWithoutNoteCreated).respond(204, expectedResponse);
+                $httpBackend.expectGET('/api/person/' + personId + '/getNote?' + 'date=' + dateWithoutNoteCreated).respond(204, expectedResponse);
                 $service.getNote(personId, dateWithoutNoteCreated).then(function(response){
                     expect(response.status).toEqual(204);
                     expect(response.data).toEqual(expectedResponse);
