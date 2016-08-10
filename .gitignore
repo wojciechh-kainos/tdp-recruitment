@@ -17,5 +17,6 @@ src/main/resources/assets/js/lib/
 .gradle/
 build/
 classes/
+app_config.yml
 
 .DS_Store
