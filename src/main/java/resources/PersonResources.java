@@ -6,18 +6,17 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
-import org.joda.time.DateTime;
 import org.jvnet.hk2.internal.Collector;
-import org.omg.CORBA.PERSIST_STORE;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Path("/person")
@@ -33,6 +32,15 @@ public class PersonResources {
         this.slotsDao = slotsDao;
     }
 
+    @PUT
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons createPerson(Persons person) {
+        personsDao.create(person);
+        return person;
+    }
+
     @GET
     @Path("/all")
     @UnitOfWork
@@ -46,12 +54,4 @@ public class PersonResources {
         return persons;
     }
 
-    @GET
-    @Path("/all1")
-    @UnitOfWork
-    public List fetchAllPersons() {
-        return personsDao.findAll();
-
-
-    }
 }

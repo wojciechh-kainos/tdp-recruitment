@@ -12,13 +12,9 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import resources.SlotsResource;
 import resources.SlotsTimesResource;
 import resources.PersonResources;
-
-import javax.ws.rs.HEAD;
-
-import static org.postgresql.hostchooser.HostRequirement.master;
-import resources.TdpRecruitmentSlotsResource;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -58,19 +54,8 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         module.setSessionFactory(hibernateBundle.getSessionFactory());
 
         environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResources.class));
-        environment.jersey().register(SlotsTimesResource.class);
-        environment.jersey().register(guiceBundle.getInjector().getInstance(TdpRecruitmentSlotsResource.class));
-
-//        TdpIAuthenticator authenticator = new UnitOfWorkAwareProxyFactory(hibernateBundle).create(TdpIAuthenticator.class,
-//                TdpIUserDAO.class, guiceBundle.getInjector().getInstance(TdpIUserDAO.class));
-
-//        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<TdpIUser>()
-//                .setAuthenticator(authenticator)
-//                .setAuthorizer(guiceBundle.getInjector().getInstance(TdpIAuthorizer.class))
-//                .setUnauthorizedHandler(new TdpIUnauthorizedHandler())
-//                .buildAuthFilter()));
-
-//        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(TdpIUser.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsTimesResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
     }
 
     public static void main(final String[] args) throws Exception {

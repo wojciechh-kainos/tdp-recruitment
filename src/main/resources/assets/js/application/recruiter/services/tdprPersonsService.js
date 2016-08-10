@@ -1,5 +1,5 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q) {
         var persons;
         
         this.fetchPersonsWithSlotsForDates = function(start, end){
@@ -18,6 +18,16 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         
         this.getPersons = function () {
             return persons;
-        }
+        };
+
+        this.createPerson = function (person) {
+            return $http.put("/api/person/create/", person).then(function (response) {
+                return response;
+            }, function (err) {
+                err.message = "Interviewer adding failed.";
+                return $q.reject(err);
+            });
+        };
+
     })
 });
