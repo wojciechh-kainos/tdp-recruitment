@@ -35,6 +35,14 @@ define(['angular', 'angularMocks','application/recruiter/filters/tdprRecruiterJo
             it("should return nothing when isOps marked", function(){
                 expect(filter('jobProfileFilter')(personDataForTesting, 'isOps').length).toEqual(0);
             })
+
+            it("should return 2 persons when job profile value not set", function(){
+                expect(filter('jobProfileFilter')(personDataForTesting).length).toEqual(2);
+            })
+
+            it("should return 2 persons when job profile value is empty string", function(){
+                expect(filter('jobProfileFilter')(personDataForTesting,'').length).toEqual(2);
+            })
         })
     })
 });
