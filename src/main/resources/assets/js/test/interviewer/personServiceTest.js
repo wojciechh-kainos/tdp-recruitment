@@ -27,7 +27,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
         describe('updatePersonDetails', function () {
             it('should call backend with given person object', function () {
                 var person = {id: 100, email: 'a@a'};
-                $httpBackend.expectPUT('/api/person/create', person).respond(200);
+                $httpBackend.expectPUT('/api/person/' + person.id, person).respond(200);
 
                 service.updatePersonDetails(person).then(function (response) {
                     expect(response.status).toEqual(200);
