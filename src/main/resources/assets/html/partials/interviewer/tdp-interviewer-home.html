@@ -10,6 +10,7 @@
         <span class="navigate1">{{displayedStartDate}} - {{displayedEndDate}}</span>
         <button class="button navigate1 " ng-click="showNextWeek()">Next week</button>
     </div>
+
     <div class="legend">
         <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.available.id}}"/>
             <span class="{{::AvailabilityEnum.available.className}} legend-block"></span> Available</label>
@@ -37,8 +38,8 @@
                     ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
-                    ng-mousedown="markSlots(slot)"
-                    ng-mouseover="mousedown ? markSlots(slot) : '' "
+                    ng-mousedown="markSlots(slot); changeSlotStatus() "
+                    ng-mouseover="mousedown ? markSlots(slot) : ''"
                     ng-click=" changeSlotStatus()">
                 </td>
             </tr>
@@ -53,15 +54,16 @@
                     <label>Note for this week:</label>
                 </div>
                 <div class="col-lg-4">
-                    <textarea ng-model="temporaryContent" ng-style="textAreaStyle" ng-disabled="!editNote" rows="3" cols="45" maxlength="500" ng-class="{'disabled-textarea' : !editNote}"></textarea>
+                    <textarea ng-model="temporaryContent" ng-style="textAreaStyle" ng-disabled="!editNote" rows="3" cols="45" maxlength="500"></textarea>
                 </div>
+
                 <div class="col-lg-1">
                     <button class="btn btn-primary" type="button" ng-model="editNote" ng-click="editNoteSwitch()" ng-init="editNote = false; buttonTitle = 'Edit note'">{{buttonTitle}}</button>
                 </div>
             </div>
             <hr>
             <div>
-                <button class="btn btn-primary uppercase" id="discard-btn"  type="button" ng-click="discardChanges()">discard changes</button>
+                <button id="discard-btn" class="btn btn-primary uppercase" type="button" ng-click="discardChanges()">discard changes</button>
                 <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
             </div>
             <hr>
