@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum, $log) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, $filter, $stateParams, $timeout, AvailabilityEnum) {
         $scope.slotTimes = [];
         tdprSlotsService.getSlotsTimes().then(function (response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -17,9 +17,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
 
-        $scope.$log = $log;
-
         var id = $stateParams.id;
+
+        $scope.clearTable();
+        $scope.getSlots(id);
 
         $scope.clearTable = function () {
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
@@ -29,14 +30,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }
             }
         };
-
-        $scope.clearTable();
-
-        function getDayOfTheWeek(d, i) {
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-            return new Date(d.setDate(diff + i)); // i = 0 - monday
-        }
 
         $scope.getSlots = function (personId) {
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
@@ -88,11 +81,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
         };
 
-        $scope.getSlots(id);
-
         $scope.markSlots = function(slot) {
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
+
+        function getDayOfTheWeek(d, i) {
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff + i)); // i = 0 - monday
+        }
 
     });
 });
