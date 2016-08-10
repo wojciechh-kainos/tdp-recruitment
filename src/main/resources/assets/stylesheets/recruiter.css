@@ -18,15 +18,13 @@
     border: 1px solid #375D81;
 }
 
-.slot-unavailable {
-    border-top-width: 0px;
-}
+
 
 .slot-available {
     background-color: #87D37C;
 }
 
-.slot-init {
+.slot-unavailable {
     background-color: red;
 }
 
@@ -34,7 +32,7 @@
     background-color: darkred;
 }
 
-.slot-busy {
+.slot-maybe {
     background-color: orange;
 }
 

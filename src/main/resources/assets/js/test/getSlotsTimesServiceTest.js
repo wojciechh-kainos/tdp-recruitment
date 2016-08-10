@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'], function (angular) {
+define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTimesService'], function (angular) {
 
     describe('tdprRecruiterGetSlotsTimesService', function () {
         beforeEach(angular.mock.module('tdprRecruiterModule'));
@@ -6,8 +6,8 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
         var $httpBackend;
         var $service;
 
-        beforeEach(inject(function (_tdprRecruiterGetSlotsTimesService_, _$httpBackend_) {
-            $service = _tdprRecruiterGetSlotsTimesService_;
+        beforeEach(inject(function (_tdprSlotsTimesService_, _$httpBackend_) {
+            $service = _tdprSlotsTimesService_;
             $httpBackend = _$httpBackend_;
         }));
 

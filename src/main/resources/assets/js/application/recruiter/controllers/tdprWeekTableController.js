@@ -9,7 +9,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         });
 
         tdprSlotsTimesService.fetchSlotsTimes().then(function () {
-            $scope.slotTimes = tdprSlotsTimesService.getSlotTimes();
+            $scope.slotTimes = tdprSlotsTimesService.getSlotsTimes();
         });
     })
 });
