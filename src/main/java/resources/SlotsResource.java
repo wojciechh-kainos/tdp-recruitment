@@ -19,12 +19,10 @@ import java.util.List;
 public class SlotsResource {
 
     private SlotsDao slotsDao;
-    private PersonsDao personsDao;
 
     @Inject
-    public SlotsResource(SlotsDao slotsDao, PersonsDao personsDao) {
+    public SlotsResource(SlotsDao slotsDao) {
         this.slotsDao = slotsDao;
-        this.personsDao = personsDao;
     }
 
     @PUT
@@ -38,11 +36,15 @@ public class SlotsResource {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-        Date start = formatter.parse(date_from);
-        Date end = formatter.parse(date_to);
+        Date now = new Date();
+        Date startDate = formatter.parse(date_from);
+        Date endDate = formatter.parse(date_to);
 
-        slotsDao.updateForPersonAndWeek(slots, person_id, start, end);
+        if (now.after(endDate)) { // don't allow users to submit availabilities older than current week
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
 
+        slotsDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
         return Response.status(Response.Status.CREATED).build();
     }
 

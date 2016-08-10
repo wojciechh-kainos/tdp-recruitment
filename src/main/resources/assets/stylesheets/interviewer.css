@@ -50,3 +50,7 @@ table, td, tr {
     width: 725px;
     margin: auto;
 }
+
+.mouse-pointer{
+    cursor: pointer;
+}

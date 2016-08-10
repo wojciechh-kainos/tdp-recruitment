@@ -1,6 +1,6 @@
 <div class="container">
     <h1>YOUR AVAILABILITY</h1>
-    <h3>(click on slots to change availability)</h3>
+    <h3>(click/drag to change availability)</h3>
     <div class="row">
         <button class="btn btn-default navigate pull-left" ng-click="showPreviousWeek()">Previous week</button>
 
@@ -29,20 +29,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="slotsForDay in slotsForWeek">
+        <tr ng-repeat="slotsForDay in slotsForWeek" >
             <td class="slotTime">{{slotTimes[$index]}}</td>
-            <td ng-repeat="slot in slotsForDay track by $index"
+            <td class="mouse-pointer"
+                ng-repeat="slot in slotsForDay track by $index"
                 ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
-                ng-mousedown="markSlots(slot)"
-                ng-mouseover="mousedown ? markSlots(slot) : '' " >
+                ng-mousedown="relativeDayNumber>=0 ? markSlots(slot) : '' "
+                ng-mouseover="relativeDayNumber>=0 && mousedown ? markSlots(slot) : '' " >
             </td>
         </tr>
         </tbody>
     </table>
     <div>
-        <button class="btn btn-primary" type="button" ng-click="updateSlots()">SUBMIT CHANGES</button>
-        <button class="btn btn-primary pull-right" type="button" ng-click="goDetails()">Personal details</button>
+        <button class="btn btn-primary" type="button" ng-click="updateSlots()" ng-disabled="relativeDayNumber<0">SUBMIT CHANGES</button>
+        <button class="btn btn-primary pull-right" type="button" ng-click="goDetails() ">Personal details</button>
     </div>
 </div>

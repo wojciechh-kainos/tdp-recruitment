@@ -82,7 +82,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 getSlotsDeferred.resolve({});
 
                 var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
-                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 5), "dd-MM-yyyy");
 
                 $scope.updateSlots();
                 $scope.$apply();

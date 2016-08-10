@@ -17,8 +17,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
 
-        $scope.$log = $log;
-
         var id = $stateParams.id;
 
         $scope.clearTable = function () {
@@ -29,14 +27,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }
             }
         };
-
-        $scope.clearTable();
-
-        function getDayOfTheWeek(d, i) {
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-            return new Date(d.setDate(diff + i)); // i = 0 - monday
-        }
 
         $scope.getSlots = function (personId) {
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
@@ -67,8 +57,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }
             }
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + $scope.relativeDayNumber), "dd-MM-yyyy");
-            tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function(){
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
+            tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});});
         };
 
@@ -84,8 +74,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
         };
 
-        $scope.getSlots(id);
-
         $scope.markSlots = function(slot) {
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
@@ -93,6 +81,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
               $state.go('tdpr.interviewer.details', {'id' : id});
         };
 
+
+        function getDayOfTheWeek(d, i) {
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff + i)); // i = 0 - monday
+        }
+
+        $scope.clearTable();
+        $scope.getSlots(id);
 
     });
 });
