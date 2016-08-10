@@ -5,6 +5,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         $scope.displayedStartDate;
         $scope.displayedEndDate;
         $scope.slotsForWeek = new Array(18);
+        var LIGHTGREYCOLOUR = 'rgb(232, 232, 232)';
+
+        $scope.hasNoteChanged = false;
+        $scope.hasSlotChanged = false;
 
         var note;
         var id = $stateParams.id;
@@ -27,9 +31,29 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
 
             getSlots(id, relativeDayNumber);
             getNote(id, startDate);
+            $scope.textAreaStyle = {'background-color':LIGHTGREYCOLOUR};
+        }
+
+        $scope.changeSlotStatus = function() {
+            $scope.hasSlotChanged = true;
+        }
+
+        $scope.editNoteSwitch = function() {
+            if($scope.editNote) {
+                disableNoteEditing();
+            } else {
+                enableNoteEditing();
+            }
         }
 
        $scope.showPreviousWeek = function() {
+            if($scope.hasNoteChanged || $scope.hasSlotChanged) {
+                alert("You have changed your data. Submit or discard your changes!");
+                return;
+            }
+
+            disableNoteEditing(); // set note input to disabled by default when changing weeks
+
             relativeDayNumber = relativeDayNumber - 7;
 
             clearTable();
@@ -40,6 +64,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         }
 
         $scope.showNextWeek = function() {
+            if($scope.hasNoteChanged || $scope.hasSlotChanged) {
+                alert("You have changed your data. Submit or discard your changes!");
+                return;
+            }
+
+            disableNoteEditing(); // set note input to disabled when changing weeks
+
             relativeDayNumber = relativeDayNumber + 7;
 
             clearTable();
@@ -55,8 +86,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
                     if ($scope.slotsForWeek[i][j].available) {
                         var slot = {
-                            slotsDate: getDayOfTheWeek(new Date(), j),
-                            person: {id: id},
+                            slotsDate: getDayOfTheWeek(new Date(), j + relativeDayNumber),
+                            person: {id:id}, // null?
                             slot: {id: i + 1},
                             type: {id: 1}
                         };
@@ -75,14 +106,31 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
             var note = {
                          "id": $scope.noteContent.id,
                          "person": {
-                           "id": $stateParams.id
+                           "id": id
                          },
-                         "description": $scope.noteContent.description,
+                         "description": $scope.temporaryContent,
                          "date": $filter('date')(getDayOfTheWeek(new Date(), relativeDayNumber), "yyyy-MM-dd")
              }
 
             sendNote(note);
+            $scope.hasSlotChanged = false;
+            $scope.hasNoteChanged = false;
          };
+
+        function enableNoteEditing() {
+            $scope.hasNoteChanged = true;
+            $scope.buttonTitle = "Discard";
+            $scope.textAreaStyle = {'background-color':'white'};
+            $scope.editNote = true;
+        }
+
+        function disableNoteEditing() {
+            $scope.hasNoteChanged = false;
+            $scope.buttonTitle = "Edit note";
+            $scope.textAreaStyle = {'background-color':LIGHTGREYCOLOUR};
+            $scope.temporaryContent = $scope.noteContent.description;
+            $scope.editNote = false;
+        }
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
@@ -95,6 +143,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
         function getNote(personId, date) {
             tdprPersonService.getNote(personId, date).then(function(response) {
                 $scope.noteContent = response.data;
+                $scope.temporaryContent = response.data.description;
                 if(response.status == 204) {
                     $scope.noteContent.id = null;
                 }
