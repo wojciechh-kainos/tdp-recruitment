@@ -1,10 +1,9 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService,tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService,tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum) {
         $scope.slotTimes = [];
 
         $scope.displayedStartDate;
         $scope.displayedEndDate;
-
         $scope.hasNoteChanged = false;
         $scope.hasSlotChanged = false;
         $scope.startDate;
@@ -15,14 +14,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
 
-        $scope.$log = $log;
-
         var note;
         var id = $stateParams.id;
 
         var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-        var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
-
+        var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4 ), "dd-MM-yyyy");
 
         $scope.clearTable = function () {
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
@@ -140,28 +136,29 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     }
                 }
             }
-
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + $scope.relativeDayNumber), "dd-MM-yyyy");
-
-            tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function(){
-                            $scope.showSubmitSuccess = true;
-                            $timeout(function(){$scope.showSubmitSuccess=false;}, 2000);
-                        });
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
+            tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
+                $scope.showSubmitSuccess = true;
+                $timeout(function () {
+                    $scope.showSubmitSuccess = false;
+                }, 2000);
+            });
 
             var note = {
-                         "id": $scope.noteContent.id,
-                         "person": {
-                           "id": id
-                         },
-                         "description": $scope.temporaryContent,
-                         "date": $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd")
+                 "id": $scope.noteContent.id,
+                 "person": {
+                   "id": id
+                 },
+                 "description": $scope.temporaryContent,
+                 "date": $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd")
              }
 
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
-         };
+        };
+
 
         function enableNoteEditing() {
             $scope.hasNoteChanged = true;

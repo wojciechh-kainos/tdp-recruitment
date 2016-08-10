@@ -54,7 +54,7 @@
                     <label>Note for this week:</label>
                 </div>
                 <div class="col-lg-4">
-                    <textarea ng-model="temporaryContent" ng-style="textAreaStyle" ng-disabled="!editNote" rows="3" cols="45" maxlength="500"></textarea>
+                    <textarea ng-model="temporaryContent" ng-style="textAreaStyle" ng-disabled="!editNote" rows="3" cols="45" maxlength="500" ng-class="{'disabled-textarea' : !editNote}"></textarea>
                 </div>
 
                 <div class="col-lg-1">
@@ -63,7 +63,7 @@
             </div>
             <hr>
             <div>
-                <button id="discard-btn" class="btn btn-primary uppercase" type="button" ng-click="discardChanges()">discard changes</button>
+                <button class="btn btn-primary uppercase" id="discard-btn"  type="button" ng-click="discardChanges()">discard changes</button>
                 <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
             </div>
             <hr>

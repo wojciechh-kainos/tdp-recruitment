@@ -178,3 +178,7 @@ button {
 .disabled-textarea {
     background: #D3D3D3;
 }
+
+.mouse-pointer{
+    cursor: pointer;
+}
