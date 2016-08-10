@@ -38,18 +38,18 @@ public class SlotsDao extends AbstractDAO<Slots> {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        Criteria criteria = currentSession().createCriteria(Slots.class);
+        Criteria criteria = criteria();
         addRestrictionIfNotNull(criteria, Restrictions.ge("slotsDate", start), start);
         addRestrictionIfNotNull(criteria, Restrictions.le("slotsDate", end), end);
 
-        return criteria.list();
+        return list(criteria);
     }
 
     public List<Slots> findBetweenPerJobProfile(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps){
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        Criteria criteria = currentSession().createCriteria(Slots.class);
+        Criteria criteria = criteria();
         Criteria criteriaPerson = criteria.createCriteria("person");
 
         criteria.add(Restrictions.ge("slotsDate", start));
@@ -59,7 +59,7 @@ public class SlotsDao extends AbstractDAO<Slots> {
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
 
-        return criteria.list();
+        return list(criteria);
     }
 
     public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
