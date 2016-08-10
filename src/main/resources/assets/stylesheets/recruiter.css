@@ -14,23 +14,16 @@
 
 .rotate > span {
     white-space: nowrap;
-    /*padding: 5px 10px;
-    border-bottom: 1px solid #ccc;*/
 }
-
 .slot{
+
+
     /*min-width: 10px;*/
     /*min-height: 10px;*/
-    width: 16px;
+    min-width: 16px;
     height: 20px;
 }
 
-.slot:hover {
-    background-color: black;
-}
-.person-row{
-    /*height: 10px;*/
-}
 
 .cell-avail-unavailable {
     border-top-width: 0px;
@@ -55,14 +48,6 @@
 
 .cell-selected {
     background-color: cyan;
-}
-
-.person-name {
-    width: 140px;
-    position:absolute;
-    left:0;
-    text-align: right;
-    margin: 0;
 }
 
 .my-timetable {
@@ -112,17 +97,29 @@
 
 }
 
-.table1-container {
+/* AFTER REFACTOR*/
+
+.slot:hover {
+    background-color: grey;
+}
+
+.availabilities-table-container {
     min-width: 800px;
-    overflow-x: scroll;
+    overflow-x: auto;
     margin-left:140px;
     overflow-y:visible;
     padding-bottom:1px;
-
 }
 
 .container {
     position: relative;
 }
 
-
+.person-name {
+    width: 150px;
+    position: absolute;
+    left:0;
+    text-align: right;
+    margin: 0;
+    padding-right: 5px;
+}

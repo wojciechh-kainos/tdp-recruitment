@@ -14,7 +14,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 
                 scope.getSlot = function (slotNumber, day) {
                     return scope.person.slotsList.find(function (slot) {
-                        return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day);
+                        return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day.getDay());
                     });
                 }
             }

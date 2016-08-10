@@ -1,38 +1,22 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule' 
-    , 'application/recruiter/directives/tdprAvailabilityDirective'  //directives deps should be moved to moduleConfig
-    , 'application/recruiter/directives/tdprPersonDirective'
-    , 'application/recruiter/directives/tdprPersonsDirective'
-    , 'application/recruiter/directives/tdprTableDirective'
-    , 'application/recruiter/directives/tdprFilterDirective'
-    , 'application/recruiter/directives/tdprPersonRowDirective'
-    , 'application/recruiter/directives/tdprSlotDirective'
-    , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
-    , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService) {
-        var slotsData = tdprRecruiterGetSlotsTimesService.getSlotsTimes();
-        var personsData = tdprPersonsService.fetchPersons();
+define(['angular', 'application/recruiter/tdprRecruiterModule'
+    ], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprSlotsTimesService, tdprPersonsService, tdprDateService) {
 
-        $scope.staticData = [];
-        $scope.timeData = {};
-        $scope.days = [getDayOfTheWeek(new Date(), 0),2,3,4,5];
-        $scope.monday = {};
+        $scope.days = tdprDateService.getCurrentWeek();
 
-        function getDayOfTheWeek(d, i) {
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-            return new Date(d.setDate(diff+i)); //i = 0 - monday
-        }
-    var i = 0;
-        personsData.then(function () {
+        tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function () {
             $scope.persons = tdprPersonsService.getPersons();
+            console.log($scope.persons);
         });
 
-        slotsData.then(function () {
-            $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
-            $scope.timeData = $scope.timeData.slice(0,2);
+        tdprSlotsTimesService.fetchSlotsTimes().then(function () {
+            $scope.slotTimes = tdprSlotsTimesService.getSlotTimes();
         });
 
-        $scope.startDateWeek = tdprPersonsService.getCurrentWeek();
+        $scope.szybkiGuzik = function (i) {
+            $scope.slotTimes = tdprSlotsTimesService.getSlotTimes().slice(0, i);
+            
+        }
         
     })
 });

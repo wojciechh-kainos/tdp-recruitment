@@ -2,6 +2,11 @@ define(['angular'
     , 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/controllers/tdprWeekTableController'
     , 'application/recruiter/services/tdprPersonsService'
+    , 'application/recruiter/directives/tdprPersonRowDirective'
+    , 'application/recruiter/directives/tdprSlotDirective'
+    , 'application/recruiter/services/tdprSlotsTimesService'
+    , 'application/recruiter/services/tdprPersonsService'
+    , 'application/recruiter/services/tdprDateService'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
