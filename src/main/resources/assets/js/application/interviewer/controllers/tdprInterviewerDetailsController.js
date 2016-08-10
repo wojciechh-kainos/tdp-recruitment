@@ -22,7 +22,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
             tdprPersonService.updatePersonDetails(person).then(function () {
-                //init();
+                init();
                 Notification.success({message: 'Details updated!', delay: 2000});
             });
         }
