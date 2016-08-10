@@ -1,26 +1,26 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.filter('jobProfileFilter', function(){
-        return function(person, jobProfile){
+        return function(persons, jobProfile){
              var response = [];
 
-             if(jobProfile == undefined)
-                return person;
+             if(jobProfile == undefined || jobProfile == "")
+                return persons;
 
-             for(var i = 0; i < person.length; i++){
+             for(var i = 0; i < persons.length; i++){
                  switch(jobProfile){
                     case 'isDev': {
-                        if(person[i].isDev == true)
-                            response.push(person[i]);
+                        if(persons[i].isDev == true)
+                            response.push(persons[i]);
                             break;
                     }
                     case 'isOps': {
-                        if(person[i].isOps == true)
-                            response.push(person[i]);
+                        if(persons[i].isOps == true)
+                            response.push(persons[i]);
                             break;
                     }
                     case 'isTest': {
-                        if(person[i].isTest == true)
-                            response.push(person[i]);
+                        if(persons[i].isTest == true)
+                            response.push(persons[i]);
                             break;
                     }
                  }
