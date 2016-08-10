@@ -19,7 +19,7 @@ define(['angular' 
                     } 
                 }
             }).state("tdpr.interviewer.details", {
-              url: "/details/{id}",
+              url: "/{id}/details",
               views: {
                   "@": {
                       templateUrl: "/html/partials/interviewer/tdpr-interviewer-details.html",
