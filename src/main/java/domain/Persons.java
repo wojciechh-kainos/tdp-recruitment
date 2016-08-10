@@ -59,7 +59,6 @@ public class Persons {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Notes> notesList = new HashSet<Notes>();
 
-
     public Persons() {
     }
 

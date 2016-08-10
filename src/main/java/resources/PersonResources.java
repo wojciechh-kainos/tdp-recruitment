@@ -27,7 +27,7 @@ public class PersonResources {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService){
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.notesDao = notesDao;

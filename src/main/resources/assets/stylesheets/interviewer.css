@@ -170,3 +170,7 @@ button {
     background: #286090;
     color: white;
 }
+
+.uppercase {
+    text-transform: uppercase;
+}
