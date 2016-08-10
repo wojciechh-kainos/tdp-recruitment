@@ -41,3 +41,31 @@ h2 {
     font-size: 0.9em;
     color: #808080;
 }
+
+.cell-avail-empty {
+    background-color: #ffffff;
+}
+
+.cell-avail-available {
+    background-color: #87D37C;
+}
+
+.cell-avail-unavailable {
+    background-color: #F44336;
+}
+
+.cell-avail-maybe {
+    background-color: #B0BEC5;
+}
+
+.cell-avail-init {
+    background: #FFEB3B;
+}
+
+.cell-avail-full {
+    background: #AB47BC;
+}
+
+.cell-selected {
+    background-color: cyan;
+}

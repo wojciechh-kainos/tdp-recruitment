@@ -23,12 +23,18 @@ body {
 #interviewer-header {
    font-size: 48px;
    color: #375D81;
+   }
+
+h1 {
+    font-size: 48px;
 }
+
 .container {
     text-align: center;
     font-family: 'Lato', sans-serif;
 
 }
+
 .availability-table {
     display: inline-block;
     margin-top: 30px;
@@ -38,6 +44,16 @@ body {
 
 .available-slot {
     background-color: #87D37C;
+}
+
+.legend label {
+    margin-right: 3rem;
+}
+
+.legend-block {
+    display: inline-block;
+    height: 10px;
+    width: 20px;
 }
 
 .availability-table tbody td, .availability-table thead th {
@@ -81,7 +97,6 @@ body {
 .navigate1 {
      display: inline-block;
      color: #3498DB;
-
 }
 
 #submit-slots {

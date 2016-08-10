@@ -8,6 +8,7 @@ import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
@@ -22,13 +23,15 @@ public class PersonResources {
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
     private NotesDao notesDao;
+    private MailService mailService;
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao){
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService){
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.notesDao = notesDao;
+        this.mailService = mailService;
     }
 
     @PUT
@@ -37,6 +40,7 @@ public class PersonResources {
     @UnitOfWork
     public Persons createPerson(Persons person) {
         personsDao.create(person);
+        mailService.sendEmail(person.getEmail(), person.getId());
         return person;
     }
 

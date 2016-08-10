@@ -4,15 +4,24 @@
 </div>
 
 <div class="container">
-
     <h1 id="interviewer-header">Your availability</h1>
     <h4>(click on slots to change availability)</h4>
     <div id="date-container">
-        <button id="btn-left" class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
+        <button class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
         <span class="navigate1">{{displayedStartDate}} - {{displayedEndDate}}</span>
-        <button id="btn-right" class="button navigate1 " ng-click="showNextWeek()">Next week</button>
+        <button class="button navigate1 " ng-click="showNextWeek()">Next week</button>
     </div>
-    <table class="availability-table">
+
+    <div class="legend">
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.available.id}}"/>
+            <span class="{{::AvailabilityEnum.available.className}} legend-block"></span> Available</label>
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.unavailable.id}}"/>
+            <span class="{{::AvailabilityEnum.unavailable.className}} legend-block"></span> Unavailable</label>
+        <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.maybe.id}}"/>
+            <span class="{{::AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
+    </div>
+
+    <table class="availability-table" ng-mousedown="mousedown = true" ng-mouseup="mousedown = false">
         <thead>
             <tr>
                 <th id="hours-th">HOURS</th>
@@ -26,7 +35,13 @@
         <tbody>
             <tr ng-repeat="slotsForDay in slotsForWeek">
                 <th class="slot-time">{{slotTimes[$index]}}</th>
-                <td ng-repeat="slot in slotsForDay track by $index" ng-class="{'available-slot': slot.available}" ng-click="slot.available = !slot.available; changeSlotStatus()">
+                <td ng-repeat="slot in slotsForDay track by $index"
+                    ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
+                    '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
+                    '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
+                    ng-mousedown="markSlots(slot)"
+                    ng-mouseover="mousedown ? markSlots(slot) : '' "
+                    ng-click=" changeSlotStatus()">
                 </td>
             </tr>
         </tbody>
@@ -55,5 +70,4 @@
             <hr>
         </div>
     </div>
-
 </div>
