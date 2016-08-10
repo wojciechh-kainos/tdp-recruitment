@@ -71,11 +71,11 @@ public class PersonResourcesTest {
 
     @Test
     public void testCreateNote(){
-        when(mockNotesDao.create(note2)).thenReturn(2L);
+        when(mockNotesDao.createOrUpdate(note2)).thenReturn(note2);
 
-        Long result = resource.updateNote(note2);
+        Notes result = resource.createOrUpdate(note2);
 
-        assertEquals(note2.getId(),result);
-        verify(mockNotesDao, times(1)).create(note2);
+        assertEquals(note2,result);
+        verify(mockNotesDao, times(1)).createOrUpdate(note2);
     }
 }

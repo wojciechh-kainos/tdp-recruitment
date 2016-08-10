@@ -89,7 +89,7 @@ public class PersonResources {
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Long updateNote(Notes note){
-        return notesDao.create(note);
+    public Notes createOrUpdate(Notes note){
+        return notesDao.createOrUpdate(note);
     }
 }

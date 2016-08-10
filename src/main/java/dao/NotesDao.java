@@ -16,8 +16,9 @@ public class NotesDao extends AbstractDAO<Notes>{
         super(sessionFactory);
     }
 
-    public long create(Notes note) {
-        return persist(note).getId();
+    public Notes createOrUpdate(Notes note) {
+        persist(note);
+        return note;
     }
 
     public Notes getByIdAndDate(Long personId,Date startDate) {

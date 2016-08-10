@@ -4,7 +4,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.displayedStartDate;
         $scope.displayedEndDate;
-        var LIGHTGREYCOLOUR = 'rgb(232, 232, 232)';
 
         $scope.hasNoteChanged = false;
         $scope.hasSlotChanged = false;
@@ -63,7 +62,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
             $scope.getSlots(id);
             getNote(id, startDate);
-            $scope.textAreaStyle = {'background-color':LIGHTGREYCOLOUR};
         }
 
         $scope.discardChanges = function() {
@@ -134,7 +132,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     if ($scope.slotsForWeek[i][j].type !== AvailabilityEnum.empty.id) {
                         var slot = {
                             slotsDate: getDayOfTheWeek(new Date(), j + $scope.relativeDayNumber),
-                            person: {id:id}, // null?
+                            person: {id:id},
                             slot: {id: i + 1},
                             type: {id: $scope.slotsForWeek[i][j].type}
                         };
@@ -168,14 +166,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         function enableNoteEditing() {
             $scope.hasNoteChanged = true;
             $scope.buttonTitle = "Discard";
-            $scope.textAreaStyle = {'background-color':'white'};
             $scope.editNote = true;
         }
 
         function disableNoteEditing() {
             $scope.hasNoteChanged = false;
             $scope.buttonTitle = "Edit note";
-            $scope.textAreaStyle = {'background-color':LIGHTGREYCOLOUR};
             $scope.temporaryContent = $scope.noteContent.description;
             $scope.editNote = false;
         }
