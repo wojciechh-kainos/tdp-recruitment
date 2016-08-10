@@ -99,7 +99,7 @@ define(['angular', 'angularMocks',
             };
 
             weekStart = dateFilter(weekStart, format);
-            weekStartString = dateFilter(weekStart, 'dd-MM-yyyy');
+            weekStartString = dateFilter(weekStart, 'yyyy-MM-dd');
         });
 
         describe('changeSlotType', function () {

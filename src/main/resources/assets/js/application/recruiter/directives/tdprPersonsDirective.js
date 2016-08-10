@@ -4,9 +4,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-persons.html',
             scope: {
-                selectedPersonTable: '=',
+                persons: '=',
                 timeElements: '=',
-                startWeekDay: '='
+                weekDay: '='
             },
             link: function (scope, element, attributes) {
                 scope.jobProfile = "";
@@ -16,7 +16,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     // Possibly add here check for job profile
                     var type = JobProfileEnum[scope.jobProfile];
 
-                    return _.filter(checkArray, function (value, index) {
+                    return _.filter(checkArray, function (value) {
                         return value.person[type] === true;
                     });
                 }
@@ -25,25 +25,25 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     scope.peopleList = _returnTableRows(table);
                 }
 
-                function _init() {
-                    _refreshList(scope.selectedPersonTable);
+                function refresh() {
+                    _refreshList(scope.persons);
                 }
 
                 function _changeJobProfile(newValue) {
                     scope.jobProfile = newValue;
                 }
 
-                scope.$watch('selectedPersonTable', function (newValue, oldValue) {
+                scope.$watch('persons', function (newValue) {
                     _refreshList(newValue);
                 });
 
-                scope.$parent.$watch('startWeekDay', function () {
-                    _init();
+                scope.$parent.$watch('weekDay', function () {
+                    refresh();
                 });
 
-                scope.$parent.$parent.$watch('jobProfile', function (newValue, oldValue) {
+                scope.$parent.$parent.$watch('jobProfile', function (newValue) {
                     _changeJobProfile(newValue);
-                    _init();
+                    refresh();
                 });
             }
         };

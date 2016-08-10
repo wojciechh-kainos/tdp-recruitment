@@ -6,21 +6,35 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/directives/tdprFilterDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService) {
-        var slotsData = tdprRecruiterGetSlotsTimesService.getSlotsTimes();
-        var personsData = tdprPersonsService.fetchPersons();
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService, tdprDateService) {
+        $scope.inputWeek = new Date();
+        $scope.weekDay = new tdprPersonsService.changeCurrentWeek($scope.inputWeek);
 
-        $scope.staticData = [];
-        $scope.timeData = {};
+        var refresh = function () {
+            tdprPersonsService.fetchPersons().then(function () {
+                $scope.personsData = tdprPersonsService.getPersons();
+                $scope.$broadcast("changedPersonData", {persons: $scope.personsData, weekDay: $scope.weekDay});
+            });
 
-        personsData.then(function () {
-            $scope.staticData = tdprPersonsService.getPersons();
+            tdprRecruiterGetSlotsTimesService.getSlotsTimes().then(function () {
+                $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
+                $scope.$broadcast("changedTimeData", {timeData: $scope.timeData, weekDay: $scope.weekDay});
+            });
+        };
+
+        $scope.$watch('inputWeek', function (newValue) {
+            $scope.weekDay = tdprPersonsService.changeCurrentWeek(newValue);
         });
 
-        slotsData.then(function () {
-            $scope.timeData = tdprRecruiterGetSlotsTimesService.getSlots();
+        $scope.$watch('weekDay', function (newValue, oldValue) {
+            if(tdprDateService.compareTime(newValue, oldValue) === false) {
+                refresh();
+                $scope.$broadcast("changedWeekDay", {weekDay: newValue});
+            }
         });
 
-        $scope.startDateWeek = tdprPersonsService.getCurrentWeek();
-    })
+
+        refresh();
+
+    });
 });

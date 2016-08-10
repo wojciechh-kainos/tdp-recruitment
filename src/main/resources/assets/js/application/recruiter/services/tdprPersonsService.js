@@ -5,15 +5,24 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
         var weekEnd;
         var currentDay = new Date();
 
-        this.fetchPersons = function () {
-            var format = 'yyyy-MM-dd';
-
+        var setStartEndWeek = function () {
             var now = currentDay;
+
             weekStart = new Date();
             weekEnd = new Date();
 
             weekStart.setDate(now.getDate() - now.getDay() + 1);
             weekEnd.setDate(now.getDate() + (7 - now.getDay()));
+
+            weekStart = tdprDateService.resetDate(weekStart);
+            weekEnd = tdprDateService.resetDate(weekEnd);
+        };
+
+        this.fetchPersons = function () {
+            var format = 'yyyy-MM-dd';
+
+            setStartEndWeek();
+
             return $http.get('api/person/all?startDate=' + dateFilter(weekStart, format) + '&endDate=' + dateFilter(weekEnd, format)).then(
                 function (response) {
                     persons = response.data;
@@ -27,6 +36,12 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
 
         this.getCurrentWeek = function() {
             return tdprDateService.resetDate(weekStart);
+        };
+
+        this.changeCurrentWeek = function(newDate) {
+            currentDay = tdprDateService.resetDate(newDate);
+            setStartEndWeek(newDate);
+            return weekStart;
         };
 
         this.getPersons = function () {

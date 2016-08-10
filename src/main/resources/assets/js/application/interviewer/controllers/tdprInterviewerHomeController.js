@@ -39,8 +39,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.getSlots = function (personId) {
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
+            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd");
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "yyyy-MM-dd");
 
             $scope.startDate = startDate;
             $scope.endDate = endDate;
@@ -66,8 +66,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     }
                 }
             }
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + $scope.relativeDayNumber), "dd-MM-yyyy");
+            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd");
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4 + $scope.relativeDayNumber), "yyyy-MM-dd");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 $scope.showSubmitSuccess = true;
                 $timeout(function () {

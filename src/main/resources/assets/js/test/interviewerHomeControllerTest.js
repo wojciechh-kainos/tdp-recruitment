@@ -49,8 +49,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
         describe('getSlots', function () {
             it('should call service with correct dates and personId', function () {
-                var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
-                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+                var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "yyyy-MM-dd");
+                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "yyyy-MM-dd");
 
                 $scope.getSlots();
                 $scope.$apply();
@@ -80,8 +80,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.slotsForWeek[0][0] = {type: {id: 42}};
                 getSlotsDeferred.resolve({});
 
-                var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
-                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "dd-MM-yyyy");
+                var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "yyyy-MM-dd");
+                var endDate = $filter('date')(getDayOfTheWeek(new Date(), 4), "yyyy-MM-dd");
 
                 $scope.updateSlots();
                 $scope.$apply();

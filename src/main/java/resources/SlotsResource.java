@@ -36,7 +36,7 @@ public class SlotsResource {
                            @PathParam("date_from") String date_from,
                            @PathParam("date_to") String date_to) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Date start = formatter.parse(date_from);
         Date end = formatter.parse(date_to);
@@ -53,7 +53,7 @@ public class SlotsResource {
                                          @QueryParam("startDate") String startDate,
                                          @QueryParam("endDate") String endDate) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);

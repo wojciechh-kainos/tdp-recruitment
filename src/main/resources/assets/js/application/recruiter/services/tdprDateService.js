@@ -22,7 +22,12 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.formatDate = function (dateToFormat) {
-            return dateFilter(dateToFormat, "dd-MM-yyyy");
-        }
+            return dateFilter(dateToFormat, "yyyy-MM-dd");
+        };
+
+        this.compareTime = function (compare, compareTo) {
+            if (compare === undefined || compareTo === undefined) return false;
+            return compare.getTime() === compareTo.getTime();
+        };
     });
 });

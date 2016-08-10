@@ -3,9 +3,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-availability.html',
+            replace: true,
             link: function (scope, element, attributes) {
-
-                function _init() {
+                function refresh() {
                     var available = scope.availabilityObject.type ? scope.availabilityObject.type : "empty";
                     var type = AvailabilityEnum[available];
 
@@ -21,9 +21,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     scope.tooltipText = scope.availabilityObject.tooltipText;
                 }
 
-
                 scope.$watch("availabilityObject", function () {
-                    _init();
+                    refresh();
                 });
             }
         };

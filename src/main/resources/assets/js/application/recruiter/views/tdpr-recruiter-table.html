@@ -2,6 +2,8 @@
 
 <div filter-directive></div>
 
-<div id="timetable" data-my-timetable data-start-week-day="startDateWeek" data-model-input="staticData" data-slots-times="timeData"></div>
+<input name="week" type="date" ng-model="inputWeek" />
+
+<div id="timetable" data-timetable data-week-day="weekDay" data-persons="personsData" data-slots-times="timeData"></div>
 
 <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>

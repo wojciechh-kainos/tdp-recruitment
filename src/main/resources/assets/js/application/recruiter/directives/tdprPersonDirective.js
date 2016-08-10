@@ -1,32 +1,30 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability', 'application/recruiter/services/tdprScheduleService'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability, tdprScheduleService) {
+    tdprRecruiterModule.directive("personDirective", ['tdprPopulateAvailability', 'tdprScheduleService', 'tdprDateService', function (tdprPopulateAvailability, tdprScheduleService, tdprDateService) {
         return {
             restrict: 'A',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             link: function (scope, element, attributes) {
-                var changeType = function (objectArray) {
-                    tdprScheduleService.changeSlotTypeCycleThrough(objectArray, scope.person.slots, scope.person.person);
-
-                    _init();
-                };
-
-                function _init() {
-                    scope.changeType = changeType;
+                function refresh() {
                     scope.availabilityArray = tdprPopulateAvailability.populateAvailability(scope.person, scope.timeElements);
                 }
+                
+                scope.changeType = function (objectArray) {
+                    tdprScheduleService.changeSlotTypeCycleThrough(objectArray, scope.person.slots, scope.person.person);
+                    refresh();
+                };
 
                 scope.$watch("timeElements", function () {
-                    _init();
+                    refresh();
                 });
 
                 scope.$watch("person", function () {
-                    _init();
+                    refresh();
                 });
 
-                scope.$parent.$parent.$watch("startWeekDay", function () {
-                    _init();
+                scope.$on("changedWeekDay", function () {
+                    refresh();
                 });
             }
         };
-    });
+    }]);
 });
