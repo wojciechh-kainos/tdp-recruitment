@@ -43,6 +43,13 @@ define(['angular'
         dev: "isDev",
         web: "isWeb",
         test: "isTest"
+    }).constant('BandLevelEnum',{
+        "1": "1 - Principal",
+        "2": "2 - Manager",
+        "3": "3 - Consultant",
+        "4": "4 - Senior associate",
+        "5": "5 - Associate",
+        "6": "6 - Trainee"
     });
 
     return tdprConstantsModule;

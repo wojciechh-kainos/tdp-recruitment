@@ -35,6 +35,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 tdprSlotsService: slotsService,
                 tdprPersonService: personService,
                 AvailabilityEnum: AvailabilityEnum,
+                Notification: { success: function() {}},
                 $stateParams: {id: personId}
             });
 
