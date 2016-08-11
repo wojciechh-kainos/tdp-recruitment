@@ -140,7 +140,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
 
                 $httpBackend.expectPUT('/api/person/updateNote', dataToSend).respond(400, expectedResponse);
                 $service.updateNote(dataToSend).then(function(response) {
-                    expect(response.status).toEqual(200);
+                    expect(response.status).toEqual(300);
                     expect(response.data).toEqual(expectedResponse);
                 });
                 $httpBackend.flush();

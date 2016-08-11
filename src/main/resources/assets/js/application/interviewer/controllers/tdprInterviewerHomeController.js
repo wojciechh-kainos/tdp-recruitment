@@ -55,6 +55,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.slotTimes.push(startTime + "-" + endTime);
                 }
             });
+            $scope.temporaryContent = "";
 
             $scope.getSlots(id);
             getNote(id, startDate);
@@ -187,7 +188,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         function getNote(personId, date) {
             tdprPersonService.getNote(personId, date).then(function(response) {
                 $scope.noteContent = response.data;
-                $scope.temporaryContent = response.data.description;
+                if(response.data.description == null) {
+                    $scope.temporaryContent = "";
+                } else {
+                    $scope.temporaryContent = response.data.description;
+                }
                 if(response.status == 204) {
                     $scope.noteContent.id = null;
                 }
