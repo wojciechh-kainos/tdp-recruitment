@@ -4,15 +4,15 @@
 
     <div class="legend">
         <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="isDev"/>
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
             <span>Developer</span>
         </label>
         <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="isTest"/>
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
             <span> Tester</span>
         </label>
         <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="isWeb"/>
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.web}}"/>
             <span> WebOps</span>
         </label>
     </div>
