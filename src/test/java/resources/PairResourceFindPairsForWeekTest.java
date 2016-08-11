@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class PairResourceWithDifferentDaysTest {
+public class PairResourceFindPairsForWeekTest {
 
     private final String startDate = "01-01-2016";
     private final String endDate = "02-01-2016";
@@ -76,12 +76,10 @@ public class PairResourceWithDifferentDaysTest {
 
 
     @Test
-    public void testFindPairsForWeek(){
+    public void testFindPairForWeek(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
 
-        List listOfPairList = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
-
-        List<Pair> pairs = (List<Pair>) listOfPairList.get(0);
+        List<Pair> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
         assertEquals("One pair should be found", 1, pairs.size());
 
@@ -93,7 +91,7 @@ public class PairResourceWithDifferentDaysTest {
                                         .map(searchedSlot -> searchedSlot.getSlot())
                                         .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
 
-        assertTrue("Found slots should be from expected day", pair.getSlots().stream().allMatch(slot -> slot.getSlotsDate().equals(expectedDate)));
+        assertTrue("Found slots should be at expected day", pair.getSlots().stream().allMatch(slot -> slot.getSlotsDate().equals(expectedDate)));
 
     }
 

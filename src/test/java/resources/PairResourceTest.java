@@ -69,9 +69,8 @@ public class PairResourceTest {
     public void testFindPairs(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
 
-        List listOfPairList = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List<Pair> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
-        List<Pair> pairs = (List<Pair>) listOfPairList.get(0);
         Pair pair = pairs.get(0);
 
         assertEquals("One pair of slots should be found", 1, pairs.size());
