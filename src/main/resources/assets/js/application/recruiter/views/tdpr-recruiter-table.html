@@ -2,6 +2,21 @@
 
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
+    <div class="legend">
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="isDev"/>
+            <span>Developer</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="isTest"/>
+            <span> Tester</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="isWeb"/>
+            <span> WebOps</span>
+        </label>
+    </div>
+
     <div class="availabilities-table-container">
         <table id="availabilities-table">
             <thead>
@@ -23,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr person slot-times="slotTimes" person-data="person" days="days" ng-repeat="person in persons"></tr>
+                <tr person slot-times="slotTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile"></tr>
             </tbody>
         </table>
     </div>
