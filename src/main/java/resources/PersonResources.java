@@ -11,6 +11,7 @@ import io.dropwizard.hibernate.UnitOfWork;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,7 +90,14 @@ public class PersonResources {
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Notes createOrUpdate(Notes note){
-        return notesDao.createOrUpdate(note);
+    public Response createOrUpdate(Notes note){
+        Date now = new Date();
+
+        if (now.after(note.getDate())) { // don't allow users to submit availabilities older than current week
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } else {
+            notesDao.createOrUpdate(note);
+            return Response.status(Response.Status.ACCEPTED).build();
+        }
     }
 }

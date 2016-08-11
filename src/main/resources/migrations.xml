@@ -15,4 +15,5 @@
     <include file="changelogs/initialPopulateAvailabilityTypes.xml"/>
     <include file="changelogs/createNotesTable.xml"/>
     <include file="changelogs/addNotesColumnToPersonsTable.xml"/>
+    <include file="changelogs/US20_modifyNoteTable.xml"/>
 </databaseChangeLog>

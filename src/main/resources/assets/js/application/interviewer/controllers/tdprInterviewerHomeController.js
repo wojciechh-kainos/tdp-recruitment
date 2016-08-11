@@ -148,20 +148,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }, 2000);
             });
 
-            var note = {
-                 "id": $scope.noteContent.id,
-                 "person": {
-                   "id": id
-                 },
-                 "description": $scope.temporaryContent,
-                 "date": $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd")
-             }
+            var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
 
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
         };
-
 
         function enableNoteEditing() {
             $scope.hasNoteChanged = true;
@@ -178,8 +170,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
-                getNote(id, startDate);
+                $scope.temporaryContent = response.data.description;
+                $scope.noteContent = response.data;
             }, function(failure) {
+                if(failure.status === 406) {
+                    $scope.temporaryContent = $scope.noteContent.description;
+                }
                 $scope.getNoteFailed = true;
                 $timeout(function () {
                     $scope.getNoteFailed = false;
@@ -191,23 +187,24 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
 
-        function fillNote(noteId, description) {
-            $scope.noteContent.id = noteId;
-            $scope.noteContent.description = "";
-            $scope.noteContent.person.id = id;
-            $scope.noteContent.date = startDate;
+        function createNote(description, personId, date) {
+            $scope.noteContent = {
+                description : description,
+                person: {
+                    id: personId
+                },
+                date: date
+            };
+            $scope.temporaryContent = "";
+            return $scope.noteContent;
         }
 
         function getNote(personId, date) {
+            createNote("", personId, date);
             tdprPersonService.getNote(personId, date).then(function(response) {
-                $scope.noteContent = response.data;
-                if(response.data.description == null) {
-                    $scope.temporaryContent = "";
-                } else {
+                if(response.status === 200) {
+                    $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
-                }
-                if(response.status == 204) {
-                    $scope.noteContent.id = null;
                 }
             }, function(failure) {
                 $scope.getNoteFailed = true;
@@ -216,7 +213,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }, 2000);
             })
         }
-
 
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
