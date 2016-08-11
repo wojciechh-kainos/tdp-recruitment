@@ -16,6 +16,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.jvnet.hk2.internal.Collector;
+
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
-public class PersonResources {
+public class PersonsResource {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
@@ -35,7 +38,7 @@ public class PersonResources {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService) {
+    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.notesDao = notesDao;
@@ -80,5 +83,21 @@ public class PersonResources {
     @UnitOfWork
     public Notes createOrUpdate(Notes note){
         return notesDao.createOrUpdate(note);
+    }
+
+    @GET
+    @Path("/{id}")
+    @UnitOfWork
+    public Persons getPersonById(@PathParam("id") Long id){
+         return personsDao.getById(id);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons updatePerson(Persons person) {
+        personsDao.update(person);
+        return person;
     }
 }
