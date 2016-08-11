@@ -105,7 +105,7 @@ define(['angular', 'angularMocks',
                 "isWeb": false,
                 "lastName": "Test",
                 "password": null,
-                "slotsList": null
+                "slotsList": []
             };
 
             testSlotId = 8;
@@ -155,11 +155,8 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object:
-                // No slot there yet
-                var slotObject = undefined;
 
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -216,15 +213,8 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object:
-                // Click on "Available" type object
-                var slotObject = {
-                    "day": testDay,
-                    "slot": testSlotId,
-                    "type": AvailabilityEnum.available.name
-                };
 
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -273,15 +263,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object:
-                // "Maybe" slot, which is last in rotation
-                var slotObject = {
-                    "day": testDay,
-                    "slot": testSlotId,
-                    "type": AvailabilityEnum.maybe.name
-                };
-
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -345,15 +327,8 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object:
-                // "Maybe" slot, which is last in rotation
-                var slotObject = {
-                    "day": testDay,
-                    "slot": testSlotId,
-                    "type": AvailabilityEnum.full.name
-                };
 
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekStart, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -413,17 +388,8 @@ define(['angular', 'angularMocks',
                 ], weekStart, person.id);
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(406);
-                //
 
-                // Simulate click on object:
-                // "Maybe" slot, which is last in rotation
-                var slotObject = {
-                    "day": weekStart,
-                    "slot": testSlotId,
-                    "type": AvailabilityEnum.full.name
-                };
-
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekStart, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person).then(function (response) {
                     expect(response.status).toEqual(406);
                 });
 
@@ -490,16 +456,8 @@ define(['angular', 'angularMocks',
                 ], weekEnd, person.id);
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekEndString + '/' + weekEndString, expectedSlots).respond(200);
-
-                // Simulate click on object:
-                // "Maybe" slot, which is last in rotation
-                var slotObject = {
-                    "day": weekEnd,
-                    "slot": testSlotId,
-                    "type": AvailabilityEnum.available.name
-                };
-
-                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekEnd, person).then(function (response) {
+                
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekEnd, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 

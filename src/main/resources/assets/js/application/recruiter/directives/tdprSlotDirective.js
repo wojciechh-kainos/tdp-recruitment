@@ -6,7 +6,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             replace: true,
             scope: {
                 slotData: '='
-
             },
             link: function (scope, element, attributes) {
                 scope.getClass = function () {

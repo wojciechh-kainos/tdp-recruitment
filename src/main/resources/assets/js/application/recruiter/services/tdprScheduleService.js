@@ -30,14 +30,15 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
             );
         };
 
-        service.changeSlotTypeCycleThrough = function (changeSlot, slotId, day, person) {
+        service.changeSlotTypeCycleThrough = function (slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");
+            var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
 
-            if (changeSlot === undefined) {
+            if (findResult === -1) {
                 // Add available slot for future changes
                 return service.changeSlotType(slotId, date, person, AvailabilityEnum.available.name);
             } else {
-                var newTypeId = parseInt(AvailabilityEnum[changeSlot.type].id) + 1;
+                var newTypeId = parseInt(AvailabilityEnum[person.slotsList[findResult].type].id) + 1;
                 var newType = _.findKey(AvailabilityEnum, {'id': newTypeId.toString()});
 
                 return service.changeSlotType(slotId, day, person, newType);

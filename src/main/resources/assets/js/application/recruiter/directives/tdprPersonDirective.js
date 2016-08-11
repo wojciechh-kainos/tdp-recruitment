@@ -6,7 +6,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             scope: {
                 personData: '=',
                 slotsTimes: '=',
-                days: '='
+                days: '=',
+                changeSlotType: '&'
             },
             link: function (scope, element, attributes) {
                 scope.getSlot = function (slotNumber, day) {
@@ -16,16 +17,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 };
                 scope.getClass = function () {
                     return scope.slotsTimes.length < 10  ? 'cell-size-' + scope.slotsTimes.length : '';
-                };
-
-                scope.changeSlotType = function (slotNumber, day) {
-                    var compareDate = new Date();
-
-                    if (compareDate.getTime() < day.getTime()) {
-                        tdprScheduleService.changeSlotTypeCycleThrough(scope.getSlot(slotNumber, day), slotNumber, day, scope.personData);
-                    } else {
-                        Notification.error({message: 'Cannot change past days!', delay: 2500});
-                    }
                 };
             }
         }
