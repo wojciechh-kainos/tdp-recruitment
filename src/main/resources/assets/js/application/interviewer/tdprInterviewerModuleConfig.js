@@ -11,7 +11,7 @@ define(['angular' 
                 abstract: true ,
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", { 
-                url: "/{id}/home", 
+                url: "/home/{id}", 
                 views: { 
                     "@": { 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
@@ -28,7 +28,7 @@ define(['angular' 
               },
               resolve:{
                   person: function(tdprPersonService, $stateParams){
-                      return tdprPersonService.getPersonDetails($stateParams.id).then(function(response){return response.data});
+                      return tdprPersonService.getPersonDetails($stateParams.id);
                   }
               }
           }); 
