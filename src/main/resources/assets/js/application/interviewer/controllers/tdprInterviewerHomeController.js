@@ -37,7 +37,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.displayedEndDate = endDate.replace(/-/g,'.');
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
                 for (var slot in response.data) {
-                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = String(response.data[slot].type.id);
+                    $scope.slotsForWeek[response.data[slot].number - 1][new Date(response.data[slot].day).getDay() - 1].type = String(AvailabilityEnum[response.data[slot].type].id);
                 }
             });
         };

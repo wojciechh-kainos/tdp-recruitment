@@ -1,13 +1,16 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.sql.Time;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -66,8 +69,9 @@ public class Persons {
     @JsonIgnore
     private Boolean active;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private Set<Slots> slotsList = new HashSet<Slots>();
+    private List<Slots> slotsList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Notes> notesList = new HashSet<Notes>();
@@ -171,11 +175,11 @@ public class Persons {
         this.activationCode = activationCode;
     }
 
-    public Set<Slots> getSlotsList() {
+    public List<Slots> getSlotsList() {
         return slotsList;
     }
 
-    public void setSlotsList(Set<Slots> slotsList) {
+    public void setSlotsList(List<Slots> slotsList) {
         this.slotsList = slotsList;
     }
 
