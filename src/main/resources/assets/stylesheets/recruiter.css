@@ -21,13 +21,7 @@
 }
 
 .person-name {
-    min-width: 200px;
-}
-
-#timetable  {
-    width: 100%;
-    overflow-x:scroll;
-    overflow-y:visible;
+    min-width: 140px;
 }
 
 .my-timetable {
