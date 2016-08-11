@@ -42,8 +42,6 @@ public class PairResource {
         List<Persons> persons = personsInSlots(slots);
         List<Slots> filteredSlots = findTriplesInSlots(slots);
 
-
-        //return findAllPairsForPerson(filteredSlots, persons.get(0));
         return findPairsForAllPersons(filteredSlots, persons);
     }
 
@@ -172,13 +170,12 @@ public class PairResource {
 
         return persons
                 .stream()
-                .map(person -> {
+                .flatMap(person -> {
                     List<Pair> pair = findAllPairsForPerson(pruneSlots(slots, prunedPersons), person);
                     prunedPersons.add(person);
 
-                    return pair;
+                    return pair.stream();
                 })
-                .filter(pair -> pair.size() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 }
