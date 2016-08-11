@@ -4,12 +4,15 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.createPathParams = function(roles, startDay, endDay){
 
-            if(roles.length == 0 || roles === null)
+            if(roles.length == 0 || roles === null){
                 return false;
-            if(startDay == null || startDay == "" || startDay == undefined)
+            }
+            if(startDay == null || startDay == "" || startDay == undefined){
                 return false;
-            if(endDay == null || endDay == "" || endDay == undefined)
+            }
+            if(endDay == null || endDay == "" || endDay == undefined){
                 return false;
+            }
 
             var pathParams = "startDate=" + startDay;
             pathParams += "&endDate=" + endDay;
@@ -27,8 +30,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.getPairs = function(roles, startDay, endDay){
             var pathParams = this.createPathParams(roles, startDay, endDay);
-            if(!pathParams)
+            if(!pathParams){
                 return false;
+            }
 
             return $http.get('api/pair/find?' + pathParams).then(function(response){
                 return response.data;
