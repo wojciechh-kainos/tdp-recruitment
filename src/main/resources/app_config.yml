@@ -12,13 +12,13 @@ database:
   driverClass: org.postgresql.Driver
 
   # the username
-  user: postgres
+  user: tdp
 
   # the password
-  password: postgres
+  password: tdp
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost/postgres
+  url: jdbc:postgresql://localhost/tdprecruitment
 
   # any properties specific to your JDBC driver:
   properties:
@@ -47,4 +47,4 @@ smtpConfig:
   port: 25
   from: no-reply@kainos.com
 
-domain: http://localhost:8888
+domain: http://localhost:8888/#/interviewer/home/
