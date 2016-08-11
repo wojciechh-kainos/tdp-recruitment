@@ -132,7 +132,7 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List<Pair> findAllPairsForPerson(List<Slots> slots, Persons person) {
+    private Stream<Pair> findAllPairsForPerson(List<Slots> slots, Persons person) {
         List<Slots> remainingSlots = slotsByPerson(slots, predicateSlots(person).negate());
         List<Slots> searchSlots = slotsByPerson(slots, predicateSlots(person));
         List<Slots> pairedSlots = remainingSlots
@@ -150,8 +150,7 @@ public class PairResource {
                 .stream()
                 .map(Slots::getPerson)
                 .distinct()
-                .map(foundPerson -> new Pair(person, foundPerson, slotsByPerson(pairedSlots, predicateSlots(foundPerson))))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .map(foundPerson -> new Pair(person, foundPerson, slotsByPerson(pairedSlots, predicateSlots(foundPerson))));
     }
 
     private List<Slots> pruneSlots(List<Slots> slots, List<Persons> persons) {
@@ -171,10 +170,10 @@ public class PairResource {
         return persons
                 .stream()
                 .flatMap(person -> {
-                    List<Pair> pair = findAllPairsForPerson(pruneSlots(slots, prunedPersons), person);
+                    Stream<Pair> pair = findAllPairsForPerson(pruneSlots(slots, prunedPersons), person);
                     prunedPersons.add(person);
 
-                    return pair.stream();
+                    return pair;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
