@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,11 +41,11 @@ public class PairResourcesFindPairsBetweenThreePersonsTest {
         mockSlots = new ArrayList<>();
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, "available");
-        SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, new Time(8, 0, 0), new Time(8, 30, 0));
-        SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 2, new Time(8, 30, 0), new Time(9, 0, 0));
-        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, new Time(9, 0, 0), new Time(9, 30, 0));
-        SlotsTimes sameSlotsTimeFourth = MockDataUtil.createSlotTime((long) 4, new Time(9, 30, 0), new Time(10, 00, 0));
-        SlotsTimes sameSlotsTimeFifth = MockDataUtil.createSlotTime((long) 5, new Time(10, 0, 0), new Time(10, 30, 0));
+        SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
+        SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
+        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));
+        SlotsTimes sameSlotsTimeFourth = MockDataUtil.createSlotTime((long) 4, LocalTime.of(9, 30, 0), LocalTime.of(10, 00, 0));
+        SlotsTimes sameSlotsTimeFifth = MockDataUtil.createSlotTime((long) 5, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0));
 
         Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
         mockSlots.add(MockDataUtil.createSlot((long)1, sameSlotsTimesFirst, firstPerson, fistDate, availabilityType));

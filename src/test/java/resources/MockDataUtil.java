@@ -8,6 +8,7 @@ import domain.SlotsTimes;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class MockDataUtil {
 
@@ -29,11 +30,11 @@ public class MockDataUtil {
         return availabilityType;
     }
 
-    public static SlotsTimes createSlotTime(Long id, Time startTime, Time endTime){
+    public static SlotsTimes createSlotTime(Long id, LocalTime startTime, LocalTime endTime){
         SlotsTimes slotsTimes = new SlotsTimes();
         slotsTimes.setId(id);
-        slotsTimes.setStartTime(startTime);
-        slotsTimes.setEndTime(endTime);
+        slotsTimes.setStartTime(Time.valueOf(startTime));
+        slotsTimes.setEndTime(Time.valueOf(endTime));
         return slotsTimes;
     }
 
