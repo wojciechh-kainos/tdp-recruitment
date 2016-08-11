@@ -37,7 +37,7 @@ define(['angular'
             id: '5',
             name: "maybe",
             className: "cell-avail-maybe",
-            tooltipText: "maybe "
+            tooltipText: "maybe"
         }
     }).constant('JobProfileEnum', {
         dev: "isDev",

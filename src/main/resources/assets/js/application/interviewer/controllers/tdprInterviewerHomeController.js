@@ -30,7 +30,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.getSlots = function (personId) {
             var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
+            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 5), "dd-MM-yyyy");
 
             $scope.startDate = startDate;
             $scope.endDate = endDate;
