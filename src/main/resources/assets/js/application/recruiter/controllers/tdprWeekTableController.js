@@ -9,7 +9,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.slotsTimes = slotsTimes;
         $scope.persons = persons;
 
-        $scope.changeSlotType = function (slotNumber, day, personData) {
+        $scope.changeSlotTypeCycle = function (slotNumber, day, personData) {
             var compareDate = new Date();
 
             if (compareDate.getTime() < day.getTime()) {
