@@ -23,11 +23,6 @@ public class SlotsTimes {
     @Column(name = "end_time")
     private Time endTime;
 
-    @Override
-    public String toString(){
-        return id + " | from: " + startTime + " | to: " + endTime;
-    }
-
     public long getId() {
         return id;
     }
