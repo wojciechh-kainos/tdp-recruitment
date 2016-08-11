@@ -12,5 +12,8 @@
     <include file="changelogs/initialChangeColumnDayNameInSlots.xml"/>
     <include file="changelogs/initialPopulatePersonsTable.xml"/>
     <include file="changelogs/initialPopulateSlotsTable.xml"/>
+    <include file="changelogs/initialPopulateAvailabilityTypes.xml"/>
+    <include file="changelogs/createNotesTable.xml"/>
+    <include file="changelogs/addNotesColumnToPersonsTable.xml"/>
     <include file="changelogs/pairsPopulateSlotsTable.xml"/>
 </databaseChangeLog>

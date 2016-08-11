@@ -1,42 +1,184 @@
- h1 {
-    font-size: 48px;
-}
-.container {
-    text-align: center;
-}
-.availability-table {
-    display: inline-block;
-    margin-top: 20px;
+body {
+    background-color: transparent;
 }
 
-table, td, tr {
-    border: 1px solid black;
+.background:before{
+	content: ' ';
+	display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.6;
+	background: url('../images/image.jpeg') no-repeat fixed center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
-.available-slot {
-    background-color: #87D37C;
+
+#interviewer-header {
+   font-size: 48px;
+   color: #375D81;
 }
-.availability-table tbody td, .availability-table thead th{
+
+.container {
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.availability-table {
+    display: inline-block;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #375D81;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    user-select: none;           /* Non-prefixed version*/
+}
+
+.legend {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #375D81;
+}
+
+.legend label {
+    margin-right: 3rem;
+    vertical-align: middle;
+}
+
+.legend-block {
+    display: inline-block;
+    height: 18px;
+    width: 20px;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+.availability-table tbody td, .availability-table thead th {
     width: 120px;
     height: 30px;
 }
-.availability-table th{
-    text-align: center;
-        border: 2px solid black;
 
+.availability-table th {
+    color: white;
+    text-align: center;
+    background-color: #375D81;
 }
-.slotTime{
+
+.availability-table td {
+    border: 1px solid #375D81;
+    border-bottom: 0px;
+}
+
+.availability-table td:hover {
+    cursor: pointer;
+    background-color: white;
+}
+
+#hours-th {
+    color: #375D81;
+    background-color: white;
+    border-top-left-radius: 5px;
+}
+
+.slot-time {
     font-weight: bold;
     font-size: 18px;
-    border: 2px solid black;
-    background-color: #89C4F4;
-
+    background-color: #ABC8E2;
+    color: white;
 }
 
-.navigate {
-     display: inline;
+.slot-time:hover {
+    background-color: white;
+    color: #375D81;
 }
 
-#submit-slots{
+.navigate1 {
+     display: inline-block;
+     color: #3498DB;
+}
+
+#submit-slots {
     width: 725px;
     margin: auto;
+}
+
+.alert {
+    position: fixed;
+    top:0;
+}
+
+#date-container span {
+    font-size: 25px;
+    line-height: 25px;
+    margin: 0px 25px 0px 25px;
+    vertical-align: middle;
+}
+
+#description {
+    color: white;
+}
+
+.button {
+    border-radius: 5px;
+    border: 1px solid #3498DB;
+    background-color: transparent;
+    width: 110px;
+    padding: 5px, 10px, 5px, 10px;
+}
+
+.button:hover {
+    background-color: #3498DB;
+    color: white;
+}
+
+#submit-button {
+    border-radius: 5px;
+    width: 200px;
+    height: 100px
+    padding: 5px, 10px, 5px, 10px;
+    background-color: #375D81;
+    color: white;
+    border: 1px solid #375D81;
+}
+
+#submit-button:hover {
+    background-color: white;
+    color: #375D81;
+    cursor: pointer;
+}
+
+#date-container {
+    margin-top: 30px;
+}
+
+button {
+    outline:none;
+}
+
+#discard-btn {
+    background: transparent;
+    color: #286090;
+}
+
+#discard-btn:hover {
+    background: #286090;
+    color: white;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.disabled-textarea {
+    background: #D3D3D3;
+}
+
+.mouse-pointer{
+    cursor: pointer;
 }
