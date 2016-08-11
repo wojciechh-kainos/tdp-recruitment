@@ -1,72 +1,96 @@
-.tiny-header {
-    height: 10px;
-}
-
 .rotate {
     transform: /* Magic Numbers */ translate(0px, 0px) /* 45 is really 360 - 45 */ rotate(270deg);
     width: 15px;
     text-align: right;
     margin-top: 25px;
     margin-bottom: 5px;
+    display: inline-block;
 }
 
 .rotate > span {
     white-space: nowrap;
-    /*padding: 5px 10px;
-    border-bottom: 1px solid #ccc;*/
 }
 
-.cell-avail-unavailable {
-    border-top-width: 0px;
+.slot {
+    min-width: 16px;
+    height: 20px;
+    cursor: pointer;
+    border: 1px solid #375D81;
+}
+
+.slot:hover {
+    background-color: white;
+}
+
+.availabilities-table-container {
+    min-width: 800px;
+    overflow-x: auto;
+    margin-left: 140px;
+    overflow-y: visible;
+    padding-bottom: 1px;
+}
+
+.container {
+    position: relative;
+    font-family: 'Lato', sans-serif;
 }
 
 .person-name {
-    min-width: 140px;
+    width: 150px;
+    position: absolute;
+    left: 0;
+    text-align: right;
+    margin: 0;
+    padding-right: 5px;
+    color: #375D81
 }
 
-.my-timetable {
+#recruiter-header {
+    color: #375D81
+}
+
+.day-th, .slot-time-th {
+    background-color: #375D81;
+    color: white;
+    font-weight: bold;
+
+}
+
+.slot-times-th{
     width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse;
-
-    background: #fff;
-
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    border: 1px solid black;
+}
+.day-th {
+    border-right: 2px solid black;
+    box-sizing: border-box;
+}
+.day-th:last-of-type {
+    border-right: 1px solid black;
 }
 
-.my-timetable td {
-    cursor: pointer;
-    border-right: 1px dotted;
-    border-bottom: 1px dashed;
-    max-width: 10px;
+.availabilities-table {
+    border: 2px solid black;
 }
 
-.cell-last-column {
-    border-right: 4px solid dodgerblue !important;
-    margin-right: 50px;
+
+.cell-size-3 {
+    width: 50px;
 }
-
-.my-timetable td:hover {
-    background: orange;
+.cell-size-4 {
+    width: 38px;
 }
-
-.my-timetable .selected {
-    background: #2cab54;
+.cell-size-5 {
+    width: 30px;
 }
-
-.my-timetable th {
-    font-size: 0.8em;
-    color: #808080;
-    cursor: pointer;
-    border: 2px solid dodgerblue;
-    text-align: center;
+.cell-size-6 {
+    width: 25px;
 }
-
-.my-timetable th:first-child, .my-timetable .person-name, .my-timetable .big-header, .my-timetable .tiny-header:nth-of-type(18n+1) {
-    border-right: 4px solid dodgerblue;
-
+.cell-size-7 {
+    width: 22px;
+}
+.cell-size-8 {
+    width: 19px;
+}
+.cell-size-9 {
+    width: 17px;
 }

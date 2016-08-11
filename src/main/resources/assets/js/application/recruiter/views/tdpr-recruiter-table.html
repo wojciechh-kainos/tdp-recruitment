@@ -1,10 +1,48 @@
-<h1>TIMETABLE</h1>
+<div class="container">
 
-<div filter-directive></div>
+    <h1 id="recruiter-header">Availabilities for interviews</h1>
 
-<input name="week" type="date" ng-model="inputWeek" />
+    <div class="legend">
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
+            <span>Developer</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
+            <span> Tester</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.web}}"/>
+            <span> WebOps</span>
+        </label>
+    </div>
 
-<div id="timetable" data-timetable data-week-day="weekDay" data-persons="personsData" data-slots-times="timeData"></div>
+    <div class="availabilities-table-container">
+        <table id="availabilities-table">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td class="day-th" ng-repeat="day in days">{{day | date: 'EEEE dd.MM.yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td ng-repeat="day in days">
+                        <table class="slot-times-th">
+                            <tr>
+                                <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
+                                    <span class="rotate">{{slotTime.startTime | limitTo:5}} </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr person slots-times="slotsTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile"></tr>
+            </tbody>
+        </table>
+    </div>
 
 <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
 
+</div>
