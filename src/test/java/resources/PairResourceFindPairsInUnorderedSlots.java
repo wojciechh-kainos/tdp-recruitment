@@ -14,12 +14,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -49,13 +47,13 @@ public class PairResourceFindPairsInUnorderedSlots {
         endDate = dateFormat.format(nextDate);
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, "available");
-        SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
-        SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
-        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 5, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));
+        SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
+        SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
+        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 5, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0));
         SlotsTimes sameSlotsTimeFourth = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 30, 0), LocalTime.of(10, 0, 0));
-        SlotsTimes sameSlotsTimeFifth = MockDataUtil.createSlotTime((long) 9, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0));
-        SlotsTimes sameSlotsTimeSixth = MockDataUtil.createSlotTime((long) 7, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0));
-        SlotsTimes sameSlotsTimeSeventh = MockDataUtil.createSlotTime((long) 8, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0));
+        SlotsTimes sameSlotsTimeFifth = MockDataUtil.createSlotTime((long) 9, LocalTime.of(12, 0, 0), LocalTime.of(12, 30, 0));
+        SlotsTimes sameSlotsTimeSixth = MockDataUtil.createSlotTime((long) 7, LocalTime.of(11, 0, 0), LocalTime.of(11, 30, 0));
+        SlotsTimes sameSlotsTimeSeventh = MockDataUtil.createSlotTime((long) 8, LocalTime.of(11, 30, 0), LocalTime.of(12, 0, 0));
 
         Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
         mockSlots.add(MockDataUtil.createSlot((long)1, sameSlotsTimesFirst  , firstPerson, date, availabilityType));
@@ -79,7 +77,7 @@ public class PairResourceFindPairsInUnorderedSlots {
     }
 
     @Test
-    public void testFindPairForWeek(){
+    public void testFindPairForWeekInUnorderedSlots(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Pair> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
