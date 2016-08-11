@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 public class PairResource {
 
     private final String AVAILABLE_TYPE = "available";
+    private final String MAYBE_TYPE = "maybe";
     private SlotsDao slotsDao;
 
     @Inject
@@ -140,7 +141,7 @@ public class PairResource {
                         .stream()
                         .filter(ss -> rs.getSlot().equals(ss.getSlot())
                                 && rs.getSlotsDate().equals(ss.getSlotsDate())
-                                && rs.getType().getType().equals(AVAILABLE_TYPE))
+                                && (rs.getType().getType().equals(AVAILABLE_TYPE) || rs.getType().getType().equals(MAYBE_TYPE)))
                         .collect(Collectors.toCollection(ArrayList::new))
                         .size() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));
