@@ -47,4 +47,4 @@ smtpConfig:
   port: 25
   from: no-reply@kainos.com
 
-domain: http://localhost:8888/#/interviewer/home/
+domain: http://localhost:8888
