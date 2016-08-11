@@ -31,7 +31,6 @@ public class PairResource {
     }
 
     @GET
-    @Path("/find")
     @UnitOfWork
     public List<Pair> findPairs(@QueryParam("startDate") String startDate,
                           @QueryParam("endDate") String endDate,
