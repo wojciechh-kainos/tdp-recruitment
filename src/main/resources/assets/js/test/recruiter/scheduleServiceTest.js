@@ -1,5 +1,6 @@
 define(['angular', 'angularMocks',
     'lodash',
+    'notification',
     'application/recruiter/services/tdprScheduleService',
     'application/recruiter/services/tdprDateService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
@@ -57,14 +58,16 @@ define(['angular', 'angularMocks',
         var tdprRecruiterSlotsService;
         var AvailabilityEnum;
         var dateFilter;
+        var Notification;
 
-        beforeEach(inject(function (_$httpBackend_, _dateFilter_, _tdprDateService_, _tdprScheduleService_, _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
+        beforeEach(inject(function (_$httpBackend_, _dateFilter_, _tdprDateService_, _tdprScheduleService_, _tdprRecruiterSlotsService_, _AvailabilityEnum_, _Notification_) {
             $httpBackend = _$httpBackend_;
             tdprDateService = _tdprScheduleService_;
             tdprScheduleService = _tdprScheduleService_;
             tdprRecruiterSlotsService = _tdprRecruiterSlotsService_;
             dateFilter = _dateFilter_;
             AvailabilityEnum = _AvailabilityEnum_;
+            Notification = _Notification_;
         }));
 
         var weekStart;

@@ -1,12 +1,15 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum) {
+    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', 'Notification', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum, Notification) {
         var service = {};
 
         service.updateSlots = function (slots, personId, startDate, endDate) {
             return $http.put("/api/slots/update/" + personId + "/" + startDate + "/" + endDate, slots).then(function (response) {
                 return response;
             }, function (err) {
-                err.message = "Failed to update slots for person.";
+                err.message = "Failed to update slots for person. Could not change past days.";
+                Notification.error({
+                    message: err.message,
+                    delay: 2000});
                 return $q.reject(err);
             });
         };
