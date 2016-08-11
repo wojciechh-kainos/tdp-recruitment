@@ -2,8 +2,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
     tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService,tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum) {
         $scope.slotTimes = [];
 
-        $scope.displayedStartDate;
-        $scope.displayedEndDate;
         $scope.hasNoteChanged = false;
         $scope.hasSlotChanged = false;
         $scope.startDate;
