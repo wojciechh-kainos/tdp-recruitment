@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import resources.PersonResources;
+import resources.PersonsResource;
 import services.MailService;
 
 import java.sql.Date;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class PersonsResourcesTest {
 
-    PersonResources resource;
+    PersonsResource resource;
 
     @Mock
     NotesDao mockNotesDao;
@@ -56,7 +56,7 @@ public class PersonsResourcesTest {
 
     @Before
     public void setUp(){
-        resource = new PersonResources(mockPersonsDao, mockSlotsDao, mockNotesDao, mockMailService);
+        resource = new PersonsResource(mockPersonsDao, mockSlotsDao, mockMailService, mockNotesDao);
     }
 
     @Test

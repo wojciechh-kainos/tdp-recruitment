@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +36,7 @@ public class Persons {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private Boolean admin;
 
     @Column(name = "is_dev")
@@ -50,10 +52,18 @@ public class Persons {
     @Column(name = "band_level")
     private Integer bandLevel;
 
+
     @JsonIgnore
     @Column(name = "activation_code")
     private String activationCode;
 
+    @Column(name = "default_start_hour")
+    private Time defaultStartHour;
+
+    @Column(name = "default_finish_hour")
+    private Time defaultFinishHour;
+
+    @JsonIgnore
     private Boolean active;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
@@ -176,4 +186,11 @@ public class Persons {
     public void setNotesList(Set<Notes> notesList) {
         this.notesList = notesList;
     }
+    public Time getDefaultStartHour() {return defaultStartHour;}
+
+    public void setDefaultStartHour(Time defaultStartHour) {this.defaultStartHour = defaultStartHour;}
+
+    public Time getDefaultFinishHour() {return defaultFinishHour;}
+
+    public void setDefaultFinishHour(Time defaultFinishHour) {this.defaultFinishHour = defaultFinishHour;}
 }
