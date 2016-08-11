@@ -1,14 +1,17 @@
 <div class="alert alert-success" role="alert" ng-show="showSubmitSuccess">
     <strong>Success!</strong> You successfully submitted availability slots.
 </div>
+<div class="alert alert-danger" role="alert" ng-show="previousWeekAlert">
+    <strong>Failed!</strong> You cannot change slots from previous weeks.
+</div>
 <div class="container">
-    <h1>YOUR AVAILABILITY</h1>
-    <h3>(click/drag to change availability)</h3>
-    <div class="row">
-        <button class="btn btn-default navigate pull-left" ng-click="showPreviousWeek()">Previous week</button>
-
-        <h4 class="navigate">{{startDate}} - {{endDate}}</h4>
-        <button class="btn btn-default navigate pull-right" ng-click="showNextWeek()">Next week</button>
+    <h1 id="interviewer-header">Your availability</h1>
+    <h4 id="description">click on slots to change availability</h4>
+    <hr>
+    <div id="date-container">
+        <button class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
+        <span class="navigate1">{{displayedStartDate}} - {{displayedEndDate}}</span>
+        <button class="button navigate1 " ng-click="showNextWeek()">Next week</button>
     </div>
 
     <div class="legend">
@@ -22,30 +25,51 @@
 
     <table class="availability-table" ng-mousedown="mousedown = true" ng-mouseup="mousedown = false">
         <thead>
-        <tr>
-            <th>HOURS</th>
-            <th>MONDAY</th>
-            <th>TUESDAY</th>
-            <th>WEDNESDAY</th>
-            <th>THURSDAY</th>
-            <th>FRIDAY</th>
-        </tr>
+            <tr>
+                <th id="hours-th">HOURS</th>
+                <th>MONDAY</th>
+                <th>TUESDAY</th>
+                <th>WEDNESDAY</th>
+                <th>THURSDAY</th>
+                <th>FRIDAY</th>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="slotsForDay in slotsForWeek" >
-            <td class="slotTime">{{slotTimes[$index]}}</td>
-            <td class="mouse-pointer"
-                ng-repeat="slot in slotsForDay track by $index"
-                ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
+            <tr ng-repeat="slotsForDay in slotsForWeek">
+                <th class="slot-time">{{slotTimes[$index]}}</th>
+                <td ng-repeat="slot in slotsForDay track by $index"
+                    ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
-                ng-mousedown="relativeDayNumber>=0 ? markSlots(slot) : '' "
-                ng-mouseover="relativeDayNumber>=0 && mousedown ? markSlots(slot) : '' " >
-            </td>
-        </tr>
+                    ng-mousedown="markSlots(slot); changeSlotStatus() "
+                    ng-mouseover="mousedown ? markSlots(slot) : ''"
+                    ng-click=" changeSlotStatus()">
+                </td>
+            </tr>
         </tbody>
     </table>
-    <div>
-        <button class="btn btn-primary" type="button" ng-click="updateSlots()" ng-disabled="relativeDayNumber<0">SUBMIT CHANGES</button>
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-2">
+                    <label>Note for this week:</label>
+                </div>
+                <div class="col-lg-4">
+                    <textarea ng-model="temporaryContent" ng-style="textAreaStyle" ng-disabled="!editNote" rows="3" cols="45" maxlength="500" ng-class="{'disabled-textarea' : !editNote}"></textarea>
+                </div>
+
+                <div class="col-lg-1">
+                    <button class="btn btn-primary" type="button" ng-model="editNote" ng-click="editNoteSwitch()" ng-init="editNote = false; buttonTitle = 'Edit note'">{{buttonTitle}}</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <button class="btn btn-primary uppercase" id="discard-btn"  type="button" ng-click="discardChanges()">discard changes</button>
+                <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
+            </div>
+            <hr>
+        </div>
     </div>
 </div>
