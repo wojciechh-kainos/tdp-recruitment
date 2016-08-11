@@ -28,7 +28,7 @@ define(['angular' 
               },
               resolve:{
                   person: function(tdprPersonService, $stateParams){
-                      return tdprPersonService.getPersonDetails($stateParams.id);
+                      return tdprPersonService.getPersonDetails($stateParams.id).then(function(response){return response.data});
                   }
               }
           }); 

@@ -3,7 +3,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function(an
 
         this.getPersonDetails = function (id) {
             return $http.get("/api/person/" + id).then(function (response) {
-                return response.data;
+                return response;
             });
         };
 
