@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInterviewerHomeController', 'application/interviewer/services/tdprSlotsService'], function (angular) {
+define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInterviewerHomeController', 'application/interviewer/services/tdprSlotsService', 'application/interviewer/services/tdprPersonService'], function (angular) {
 
     describe('tdprInterviewerHomeController', function () {
         beforeEach(angular.mock.module('tdprInterviewerModule'));
@@ -10,11 +10,15 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var getSlotsDeferred;
         var AvailabilityEnum;
 
-        beforeEach(inject(function ($controller, tdprSlotsService, _$rootScope_, _$filter_, $q) {
+        beforeEach(inject(function ($controller, tdprSlotsService,tdprPersonService, _$rootScope_, _$filter_, $q) {
             personId = 42;
             $filter = _$filter_;
             $scope = _$rootScope_.$new();
+            $scope.noteContent = {};
             slotsService = tdprSlotsService;
+            personService = tdprPersonService;
+            getNoteDeferred = $q.defer();
+            updateNoteDeferred = $q.defer();
             getSlotsDeferred = $q.defer();
             var slotsTimesDeferred = $q.defer();
             var updateSlotsDeferred = $q.defer();
@@ -59,10 +63,13 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             spyOn(slotsService, 'getSlotsTimes').and.returnValue(slotsTimesDeferred.promise);
             spyOn(slotsService, 'getSlots').and.returnValue(getSlotsDeferred.promise);
             spyOn(slotsService, 'updateSlots').and.returnValue(updateSlotsDeferred.promise);
+            spyOn(personService, 'getNote').and.returnValue(getNoteDeferred.promise);
+            spyOn(personService, 'updateNote').and.returnValue(updateNoteDeferred.promise);
 
             $controller('tdprInterviewerHomeController', {
                 $scope: $scope,
                 tdprSlotsService: slotsService,
+                tdprPersonService: personService,
                 AvailabilityEnum: AvailabilityEnum,
                 $stateParams: {id: personId}
             });

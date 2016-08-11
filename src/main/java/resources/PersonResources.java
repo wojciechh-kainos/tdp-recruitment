@@ -1,8 +1,10 @@
 package resources;
 
 import com.google.inject.Inject;
+import dao.NotesDao;
 import dao.PersonsDao;
 import dao.SlotsDao;
+import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -15,9 +17,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import org.hibernate.validator.constraints.NotEmpty;
 import services.MailService;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,12 +30,15 @@ public class PersonResources {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
+    private NotesDao notesDao;
     private MailService mailService;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService) {
+    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
+        this.notesDao = notesDao;
         this.mailService = mailService;
     }
 
@@ -57,5 +63,22 @@ public class PersonResources {
         persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
 
         return persons;
+    }
+
+    @GET
+    @Path("/{personId}/getNote")
+    @UnitOfWork
+    public Notes getNote(@PathParam("personId") Long personId,
+                         @QueryParam("date") String startDate) throws ParseException {
+        Date date = formatter.parse(startDate);
+        return notesDao.getByIdAndDate(personId,date);
+    }
+
+    @PUT
+    @Path("/updateNote")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Notes createOrUpdate(Notes note){
+        return notesDao.createOrUpdate(note);
     }
 }

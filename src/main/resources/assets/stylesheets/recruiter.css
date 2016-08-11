@@ -54,6 +54,9 @@
     color: white;
     font-weight: bold;
 }
+.slot-times-th {
+    width: 100%;
+}
 
 
 .availabilities-table {

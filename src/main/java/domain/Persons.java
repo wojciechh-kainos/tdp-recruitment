@@ -63,6 +63,8 @@ public class Persons {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Slots> slotsList = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private Set<Notes> notesList = new HashSet<Notes>();
 
     public Persons() {
     }
@@ -169,5 +171,13 @@ public class Persons {
 
     public void setSlotsList(List<Slots> slotsList) {
         this.slotsList = slotsList;
+    }
+
+    public Set<Notes> getNotesList() {
+        return notesList;
+    }
+
+    public void setNotesList(Set<Notes> notesList) {
+        this.notesList = notesList;
     }
 }
