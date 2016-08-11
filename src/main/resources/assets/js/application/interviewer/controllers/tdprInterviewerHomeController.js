@@ -191,6 +191,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
 
+        function fillNote(noteId, description) {
+            $scope.noteContent.id = noteId;
+            $scope.noteContent.description = "";
+            $scope.noteContent.person.id = id;
+            $scope.noteContent.date = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd");
+        }
+
         function getNote(personId, date) {
             tdprPersonService.getNote(personId, date).then(function(response) {
                 $scope.noteContent = response.data;
