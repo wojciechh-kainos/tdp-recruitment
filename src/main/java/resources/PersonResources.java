@@ -92,12 +92,15 @@ public class PersonResources {
     @UnitOfWork
     public Response createOrUpdate(Notes note){
         Date now = new Date();
-
-        if (now.after(note.getDate())) { // don't allow users to submit availabilities older than current week
+        Calendar c = Calendar.getInstance();
+        c.setTime(note.getDate()); // Now use today date.
+        c.add(Calendar.DATE, 5); // Adding 5 days
+        Date comparisonDate = new Date(c.getTimeInMillis());
+        if (now.after(comparisonDate)) { // don't allow users to submit availabilities older than current week
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         } else {
             notesDao.createOrUpdate(note);
-            return Response.status(Response.Status.ACCEPTED).build();
+            return Response.status(Response.Status.ACCEPTED).entity(note).build();
         }
     }
 }
