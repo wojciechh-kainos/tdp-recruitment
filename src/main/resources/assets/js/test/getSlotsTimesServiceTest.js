@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'], function (angular) {
+define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTimesService'], function (angular) {
 
     describe('tdprRecruiterGetSlotsTimesService', function () {
         beforeEach(angular.mock.module('tdprRecruiterModule'));
@@ -6,15 +6,15 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
         var $httpBackend;
         var $service;
 
-        beforeEach(inject(function (_tdprRecruiterGetSlotsTimesService_, _$httpBackend_) {
-            $service = _tdprRecruiterGetSlotsTimesService_;
+        beforeEach(inject(function (_tdprSlotsTimesService_, _$httpBackend_) {
+            $service = _tdprSlotsTimesService_;
             $httpBackend = _$httpBackend_;
         }));
 
         describe('When error in request', function () {
             it('should return empty object', function(){
                 $httpBackend.expectGET('/api/slots_times/all').respond(400, '');
-                $service.getSlotsTimes().then(function(response){
+                $service.fetchSlotsTimes().then(function(response){
                     expect(response.error).toEqual("Failed");
                 });
                 $httpBackend.flush();
@@ -42,7 +42,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
                 {"id":17,"startTime":"16:00:00","endTime":"16:30:00"},
                 {"id":18,"startTime":"16:30:00","endTime":"17:00:00"}];
                 $httpBackend.expectGET('/api/slots_times/all').respond(200, expectedSlotsTimes);
-                $service.getSlotsTimes().then(function(response){
+                $service.fetchSlotsTimes().then(function(response){
                     expect(response).toEqual(expectedSlotsTimes);
                     expect(response.length).toEqual(18);
                 });

@@ -1,5 +1,26 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprDateService', function (dateFilter) {
+
+        function getDayOfTheWeek(d, i) {
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff + i)); //i = 0 - monday
+        }
+
+        this.getCurrentWeek = function () {
+            return this.getWeekWithOffset(0);
+        };
+
+        this.getWeekWithOffset = function (offset) {
+            var today = new Date();
+            var weekDays = [];
+            for (var i = 0; i < 5; i++) {  //iterate from monday to friday
+                weekDays.push(getDayOfTheWeek(today, i + offset * 7));
+            }
+            return weekDays;
+        };
+
+
         this.resetDate = function (dateToReset) {
             var date = new Date(dateToReset);
 
@@ -12,15 +33,6 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             return date;
         };
 
-        this.setHourMin = function (dateToSet, hour, min) {
-            var date = new Date(dateToSet);
-
-            date.setHours(hour);
-            date.setMinutes(min);
-
-            return date;
-        };
-
         this.formatDate = function (dateToFormat) {
             return dateFilter(dateToFormat, "yyyy-MM-dd");
         };
@@ -29,5 +41,5 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             if (compare === undefined || compareTo === undefined) return false;
             return compare.getTime() === compareTo.getTime();
         };
-    });
+    })
 });

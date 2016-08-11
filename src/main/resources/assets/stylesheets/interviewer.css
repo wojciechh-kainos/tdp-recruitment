@@ -129,7 +129,7 @@ body {
     border: 1px solid #3498DB;
     background-color: transparent;
     width: 110px;
-    padding: 5px, 10px, 5px, 10px;
+    padding: 5px 10px 5px 10px;
 }
 
 .button:hover {
@@ -140,8 +140,8 @@ body {
 #submit-button {
     border-radius: 5px;
     width: 200px;
-    height: 100px
-    padding: 5px, 10px, 5px, 10px;
+    height: 100px;
+    padding: 5px 10px 5px 10px;
     background-color: #375D81;
     color: white;
     border: 1px solid #375D81;
