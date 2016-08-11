@@ -21,29 +21,23 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             Notification = { success: function () {} };
 
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
-            spyOn(personService, 'getPerson').and.returnValue({
-                dummyData: 42,
-                bandLevel: "9001",
-                defaultStartHour: '05:15:01',
-                defaultFinishHour: '22:49:31'
-            });
 
             $controller('tdprInterviewerDetailsController', {
                 $scope: $scope,
                 BandLevelEnum: {},
                 tdprPersonService: personService,
                 Notification: Notification,
-                $stateParams: {id: personId}
+                $stateParams: {id: personId},
+                person: {
+                    dummyData: 42,
+                    bandLevel: "9001",
+                    defaultStartHour: '05:15:01',
+                    defaultFinishHour: '22:49:31'
+                }
             });
         }));
 
-        it('should call getPerson at init', function () {
-            expect(personService.getPerson);
-        });
-
         it('should store data received from service in model', function () {
-            $scope.$apply();
-
             expect($scope.person.bandLevel).toEqual("9001");
             expect($scope.person.defaultStartHour).toEqual(new Date(1970, 0, 1, 5, 15, 1));
             expect($scope.person.defaultFinishHour).toEqual(new Date(1970, 0, 1, 22, 49, 31));

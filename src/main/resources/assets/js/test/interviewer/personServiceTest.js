@@ -14,10 +14,10 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
 
         describe('getPersonDetails', function () {
             it('should call backend with given person id', function () {
-                $httpBackend.expectGET('/api/person/' + personId).respond(200);
+                $httpBackend.expectGET('/api/person/' + personId).respond(200, {id: personId});
 
                 service.getPersonDetails(personId).then(function (response) {
-                    expect(response.status).toEqual(200);
+                    expect(response).toEqual({id: personId});
                 });
 
                 $httpBackend.flush();
