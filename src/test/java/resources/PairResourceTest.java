@@ -1,6 +1,5 @@
 package resources;
 
-
 import dao.SlotsDao;
 import domain.*;
 import org.junit.Before;
@@ -10,27 +9,26 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceTest {
 
-    private final String startDate = "01-01-2016";
-    private final String endDate = "02-01-2016";
+    private String startDate;
+    private String endDate;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
 
-
-    private AvailabilityTypes availabilityType;
     private PairResource resource;
-    private List<Slots> mockSlots;
+    private List<Slots> mockSlots = new ArrayList<>();
     private List<SlotsTimes> expectedSlotsTimes;
 
     @Mock
@@ -42,9 +40,12 @@ public class PairResourceTest {
         Date sameDate = new Date(calendar.getTimeInMillis());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date differentDate = new Date(calendar.getTimeInMillis());
-        mockSlots = new ArrayList<>();
 
-        availabilityType = MockDataUtil.createAvailableType((long)1, "available");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        startDate = dateFormat.format(sameDate);
+        endDate = dateFormat.format(differentDate);
+
+        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, "available");
         SlotsTimes sameSlotsTimeFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
         SlotsTimes sameSlotsTimeSecond = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
         SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));
@@ -74,13 +75,14 @@ public class PairResourceTest {
 
         Pair pair = pairs.get(0);
 
-        assertEquals("One pair of slots should be found", 1, pairs.size());
+        assertEquals("One pair should be found", 1, pairs.size());
 
         assertEquals("Searched slots list should have three expected slot", 3, pair.getSlots().size());
 
-        assertTrue("Searched slots should have the same slotsTime as expected", pair.getSlots().stream()
-                                                                                                  .map(searchedSlot -> searchedSlot.getSlot())
-                                                                                                    .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
+        assertTrue("Searched slots should have the same slotsTime as expected",
+                pair.getSlots().stream()
+                      .map(searchedSlot -> searchedSlot.getSlot())
+                        .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
     }
 
 }

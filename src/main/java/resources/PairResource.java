@@ -33,7 +33,7 @@ public class PairResource {
     @GET
     @Path("/find")
     @UnitOfWork
-    public List findPairs(@QueryParam("startDate") String startDate,
+    public List<Pair> findPairs(@QueryParam("startDate") String startDate,
                           @QueryParam("endDate") String endDate,
                           @QueryParam("isDev") Boolean isDev,
                           @QueryParam("isTest") Boolean isTest,
@@ -163,7 +163,7 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List findPairsForAllPersons(List<Slots> slots, List<Persons> persons) {
+    private List<Pair> findPairsForAllPersons(List<Slots> slots, List<Persons> persons) {
         List<Persons> prunedPersons = new ArrayList<>();
 
         return persons

@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,15 +25,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsForWeekTest {
 
-    private final String startDate = "01-01-2016";
-    private final String endDate = "02-01-2016";
+    private String startDate;
+    private String endDate;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
 
     private PairResource resource;
-    private List<Slots> mockSlots;
-    private AvailabilityTypes availabilityType;
+    private List<Slots> mockSlots = new ArrayList<>();
     private List<SlotsTimes> expectedSlotsTimes;
 
     @Mock
@@ -44,9 +45,12 @@ public class PairResourceFindPairsForWeekTest {
         expectedDate = new Date(calendar.getTimeInMillis());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date differentDate = new Date(calendar.getTimeInMillis());
-        mockSlots = new ArrayList<>();
 
-        availabilityType = MockDataUtil.createAvailableType((long)1, "available");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        startDate = dateFormat.format(expectedDate);
+        endDate = dateFormat.format(differentDate);
+
+        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, "available");
         SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
         SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
         SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));
@@ -84,9 +88,9 @@ public class PairResourceFindPairsForWeekTest {
         assertEquals("One pair should be found", 1, pairs.size());
 
         Pair pair = pairs.get(0);
-        assertEquals("Pair should have 3 elements", 3, pair.getSlots().size());
+        assertEquals("Pair should have 3 slots", 3, pair.getSlots().size());
 
-        assertTrue("When two people has sames slots in different days only these with minimum 3 slots times should be shown",
+        assertTrue("When two people has the same slots in different days only these with minimum 3 slots times should be shown",
                                     pair.getSlots().stream()
                                         .map(searchedSlot -> searchedSlot.getSlot())
                                         .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
