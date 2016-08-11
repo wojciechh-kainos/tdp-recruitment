@@ -24,21 +24,11 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         }));
 
         describe('fetchPersons', function () {
-            it('should call backend with date from current week', function () {
-                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200);
-
-                service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
-                expect(response.status).toEqual(200);
-                });
-
-                $httpBackend.flush();
-            });
-
             it('should fetch valid data', function () {
                 $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200, data);
 
                 service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
-                    expect(response.data).toEqual(data);
+                    expect(response).toEqual(data);
                 });
                 $httpBackend.flush();
             });

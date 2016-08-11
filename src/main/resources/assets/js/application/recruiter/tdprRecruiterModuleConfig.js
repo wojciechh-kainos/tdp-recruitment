@@ -25,9 +25,7 @@ define(['angular'
             resolve: {
                 persons: function (tdprPersonsService, tdprDateService) {
                     var week = tdprDateService.getCurrentWeek();
-                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]).then(function (response) {
-                        return response.data
-                    });
+                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]);
                 },
                 slotsTimes: function (tdprSlotsTimesService) {
                     return tdprSlotsTimesService.fetchSlotsTimes();
