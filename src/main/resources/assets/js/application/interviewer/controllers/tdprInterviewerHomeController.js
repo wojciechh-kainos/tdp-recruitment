@@ -4,8 +4,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.hasNoteChanged = false;
         $scope.hasSlotChanged = false;
-        $scope.startDate;
-        $scope.endDate;
         $scope.relativeDayNumber = 0;
         $scope.slotsForWeek = new Array(18);
         $scope.AvailabilityEnum = AvailabilityEnum;
@@ -15,8 +13,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         var note;
         var id = $stateParams.id;
 
-        var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-        var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4 ), "dd-MM-yyyy");
+        var startDate;
+        var endDate;
 
         $scope.clearTable = function () {
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
@@ -27,14 +25,14 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
-        $scope.getSlots = function (personId) {
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
-
-            $scope.startDate = startDate;
-            $scope.endDate = endDate;
+        function updateDate(){
+            startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
+            endDate  = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
             $scope.displayedStartDate = startDate.replace(/-/g,'.');
             $scope.displayedEndDate = endDate.replace(/-/g,'.');
+        }
+
+        $scope.getSlots = function (personId) {
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
                 for (var slot in response.data) {
                     $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = String(response.data[slot].type.id);
@@ -46,6 +44,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function activate() {
             $scope.clearTable();
+            updateDate();
             tdprSlotsService.getSlotsTimes().then(function(response) {
                 for(var i = 0; i < response.data.length; i++) {
                     var startTime = response.data[i].startTime.slice(0,5);
@@ -62,7 +61,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.discardChanges = function() {
             $scope.clearTable();
             $scope.getSlots(id);
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
+            startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             getNote(id, startDate);
             $scope.hasSlotChanged=false;
             $scope.hasNoteChanged=false;
@@ -89,11 +88,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             disableNoteEditing(); // set note input to disabled by default when changing weeks
 
             $scope.relativeDayNumber -= 7;
+            updateDate();
 
             $scope.clearTable();
             $scope.getSlots(id);
 
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             getNote(id, startDate);
         }
 
@@ -106,11 +105,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             disableNoteEditing(); // set note input to disabled when changing weeks
 
             $scope.relativeDayNumber += 7;
+            updateDate();
 
             $scope.clearTable();
             $scope.getSlots(id);
 
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             getNote(id, startDate);
         }
 
@@ -135,8 +134,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     }
                 }
             }
-            var startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
-            var endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
+            startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
+            endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 $scope.showSubmitSuccess = true;
                 $timeout(function () {
@@ -179,6 +178,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
+                getNote(id, startDate);
             }, function(failure) {
                 $scope.getNoteFailed = true;
                 $timeout(function () {
@@ -195,7 +195,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.noteContent.id = noteId;
             $scope.noteContent.description = "";
             $scope.noteContent.person.id = id;
-            $scope.noteContent.date = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd");
+            $scope.noteContent.date = startDate;
         }
 
         function getNote(personId, date) {
