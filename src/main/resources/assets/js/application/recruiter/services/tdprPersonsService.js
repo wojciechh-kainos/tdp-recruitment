@@ -6,7 +6,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
             return $http.get('api/person/all?startDate=' + dateFilter(start, format) + '&endDate=' + dateFilter(end, format)).then(
                 function (response) {
-                    return response.data;
+                    return response;
                 },
                 function (error) {
                     return error;

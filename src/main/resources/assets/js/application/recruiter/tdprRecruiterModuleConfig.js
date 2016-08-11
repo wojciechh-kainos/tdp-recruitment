@@ -24,10 +24,10 @@ define(['angular'
             resolve: {
                 persons: function (tdprPersonsService, tdprDateService) {
                     var week = tdprDateService.getCurrentWeek();
-                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]);
+                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]).data;
                 },
                 slotsTimes: function (tdprSlotsTimesService) {
-                    return tdprSlotsTimesService.fetchSlotsTimes();
+                    return tdprSlotsTimesService.fetchSlotsTimes().data;
                 }
             },
             views: {

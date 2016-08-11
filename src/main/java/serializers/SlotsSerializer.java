@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import domain.Slots;
 import java.io.IOException;
 
-/**
- * Created by jakubr on 09/08/16.
- */
 public class SlotsSerializer extends StdSerializer<Slots>{
 
     public SlotsSerializer(){

@@ -34,14 +34,25 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
                 $httpBackend.flush();
             });
 
-            it('should set service persons field', function () {
+            it('should fetch valid data', function () {
                 $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200, data);
 
-                service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function () {
-                    expect(service.getPersons()).toEqual(data);
+                service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
+                    expect(response.data).toEqual(data);
                 });
                 $httpBackend.flush();
             });
+
+            it('should fail when response is not 200', function () {
+                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(400);
+
+                service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
+                    expect(response.status).toEqual(400);
+                });
+                $httpBackend.flush();
+                
+
+            })
         })
     })
 });
