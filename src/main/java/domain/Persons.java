@@ -79,11 +79,6 @@ public class Persons {
     public Persons() {
     }
 
-    @Override
-    public String toString(){
-        return id + " | " + firstName + " | " + lastName;
-    }
-
     public Boolean getActive() {
         return active;
     }

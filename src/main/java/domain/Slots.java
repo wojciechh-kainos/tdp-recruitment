@@ -48,11 +48,6 @@ public class Slots {
     public Slots() {
     }
 
-    @Override
-    public String toString(){
-        return "personId: " + person.getId() + " | slotTimesId: " + slot.getId() + " | date: " + slotsDate;
-    }
-
     public Long getId() {
         return id;
     }
