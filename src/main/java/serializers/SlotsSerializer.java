@@ -7,21 +7,14 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import domain.Slots;
 import java.io.IOException;
 
-/**
- * Created by jakubr on 09/08/16.
- */
 public class SlotsSerializer extends StdSerializer<Slots>{
 
     public SlotsSerializer(){
-        this(null);
-    }
-
-    public SlotsSerializer(Class<Slots> t){
-        super(t);
+        super(Slots.class);
     }
 
     @Override
-    public void serialize(Slots slot, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException{
+    public void serialize(Slots slot, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
         jgen.writeNumberField("id", slot.getId());
         jgen.writeNumberField("number", slot.getSlot().getId());
