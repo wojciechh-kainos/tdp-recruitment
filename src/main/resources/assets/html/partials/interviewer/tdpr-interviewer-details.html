@@ -1,0 +1,57 @@
+<br>
+<div class="well">
+    <form class="form-horizontal col-lg-offset-3" name="detailsForm" role="form">
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Developer:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="person.isDev">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">WebOps:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="person.isWeb">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Tester:</label>
+            <div class="col-lg-1">
+                <input type="checkbox" ng-model="person.isTest">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Band level:</label>
+            <div class="col-lg-2">
+                <div class="ui-select">
+                    <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Default starting hour (8:00-10:00) :</label>
+            <div class="col-lg-5">
+                <input type="time" name="defaultStartHour" ng-model="person.defaultStartHour"
+                       placeholder="HH:mm:ss" min="08:00:00" max="10:00:00" required />
+                <span ng-show="detailsForm.defaultStartHour.$error.time">Invalid. </span>
+                <span ng-show="detailsForm.defaultStartHour.$error.min || detailsForm.defaultStartHour.$error.max">Values between 8:00 and 10:00!</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">Default finishing hour (16:00-18:00) :</label>
+            <div class="col-lg-5">
+                <input type="time" name="defaultFinishHour" ng-model="person.defaultFinishHour"
+                       placeholder="HH:mm:ss" min="16:00:00" max="18:00:00" required />
+                <span ng-show="detailsForm.defaultFinishHour.$error.time">Invalid. </span>
+                <span ng-show="detailsForm.defaultFinishHour.$error.min || detailsForm.defaultFinishHour.$error.max">Values between 16:00 and 18:00!</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"></label>
+            <div class="col-lg-6">
+                <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
+                <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
+            </div>
+        </div>
+    </form>
+</div>

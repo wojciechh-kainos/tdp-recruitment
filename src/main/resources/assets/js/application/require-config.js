@@ -7,7 +7,8 @@ require.config({
         'angular': 'lib/angular/angular',
         'uiRouter': 'lib/angular-ui-router/release/angular-ui-router.min',
         'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
-        'lodash': 'lib/lodash/dist/lodash'
+        'lodash': 'lib/lodash/dist/lodash',
+        'notification': 'lib/angular-ui-notification/dist/angular-ui-notification'
     },
     shim: {
         'angular': {
@@ -17,7 +18,8 @@ require.config({
             exports: '_'
         },
         'ui-bootstrap': ['angular'],
-        'uiRouter': ['angular']
+        'uiRouter': ['angular'],
+        'notification': ['angular']
     },
     deps: ['application/bootstrap']
 });
