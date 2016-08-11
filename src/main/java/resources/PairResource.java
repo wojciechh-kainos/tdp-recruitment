@@ -2,6 +2,7 @@ package resources;
 
 import com.google.inject.Inject;
 import dao.SlotsDao;
+import domain.AvailabilityTypesEnum;
 import domain.Pair;
 import domain.Persons;
 import domain.Slots;
@@ -140,7 +141,7 @@ public class PairResource {
                         .stream()
                         .filter(ss -> rs.getSlot().equals(ss.getSlot())
                                 && rs.getSlotsDate().equals(ss.getSlotsDate())
-                                && rs.getType().getType().equals(AVAILABLE_TYPE))
+                                && rs.getType().getType().equals(AvailabilityTypesEnum.available.toString()))
                         .collect(Collectors.toCollection(ArrayList::new))
                         .size() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));

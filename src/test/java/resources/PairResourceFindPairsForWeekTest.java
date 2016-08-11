@@ -50,7 +50,7 @@ public class PairResourceFindPairsForWeekTest {
         startDate = dateFormat.format(expectedDate);
         endDate = dateFormat.format(differentDate);
 
-        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, "available");
+        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
         SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
         SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));

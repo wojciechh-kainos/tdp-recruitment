@@ -1,10 +1,7 @@
 package resources;
 
 
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import domain.*;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -23,9 +20,9 @@ public class MockDataUtil {
         return slot;
     }
 
-    public static AvailabilityTypes createAvailableType(Long id, String type){
+    public static AvailabilityTypes createAvailableType(Long id, AvailabilityTypesEnum type){
         AvailabilityTypes availabilityType = new AvailabilityTypes();
-        availabilityType.setType(type);
+        availabilityType.setType(type.toString());
         availabilityType.setId(id);
         return availabilityType;
     }
