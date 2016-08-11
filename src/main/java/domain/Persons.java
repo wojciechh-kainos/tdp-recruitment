@@ -69,6 +69,8 @@ public class Persons {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Slots> slotsList = new HashSet<Slots>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private Set<Notes> notesList = new HashSet<Notes>();
 
     public Persons() {
     }
@@ -177,6 +179,13 @@ public class Persons {
         this.slotsList = slotsList;
     }
 
+    public Set<Notes> getNotesList() {
+        return notesList;
+    }
+
+    public void setNotesList(Set<Notes> notesList) {
+        this.notesList = notesList;
+    }
     public Time getDefaultStartHour() {return defaultStartHour;}
 
     public void setDefaultStartHour(Time defaultStartHour) {this.defaultStartHour = defaultStartHour;}

@@ -1,8 +1,10 @@
 package resources;
 
 import com.google.inject.Inject;
+import dao.NotesDao;
 import dao.PersonsDao;
 import dao.SlotsDao;
+import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -10,13 +12,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jvnet.hk2.internal.Collector;
 
 import services.MailService;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Path("/person")
@@ -25,12 +25,15 @@ public class PersonsResource {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
+    private NotesDao notesDao;
     private MailService mailService;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService) {
+    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
+        this.notesDao = notesDao;
         this.mailService = mailService;
     }
 
@@ -57,23 +60,40 @@ public class PersonsResource {
                     Map<String, Object> item = new HashMap<>();
                     item.put("person", person);
                     item.put("slots", slots
-                        .stream()
-                        .filter(slot -> slot.getPerson().getId() == person.getId())
-                        .map(slot -> {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("id", slot.getId());
-                            map.put("person", slot.getPerson().getId());
-                            map.put("day", slot.getSlotsDate());
-                            map.put("slot", slot.getSlot().getId());
-                            map.put("type", slot.getType().getType());
+                            .stream()
+                            .filter(slot -> slot.getPerson().getId() == person.getId())
+                            .map(slot -> {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("id", slot.getId());
+                                map.put("person", slot.getPerson().getId());
+                                map.put("day", slot.getSlotsDate());
+                                map.put("slot", slot.getSlot().getId());
+                                map.put("type", slot.getType().getType());
 
-                            return map;
-                        })
-                        .collect(Collectors.toCollection(ArrayList::new)));
+                                return map;
+                            })
+                            .collect(Collectors.toCollection(ArrayList::new)));
 
                     return item;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @GET
+    @Path("/{personId}/getNote")
+    @UnitOfWork
+    public Notes getNote(@PathParam("personId") Long personId,
+                         @QueryParam("date") String startDate) throws ParseException {
+        Date date = formatter.parse(startDate);
+        return notesDao.getByIdAndDate(personId,date);
+    }
+
+    @PUT
+    @Path("/updateNote")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Notes createOrUpdate(Notes note){
+        return notesDao.createOrUpdate(note);
     }
 
     @GET
