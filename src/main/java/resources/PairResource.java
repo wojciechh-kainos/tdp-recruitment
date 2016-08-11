@@ -66,7 +66,8 @@ public class PairResource {
                             .flatMap(personId -> {
                                 List<Slots> slotsPerDateForPerson = slotsPerDate
                                         .stream()
-                                        .filter(slotPerDate -> slotPerDate.getPerson().getId().equals(personId)) //TODO: sorting
+                                        .filter(slotPerDate -> slotPerDate.getPerson().getId().equals(personId))
+                                        .sorted((s1, s2) -> Long.compare(s1.getSlot().getId(), s2.getSlot().getId()))
                                         .collect(Collectors.toCollection(ArrayList::new));
                                 List<Long> tripleIds = match(slotsPerDateForPerson
                                         .stream()
@@ -78,7 +79,6 @@ public class PairResource {
                                         .filter(slot -> tripleIds
                                                 .stream()
                                                 .anyMatch(id -> id.equals(slot.getSlot().getId())));
-
                             });
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
