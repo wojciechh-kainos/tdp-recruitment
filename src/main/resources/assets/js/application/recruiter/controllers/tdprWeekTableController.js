@@ -1,8 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
     , 'application/recruiter/directives/tdprJobProfilesDirecrive'
-    , 'application/recruiter/directives/tdprAvailabilityDirective'
-    , 'application/recruiter/directives/tdprTableDirective'
     , 'application/recruiter/services/tdprRecruiterGetSlotsTimesService'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprRecruiterGetSlotsTimesService, tdprPersonsService, JobProfileEnum, tdprDateService) {
