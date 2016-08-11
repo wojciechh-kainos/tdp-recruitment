@@ -19,7 +19,7 @@
 }
 
 .slot:hover {
-    background-color: cornsilk;
+    background-color: white;
 }
 
 .availabilities-table-container {
@@ -53,9 +53,12 @@
     background-color: #375D81;
     color: white;
     font-weight: bold;
+
 }
-.slot-times-th {
+
+.slot-times-th, .day-th {
     width: 100%;
+    border: 1px solid black;
 }
 
 
