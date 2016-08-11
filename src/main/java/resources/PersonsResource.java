@@ -85,7 +85,7 @@ public class PersonsResource {
     public Response createOrUpdate(Notes note){
         Date now = new Date();
         Calendar c = Calendar.getInstance();
-        c.setTime(note.getDate()); // Now use today date.
+        c.setTime(note.getDate());
         c.add(Calendar.DATE, 5); // Adding 5 days
         Date comparisonDate = new Date(c.getTimeInMillis());
         if (now.after(comparisonDate)) { // don't allow users to submit availabilities older than current week
