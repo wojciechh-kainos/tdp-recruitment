@@ -18,26 +18,8 @@
     border: 1px solid #375D81;
 }
 
-
-
-.slot-available {
-    background-color: #87D37C;
-}
-
-.slot-unavailable {
-    background-color: red;
-}
-
-.slot-full {
-    background-color: darkred;
-}
-
-.slot-maybe {
-    background-color: orange;
-}
-
 .slot:hover {
-    background-color: grey;
+    background-color: cornsilk;
 }
 
 .availabilities-table-container {

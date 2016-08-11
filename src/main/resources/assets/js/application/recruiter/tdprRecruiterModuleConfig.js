@@ -21,6 +21,15 @@ define(['angular'
                 }
             }).state("tdpr.recruiter.home", {
             url: "/recruiter",
+            resolve: {
+                persons: function (tdprPersonsService, tdprDateService) {
+                    var week = tdprDateService.getCurrentWeek();
+                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]).data;
+                },
+                slotsTimes: function (tdprSlotsTimesService) {
+                    return tdprSlotsTimesService.fetchSlotsTimes().data;
+                }
+            },
             views: {
                 "main@recruiter": {
                     templateUrl: "js/application/recruiter/views/tdpr-recruiter-table.html",
