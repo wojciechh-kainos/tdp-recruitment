@@ -1,4 +1,4 @@
-package resources;
+package resourceTests.PairResourceTests;
 
 import dao.SlotsDao;
 import domain.*;
@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import resources.PairResource;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -84,5 +85,4 @@ public class PairResourceTest {
                       .map(searchedSlot -> searchedSlot.getSlot())
                         .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
     }
-
 }

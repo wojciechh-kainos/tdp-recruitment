@@ -14,10 +14,10 @@ public class AvailabilityTypes {
     @Enumerated(EnumType.STRING)
     private AvailabilityTypesEnum type;
 
-    public String getType() { return type.toString(); }
+    public AvailabilityTypesEnum getType() { return type; }
 
-    public void setType(String type) {
-        this.type = AvailabilityTypesEnum.valueOf(type);
+    public void setType(AvailabilityTypesEnum type) {
+        this.type = type;
     }
 
     public long getId() {

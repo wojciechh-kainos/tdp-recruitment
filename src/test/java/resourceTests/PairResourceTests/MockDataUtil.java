@@ -1,4 +1,4 @@
-package resources;
+package resourceTests.PairResourceTests;
 
 
 import domain.*;
@@ -22,7 +22,7 @@ public class MockDataUtil {
 
     public static AvailabilityTypes createAvailableType(Long id, AvailabilityTypesEnum type){
         AvailabilityTypes availabilityType = new AvailabilityTypes();
-        availabilityType.setType(type.toString());
+        availabilityType.setType(type);
         availabilityType.setId(id);
         return availabilityType;
     }
