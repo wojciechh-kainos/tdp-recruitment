@@ -1,8 +1,9 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum) {
 
-        $scope.currentJobProfile = "isDev";
+        $scope.JobProfileEnum = JobProfileEnum;
+        $scope.currentJobProfile = JobProfileEnum.dev;
 
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
