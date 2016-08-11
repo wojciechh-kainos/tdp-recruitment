@@ -1,5 +1,4 @@
 package resources;
-
 import com.google.inject.Inject;
 import dao.PersonsDao;
 import dao.SlotsDao;
