@@ -144,6 +144,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 $timeout(function () {
                     $scope.showSubmitSuccess = false;
                 }, 2000);
+            }, function(response){
+                $scope.previousWeekAlert = true;
+                $timeout(function () {
+                    $scope.previousWeekAlert = false;
+                }, 2000);
             });
 
             var note = {
@@ -177,7 +182,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
             }, function(failure) {
-                console.log(failure);
+                $scope.getNoteFailed = true;
+                $timeout(function () {
+                    $scope.getNoteFailed = false;
+                }, 2000);
             });
         }
 
@@ -197,7 +205,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.noteContent.id = null;
                 }
             }, function(failure) {
-                console.log("getNote problem: Status: " + failure.status);
+                $scope.getNoteFailed = true;
+                $timeout(function () {
+                    $scope.getNoteFailed = false;
+                }, 2000);
             })
         }
 
