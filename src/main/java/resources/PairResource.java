@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 @Produces(MediaType.APPLICATION_JSON)
 public class PairResource {
 
+    private final String AVAILABLE_TYPE = "available";
     private SlotsDao slotsDao;
 
     @Inject
@@ -39,18 +40,18 @@ public class PairResource {
                           @QueryParam("isOps") Boolean isOps) {
 
         List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
-        List<Persons> persons = personsInSlots(slots);
+        List<Persons> persons = findPersonsInSlots(slots);
         List<Slots> filteredSlots = findTriplesInSlots(slots);
 
         return findPairsForAllPersons(filteredSlots, persons);
     }
 
-    private Stream<Long> streamSlotsForPerson(List<Slots> slots) {
-        return slots.stream().map(slot -> slot.getPerson().getId()).distinct();
-    }
-
-    private Stream<java.sql.Date> streamSlotsForDate(List<Slots> slots) {
-        return slots.stream().map(Slots::getSlotsDate).distinct();
+    private List<Persons> findPersonsInSlots(List<Slots> slots) {
+        return slots
+                .stream()
+                .map(Slots::getPerson)
+                .distinct()
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<Slots> findTriplesInSlots(List<Slots> slots) {
@@ -83,6 +84,14 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    private Stream<Long> streamSlotsForPerson(List<Slots> slots) {
+        return slots.stream().map(slot -> slot.getPerson().getId()).distinct();
+    }
+
+    private Stream<java.sql.Date> streamSlotsForDate(List<Slots> slots) {
+        return slots.stream().map(Slots::getSlotsDate).distinct();
+    }
+
     private List<Long> match(List<Long> sortedList) {
         if (sortedList.size() < 3) {
             return new ArrayList<>();
@@ -111,18 +120,8 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-
     private static Predicate<Slots> predicateSlots(Persons person) {
         return slot -> slot.getPerson().equals(person);
-    }
-
-
-    private List<Persons> personsInSlots(List<Slots> slots) {
-        return slots
-                .stream()
-                .map(Slots::getPerson)
-                .distinct()
-                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<Slots> slotsByPerson(List<Slots> slots, Predicate<Slots> predicate) {
@@ -141,7 +140,7 @@ public class PairResource {
                         .stream()
                         .filter(ss -> rs.getSlot().equals(ss.getSlot())
                                 && rs.getSlotsDate().equals(ss.getSlotsDate())
-                                && rs.getType().getId() == 1) //type: available
+                                && rs.getType().getType().equals(AVAILABLE_TYPE))
                         .collect(Collectors.toCollection(ArrayList::new))
                         .size() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -153,7 +152,7 @@ public class PairResource {
                 .map(foundPerson -> new Pair(person, foundPerson, slotsByPerson(pairedSlots, predicateSlots(foundPerson))));
     }
 
-    private List<Slots> pruneSlots(List<Slots> slots, List<Persons> persons) {
+    private List<Slots> findSlotsForPersonsWithoutPairs(List<Slots> slots, List<Persons> persons) {
         return slots
                 .stream()
                 .filter(slot ->
@@ -170,10 +169,9 @@ public class PairResource {
         return persons
                 .stream()
                 .flatMap(person -> {
-                    Stream<Pair> pair = findAllPairsForPerson(pruneSlots(slots, prunedPersons), person);
+                    Stream<Pair> pairs = findAllPairsForPerson(findSlotsForPersonsWithoutPairs(slots, prunedPersons), person);
                     prunedPersons.add(person);
-
-                    return pair;
+                    return pairs;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
