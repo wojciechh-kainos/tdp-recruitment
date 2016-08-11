@@ -27,9 +27,8 @@ define(['angular' 
                   }
               },
               resolve:{
-                  service: "tdprPersonService",
-                  promise: function(service, $stateParams){
-                      return service.getPersonDetails($stateParams.id);
+                  person: function(tdprPersonService, $stateParams){
+                      return tdprPersonService.getPersonDetails($stateParams.id);
                   }
               }
           }); 
