@@ -15,10 +15,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.*;
 
 
 @Path("/pairs")
@@ -50,20 +47,40 @@ public class PairResource {
         return findPairsForAllPersons(filteredSlots, persons);
     }
 
+    private Stream<Long> streamSlotsForPerson(List<Slots> slots) {
+        return slots.stream().map(slot -> slot.getPerson().getId()).distinct();
+    }
+
+    private Stream<java.sql.Date> streamSlotsForDate(List<Slots> slots) {
+        return slots.stream().map(Slots::getSlotsDate).distinct();
+    }
+
     private List<Slots> findTriplesInSlots(List<Slots> slots) {
-        return slots
-                .stream()
-                .map(Slots::getSlotsDate)
-                .distinct()
+        return streamSlotsForDate(slots)
                 .flatMap(date -> {
-                    List<Slots> slotsByDate = slots
+                    List<Slots> slotsPerDate = slots
                             .stream()
                             .filter(slot -> slot.getSlotsDate().equals(date))
                             .collect(Collectors.toCollection(ArrayList::new));
 
-                    List<Long> tripleIds = match(slotsByDate.stream().map(slot -> slot.getSlot().getId()).collect(Collectors.toCollection(ArrayList::new)));
+                    return streamSlotsForPerson(slotsPerDate)
+                            .flatMap(personId -> {
+                                List<Slots> slotsPerDateForPerson = slotsPerDate
+                                        .stream()
+                                        .filter(slotPerDate -> slotPerDate.getPerson().getId().equals(personId)) //TODO: sorting
+                                        .collect(Collectors.toCollection(ArrayList::new));
+                                List<Long> tripleIds = match(slotsPerDateForPerson
+                                        .stream()
+                                        .map(slot -> slot.getSlot().getId())
+                                        .collect(Collectors.toCollection(ArrayList::new)));
 
-                    return slotsByDate.stream().filter(slot -> tripleIds.stream().anyMatch(id -> id.equals(slot.getSlot().getId())));
+                                return slotsPerDateForPerson
+                                        .stream()
+                                        .filter(slot -> tripleIds
+                                                .stream()
+                                                .anyMatch(id -> id.equals(slot.getSlot().getId())));
+
+                            });
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
