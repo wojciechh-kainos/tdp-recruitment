@@ -56,11 +56,17 @@
 
 }
 
-.slot-times-th, .day-th {
+.slot-times-th{
     width: 100%;
     border: 1px solid black;
 }
-
+.day-th {
+    border-right: 2px solid black;
+    box-sizing: border-box;
+}
+.day-th:last-of-type {
+    border-right: 1px solid black;
+}
 
 .availabilities-table {
     border: 2px solid black;
