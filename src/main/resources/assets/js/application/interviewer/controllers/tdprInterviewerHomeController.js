@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService,tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, Notification) {
         $scope.slotTimes = [];
 
         $scope.hasNoteChanged = false;
@@ -35,7 +35,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.getSlots = function (personId) {
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
                 for (var slot in response.data) {
-                    $scope.slotsForWeek[response.data[slot].slot.id - 1][new Date(response.data[slot].slotsDate).getDay() - 1].type = String(response.data[slot].type.id);
+                    $scope.slotsForWeek[response.data[slot].number - 1][new Date(response.data[slot].day).getDay() - 1].type = String(AvailabilityEnum[response.data[slot].type].id);
                 }
             });
         };
@@ -81,7 +81,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
        $scope.showPreviousWeek = function() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
-                alert("You have changed your data. Submit or discard your changes!");
+                Notification.warning({
+                    message: "You have changed your data. Submit or discard your changes!",
+                    delay: 2000});
                 return;
             }
 
@@ -98,10 +100,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.showNextWeek = function() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
-                alert("You have changed your data. Submit or discard your changes!");
+                Notification.warning({
+                    message: 'You have changed your data. Submit or discard your changes!',
+                    delay: 2000});
                 return;
             }
-
             disableNoteEditing(); // set note input to disabled when changing weeks
 
             $scope.relativeDayNumber += 7;
@@ -137,15 +140,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
-                $scope.showSubmitSuccess = true;
-                $timeout(function () {
-                    $scope.showSubmitSuccess = false;
-                }, 2000);
+                Notification.success({message: 'Changes saved!', delay: 2000});
             }, function(response){
-                $scope.previousWeekAlert = true;
-                $timeout(function () {
-                    $scope.previousWeekAlert = false;
-                }, 2000);
+                Notification.error({message: 'Cannot change past weeks!', delay: 2000});
             });
 
             var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
@@ -186,6 +183,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.markSlots = function(slot) {
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
+        $scope.goDetails = function(){
+              $state.go('tdpr.interviewer.details', {'id' : id});
+        };
+
 
         function createNote(description, personId, date) {
             $scope.noteContent = {

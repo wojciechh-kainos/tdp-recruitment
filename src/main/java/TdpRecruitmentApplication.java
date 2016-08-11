@@ -11,7 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import resources.SlotsResource;
 import resources.SlotsTimesResource;
-import resources.PersonResources;
+import resources.PersonsResource;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -50,7 +50,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
     public void run(TdpRecruitmentApplicationConfiguration configuration, Environment environment) {
         module.setSessionFactory(hibernateBundle.getSessionFactory());
 
-        environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResources.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(PersonsResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsTimesResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
     }

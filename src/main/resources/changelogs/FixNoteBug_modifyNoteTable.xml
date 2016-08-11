@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="US20_radoslawl_1" author="radoslawl">
+    <changeSet id="FixNoteBug_radoslawl_1" author="radoslawl">
         <addUniqueConstraint tableName="notes"
                              constraintName="personId_date_const"
                              columnNames="person, date"/>

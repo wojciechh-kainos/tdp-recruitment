@@ -8,6 +8,17 @@ import domain.Notes;
 import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.joda.time.DateTime;
+import org.jvnet.hk2.internal.Collector;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.jvnet.hk2.internal.Collector;
+
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,7 +30,7 @@ import java.util.stream.Collectors;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
-public class PersonResources {
+public class PersonsResource {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
@@ -28,7 +39,7 @@ public class PersonResources {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     @Inject
-    public PersonResources(PersonsDao personsDao, SlotsDao slotsDao, NotesDao notesDao, MailService mailService) {
+    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
         this.personsDao = personsDao;
         this.slotsDao = slotsDao;
         this.notesDao = notesDao;
@@ -48,33 +59,14 @@ public class PersonResources {
     @GET
     @Path("/all")
     @UnitOfWork
-    public List fetchPersonsWithSlots(@QueryParam("startDate")String startDate, @QueryParam("endDate")String endDate) {
+    public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+        Date start = DateTime.parse(startDate).toDate();
+        Date end = DateTime.parse(endDate).toDate();
+
         List<Persons> persons = personsDao.findAll();
-        List<Slots> slots = slotsDao.findBetween(startDate, endDate);
+        persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
 
-        return persons
-                .stream()
-                .map(person -> {
-                    Map<String, Object> item = new HashMap<>();
-                    item.put("person", person);
-                    item.put("slots", slots
-                            .stream()
-                            .filter(slot -> slot.getPerson().getId() == person.getId())
-                            .map(slot -> {
-                                Map<String, Object> map = new HashMap<>();
-                                map.put("id", slot.getId());
-                                map.put("person", slot.getPerson().getId());
-                                map.put("day", slot.getSlotsDate());
-                                map.put("slot", slot.getSlot().getId());
-                                map.put("type", slot.getType().getType());
-
-                                return map;
-                            })
-                            .collect(Collectors.toCollection(ArrayList::new)));
-
-                    return item;
-                })
-                .collect(Collectors.toCollection(ArrayList::new));
+        return persons;
     }
 
     @GET
@@ -102,5 +94,21 @@ public class PersonResources {
             notesDao.createOrUpdate(note);
             return Response.status(Response.Status.ACCEPTED).entity(note).build();
         }
+    }
+
+    @GET
+    @Path("/{id}")
+    @UnitOfWork
+    public Persons getPersonById(@PathParam("id") Long id){
+         return personsDao.getById(id);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Persons updatePerson(Persons person) {
+        personsDao.update(person);
+        return person;
     }
 }

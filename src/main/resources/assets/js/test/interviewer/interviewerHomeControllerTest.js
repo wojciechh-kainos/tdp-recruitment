@@ -22,7 +22,43 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             getSlotsDeferred = $q.defer();
             var slotsTimesDeferred = $q.defer();
             var updateSlotsDeferred = $q.defer();
-            AvailabilityEnum = {empty: {id: '0'}, available: {id: '1'}};
+            AvailabilityEnum = {
+                empty: {
+                    id: '0',
+                    name: "empty",
+                    className: "cell-avail-empty",
+                    tooltipText: ""
+                },
+                available: {
+                    id: '1',
+                    name: "available",
+                    className: "cell-avail-available",
+                    tooltipText: "available"
+                },
+                full: {
+                    id: '2',
+                    name: "full",
+                    className: "cell-avail-full",
+                    tooltipText: "full"
+                },
+                init: {
+                    id: '3',
+                    name: "init",
+                    className: "cell-avail-init",
+                    tooltipText: "init call"
+                },
+                unavailable: {
+                    id: '4',
+                    name: "unavailable",
+                    className: "cell-avail-unavailable",
+                    tooltipText: ""
+                },
+                maybe: {
+                    id: '5',
+                    name: "maybe",
+                    className: "cell-avail-maybe",
+                    tooltipText: "maybe"
+                }};
 
             spyOn(slotsService, 'getSlotsTimes').and.returnValue(slotsTimesDeferred.promise);
             spyOn(slotsService, 'getSlots').and.returnValue(getSlotsDeferred.promise);
@@ -35,6 +71,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 tdprSlotsService: slotsService,
                 tdprPersonService: personService,
                 AvailabilityEnum: AvailabilityEnum,
+                Notification: { success: function() {}},
                 $stateParams: {id: personId}
             });
 
@@ -67,18 +104,19 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
             it('should store values received from service in slotsForWeek array', function () {
                 getSlotsDeferred.resolve({
-                    data: [{slot: {id: 1}, type: {id: 61}, slotsDate: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
-                        {slot: {id: 4}, type: {id: 62}, slotsDate: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
-                        {slot: {id: 6}, type: {id: 63}, slotsDate: getDayOfTheWeek(new Date(), 0)}] // 6th slot, monday
+                    data: [{number: 1, type: "available", day: getDayOfTheWeek(new Date(), 1)}, // 1st slot, tuesday
+                        {number: 4, type: "unavailable", day: getDayOfTheWeek(new Date(), 4)}, // 4th slot, friday
+                        {number: 6, type: "maybe", day: getDayOfTheWeek(new Date(), 0)}] // 6th slot, monday
                 });
 
                 $scope.getSlots();
                 $scope.$apply();
+                $scope.getSlots();
 
                 expect($scope.slotsForWeek[0][0]).toEqual({type: AvailabilityEnum.empty.id});
-                expect($scope.slotsForWeek[0][1]).toEqual({type: '61'});
-                expect($scope.slotsForWeek[3][4]).toEqual({type: '62'});
-                expect($scope.slotsForWeek[5][0]).toEqual({type: '63'});
+                expect($scope.slotsForWeek[0][1]).toEqual({type: AvailabilityEnum.available.id});
+                expect($scope.slotsForWeek[3][4]).toEqual({type: AvailabilityEnum.unavailable.id});
+                expect($scope.slotsForWeek[5][0]).toEqual({type: AvailabilityEnum.maybe.id});
             });
         });
 

@@ -1,0 +1,50 @@
+server:
+  rootPath: /api/*
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 8888
+  adminConnectors:
+    - type: http
+      port: 8889
+database:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: tdp
+
+  # the password
+  password: tdp
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost/tdprecruitment
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.hbm2ddl.auto: validate
+    hibernate.show_sql: true
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+
+smtpConfig:
+  host: mail.kainos.com
+  port: 25
+  from: no-reply@kainos.com
+
+domain: http://localhost:8888
