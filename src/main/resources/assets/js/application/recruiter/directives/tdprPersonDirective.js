@@ -1,5 +1,5 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("person", function () {
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprScheduleService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.directive("person", function (tdprScheduleService) {
         return {
             restrict: 'AE',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
@@ -16,6 +16,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 };
                 scope.getClass = function () {
                     return scope.slotsTimes.length < 10  ? 'cell-size-' + scope.slotsTimes.length : '';
+                };
+
+                scope.changeSlotType = function (slotNumber, day) {
+                    tdprScheduleService.changeSlotTypeCycleThrough(scope.getSlot(slotNumber, day), slotNumber, day, scope.personData);
                 };
             }
         }

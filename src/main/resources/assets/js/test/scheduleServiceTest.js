@@ -3,7 +3,7 @@ define(['angular', 'angularMocks',
     'application/recruiter/services/tdprScheduleService',
     'application/recruiter/services/tdprDateService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
-    describe('scheduleFeatureTest', function () {
+    describe('scheduleServiceTest', function () {
         'use strict';
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
@@ -55,7 +55,6 @@ define(['angular', 'angularMocks',
         var tdprDateService;
         var tdprScheduleService;
         var tdprRecruiterSlotsService;
-
         var AvailabilityEnum;
         var dateFilter;
 
@@ -69,18 +68,29 @@ define(['angular', 'angularMocks',
         }));
 
         var weekStart;
-        var weekEnd;
         var weekStartString;
-
+        var weekEnd;
+        var weekEndString;
         var person;
+
+        var testSlotId;
+        var testDay;
 
         beforeEach(function () {
             var format = 'yyyy-MM-dd';
+            var requestFormat = 'dd-MM-yyyy';
             var now = new Date();
             weekStart = new Date();
-            weekEnd = new Date();
             weekStart.setDate(now.getDate() - now.getDay() + 1);
+
+            weekStart = dateFilter(weekStart, format);
+            weekStartString = dateFilter(weekStart, requestFormat);
+
+            weekEnd = new Date();
             weekEnd.setDate(now.getDate() + (7 - now.getDay()));
+
+            weekEnd = dateFilter(weekEnd, format);
+            weekEndString = dateFilter(weekEnd, requestFormat);
 
             person = {
                 "activationCode": null,
@@ -98,58 +108,58 @@ define(['angular', 'angularMocks',
                 "slotsList": null
             };
 
-            weekStart = dateFilter(weekStart, format);
-            weekStartString = dateFilter(weekStart, 'yyyy-MM-dd');
+            testSlotId = 8;
+            testDay = weekStart;
         });
 
-        describe('changeSlotType', function () {
-            it('should request put with new added available slot at 8', function () {
-                var startSlots = [
+        describe('changeSlotTypeCycleThrough', function () {
+            it('should create put request with new added available slot at number 8', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     }
                 ];
 
+                // These are slots which should be formatted after request
                 var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 8,
+                        "number": testSlotId,
                         "type": AvailabilityEnum.available.name
                     }
-                ], weekStart, person.id);
+                ], testDay, person.id);
 
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object
-                var objectArray = {
-                    slotId: 8,
-                    day: weekStart
-                };
+                // Simulate click on object:
+                // No slot there yet
+                var slotObject = undefined;
 
-                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -157,119 +167,345 @@ define(['angular', 'angularMocks',
             });
 
 
-            it('should request put with changed available slot at 8 to full', function () {
-                var startSlots = [
+            it('should create put request with changed slot at number 8 from available to full', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 8,
+                        "number": testSlotId,
                         "type": AvailabilityEnum.available.name
                     }
+
                 ];
 
+                // These are slots which should be formatted after request
                 var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 8,
+                        "number": testSlotId,
                         "type": AvailabilityEnum.full.name
                     }
-                ], weekStart, person.id);
+                ], testDay, person.id);
 
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object
-                var objectArray = {
-                    slotId: 8,
-                    day: weekStart,
-                    type: AvailabilityEnum.available.name
+                // Simulate click on object:
+                // Click on "Available" type object
+                var slotObject = {
+                    "day": testDay,
+                    "slot": testSlotId,
+                    "type": AvailabilityEnum.available.name
                 };
 
-                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
                 $httpBackend.flush();
             });
 
-            it('should clear type slot at 8', function () {
-                var startSlots = [
+            it('should create put request with removed slot at number 8', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 8,
+                        "number": testSlotId,
                         "type": AvailabilityEnum.maybe.name
                     }
+
                 ];
 
+                // These are slots which should be formatted after request
                 var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 7,
+                        "number": 7,
                         "type": AvailabilityEnum.available.name
                     },
                     {
                         "day": weekStart,
                         "person": 9,
-                        "slot": 9,
+                        "number": 9,
                         "type": AvailabilityEnum.full.name
                     }
-                ], weekStart, person.id);
-
+                ], testDay, person.id);
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
 
-                // Simulate click on object
-                var objectArray = {
-                    slotId: 8,
-                    day: weekStart,
-                    type: AvailabilityEnum.maybe.name
+                // Simulate click on object:
+                // "Maybe" slot, which is last in rotation
+                var slotObject = {
+                    "day": testDay,
+                    "slot": testSlotId,
+                    "type": AvailabilityEnum.maybe.name
                 };
 
-                tdprScheduleService.changeSlotTypeCycleThrough(objectArray, startSlots, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, testDay, person).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
                 $httpBackend.flush();
             });
+        });
+
+        describe('changeSlotTypeCycleThrough - date filtering, response statuses', function () {
+
+            it('should create put request with change slot number 8 from full to init state and filter for only one day', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 7,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 8,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.init.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.full.name
+                    }
+
+                ];
+
+                // These are slots which should be formatted after request
+                var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.init.name
+                    }
+                ], weekStart, person.id);
+
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
+
+                // Simulate click on object:
+                // "Maybe" slot, which is last in rotation
+                var slotObject = {
+                    "day": testDay,
+                    "slot": testSlotId,
+                    "type": AvailabilityEnum.full.name
+                };
+
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekStart, person).then(function (response) {
+                    expect(response.status).toEqual(200);
+                });
+
+                $httpBackend.flush();
+            });
+
+            it('should create put request which resolves with "NOT_ACCEPTABLE" 406 error - changing slots from past', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 7,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 8,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.init.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.full.name
+                    }
+
+                ];
+
+                // These are slots which should be formatted after request
+                var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.init.name
+                    }
+                ], weekStart, person.id);
+
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(406);
+                //
+
+                // Simulate click on object:
+                // "Maybe" slot, which is last in rotation
+                var slotObject = {
+                    "day": weekStart,
+                    "slot": testSlotId,
+                    "type": AvailabilityEnum.full.name
+                };
+
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekStart, person).then(function (response) {
+                    expect(response.status).toEqual(406);
+                });
+
+                $httpBackend.flush();
+            });
+
+
+            it('should create put request which resolves with 200 status - changing slots in future', function () {
+                // Simulate person slots for current day
+                person.slotsList = [
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 7,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.init.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": 8,
+                        "type": AvailabilityEnum.full.name
+                    }
+
+                ];
+
+                // These are slots which should be formatted after request
+                var expectedSlots = tdprRecruiterSlotsService.reformatSlots([
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 7,
+                        "type": AvailabilityEnum.available.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": 9,
+                        "type": AvailabilityEnum.init.name
+                    },
+                    {
+                        "day": weekEnd,
+                        "person": 9,
+                        "number": testSlotId,
+                        "type": AvailabilityEnum.full.name
+                    }
+                ], weekEnd, person.id);
+
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekEndString + '/' + weekEndString, expectedSlots).respond(200);
+
+                // Simulate click on object:
+                // "Maybe" slot, which is last in rotation
+                var slotObject = {
+                    "day": weekEnd,
+                    "slot": testSlotId,
+                    "type": AvailabilityEnum.available.name
+                };
+
+                tdprScheduleService.changeSlotTypeCycleThrough(slotObject, testSlotId, weekEnd, person).then(function (response) {
+                    expect(response.status).toEqual(200);
+                });
+
+                $httpBackend.flush();
+            });
+
 
         })
     })

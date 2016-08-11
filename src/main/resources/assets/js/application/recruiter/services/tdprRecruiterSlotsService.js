@@ -13,22 +13,20 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         service.reformatSlots = function (slots, day, personId) {
             var compareData = dateFilter(day, "yyyy-MM-dd");
-
             var filtered = _.filter(slots, {"day": compareData});
 
             return _.map(filtered, function (value) {
                 return {
-                    slotsDate: compareData,
+                    slotsDate: day,
                     person: {id: personId},
-                    slot: {id: value.slot},
+                    slot: {id: value.number},
                     type: {id: AvailabilityEnum[value.type].id}
-
                 }
             });
         };
 
         service.prepareAndUpdateSlots = function (slots, personId, day) {
-            var formattedData = tdprDateService.formatDate(day);
+            var formattedData = dateFilter(day, "dd-MM-yyyy");
 
             return service.updateSlots(
                 service.reformatSlots(slots, day, personId),
