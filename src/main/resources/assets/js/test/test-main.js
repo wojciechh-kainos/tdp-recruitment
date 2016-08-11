@@ -22,6 +22,7 @@ require.config({
         'requireJS': 'lib/requirejs/require',
         'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
         'karma-requireJS': 'lib/karma-require',
+        'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'lodash': 'lib/lodash/dist/lodash'
     },
     shim: {
@@ -33,7 +34,8 @@ require.config({
         },
         'angularMocks': ['angular'],
         'ui-bootstrap': ['angular'],
-        'uiRouter': ['angular']
+        'uiRouter': ['angular'],
+        'notification': ['angular']
     },
     // dynamically load all test files
     deps: allTestFiles,

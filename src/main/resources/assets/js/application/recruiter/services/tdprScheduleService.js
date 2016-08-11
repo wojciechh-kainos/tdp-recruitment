@@ -1,46 +1,46 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'tdprDateService', 'dateFilter', function (tdprRecruiterSlotsService, AvailabilityEnum, tdprDateService, dateFilter) {
+    tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'dateFilter', function (tdprRecruiterSlotsService, AvailabilityEnum, dateFilter) {
         var service = {};
 
-        service.changeSlotType = function (objectArray, slots, person, changeTo) {
-            var compareDate = dateFilter(objectArray.day, 'yyyy-MM-dd');
-            var compareSlot = parseInt(objectArray.slotId);
-
-            var findResult = _.findIndex(slots, {'day': compareDate, 'slot': compareSlot});
+        service.changeSlotType = function (slotId, day, person, changeTo) {
+            var date = dateFilter(day, "yyyy-MM-dd");
+            var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
 
             if (findResult !== -1) {
                 if (changeTo !== undefined) {
                     // There is still availability type to change
-                    slots[findResult].type = AvailabilityEnum[changeTo].name;
+                    person.slotsList[findResult].type = AvailabilityEnum[changeTo].name;
                 } else {
                     // There is no more availability types, so we need to clear slot
-                    slots[findResult] = {};
+                    person.slotsList[findResult] = {};
                 }
             } else {
-                slots.push({
-                    day: compareDate,
+                person.slotsList.push({
+                    day: date,
                     person: person.id,
-                    slot: compareSlot,
+                    number: slotId,
                     type: changeTo
                 });
             }
 
             return tdprRecruiterSlotsService.prepareAndUpdateSlots(
-                slots,
+                person.slotsList,
                 person.id,
-                objectArray.day
+                day
             );
         };
 
-        service.changeSlotTypeCycleThrough = function (objectArray, slots, person) {
-            if (objectArray.type === undefined) {
+        service.changeSlotTypeCycleThrough = function (changeSlot, slotId, day, person) {
+            var date = dateFilter(day, "yyyy-MM-dd");
+
+            if (changeSlot === undefined) {
                 // Add available slot for future changes
-                return service.changeSlotType(objectArray, slots, person, AvailabilityEnum.available.name);
+                return service.changeSlotType(slotId, date, person, AvailabilityEnum.available.name);
             } else {
-                var newTypeId = parseInt(AvailabilityEnum[objectArray.type].id) + 1;
+                var newTypeId = parseInt(AvailabilityEnum[changeSlot.type].id) + 1;
                 var newType = _.findKey(AvailabilityEnum, {'id': newTypeId.toString()});
 
-                return service.changeSlotType(objectArray, slots, person, newType);
+                return service.changeSlotType(slotId, day, person, newType);
             }
         };
 

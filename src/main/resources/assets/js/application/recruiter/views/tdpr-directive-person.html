@@ -1,4 +1,4 @@
 <th class="person-name">{{personData.firstName + ' ' + personData.lastName}}</th>
 <td ng-repeat="day in days">
-    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"></slot>
+    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()" ng-click="changeSlotType(slotTime.id, day)"></slot>
 </td>

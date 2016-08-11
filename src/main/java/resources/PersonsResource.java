@@ -16,9 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.jvnet.hk2.internal.Collector;
-
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
