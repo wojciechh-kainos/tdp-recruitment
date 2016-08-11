@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="12" author="dawidkre">
+    <changeSet id="13" author="dawidkre">
         <addColumn tableName="persons">
             <column name="default_start_hour" type="time"></column>
             <column name="default_finish_hour" type="time"></column>
