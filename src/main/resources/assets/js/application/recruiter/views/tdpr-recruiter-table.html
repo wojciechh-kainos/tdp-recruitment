@@ -27,9 +27,9 @@
                 <tr>
                     <td></td>
                     <td ng-repeat="day in days">
-                        <table style="width: 100%;">
+                        <table>
                             <tr>
-                                <td class="slot-time-th" ng-repeat="slotTime in slotTimes">
+                                <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
                                     <span class="rotate">{{slotTime.startTime | limitTo:5}} </span>
                                 </td>
                             </tr>
@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr person slot-times="slotTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile"></tr>
+                <tr person slots-times="slotsTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile"></tr>
             </tbody>
         </table>
     </div>

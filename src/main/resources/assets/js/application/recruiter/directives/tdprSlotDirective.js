@@ -10,7 +10,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             },
             link: function (scope, element, attributes) {
                 scope.getClass = function () {
-                  return scope.slotData ? 'slot-' + scope.slotData.type : '';
+                  return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
                 };
             }
         }

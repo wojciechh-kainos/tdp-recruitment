@@ -5,7 +5,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
             scope: {
                 personData: '=',
-                slotTimes: '=',
+                slotsTimes: '=',
                 days: '='
             },
             link: function (scope, element, attributes) {
@@ -15,7 +15,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     });
                 };
                 scope.getClass = function () {
-                    return scope.slotTimes.length < 10  ? 'cell-size-' + scope.slotTimes.length : '';
+                    return scope.slotsTimes.length < 10  ? 'cell-size-' + scope.slotsTimes.length : '';
                 };
             }
         }
