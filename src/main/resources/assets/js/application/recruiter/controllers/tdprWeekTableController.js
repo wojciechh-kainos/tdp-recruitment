@@ -8,5 +8,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
         $scope.persons = persons;
-    });
+
+    })
 });
