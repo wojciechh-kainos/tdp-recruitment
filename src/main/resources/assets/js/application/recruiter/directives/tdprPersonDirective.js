@@ -1,25 +1,24 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprPopulateAvailability'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("personDirective", function (tdprPopulateAvailability) {
+define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.directive("person", function () {
         return {
-            restrict: 'A',
+            restrict: 'AE',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
+            scope: {
+                personData: '=',
+                slotTimes: '=',
+                days: '='
+            },
             link: function (scope, element, attributes) {
-                function _init() {
-                    scope.availabilityArray = tdprPopulateAvailability.populateAvailability(scope.person, scope.timeElements);
-                }
-
-                scope.$watch("timeElements", function () {
-                    _init();
-                });
-
-                scope.$watch("person", function(){
-                    _init();
-                });
-
-                scope.$parent.$parent.$watch("startWeekDay", function () {
-                    _init();
-                });
+                scope.getSlot = function (slotNumber, day) {
+                    return scope.personData.slotsList.find(function (slot) {
+                        return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day.getDay());
+                    });
+                };
+                scope.getClass = function () {
+                    return scope.slotTimes.length < 10  ? 'cell-size-' + scope.slotTimes.length : '';
+                };
             }
-        };
+        }
+        
     });
 });

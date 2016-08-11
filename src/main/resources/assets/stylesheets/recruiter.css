@@ -1,7 +1,3 @@
-.tiny-header {
-    height: 10px;
-}
-
 .rotate {
     transform: /* Magic Numbers */ translate(0px, 0px) /* 45 is really 360 - 45 */ rotate(270deg);
     width: 15px;
@@ -9,120 +5,98 @@
     margin-top: 25px;
     margin-bottom: 5px;
     display: inline-block;
-
 }
 
 .rotate > span {
     white-space: nowrap;
-    /*padding: 5px 10px;
-    border-bottom: 1px solid #ccc;*/
 }
 
-.slot{
-    /*min-width: 10px;*/
-    /*min-height: 10px;*/
-    width: 16px;
+.slot {
+    min-width: 16px;
     height: 20px;
+    cursor: pointer;
+    border: 1px solid #375D81;
+}
+
+
+
+.slot-available {
+    background-color: #87D37C;
+}
+
+.slot-unavailable {
+    background-color: red;
+}
+
+.slot-full {
+    background-color: darkred;
+}
+
+.slot-maybe {
+    background-color: orange;
 }
 
 .slot:hover {
-    background-color: black;
-}
-.person-row{
-    /*height: 10px;*/
+    background-color: grey;
 }
 
-.cell-avail-unavailable {
-    border-top-width: 0px;
-}
-
-.cell-avail-available {
-    background-color: #00b3ee;
-
-}
-
-.cell-avail-init {
-    background: red;
-}
-
-.cell-avail-full {
-    background: darkred;
-}
-
-.cell-avail-busy {
-    background: orange;
-}
-
-.cell-selected {
-    background-color: cyan;
-}
-
-.person-name {
-    width: 140px;
-    position:absolute;
-    left:0;
-    text-align: right;
-    margin: 0;
-}
-
-.my-timetable {
-    width: 100%;
-    border-spacing: 0;
-    border-collapse: separate;
-
-    background: #fff;
-
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.my-timetable td {
-    cursor: pointer;
-    border-right: 1px dotted;
-    border-bottom: 1px dashed;
-    max-width: 10px;
-}
-
-.cell-last-column {
-    border-right: 4px solid dodgerblue !important;
-    margin-right: 50px;
-}
-
-.my-timetable td:hover {
-    background: orange;
-}
-
-.my-timetable .selected {
-    background: #2cab54;
-}
-
-.my-timetable th {
-    font-size: 0.8em;
-    color: #808080;
-    cursor: pointer;
-    border: 2px solid dodgerblue;
-    text-align: center;
-}
-
-.my-timetable th:first-child, .my-timetable .person-name, .my-timetable .big-header, .my-timetable .tiny-header:nth-of-type(18n+1) {
-    border-right: 4px solid dodgerblue;
-
-}
-
-.table1-container {
+.availabilities-table-container {
     min-width: 800px;
-    overflow-x: scroll;
-    margin-left:140px;
-    overflow-y:visible;
-    padding-bottom:1px;
-
+    overflow-x: auto;
+    margin-left: 140px;
+    overflow-y: visible;
+    padding-bottom: 1px;
 }
 
 .container {
     position: relative;
+    font-family: 'Lato', sans-serif;
+}
+
+.person-name {
+    width: 150px;
+    position: absolute;
+    left: 0;
+    text-align: right;
+    margin: 0;
+    padding-right: 5px;
+    color: #375D81
+}
+
+#recruiter-header {
+    color: #375D81
+}
+
+.day-th, .slot-time-th {
+    background-color: #375D81;
+    color: white;
+    font-weight: bold;
 }
 
 
+.availabilities-table {
+    border: 2px solid black;
+}
+
+
+.cell-size-3 {
+    width: 50px;
+}
+.cell-size-4 {
+    width: 38px;
+}
+.cell-size-5 {
+    width: 30px;
+}
+.cell-size-6 {
+    width: 25px;
+}
+.cell-size-7 {
+    width: 22px;
+}
+.cell-size-8 {
+    width: 19px;
+}
+.cell-size-9 {
+    width: 17px;
+}

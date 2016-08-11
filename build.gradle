@@ -60,6 +60,11 @@ dependencies {
     )
 
     compile 'org.postgresql:postgresql:9.4.1208.jre7'
+    /*Guava*/
+    compile 'com.google.guava:guava:19.0'
+
+    /*Simple Java Mail*/
+    compile 'org.simplejavamail:simple-java-mail:4.1.1'
 
     /* Google Guice - Dependency Injection */
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'

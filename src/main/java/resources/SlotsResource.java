@@ -1,47 +1,65 @@
-package Resources;
+package resources;
 
-/**
- * Created by remigiuszk on 03/08/16.
- */
-
+import com.google.inject.Inject;
+import dao.PersonsDao;
 import dao.SlotsDao;
+import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Path("/slots")
 @Produces(MediaType.APPLICATION_JSON)
 public class SlotsResource {
 
-    private SlotsDao dao;
+    private SlotsDao slotsDao;
 
     @Inject
-    SlotsResource(SlotsDao dao){
-        this.dao = dao;
+    public SlotsResource(SlotsDao slotsDao) {
+        this.slotsDao = slotsDao;
+    }
+
+    @PUT
+    @Path("/update/{person_id}/{date_from}/{date_to}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Response update(Slots[] slots,
+                           @PathParam("person_id") long person_id,
+                           @PathParam("date_from") String date_from,
+                           @PathParam("date_to") String date_to) throws ParseException {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+        Date now = new Date();
+        Date startDate = formatter.parse(date_from);
+        Date endDate = formatter.parse(date_to);
+
+        if (now.after(endDate)) { // don't allow users to submit availabilities older than current week
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+
+        slotsDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @GET
     @Path("/week")
     @UnitOfWork
     public List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
-                                  @QueryParam("startDate") String startDate,
-                                  @QueryParam("endDate") String endDate) throws ParseException {
+                                         @QueryParam("startDate") String startDate,
+                                         @QueryParam("endDate") String endDate) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);
 
-        List<Slots> list = dao.getForPersonForWeek(id, start, end);
-        return list;
+        return slotsDao.getForPersonForWeek(id, start, end);
     }
 }
