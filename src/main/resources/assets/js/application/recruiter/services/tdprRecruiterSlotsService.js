@@ -1,5 +1,5 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', 'Notification', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum, Notification) {
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService', 'notification'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum) {
         var service = {};
 
         service.updateSlots = function (slots, personId, startDate, endDate) {
@@ -7,9 +7,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 return response;
             }, function (err) {
                 err.message = "Failed to update slots for person. Could not change past days.";
-                Notification.error({
-                    message: err.message,
-                    delay: 2000});
                 return $q.reject(err);
             });
         };
