@@ -1,6 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprScheduleService'
-    ], function (angular, tdprRecruiterModule) {
+], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum, tdprScheduleService, Notification, tdprRecruiterSlotsService) {
 
         $scope.JobProfileEnum = JobProfileEnum;
@@ -10,16 +10,39 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.slotsTimes = slotsTimes;
         $scope.persons = persons;
 
+        $scope.displayedStartDate = $scope.days[0];
+        $scope.displayedEndDate = $scope.days[4];
+
+        var offset = 0;
+
+        var showDataForWeek = function (offset) {
+            $scope.days = tdprDateService.getWeekWithOffset(offset);
+            tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function (data) {
+                $scope.persons = data;
+            });
+            $scope.displayedStartDate = $scope.days[0];
+            $scope.displayedEndDate = $scope.days[4];
+        };
+
+        $scope.showNextWeek = function () {
+            offset += 1;
+            showDataForWeek(offset);
+        };
+
+        $scope.showPreviousWeek = function () {
+            offset -= 1;
+            showDataForWeek(offset);
+        };
+
         $scope.changeSlotTypeCycle = function (slotNumber, day, personData) {
             tdprScheduleService.changeSlotTypeCycleThrough(slotNumber, day, personData);
         };
 
         $scope.changeSlotSubmitChanges = function (personData) {
-            var startDate = new Date($scope.days[0]);
             var endDate = new Date($scope.days[4]);
-            endDate.setDate( endDate.getDate() + 1 );
+            endDate.setDate(endDate.getDate() + 1);
 
-            tdprRecruiterSlotsService.updateSlots(personData.slotsList, personData.id, startDate, endDate).then(
+            tdprRecruiterSlotsService.updateSlots(personData.slotsList, personData.id, $scope.days[0], endDate).then(
                 function () {
                     personData.changesPending = false;
                     Notification.success({message: 'You have successfully submitted data!', delay: 2500});
@@ -29,6 +52,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                     Notification.error({message: status.message, delay: 3500});
                 }
             );
-        }
-    })
+        };
+    });
 });
