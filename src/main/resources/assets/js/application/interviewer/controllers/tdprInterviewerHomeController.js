@@ -80,8 +80,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
        $scope.showPreviousWeek = function() {
-            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
-            if(!isPossibleToChangeWeek) return;
+           if(! notifyAboutNotSubmittedChanges()) {
+              return;
+           }
 
             disableNoteEditing(); // set note input to disabled by default when changing weeks
 
@@ -95,8 +96,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.showNextWeek = function() {
-            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
-            if(!isPossibleToChangeWeek) return;
+            if(! notifyAboutNotSubmittedChanges()) {
+              return;
+            }
 
             disableNoteEditing(); // set note input to disabled when changing weeks
 
