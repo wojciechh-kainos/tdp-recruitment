@@ -25,6 +25,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsBetweenThreePersonsTest {
 
+
+    private final int TODAY_OFFSET = 0;
+    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
@@ -40,8 +43,8 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
     @Before
     public void setUp() {
 
-        Date firstDate = MockDataUtil.createDate(0);
-        Date secondDate = MockDataUtil.createDate(1);
+        Date firstDate = MockDataUtil.createDate(TODAY_OFFSET);
+        Date secondDate = MockDataUtil.createDate(TOMORROW_OFFSET);
 
         startDate = MockDataUtil.convertDateToString(firstDate);
         endDate = MockDataUtil.convertDateToString(secondDate);
