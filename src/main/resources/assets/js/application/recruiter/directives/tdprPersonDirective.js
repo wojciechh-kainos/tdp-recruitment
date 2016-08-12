@@ -7,7 +7,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 personData: '=',
                 slotsTimes: '=',
                 days: '=',
-                changeSlotType: '&'
+                changeSlotType: '&',
+                submitSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
                 scope.getSlot = function (slotNumber, day) {

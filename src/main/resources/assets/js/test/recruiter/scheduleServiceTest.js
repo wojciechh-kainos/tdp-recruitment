@@ -105,7 +105,7 @@ define(['angular', 'angularMocks',
                 "isWeb": false,
                 "lastName": "Test",
                 "password": null,
-                "slotsList": []
+                "slotsList": null
             };
 
             testSlotId = 8;
@@ -150,13 +150,14 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.available.name
                     }
-                ], testDay, person.id);
+                ], person.id);
 
 
-                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
 
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -208,13 +209,13 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.full.name
                     }
-                ], testDay, person.id);
+                ], person.id);
 
 
-                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
-
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -242,7 +243,6 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.maybe.name
                     }
-
                 ];
 
                 // These are slots which should be formatted after request
@@ -259,11 +259,15 @@ define(['angular', 'angularMocks',
                         "number": 9,
                         "type": AvailabilityEnum.full.name
                     }
-                ], testDay, person.id);
+                ], person.id);
 
-                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
+                console.log(expectedSlots);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person).then(function (response) {
+
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
+
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -271,29 +275,11 @@ define(['angular', 'angularMocks',
             });
         });
 
-        describe('changeSlotTypeCycleThrough - date filtering, response statuses', function () {
+        describe('changeSlotTypeCycleThrough - filtering, response statuses', function () {
 
             it('should create put request with change slot number 8 from full to init state and filter for only one day', function () {
                 // Simulate person slots for current day
                 person.slotsList = [
-                    {
-                        "day": weekEnd,
-                        "person": 9,
-                        "number": 7,
-                        "type": AvailabilityEnum.available.name
-                    },
-                    {
-                        "day": weekEnd,
-                        "person": 9,
-                        "number": 8,
-                        "type": AvailabilityEnum.available.name
-                    },
-                    {
-                        "day": weekEnd,
-                        "person": 9,
-                        "number": 9,
-                        "type": AvailabilityEnum.init.name
-                    },
                     {
                         "day": weekStart,
                         "person": 9,
@@ -323,12 +309,12 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.init.name
                     }
-                ], weekStart, person.id);
+                ], person.id);
 
-                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(200);
+                $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
-
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -385,11 +371,13 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.init.name
                     }
-                ], weekStart, person.id);
+                ], person.id);
+
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(406);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekStartString).then(function (response) {
                     expect(response.status).toEqual(406);
                 });
 
@@ -453,18 +441,18 @@ define(['angular', 'angularMocks',
                         "number": testSlotId,
                         "type": AvailabilityEnum.full.name
                     }
-                ], weekEnd, person.id);
+                ], person.id);
+
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekEndString + '/' + weekEndString, expectedSlots).respond(200);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekEnd, person).then(function (response) {
+                tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekEnd, person);
+                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekEnd), person.id, weekEnd, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
                 $httpBackend.flush();
             });
-
-
         })
     })
 });

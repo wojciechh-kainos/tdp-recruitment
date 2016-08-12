@@ -1,4 +1,9 @@
-<th class="person-name">{{personData.firstName + ' ' + personData.lastName}}</th>
+<th class="person-name">
+    <span>{{personData.firstName + ' ' + personData.lastName}}</span>
+    <input class="submit-changes-button" type="button" value="Submit"
+           ng-click="submitSlotChanges({person: personData})" ng-if="personData.changesPending"/>
+</th>
 <td ng-repeat="day in days">
-    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()" ng-click="changeSlotType({slot: slotTime.id, day: day, person: personData})"></slot>
+    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"
+          ng-click="changeSlotType({slot: slotTime.id, day: day, person: personData})"></slot>
 </td>

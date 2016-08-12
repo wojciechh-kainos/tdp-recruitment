@@ -13,6 +13,12 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                 } else {
                     // There is no more availability types, so we need to clear slot
                     person.slotsList[findResult] = {};
+
+                    // Remove that slot from list
+                    person.slotsList = _.filter(person.slotsList,
+                        function (value) {
+                            return _.size(value) > 0;
+                        });
                 }
             } else {
                 person.slotsList.push({
@@ -22,12 +28,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
                     type: changeTo
                 });
             }
-
-            return tdprRecruiterSlotsService.prepareAndUpdateSlots(
-                person.slotsList,
-                person.id,
-                day
-            );
+            person.changesPending = true;
         };
 
         service.changeSlotTypeCycleThrough = function (slotId, day, person) {

@@ -11,28 +11,32 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-        service.reformatSlots = function (slots, day, personId) {
+        service.filterSlots = function (slots, day) {
             var compareData = dateFilter(day, "yyyy-MM-dd");
-            var filtered = _.filter(slots, {"day": compareData});
-
-            return _.map(filtered, function (value) {
-                return {
-                    slotsDate: day,
-                    person: {id: personId},
-                    slot: {id: value.number},
-                    type: {id: AvailabilityEnum[value.type].id}
-                }
-            });
+            return _.filter(slots, {"day": compareData});
         };
 
-        service.prepareAndUpdateSlots = function (slots, personId, day) {
-            var formattedData = dateFilter(day, "dd-MM-yyyy");
+        service.reformatSlots = function (slots, personId) {
+            return _.map(slots,
+                function (value) {
+                    return {
+                        slotsDate: value.day,
+                        person: {id: personId},
+                        slot: {id: value.number},
+                        type: {id: AvailabilityEnum[value.type].id}
+                    }
+                });
+        };
+
+        service.prepareAndUpdateSlots = function (slots, personId, startDay, endDay) {
+            var startDayFormat = dateFilter(startDay, "dd-MM-yyyy");
+            var endDayFormat = dateFilter(endDay, "dd-MM-yyyy");
 
             return service.updateSlots(
-                service.reformatSlots(slots, day, personId),
+                service.reformatSlots(slots, personId),
                 personId,
-                formattedData,
-                formattedData
+                startDayFormat,
+                endDayFormat
             );
         };
 
