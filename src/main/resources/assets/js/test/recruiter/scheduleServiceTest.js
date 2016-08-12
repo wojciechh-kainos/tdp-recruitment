@@ -261,9 +261,6 @@ define(['angular', 'angularMocks',
                     }
                 ], person.id);
 
-                console.log(expectedSlots);
-
-
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
