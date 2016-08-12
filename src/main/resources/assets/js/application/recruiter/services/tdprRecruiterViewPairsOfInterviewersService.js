@@ -4,13 +4,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.createPathParams = function(roles, startDay, endDay){
 
-            if(roles.length == 0 || roles === null){
-                return false;
-            }
-            if(startDay == null || startDay == "" || startDay == undefined){
-                return false;
-            }
-            if(endDay == null || endDay == "" || endDay == undefined){
+            if(roles.length == 0 || !roles || !startDay || !endDay){
                 return false;
             }
 
