@@ -23,7 +23,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PairResourcesFindPairsBetweenThreePersonsTest {
+public class PairResourceFindPairsBetweenThreePersonsTest {
 
     private final Boolean isDev = true;
     private final Boolean isTest = false;
