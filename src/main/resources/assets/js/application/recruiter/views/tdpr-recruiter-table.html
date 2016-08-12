@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr person slots-times="slotsTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile" submit-slot-changes="changeSlotSubmitChanges(person)" change-slot-type="changeSlotTypeCycle(slot, day, person)"></tr>
+                <tr person slots-times="slotsTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile" submit-slot-changes="changeSlotSubmitChanges(person)" change-slot-type="changeSlotTypeCycle(slot, slotId, day, person)"></tr>
             </tbody>
         </table>
     </div>

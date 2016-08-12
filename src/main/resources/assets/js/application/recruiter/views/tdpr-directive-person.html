@@ -5,5 +5,5 @@
 </th>
 <td ng-repeat="day in days">
     <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"
-          ng-click="changeSlotType({slot: slotTime.id, day: day, person: personData})"></slot>
+          ng-click="changeSlotType({slot: getSlot(slotTime.id, day), slotId: slotTime.id, day: day, person: personData})"></slot>
 </td>

@@ -1,8 +1,7 @@
 define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprDateService'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprScheduleService', ['tdprRecruiterSlotsService', 'AvailabilityEnum', 'dateFilter', function (tdprRecruiterSlotsService, AvailabilityEnum, dateFilter) {
-        var service = {};
 
-        service.changeSlotType = function (slotId, day, person, changeTo) {
+        this.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
             var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
 
@@ -31,21 +30,18 @@ define(['application/recruiter/tdprRecruiterModule', 'application/recruiter/serv
             person.changesPending = true;
         };
 
-        service.changeSlotTypeCycleThrough = function (slotId, day, person) {
+        this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");
-            var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
 
-            if (findResult === -1) {
+            if (slot === undefined) {
                 // Add available slot for future changes
-                return service.changeSlotType(slotId, date, person, AvailabilityEnum.available.name);
+                return this.changeSlotType(slot, slotId, date, person, AvailabilityEnum.available.name);
             } else {
-                var newTypeId = parseInt(AvailabilityEnum[person.slotsList[findResult].type].id) + 1;
+                var newTypeId = parseInt(AvailabilityEnum[slot.type].id) + 1;
                 var newType = _.findKey(AvailabilityEnum, {'id': newTypeId.toString()});
 
-                return service.changeSlotType(slotId, day, person, newType);
+                return this.changeSlotType(slot, slotId, date, person, newType);
             }
         };
-
-        return service;
-    }])
+    }]);
 });

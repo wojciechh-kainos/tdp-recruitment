@@ -34,8 +34,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             showDataForWeek(offset);
         };
 
-        $scope.changeSlotTypeCycle = function (slotNumber, day, personData) {
-            tdprScheduleService.changeSlotTypeCycleThrough(slotNumber, day, personData);
+        $scope.changeSlotTypeCycle = function (slot, slotId, day, personData) {
+            tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, personData);
         };
 
         $scope.changeSlotSubmitChanges = function (personData) {
