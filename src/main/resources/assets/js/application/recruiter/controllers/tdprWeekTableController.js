@@ -25,12 +25,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.showNextWeek = function() {
           offset += 1;
           showDataForWeek(offset);
-        }
+        };
 
         $scope.showPreviousWeek = function() {
           offset -= 1;
           showDataForWeek(offset);
-        }
-
+        };
     });
 });
