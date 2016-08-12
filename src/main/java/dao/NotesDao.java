@@ -2,12 +2,10 @@ package dao;
 
 import com.google.inject.Inject;
 import domain.Notes;
-import domain.Persons;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.Date;
-import java.util.List;
 
 public class NotesDao extends AbstractDAO<Notes>{
 

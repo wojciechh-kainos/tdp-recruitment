@@ -7,7 +7,6 @@ import dao.SlotsDao;
 import domain.Notes;
 import domain.Persons;
 import io.dropwizard.hibernate.UnitOfWork;
-import io.dropwizard.logging.SyslogAppenderFactory;
 import org.joda.time.DateTime;
 
 import javax.ws.rs.GET;
@@ -58,18 +57,14 @@ public class PersonsResource {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        Date noteDate = formatter.parse(startDate);
-
         List<Persons> persons = personsDao.findAll();
         persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
             Notes note = notesDao.getByPersonIdAndDate(p.getId(), start);
-            if(note != null){
-                System.out.println("GOOOOOOOOOOOOOOOOOOOOOOOOOOOD");
-                p.setNotesList(Arrays.asList(note));
-                System.out.println(note.getDescription());
-            } else {
-                System.out.println("NUUUUUUUUUUUUUUUUUUL");
+            if(note != null) {
+                if(!note.getDescription().isEmpty()) {
+                    p.setNotesList(Arrays.asList(note));
+                }
             }
         });
 
