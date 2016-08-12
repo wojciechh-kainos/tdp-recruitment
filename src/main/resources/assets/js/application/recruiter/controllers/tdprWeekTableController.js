@@ -19,6 +19,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                     personData.changesPending = false;
                     Notification.success({message: 'You have successfully submitted data!', delay: 2500});
                 }
+            ).catch(
+                function (status) {
+                    Notification.error({message: status.message, delay: 3500});
+                }
             );
         }
     })

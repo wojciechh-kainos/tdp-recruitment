@@ -20,5 +20,5 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             return weekDays;
         };
 
-    });
+    })
 });

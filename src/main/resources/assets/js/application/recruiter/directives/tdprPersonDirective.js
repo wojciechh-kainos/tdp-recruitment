@@ -1,5 +1,5 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprScheduleService', 'notification'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.directive("person", function (tdprScheduleService, Notification) {
+define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.directive("person", function () {
         return {
             restrict: 'AE',
             templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
@@ -21,5 +21,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 };
             }
         }
+
     });
 });

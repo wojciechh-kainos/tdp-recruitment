@@ -13,5 +13,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 };
             }
         }
+
     })
 });
