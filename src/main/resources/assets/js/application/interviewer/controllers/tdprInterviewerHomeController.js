@@ -135,7 +135,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});
             }, function(response){
-                Notification.error({message: 'You could not edit slots from past weeks!', delay: 2000});
+                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
             });
 
             var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
