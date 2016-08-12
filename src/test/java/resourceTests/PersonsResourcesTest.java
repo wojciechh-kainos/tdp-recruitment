@@ -14,9 +14,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import resources.PersonsResource;
 import services.MailService;
 
+import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -40,16 +42,22 @@ public class PersonsResourcesTest {
     private static Date date;
     private static String dateString;
     private static Persons person;
-    private static Notes note, note2;
+    private static Notes note, note2, note3;
 
     @BeforeClass
     public static void setUpBeforeClass(){
+        java.util.Date date3 = new java.util.Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date3); // Now use today date.
+        c.add(Calendar.DATE, 10); // Adding 10 days
+
         person = new Persons();
         person.setId(1L);
         dateString = "26-07-2016";
         date = Date.valueOf("2016-07-26");
         note = new Notes(1L, person, "note nr 1", date);
         note2 = new Notes(2L, person, "note nr 2", date);
+        note3 = new Notes(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
         stubNoteDB = new ArrayList<>();
         stubNoteDB.add(note);
     }
@@ -73,9 +81,18 @@ public class PersonsResourcesTest {
     public void testCreateNote(){
         when(mockNotesDao.createOrUpdate(note2)).thenReturn(note2);
 
-        Notes result = resource.createOrUpdate(note2);
+        Response result = resource.createOrUpdate(note2);
 
-        assertEquals(note2,result);
-        verify(mockNotesDao, times(1)).createOrUpdate(note2);
+        assertEquals(Response.Status.NOT_ACCEPTABLE.getStatusCode(), result.getStatus());
+        verify(mockNotesDao, times(0)).createOrUpdate(note2);
+    }
+
+    @Test
+    public void testCreateNoteWithCorrectDate(){
+        when(mockNotesDao.createOrUpdate(note3)).thenReturn(note3);
+
+        Response result = resource.createOrUpdate(note3);
+
+        assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
     }
 }

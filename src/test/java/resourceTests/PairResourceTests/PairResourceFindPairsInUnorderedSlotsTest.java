@@ -21,7 +21,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PairResourceFindPairsInUnorderedSlots {
+public class PairResourceFindPairsInUnorderedSlotsTest {
 
     private final Boolean isDev = true;
     private final Boolean isTest = false;

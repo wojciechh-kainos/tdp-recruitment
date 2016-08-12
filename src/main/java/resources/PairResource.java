@@ -102,7 +102,7 @@ public class PairResource {
 
     private List<Long> matchList(List<Long> sortedList, int curr, int prev, int prevprev, List<Long> output) {
         if (curr < sortedList.size()) {
-            if (sortedList.get(curr) - sortedList.get(prev) == 1 && sortedList.get(prev) - sortedList.get(prevprev) == 1) {
+            if (isSlotTimeJustAfterPrevious(sortedList, curr, prev) && isSlotTimeJustAfterPrevious(sortedList, prev, prevprev)) {
                 output.add(sortedList.get(prevprev));
                 output.add(sortedList.get(prev));
                 output.add(sortedList.get(curr));
@@ -118,6 +118,10 @@ public class PairResource {
                 .stream()
                 .distinct()
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private boolean isSlotTimeJustAfterPrevious(List<Long> sortedSlotsTimeIdList, int currentPosition, int previousPosition) {
+        return sortedSlotsTimeIdList.get(currentPosition) - sortedSlotsTimeIdList.get(previousPosition) == 1;
     }
 
     private static Predicate<Slots> predicateSlots(Persons person) {
@@ -152,7 +156,7 @@ public class PairResource {
                 .map(foundPerson -> new Pair(person, foundPerson, slotsByPerson(pairedSlots, predicateSlots(foundPerson))));
     }
 
-    private List<Slots> findSlotsForPersonsWithoutPairs(List<Slots> slots, List<Persons> persons) {
+    private List<Slots> withSlotsFromUnpairedPersons(List<Slots> slots, List<Persons> persons) {
         return slots
                 .stream()
                 .filter(slot ->
@@ -169,7 +173,7 @@ public class PairResource {
         return persons
                 .stream()
                 .flatMap(person -> {
-                    Stream<Pair> pairs = findAllPairsForPerson(findSlotsForPersonsWithoutPairs(slots, prunedPersons), person);
+                    Stream<Pair> pairs = findAllPairsForPerson(withSlotsFromUnpairedPersons(slots, prunedPersons), person);
                     prunedPersons.add(person);
                     return pairs;
                 })
