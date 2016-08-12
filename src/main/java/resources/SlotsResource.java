@@ -39,7 +39,8 @@ public class SlotsResource {
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
 
-        if (now.after(endDate)) { // don't allow users to submit availabilities older than current week
+        // Don't allow users to submit availabilities older than current week
+        if (now.compareTo(startDate) > 0 && now.compareTo(endDate) > 0) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
 
