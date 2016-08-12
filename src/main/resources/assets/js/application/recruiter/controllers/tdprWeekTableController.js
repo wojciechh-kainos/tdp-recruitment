@@ -15,7 +15,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.changeSlotSubmitChanges = function (personData) {
-            tdprRecruiterSlotsService.prepareAndUpdateSlots(personData.slotsList, personData.id, $scope.days[0], $scope.days[4]).then(
+            var startDate = new Date($scope.days[0]);
+            var endDate = new Date($scope.days[4]);
+            endDate.setDate( endDate.getDate() + 1 );
+
+            tdprRecruiterSlotsService.prepareAndUpdateSlots(personData.slotsList, personData.id, startDate, endDate).then(
                 function () {
                     personData.changesPending = false;
                     Notification.success({message: 'You have successfully submitted data!', delay: 2500});
