@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
     tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum) {
 
         this.updateSlots = function (slots, personId, startDate, endDate) {
-            return $http.put("/api/slots/update/" + personId + "/" + dateFilter(startDate, "dd-MM-yyyy") + "/" + dateFilter(endDate, "dd-MM-yyyy"), this.reformatSlots(slots, personId)).then(function (response) {
+            return $http.put("/api/slots/" + dateFilter(startDate, "dd-MM-yyyy") + "/" + dateFilter(endDate, "dd-MM-yyyy") + '?personId=' + personId, this.reformatSlots(slots, personId)).then(function (response) {
                 return response;
             }, function (err) {
                 err.message = "Failed to update slots for person. Could not change past days.";

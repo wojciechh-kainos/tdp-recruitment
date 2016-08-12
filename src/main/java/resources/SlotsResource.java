@@ -25,13 +25,13 @@ public class SlotsResource {
     }
 
     @PUT
-    @Path("/update/{person_id}/{date_from}/{date_to}")
+    @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Response update(Slots[] slots,
-                           @PathParam("person_id") long person_id,
                            @PathParam("date_from") String date_from,
-                           @PathParam("date_to") String date_to) throws ParseException {
+                           @PathParam("date_to") String date_to,
+                           @QueryParam("personId") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 

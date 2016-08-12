@@ -97,7 +97,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             tdprRecruiterSlotsService.updateSlots(personData.slotsList, personData.id, $scope.days[0], endDate).then(
                 function () {
                     personData.changesPending = false;
-                    Notification.success({message: 'You have successfully submitted data!', delay: 2500});
+                    Notification.success({message: 'Your changes were saved successfully!', delay: 3500});
                 }
             ).catch(
                 function (status) {
