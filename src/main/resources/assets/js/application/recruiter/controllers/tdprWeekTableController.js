@@ -1,6 +1,7 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService'
 ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
+                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter, $filter) {
 
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;
@@ -16,7 +17,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.filterSlots = function () {
             $scope.slotsTimes = $filter('slotsByTime')(slotsTimes, $scope.startTime, $scope.endTime);
         }
-    })
+
         $scope.displayedStartDate = $scope.days[0];
         $scope.displayedEndDate = $scope.days[4];
 
@@ -115,3 +116,4 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
     });
 });
+
