@@ -5,7 +5,7 @@ Default working hours:
 Note for this week:
 {{note}}
 ">
-    {{personData.firstName + ' ' + personData.lastName}}
+    {{personData.firstName + ' ' + personData.lastName}}<span class="red" ng-show="note != 'none'">*</span>
 </th>
 <td ng-repeat="day in days">
     <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"></slot>
