@@ -29,8 +29,10 @@
                     <td ng-repeat="day in days">
                         <table class="slot-times-th">
                             <tr>
-                                <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
-                                    <span class="rotate">{{slotTime.startTime | limitTo:5}} </span>
+                                <td class="slot-time-th" ng-repeat="slotTime in slotsTimes"
+                                    >
+                                    <span uib-tooltip="{{slotTime.startTime | limitTo:5}}-{{slotTime.endTime | limitTo:5}}" class="rotate mouse-pointer">
+                                        {{slotTime.startTime | limitTo:5}}</span>
                                 </td>
                             </tr>
                         </table>

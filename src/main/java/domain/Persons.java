@@ -73,8 +73,9 @@ public class Persons {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Slots> slotsList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private Set<Notes> notesList = new HashSet<Notes>();
+    private List<Notes> notesList = new ArrayList<>();
 
     public Persons() {
     }
@@ -183,13 +184,14 @@ public class Persons {
         this.slotsList = slotsList;
     }
 
-    public Set<Notes> getNotesList() {
+    public List<Notes> getNotesList() {
         return notesList;
     }
 
-    public void setNotesList(Set<Notes> notesList) {
+    public void setNotesList(List<Notes> notesList) {
         this.notesList = notesList;
     }
+
     public Time getDefaultStartHour() {return defaultStartHour;}
 
     public void setDefaultStartHour(Time defaultStartHour) {this.defaultStartHour = defaultStartHour;}

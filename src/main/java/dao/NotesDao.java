@@ -26,7 +26,7 @@ public class NotesDao extends AbstractDAO<Notes>{
         return note;
     }
 
-    public Notes getByIdAndDate(Long personId,Date startDate) {
+    public Notes getByPersonIdAndDate(Long personId, Date startDate) {
         return uniqueResult( namedQuery("Notes.getNoteByPersonIdAndDate")
               .setParameter("id", personId)
               .setDate("date", startDate));

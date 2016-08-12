@@ -6,18 +6,14 @@ import dao.PersonsDao;
 import dao.SlotsDao;
 import domain.Notes;
 import domain.Persons;
-import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import io.dropwizard.logging.SyslogAppenderFactory;
 import org.joda.time.DateTime;
-import org.jvnet.hk2.internal.Collector;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.jvnet.hk2.internal.Collector;
 
 import services.MailService;
 import javax.ws.rs.*;
@@ -26,7 +22,6 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
@@ -59,12 +54,24 @@ public class PersonsResource {
     @GET
     @Path("/all")
     @UnitOfWork
-    public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+    public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) throws ParseException {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
+        Date noteDate = formatter.parse(startDate);
+
         List<Persons> persons = personsDao.findAll();
         persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
+        persons.forEach(p -> {
+            Notes note = notesDao.getByPersonIdAndDate(p.getId(), start);
+            if(note != null){
+                System.out.println("GOOOOOOOOOOOOOOOOOOOOOOOOOOOD");
+                p.setNotesList(Arrays.asList(note));
+                System.out.println(note.getDescription());
+            } else {
+                System.out.println("NUUUUUUUUUUUUUUUUUUL");
+            }
+        });
 
         return persons;
     }
@@ -75,7 +82,7 @@ public class PersonsResource {
     public Notes getNote(@PathParam("personId") Long personId,
                          @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return notesDao.getByIdAndDate(personId,date);
+        return notesDao.getByPersonIdAndDate(personId,date);
     }
 
     @PUT

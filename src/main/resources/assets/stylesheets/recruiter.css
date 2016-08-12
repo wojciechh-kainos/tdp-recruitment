@@ -18,6 +18,12 @@
     border: 1px solid #375D81;
 }
 
+.slot-span {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .slot:hover {
     background-color: white;
 }
@@ -42,7 +48,8 @@
     text-align: right;
     margin: 0;
     padding-right: 5px;
-    color: #375D81
+    color: #375D81;
+    cursor: pointer;
 }
 
 #recruiter-header {
@@ -72,6 +79,10 @@
     border: 2px solid black;
 }
 
+.tooltip-inner {
+    white-space: pre-wrap;
+    max-width: 400px;
+}
 
 .cell-size-3 {
     width: 50px;
