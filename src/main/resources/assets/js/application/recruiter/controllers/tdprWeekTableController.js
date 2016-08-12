@@ -1,5 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
-], function (angular, tdprRecruiterModule) {
+    , 'application/recruiter/services/tdprScheduleService'
+    ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum, tdprScheduleService, Notification, tdprRecruiterSlotsService) {
 
         $scope.JobProfileEnum = JobProfileEnum;
