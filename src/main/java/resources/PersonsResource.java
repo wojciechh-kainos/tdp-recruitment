@@ -22,6 +22,7 @@ import org.jvnet.hk2.internal.Collector;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -81,8 +82,18 @@ public class PersonsResource {
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Notes createOrUpdate(Notes note){
-        return notesDao.createOrUpdate(note);
+    public Response createOrUpdate(Notes note){
+        Date now = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(note.getDate());
+        c.add(Calendar.DATE, 5); // Adding 5 days
+        Date comparisonDate = new Date(c.getTimeInMillis());
+        if (now.after(comparisonDate)) { // don't allow users to submit availabilities older than current week
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        } else {
+            notesDao.createOrUpdate(note);
+            return Response.status(Response.Status.ACCEPTED).entity(note).build();
+        }
     }
 
     @GET

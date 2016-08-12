@@ -16,7 +16,12 @@ public class NotesDao extends AbstractDAO<Notes>{
         super(sessionFactory);
     }
 
+    public void deleteNoteForWeek(Long id, Date date) {
+        namedQuery("Notes.deleteNoteForWeek").setParameter("id", id).setDate("date", date).executeUpdate();
+    }
+
     public Notes createOrUpdate(Notes note) {
+        deleteNoteForWeek(note.getPerson().getId(), note.getDate());
         persist(note);
         return note;
     }
