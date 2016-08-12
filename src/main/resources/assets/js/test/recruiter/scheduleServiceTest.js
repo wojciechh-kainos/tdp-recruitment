@@ -157,7 +157,7 @@ define(['angular', 'angularMocks',
 
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -215,7 +215,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, testDay, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -264,7 +264,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -311,7 +311,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 
@@ -374,7 +374,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(406);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekStart, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekStartString).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekStartString).then(function (response) {
                     expect(response.status).toEqual(406);
                 });
 
@@ -444,7 +444,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekEndString + '/' + weekEndString, expectedSlots).respond(200);
 
                 tdprScheduleService.changeSlotTypeCycleThrough(testSlotId, weekEnd, person);
-                tdprRecruiterSlotsService.prepareAndUpdateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekEnd), person.id, weekEnd, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekEnd), person.id, weekEnd, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 

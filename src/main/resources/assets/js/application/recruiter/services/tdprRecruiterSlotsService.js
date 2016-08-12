@@ -3,7 +3,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         var service = {};
 
         service.updateSlots = function (slots, personId, startDate, endDate) {
-            return $http.put("/api/slots/update/" + personId + "/" + startDate + "/" + endDate, slots).then(function (response) {
+            return $http.put("/api/slots/update/" + personId + "/" + dateFilter(startDate, "dd-MM-yyyy") + "/" + dateFilter(endDate, "dd-MM-yyyy"), service.reformatSlots(slots, personId)).then(function (response) {
                 return response;
             }, function (err) {
                 err.message = "Failed to update slots for person. Could not change past days.";
@@ -26,18 +26,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                         type: {id: AvailabilityEnum[value.type].id}
                     }
                 });
-        };
-
-        service.prepareAndUpdateSlots = function (slots, personId, startDay, endDay) {
-            var startDayFormat = dateFilter(startDay, "dd-MM-yyyy");
-            var endDayFormat = dateFilter(endDay, "dd-MM-yyyy");
-
-            return service.updateSlots(
-                service.reformatSlots(slots, personId),
-                personId,
-                startDayFormat,
-                endDayFormat
-            );
         };
 
         return service;
