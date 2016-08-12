@@ -11,7 +11,7 @@ define(['angular' 
                 abstract: true ,
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", { 
-                url: "/home/{id}", 
+                url: "/{id}/home", 
                 views: { 
                     "@": { 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
@@ -33,7 +33,7 @@ define(['angular' 
               }
           }); 
 
-          $urlRouterProvider.otherwise("/interviewer/home/1");
+          $urlRouterProvider.otherwise("/recruiter");
         }); 
 
     return tdprInterviewerModule; 
