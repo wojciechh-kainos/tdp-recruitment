@@ -80,12 +80,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
        $scope.showPreviousWeek = function() {
-            if($scope.hasNoteChanged || $scope.hasSlotChanged) {
-                Notification.warning({
-                    message: "You have changed your data. Submit or discard your changes!",
-                    delay: 2000});
-                return;
-            }
+            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
+            if(!isPossibleToChangeWeek) return;
 
             disableNoteEditing(); // set note input to disabled by default when changing weeks
 
@@ -99,12 +95,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.showNextWeek = function() {
-            if($scope.hasNoteChanged || $scope.hasSlotChanged) {
-                Notification.warning({
-                    message: 'You have changed your data. Submit or discard your changes!',
-                    delay: 2000});
-                return;
-            }
+            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
+            if(!isPossibleToChangeWeek) return;
+
             disableNoteEditing(); // set note input to disabled when changing weeks
 
             $scope.relativeDayNumber += 7;
@@ -142,7 +135,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});
             }, function(response){
-                Notification.error({message: 'Cannot change past weeks!', delay: 2000});
+                Notification.error({message: 'You could not edit slots from past weeks!', delay: 2000});
             });
 
             var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
@@ -173,10 +166,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 if(failure.status === 406) {
                     $scope.temporaryContent = $scope.noteContent.description;
                 }
-                $scope.getNoteFailed = true;
-                $timeout(function () {
-                    $scope.getNoteFailed = false;
-                }, 2000);
+                    Notification.warning({
+                        message: 'Something went wrong with sending your note.',
+                        delay: 2000});
             });
         }
 
@@ -186,7 +178,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
         };
-
 
         function createNote(description, personId, date) {
             $scope.noteContent = {
@@ -208,12 +199,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                 }
             }, function(failure) {
-                $scope.getNoteFailed = true;
-                $timeout(function () {
-                    $scope.getNoteFailed = false;
-                }, 2000);
-            })
-        }
+               Notification.warning({
+                    message: 'Something went wrong with getting your note.',
+                    delay: 2000});
+               }
+        )}
 
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
@@ -221,5 +211,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             return new Date(d.setDate(diff+i)); //i = 0 - monday
         }
 
+        function notifyAboutNotSubmittedChanges() {
+            if($scope.hasNoteChanged || $scope.hasSlotChanged) {
+                Notification.warning({
+                    message: 'You have changed your data. Submit or discard your changes!',
+                    delay: 2000});
+                return false;
+            } else return true;
+        }
     });
 });
