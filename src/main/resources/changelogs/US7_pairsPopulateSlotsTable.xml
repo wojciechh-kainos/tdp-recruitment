@@ -26,12 +26,6 @@
             <column name="type" value="1"/>
         </insert>
         <insert tableName="slots">
-            <column name="slots_date" valueDate="2016-08-01"/>
-            <column name="person" value="1"/>
-            <column name="slot" value="1"/>
-            <column name="type" value="1"/>
-        </insert>
-        <insert tableName="slots">
             <column name="slots_date" valueDate="2016-08-02"/>
             <column name="person" value="1"/>
             <column name="slot" value="1"/>
