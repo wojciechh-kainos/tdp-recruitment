@@ -1,5 +1,6 @@
 define([
     'angular'
+    , 'lodash'
     , 'application/tdprModule'
     , 'application/tdprModuleConfig'
     , 'application/recruiter/tdprRecruiterModuleConfig'
