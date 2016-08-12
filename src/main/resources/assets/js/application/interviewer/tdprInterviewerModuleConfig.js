@@ -33,7 +33,7 @@ define(['angular' 
               }
           }); 
 
-          $urlRouterProvider.otherwise("/interviewer/1/home");
+          $urlRouterProvider.otherwise("/recruiter");
         }); 
 
     return tdprInterviewerModule; 
