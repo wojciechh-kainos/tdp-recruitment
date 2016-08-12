@@ -80,8 +80,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
        $scope.showPreviousWeek = function() {
-            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
-            if(!isPossibleToChangeWeek) return;
+            notifyAboutNotSubmittedChanges();
+            if($scope.hasNoteChanged || $scope.hasSlotChanged){
+                return;
+            }
 
             disableNoteEditing(); // set note input to disabled by default when changing weeks
 
@@ -95,8 +97,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.showNextWeek = function() {
-            var isPossibleToChangeWeek = notifyAboutNotSubmittedChanges();
-            if(!isPossibleToChangeWeek) return;
+            notifyAboutNotSubmittedChanges();
+            if($scope.hasNoteChanged || $scope.hasSlotChanged){
+                return;
+            }
 
             disableNoteEditing(); // set note input to disabled when changing weeks
 
@@ -216,8 +220,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 Notification.warning({
                     message: 'You have changed your data. Submit or discard your changes!',
                     delay: 2000});
-                return false;
-            } else return true;
+            }
         }
     });
 });
