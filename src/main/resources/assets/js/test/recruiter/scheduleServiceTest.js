@@ -1,12 +1,15 @@
 define(['angular', 'angularMocks',
     'lodash',
-    'application/recruiter/services/tdprScheduleService',
+    'notification',
+    'application/recruiter/controllers/tdprWeekTableController',
     'application/recruiter/services/tdprDateService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
     describe('scheduleServiceTest', function () {
         'use strict';
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
+
+        var slotsTimes;
 
         beforeEach(function () {
             module('tdprRecruiterModule', function ($provide) {
@@ -48,23 +51,118 @@ define(['angular', 'angularMocks',
                         tooltipText: "maybe "
                     }
                 });
+
+                $provide.constant('JobProfileEnum', {
+                    dev: "isDev",
+                    web: "isWeb",
+                    test: "isTest"
+                });
+
+                $provide.constant('Notification',
+                    {
+                        delay: 5000,
+                        startTop: 10,
+                        startRight: 10,
+                        verticalSpacing: 10,
+                        horizontalSpacing: 10,
+                        positionX: 'right',
+                        positionY: 'top',
+                        replaceMessage: false,
+                        templateUrl: 'angular-ui-notification.html',
+                        onClose: undefined,
+                        closeOnClick: true,
+                        maxCount: 0 // 0 - Infinite
+
+                    });
+
+
             });
+
+
+            slotsTimes = [{"id": 1, "startTime": "08:00:00", "endTime": "08:30:00"},
+                {"id": 2, "startTime": "08:30:00", "endTime": "09:00:00"},
+                {"id": 3, "startTime": "09:00:00", "endTime": "09:30:00"},
+                {"id": 4, "startTime": "09:30:00", "endTime": "10:00:00"},
+                {"id": 5, "startTime": "10:00:00", "endTime": "10:30:00"},
+                {"id": 6, "startTime": "10:30:00", "endTime": "11:00:00"},
+                {"id": 7, "startTime": "11:00:00", "endTime": "11:30:00"},
+                {"id": 8, "startTime": "11:30:00", "endTime": "12:00:00"},
+                {"id": 9, "startTime": "12:00:00", "endTime": "12:30:00"},
+                {"id": 10, "startTime": "12:30:00", "endTime": "13:00:00"},
+                {"id": 11, "startTime": "13:00:00", "endTime": "13:30:00"},
+                {"id": 12, "startTime": "13:30:00", "endTime": "14:00:00"},
+                {"id": 13, "startTime": "14:00:00", "endTime": "14:30:00"},
+                {"id": 14, "startTime": "14:30:00", "endTime": "15:00:00"},
+                {"id": 15, "startTime": "15:00:00", "endTime": "15:30:00"},
+                {"id": 16, "startTime": "15:30:00", "endTime": "16:00:00"},
+                {"id": 17, "startTime": "16:00:00", "endTime": "16:30:00"},
+                {"id": 18, "startTime": "16:30:00", "endTime": "17:00:00"}];
         });
 
+        var $state;
+        var $scope;
+
         var $httpBackend;
+        var dateFilter;
         var tdprDateService;
-        var tdprScheduleService;
+        var tdprWeekTableController;
         var tdprRecruiterSlotsService;
         var AvailabilityEnum;
-        var dateFilter;
 
-        beforeEach(inject(function (_$httpBackend_, _dateFilter_, _tdprDateService_, _tdprScheduleService_, _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
+        var person;
+        var $q;
+        var persons;
+
+        beforeEach(function () {
+            person = {
+                "activationCode": null,
+                "active": false,
+                "admin": false,
+                "bandLevel": 1,
+                "email": "test@test.pl",
+                "firstName": "Test",
+                "id": 1,
+                "isDev": true,
+                "isTest": false,
+                "isWeb": false,
+                "lastName": "Test",
+                "password": null,
+                "slotsList": null
+            };
+
+            persons = [person];
+        });
+
+
+        beforeEach(inject(function ($controller, _$q_, _$rootScope_, _$state_, _$filter_, _$httpBackend_, _dateFilter_, _tdprPersonsService_, _tdprDateService_, _JobProfileEnum_, _Notification_, _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
+            $state = _$state_;
+            $scope = _$rootScope_.$new();
+
+            $q = _$q_;
+
+
             $httpBackend = _$httpBackend_;
-            tdprDateService = _tdprScheduleService_;
-            tdprScheduleService = _tdprScheduleService_;
-            tdprRecruiterSlotsService = _tdprRecruiterSlotsService_;
             dateFilter = _dateFilter_;
+            tdprDateService = _tdprDateService_;
+            tdprRecruiterSlotsService = _tdprRecruiterSlotsService_;
             AvailabilityEnum = _AvailabilityEnum_;
+
+            //spyOn(tdprRecruiterSlotsService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
+
+
+            tdprWeekTableController = $controller('tdprWeekTableController', {
+                $scope: $scope,
+                tdprPersonsService: _tdprPersonsService_,
+                tdprDateService: _tdprDateService_,
+                persons: persons,
+                slotsTimes: slotsTimes,
+                JobProfileEnum: _JobProfileEnum_,
+
+                tdprRecruiterSlotsService: tdprRecruiterSlotsService,
+                AvailabilityEnum: AvailabilityEnum,
+                dateFilter: dateFilter,
+                Notification: _Notification_
+            });
         }));
 
         var weekStart;
@@ -92,21 +190,6 @@ define(['angular', 'angularMocks',
             weekEnd = dateFilter(weekEnd, format);
             weekEndString = dateFilter(weekEnd, requestFormat);
 
-            person = {
-                "activationCode": null,
-                "active": false,
-                "admin": false,
-                "bandLevel": 1,
-                "email": "test@test.pl",
-                "firstName": "Test",
-                "id": 1,
-                "isDev": true,
-                "isTest": false,
-                "isWeb": false,
-                "lastName": "Test",
-                "password": null,
-                "slotsList": null
-            };
 
             testSlotId = 8;
             testDay = weekStart;
@@ -156,7 +239,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
 
-                tdprScheduleService.changeSlotTypeCycleThrough(undefined, testSlotId, testDay, person);
+                $scope.changeSlotTypeCycleThrough(undefined, testSlotId, testDay, person);
                 tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
@@ -214,7 +297,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, testDay, person);
+                $scope.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, testDay, person);
                 tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
@@ -263,7 +346,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, weekStart, person);
+                $scope.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, weekStart, person);
                 tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
@@ -310,7 +393,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekEndString, expectedSlots).respond(200);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(person.slotsList[1], testSlotId, weekStart, person);
+                $scope.changeSlotTypeCycleThrough(person.slotsList[1], testSlotId, weekStart, person);
                 tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
@@ -373,7 +456,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekStartString + '/' + weekStartString, expectedSlots).respond(406);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(person.slotsList[4], testSlotId, weekStart, person);
+                $scope.changeSlotTypeCycleThrough(person.slotsList[4], testSlotId, weekStart, person);
                 tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekStart), person.id, weekStart, weekStartString).then(function (response) {
                     expect(response.status).toEqual(406);
                 });
@@ -443,7 +526,7 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.expect('PUT', '/api/slots/update/' + person.id + '/' + weekEndString + '/' + weekEndString, expectedSlots).respond(200);
 
-                tdprScheduleService.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, weekEnd, person);
+                $scope.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, weekEnd, person);
                 tdprRecruiterSlotsService.updateSlots(tdprRecruiterSlotsService.filterSlots(person.slotsList, weekEnd), person.id, weekEnd, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
