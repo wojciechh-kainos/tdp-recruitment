@@ -31,11 +31,11 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprSlotsSe
 
         describe('updateSlots', function () {
             it('should call backend with given slots, dates and person id', function () {
-                $httpBackend.expectPUT('/api/slots/update/' + startDate + '/' + endDate + '/' + personId).respond(200);
+                $httpBackend.expectPUT('/api/slots/' + startDate + '/' + endDate + '?personId=' + personId).respond(200);
 
                 var fakeSlotsObject = {};
 
-                service.updateSlots(fakeSlotsObject, startDate, endDate, personId).then(function (response) {
+                service.updateSlots(fakeSlotsObject, personId, startDate, endDate).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 

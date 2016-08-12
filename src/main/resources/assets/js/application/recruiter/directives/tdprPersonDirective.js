@@ -6,7 +6,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             scope: {
                 personData: '=',
                 slotsTimes: '=',
-                days: '='
+                days: '=',
+                changeSlotType: '&',
+                submitSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
 
@@ -24,6 +26,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 };
             }
         }
-        
+
     });
 });

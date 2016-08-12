@@ -25,13 +25,13 @@ public class SlotsResource {
     }
 
     @PUT
-    @Path("/update/{person_id}/{date_from}/{date_to}")
+    @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Response update(Slots[] slots,
-                           @PathParam("person_id") long person_id,
                            @PathParam("date_from") String date_from,
-                           @PathParam("date_to") String date_to) throws ParseException {
+                           @PathParam("date_to") String date_to,
+                           @QueryParam("personId") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -39,7 +39,8 @@ public class SlotsResource {
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
 
-        if (now.after(endDate)) { // don't allow users to submit availabilities older than current week
+        // Don't allow users to submit availabilities older than current week
+        if (now.compareTo(startDate) > 0 && now.compareTo(endDate) > 0) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
 

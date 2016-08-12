@@ -6,7 +6,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         };
 
         this.updateSlots = function (slots, personId, startDate, endDate) {
-            return $http.put("/api/slots/update/" + personId + "/" + startDate + "/" + endDate, slots);
+            return $http.put("/api/slots/" + startDate + "/" + endDate + '?personId=' + personId, slots);
         };
 
         this.getSlotsTimes = function () {

@@ -31,7 +31,7 @@
 .availabilities-table-container {
     min-width: 800px;
     overflow-x: auto;
-    margin-left: 140px;
+    margin-left: 185px;
     overflow-y: visible;
     padding-bottom: 1px;
 }
@@ -42,7 +42,7 @@
 }
 
 .person-name {
-    width: 150px;
+    width: 200px;
     position: absolute;
     left: 0;
     text-align: right;
@@ -50,6 +50,10 @@
     padding-right: 5px;
     color: #375D81;
     cursor: pointer;
+}
+
+.submit-changes-button {
+    font-size: smaller;
 }
 
 #recruiter-header {
@@ -105,7 +109,7 @@
 .cell-size-9 {
     width: 17px;
 }
-
 .red {
     color: red;
 }
+
