@@ -62,8 +62,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             person.changesPending = true;
         };
 
-        $scope.cancelChanges = function () {
-
+        $scope.refreshPersonsData = function () {
+            tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
+                function (persons) {
+                    $scope.persons = persons;
+                }
+            ).catch(function () {
+                Notification.error({message: "Failed to refersh persons data", delay: 3000});
+            });
         };
 
         $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {

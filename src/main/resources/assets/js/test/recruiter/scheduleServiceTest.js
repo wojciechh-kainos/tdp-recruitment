@@ -7,9 +7,30 @@ define(['angular', 'angularMocks',
     describe('scheduleServiceTest', function () {
         'use strict';
 
-        beforeEach(angular.mock.module('tdprRecruiterModule'));
-
         var slotsTimes;
+
+        var $state;
+        var $scope;
+
+        var $httpBackend;
+        var dateFilter;
+        var tdprDateService;
+        var tdprWeekTableController;
+        var tdprRecruiterSlotsService;
+        var AvailabilityEnum;
+
+        var person;
+        var $q;
+        var persons;
+
+        var weekStart;
+        var weekStartString;
+        var weekEnd;
+        var weekEndString;
+        var testSlotId;
+        var testDay;
+
+        beforeEach(angular.mock.module('tdprRecruiterModule'));
 
         beforeEach(function () {
             module('tdprRecruiterModule', function ($provide) {
@@ -75,9 +96,7 @@ define(['angular', 'angularMocks',
 
                     });
 
-
             });
-
 
             slotsTimes = [{"id": 1, "startTime": "08:00:00", "endTime": "08:30:00"},
                 {"id": 2, "startTime": "08:30:00", "endTime": "09:00:00"},
@@ -97,23 +116,7 @@ define(['angular', 'angularMocks',
                 {"id": 16, "startTime": "15:30:00", "endTime": "16:00:00"},
                 {"id": 17, "startTime": "16:00:00", "endTime": "16:30:00"},
                 {"id": 18, "startTime": "16:30:00", "endTime": "17:00:00"}];
-        });
 
-        var $state;
-        var $scope;
-
-        var $httpBackend;
-        var dateFilter;
-        var tdprDateService;
-        var tdprWeekTableController;
-        var tdprRecruiterSlotsService;
-        var AvailabilityEnum;
-
-        var person;
-        var $q;
-        var persons;
-
-        beforeEach(function () {
             person = {
                 "activationCode": null,
                 "active": false,
@@ -133,7 +136,6 @@ define(['angular', 'angularMocks',
             persons = [person];
         });
 
-
         beforeEach(inject(function ($controller, _$q_, _$rootScope_, _$state_, _$filter_, _$httpBackend_, _dateFilter_, _tdprPersonsService_, _tdprDateService_, _JobProfileEnum_, _Notification_, _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
             $state = _$state_;
             $scope = _$rootScope_.$new();
@@ -146,9 +148,6 @@ define(['angular', 'angularMocks',
             tdprDateService = _tdprDateService_;
             tdprRecruiterSlotsService = _tdprRecruiterSlotsService_;
             AvailabilityEnum = _AvailabilityEnum_;
-
-            //spyOn(tdprRecruiterSlotsService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
-
 
             tdprWeekTableController = $controller('tdprWeekTableController', {
                 $scope: $scope,
@@ -164,15 +163,6 @@ define(['angular', 'angularMocks',
                 Notification: _Notification_
             });
         }));
-
-        var weekStart;
-        var weekStartString;
-        var weekEnd;
-        var weekEndString;
-        var person;
-
-        var testSlotId;
-        var testDay;
 
         beforeEach(function () {
             var format = 'yyyy-MM-dd';
@@ -197,7 +187,7 @@ define(['angular', 'angularMocks',
 
         describe('changeSlotTypeCycleThrough', function () {
             it('should create put request with new added available slot at number 8', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekStart,
@@ -249,7 +239,7 @@ define(['angular', 'angularMocks',
 
 
             it('should create put request with changed slot at number 8 from available to full', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekStart,
@@ -306,7 +296,7 @@ define(['angular', 'angularMocks',
             });
 
             it('should create put request with removed slot at number 8', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekStart,
@@ -358,7 +348,7 @@ define(['angular', 'angularMocks',
         describe('changeSlotTypeCycleThrough - filtering, response statuses', function () {
 
             it('should create put request with change slot number 8 from full to init state and filter for only one day', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekStart,
@@ -402,7 +392,7 @@ define(['angular', 'angularMocks',
             });
 
             it('should create put request which resolves with "NOT_ACCEPTABLE" 406 error - changing slots from past', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekEnd,
@@ -466,7 +456,7 @@ define(['angular', 'angularMocks',
 
 
             it('should create put request which resolves with 200 status - changing slots in future', function () {
-                // Simulate person slots for current day
+
                 person.slotsList = [
                     {
                         "day": weekEnd,
