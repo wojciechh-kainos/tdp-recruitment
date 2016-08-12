@@ -13,9 +13,10 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
         this.getWeekWithOffset = function (offset) {
             var today = new Date();
+            today.setDate(today.getDate() + offset * 7);
             var weekDays = [];
             for (var i = 0; i < 5; i++) {  //iterate from monday to friday
-                weekDays.push(getDayOfTheWeek(today, i + offset * 7));
+                weekDays.push(getDayOfTheWeek(today, i));
             }
             return weekDays;
         };
