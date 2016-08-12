@@ -5,7 +5,10 @@ import domain.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Calendar;
 
 public class MockDataUtil {
 
@@ -48,5 +51,17 @@ public class MockDataUtil {
         person.setIsTest(isTest);
         person.setIsWeb(isOps);
         return person;
+    }
+
+    public static Date createDate(int daysOffset){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, daysOffset);
+        return new Date(calendar.getTimeInMillis());
+
+    }
+
+    public static String convertDateToString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return dateFormat.format(date);
     }
 }

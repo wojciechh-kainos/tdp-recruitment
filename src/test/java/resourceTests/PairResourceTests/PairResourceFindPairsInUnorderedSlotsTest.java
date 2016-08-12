@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -23,6 +22,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsInUnorderedSlotsTest {
 
+    private final int TODAY_OFFSET = 0;
+    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
@@ -37,14 +38,12 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
 
     @Before
     public void setUp(){
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date nextDate = new Date(calendar.getTimeInMillis());
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        startDate = dateFormat.format(date);
-        endDate = dateFormat.format(nextDate);
+        Date date = MockDataUtil.createDate(TODAY_OFFSET);
+        Date nextDate = MockDataUtil.createDate(TOMORROW_OFFSET);
+
+        startDate = MockDataUtil.convertDateToString(date);
+        endDate = MockDataUtil.convertDateToString(nextDate);
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));

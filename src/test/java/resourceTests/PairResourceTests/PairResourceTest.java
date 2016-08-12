@@ -22,11 +22,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceTest {
 
-    private String startDate;
-    private String endDate;
+    private final int TODAY_OFFSET = 0;
+    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
+    private String startDate;
+    private String endDate;
 
     private PairResource resource;
     private List<Slots> mockSlots = new ArrayList<>();
@@ -37,14 +39,11 @@ public class PairResourceTest {
 
     @Before
     public void setUp(){
-        Calendar calendar = Calendar.getInstance();
-        Date sameDate = new Date(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date differentDate = new Date(calendar.getTimeInMillis());
+        Date sameDate = MockDataUtil.createDate(TODAY_OFFSET);
+        Date differentDate = MockDataUtil.createDate(TOMORROW_OFFSET);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        startDate = dateFormat.format(sameDate);
-        endDate = dateFormat.format(differentDate);
+        startDate = MockDataUtil.convertDateToString(sameDate);
+        endDate = MockDataUtil.convertDateToString(differentDate);
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         SlotsTimes sameSlotsTimeFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));

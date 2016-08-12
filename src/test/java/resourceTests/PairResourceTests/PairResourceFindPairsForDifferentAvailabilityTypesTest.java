@@ -24,6 +24,8 @@ import static org.mockito.Mockito.when;
 
 public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
+    private final int TODAY_OFFSET = 0;
+    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
@@ -38,14 +40,11 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
     @Before
     public void setUp(){
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date nextDate = new Date(calendar.getTimeInMillis());
+        Date date = MockDataUtil.createDate(TODAY_OFFSET);
+        Date nextDate = MockDataUtil.createDate(TOMORROW_OFFSET);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        startDate = dateFormat.format(date);
-        endDate = dateFormat.format(nextDate);
+        startDate = MockDataUtil.convertDateToString(date);
+        endDate = MockDataUtil.convertDateToString(nextDate);
 
         AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         AvailabilityTypes typeMaybe = MockDataUtil.createAvailableType((long) 5, AvailabilityTypesEnum.maybe);

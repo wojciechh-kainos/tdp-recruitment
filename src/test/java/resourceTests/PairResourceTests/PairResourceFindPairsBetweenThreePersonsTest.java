@@ -40,14 +40,11 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
     @Before
     public void setUp() {
 
-        Calendar calendar = Calendar.getInstance();
-        Date firstDate = new Date(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date secondDate = new Date(calendar.getTimeInMillis());
+        Date firstDate = MockDataUtil.createDate(0);
+        Date secondDate = MockDataUtil.createDate(1);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        startDate = dateFormat.format(firstDate);
-        endDate = dateFormat.format(secondDate);
+        startDate = MockDataUtil.convertDateToString(firstDate);
+        endDate = MockDataUtil.convertDateToString(secondDate);
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));

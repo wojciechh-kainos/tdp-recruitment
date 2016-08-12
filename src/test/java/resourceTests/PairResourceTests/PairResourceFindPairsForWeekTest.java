@@ -26,6 +26,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsForWeekTest {
 
+    private final int TODAY_OFFSET = 0;
+    private final int TOMORROW_OFFSET = 1;
     private String startDate;
     private String endDate;
     private final Boolean isDev = true;
@@ -42,14 +44,11 @@ public class PairResourceFindPairsForWeekTest {
 
     @Before
     public void setUp(){
-        Calendar calendar = Calendar.getInstance();
-        expectedDate = new Date(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date differentDate = new Date(calendar.getTimeInMillis());
+        expectedDate = MockDataUtil.createDate(TODAY_OFFSET);
+        Date differentDate = MockDataUtil.createDate(TOMORROW_OFFSET);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        startDate = dateFormat.format(expectedDate);
-        endDate = dateFormat.format(differentDate);
+        startDate = MockDataUtil.convertDateToString(expectedDate);
+        endDate = MockDataUtil.convertDateToString(differentDate);
 
         AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
