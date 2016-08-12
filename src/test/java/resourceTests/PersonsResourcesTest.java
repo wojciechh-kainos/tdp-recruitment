@@ -69,12 +69,12 @@ public class PersonsResourcesTest {
 
     @Test
     public void testGetNote()throws ParseException{
-        when(mockNotesDao.getByIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
+        when(mockNotesDao.getByPersonIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
 
         Notes result = resource.getNote(1L,dateString);
 
         assertEquals(stubNoteDB.get(0),result);
-        verify(mockNotesDao, times(1)).getByIdAndDate(1L,date);
+        verify(mockNotesDao, times(1)).getByPersonIdAndDate(1L,date);
     }
 
     @Test

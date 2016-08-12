@@ -36,7 +36,8 @@
                         <table class="slot-times-th">
                             <tr>
                                 <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
-                                    <span class="rotate">{{slotTime.startTime | limitTo:5}} </span>
+                                    <span uib-tooltip="{{slotTime.startTime | limitTo:5}}-{{slotTime.endTime | limitTo:5}}" class="rotate mouse-pointer">
+                                        {{slotTime.startTime | limitTo:5}}</span>
                                 </td>
                             </tr>
                         </table>

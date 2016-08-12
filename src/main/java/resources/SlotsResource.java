@@ -1,16 +1,16 @@
 package resources;
+
 import com.google.inject.Inject;
-import dao.PersonsDao;
 import dao.SlotsDao;
-import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Path("/slots")

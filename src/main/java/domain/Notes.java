@@ -1,10 +1,10 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "notes")
@@ -20,7 +20,8 @@ public class Notes {
 
     @NotNull
     @JoinColumn(name = "person")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Persons person;
 
     @NotNull
