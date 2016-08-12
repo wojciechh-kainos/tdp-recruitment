@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 @Table(name = "notes")
 @NamedQueries({
-    @NamedQuery(name = "Notes.getNoteByPersonIdAndDate", query = "select n from Notes n where person.id = :id and date = :date")
+    @NamedQuery(name = "Notes.getNoteByPersonIdAndDate", query = "select n from Notes n where person.id = :id and date = :date"),
+    @NamedQuery(name = "Notes.deleteNoteForWeek", query = "delete from Notes where person.id = :id and date = :date")
 })
 public class Notes {
 
