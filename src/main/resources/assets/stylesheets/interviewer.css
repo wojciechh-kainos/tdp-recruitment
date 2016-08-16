@@ -77,7 +77,7 @@ body {
 
 .availability-table td:hover {
     cursor: pointer;
-    background-color: white;
+    border: solid white;
 }
 
 #hours-th {
