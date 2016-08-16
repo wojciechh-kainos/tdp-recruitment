@@ -86,6 +86,12 @@
     max-width: 400px;
 }
 
+.cell-size-1 {
+    width: 150px;
+}
+.cell-size-2 {
+    width: 75px;
+}
 .cell-size-3 {
     width: 50px;
 }

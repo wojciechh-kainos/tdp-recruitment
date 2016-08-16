@@ -9,13 +9,13 @@ define(['angular' 
           $stateProvider 
             .state("tdpr.interviewer", { 
                 abstract: true ,
-                url: "/interviewer"
-            }).state("tdpr.interviewer.home", { 
-                url: "/{id}/home", 
                 params : {
                     isRecruiter : false,
                     personName : ''
                 },
+                url: "/interviewer"
+            }).state("tdpr.interviewer.home", { 
+                url: "/{id}/home", 
                 views: { 
                     "@": { 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
