@@ -11,6 +11,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.mousedown = false;
         $scope.isRecruiter = $state.params.isRecruiter;
         $scope.personName = $state.params.personName;
+        $scope.editNote = false;
+        $scope.buttonTitle = 'Edit note';
 
         var note;
         var id = $stateParams.id;
