@@ -9,7 +9,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
-        var isRecruiter = false;
+        $scope.isRecruiter = $state.params.isRecruiter;
+        $scope.personName = $state.params.personName;
 
         var note;
         var id = $stateParams.id;
@@ -59,6 +60,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             getNote(id, startDate);
         }
 
+        $scope.goBackToRecruiterView = function(){
+            $state.go('tdpr.recruiter.home');
+        }
+
         $scope.discardChanges = function() {
             $scope.clearTable();
             $scope.getSlots(id);
@@ -69,7 +74,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.changeSlotStatus = function() {
-            if($scope.relativeDayNumber<0 && !isRecruiter){
+            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
@@ -180,7 +185,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.markSlots = function(slot) {
-            if($scope.relativeDayNumber<0 && !isRecruiter){
+            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
                 return;
             }
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
