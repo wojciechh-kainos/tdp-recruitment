@@ -11,8 +11,8 @@ body {
     right: 0;
     bottom: 0;
     z-index: -1;
-    opacity: 0.6;
-	background: url('../images/image.jpeg') no-repeat fixed center;
+    opacity: 0.2;
+	background: url('../images/kainos_desktop.jpg') no-repeat fixed center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
