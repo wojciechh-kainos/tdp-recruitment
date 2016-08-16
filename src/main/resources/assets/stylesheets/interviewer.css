@@ -19,7 +19,7 @@ body {
 	background-size: cover;
 }
 
-#interviewer-header {
+h1.interviewer-header {
    font-size: 48px;
    color: #375D81;
 }
