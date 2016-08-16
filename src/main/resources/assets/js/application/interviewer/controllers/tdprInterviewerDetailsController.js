@@ -25,6 +25,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
             tdprPersonService.updatePersonDetails(person).then(function () {
                 Notification.success({message: 'Details updated!', delay: 2000});
+
+                $scope.goHome();
             });
         };
 

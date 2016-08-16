@@ -22,12 +22,15 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
+            spyOn($state, 'go');
+
             $controller('tdprInterviewerDetailsController', {
                 $scope: $scope,
                 BandLevelEnum: {},
                 tdprPersonService: personService,
                 Notification: Notification,
                 $stateParams: {id: personId},
+                $state: $state,
                 person: {
                     dummyData: 42,
                     bandLevel: "9001",
@@ -45,8 +48,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
         describe('goHome', function () {
             it('should redirect user to home state', function () {
-                spyOn($state, 'go');
-
                 $scope.goHome();
 
                 expect($state.go).toHaveBeenCalledWith('tdpr.interviewer.home', {'id': personId});
