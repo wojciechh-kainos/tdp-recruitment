@@ -12,25 +12,18 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.displayedStartDate = $scope.days[0];
         $scope.displayedEndDate = $scope.days[4];
 
-        var offset = 0;
+        $scope.offset = 0;
 
-        var showDataForWeek = function (offset) {
-            $scope.days = tdprDateService.getWeekWithOffset(offset);
+        $scope.changeWeek = function (offset) {
+
+            offset == 0 ? $scope.offset = 0 : $scope.offset += offset;
+
+            $scope.days = tdprDateService.getWeekWithOffset($scope.offset);
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function (data) {
                 $scope.persons = data;
             });
             $scope.displayedStartDate = $scope.days[0];
             $scope.displayedEndDate = $scope.days[4];
-        };
-
-        $scope.showNextWeek = function () {
-            offset += 1;
-            showDataForWeek(offset);
-        };
-
-        $scope.showPreviousWeek = function () {
-            offset -= 1;
-            showDataForWeek(offset);
         };
 
         $scope.changeSlotType = function (slot, slotId, day, person, changeTo) {
