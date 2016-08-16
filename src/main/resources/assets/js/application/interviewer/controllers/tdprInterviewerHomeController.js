@@ -9,6 +9,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
+        $scope.isRecruiter = $state.params.isRecruiter;
+        $scope.personName = $state.params.personName;
 
         var note;
         var id = $stateParams.id;
@@ -58,6 +60,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             getNote(id, startDate);
         }
 
+        $scope.goBackToRecruiterView = function(){
+            $state.go('tdpr.recruiter.home');
+        }
+
         $scope.discardChanges = function() {
             $scope.clearTable();
             $scope.getSlots(id);
@@ -65,11 +71,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             getNote(id, startDate);
             $scope.hasSlotChanged=false;
             $scope.hasNoteChanged=false;
-        }
+        };
 
         $scope.changeSlotStatus = function() {
+            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
+                return;
+            }
             $scope.hasSlotChanged = true;
-        }
+        };
 
         $scope.editNoteSwitch = function() {
             if($scope.editNote) {
@@ -77,7 +87,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             } else {
                 enableNoteEditing();
             }
-        }
+        };
 
        $scope.showPreviousWeek = function() {
              if(!verifyNoUnsavedChanges()){
@@ -93,7 +103,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
 
             getNote(id, startDate);
-        }
+        };
 
         $scope.showNextWeek = function() {
             if(!verifyNoUnsavedChanges()){
@@ -109,7 +119,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
 
             getNote(id, startDate);
-        }
+        };
 
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
@@ -175,6 +185,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.markSlots = function(slot) {
+            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+                return;
+            }
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
         $scope.goDetails = function(){
@@ -206,12 +219,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     delay: 2000});
                }
         )}
-
-        function getDayOfTheWeek(d, i) {
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-            return new Date(d.setDate(diff+i)); //i = 0 - monday
-        }
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
