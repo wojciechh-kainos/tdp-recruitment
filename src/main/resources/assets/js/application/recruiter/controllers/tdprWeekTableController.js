@@ -38,7 +38,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             if (slot !== undefined) {
                 if (changeTo !== undefined) {
                     // There is still availability type to change
-                    slot.type = AvailabilityEnum[changeTo].name;
+                    slot.type = changeTo;
                 } else {
                     // There is no more availability types, so we need to clear slot
                     slot.type = "";
