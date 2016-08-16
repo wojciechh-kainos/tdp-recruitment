@@ -295,7 +295,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.flush();
             });
 
-            it('should create put request with removed init call at slot number 8', function () {
+            it('should create put request with init call change to full at slot number 8', function () {
 
                 person.slotsList = [
                     {
@@ -336,7 +336,7 @@ define(['angular', 'angularMocks',
                         "day": weekStart,
                         "person": 9,
                         "number": testSlotId,
-                        "type": AvailabilityEnum.maybe.name
+                        "type": AvailabilityEnum.full.name
                     }
                 ], person.id);
 

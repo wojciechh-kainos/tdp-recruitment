@@ -80,15 +80,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 switch(slot.type) {
                     case AvailabilityEnum.available.name:
                     case AvailabilityEnum.maybe.name:
+                    case AvailabilityEnum.init.name:
                         newType = AvailabilityEnum.full.name;
                     break;
 
                     case AvailabilityEnum.full.name:
                         newType = AvailabilityEnum.init.name;
-                    break;
-
-                    case AvailabilityEnum.init.name:
-                        newType = AvailabilityEnum.maybe.name;
                     break;
                 }
 
