@@ -233,7 +233,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.warnMessage = "Please remember to submit your note.";
                     if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
                 }
-                if (response.status === 204){
+                else if (response.status === 204){
                     $scope.warnMessage = "You didn't submit any notes last week.";
                 } else {
                      Notification.warning({
