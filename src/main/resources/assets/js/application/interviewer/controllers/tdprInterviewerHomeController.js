@@ -9,6 +9,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
+        var isRecruiter = $state.params.isRecruiter;
 
         var note;
         var id = $stateParams.id;

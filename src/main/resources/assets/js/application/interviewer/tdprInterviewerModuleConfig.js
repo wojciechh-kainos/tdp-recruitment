@@ -12,6 +12,9 @@ define(['angular' 
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", { 
                 url: "/{id}/home", 
+                params : {
+                    isRecruiter : false
+                },
                 views: { 
                     "@": { 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
