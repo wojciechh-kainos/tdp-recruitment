@@ -1,9 +1,10 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService'
 ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter) {
 
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;
+        $scope.WeekNavigateEnum = WeekNavigateEnum;
 
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
@@ -16,7 +17,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.changeWeek = function (offset) {
 
-            offset == 0 ? $scope.offset = 0 : $scope.offset += offset;
+            offset == WeekNavigateEnum.current ? $scope.offset = WeekNavigateEnum.current : $scope.offset += offset;
 
             $scope.days = tdprDateService.getWeekWithOffset($scope.offset);
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function (data) {

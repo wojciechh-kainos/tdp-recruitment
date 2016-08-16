@@ -95,7 +95,11 @@ define(['angular', 'angularMocks',
                         maxCount: 0 // 0 - Infinite
 
                     });
-
+                $provide.constant('WeekNavigateEnum',{
+                        previous : -1,
+                        next : 1,
+                        current : 0
+                  });
             });
 
             slotsTimes = [{"id": 1, "startTime": "08:00:00", "endTime": "08:30:00"},
