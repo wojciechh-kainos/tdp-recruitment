@@ -1,6 +1,8 @@
 <div class="container">
-    <h1 id="interviewer-header">Your availability</h1>
+    <h1 class="interviewer-header" id="interviewer-header" ng-show="!isRecruiter">Your availability</h1>
+    <h1 class="interviewer-header" id="interviewer-header-for-recruiter" ng-show="isRecruiter">Availability of {{personName}}</h1>
     <h4 id="description">click on slots to change availability</h4>
+
     <hr>
     <div id="date-container">
         <button class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
@@ -67,7 +69,8 @@
             </div>
             <hr>
             <div>
-                <button class="btn btn-primary uppercase" id="discard-btn"  type="button" ng-click="discardChanges()">discard changes</button>
+                <button class="btn btn-primary uppercase" id="back-to-interview-btn" type="button" ng-show="isRecruiter" ng-click="goBackToRecruiterView()">back to recruiter view</button>
+                <button class="btn btn-primary uppercase" id="discard-btn" type="button" ng-click="discardChanges()">discard changes</button>
                 <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
                 <button class="btn btn-primary pull-right" type="button" ng-click="goDetails() ">Personal details</button>
             </div>
