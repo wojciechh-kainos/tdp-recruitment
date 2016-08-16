@@ -21,7 +21,7 @@
             <label class="col-md-4 control-label">Band level:</label>
             <div class="col-md-8">
                 <div class="ui-select">
-                    <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum">
+                    <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum" ng-init="person.bandLevel = '6';">
                     </select>
                 </div>
             </div>
