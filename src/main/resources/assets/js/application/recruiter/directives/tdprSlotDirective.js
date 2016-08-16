@@ -14,8 +14,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 };
 
                 scope.getTooltipString = function () {
-                    return scope.slotTimeData.startTime.slice(0,5) + '-' + scope.slotTimeData.endTime.slice(0,5);
-                }
+                    return scope.slotTimeData.startTime.slice(0,5) + '-' + scope.slotTimeData.endTime.slice(0,5) + ' ' + (scope.slotData ? scope.slotData.type : '');
+                };
             }
         }
 
