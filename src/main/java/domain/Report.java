@@ -11,7 +11,7 @@ public class Report {
     private Long numberOfAvailableSlots;
     private Long numberOfWastedSlots;
 
-    public Report(Long numberOfInitSlots, Persons person, Long numberOfAvailableSlots, Long numberOfFullSlots, Long numberOfWastedSlots) {
+    public Report(Persons person, Long numberOfInitSlots, Long numberOfAvailableSlots, Long numberOfFullSlots, Long numberOfWastedSlots) {
         this.numberOfInitSlots = numberOfInitSlots;
         this.person = person;
         this.numberOfAvailableSlots = numberOfAvailableSlots;
