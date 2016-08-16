@@ -3,11 +3,14 @@ define(['angular'
     , 'application/reports/controllers/tdprReportsController'
 ], function (angular, tdprReportsModule) {
 
-    tdprReportsModule.config(function ($stateProvider) {
+    tdprReportsModule.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state("reports", {
+            .state("tdpr.reports", {
                 url: '/reports',
-                abstract: true,
+                abstract: true
+            })
+            .state("tdpr.reports.home", {
+                url: '/home',
                 views: {
                     "@": {
                         templateUrl: '/js/application/reports/views/tdpr-reports-home.html',
@@ -15,6 +18,7 @@ define(['angular'
                     }
                 }
             });
+        $urlRouterProvider.otherwise("/recruiter");
     });
     return tdprReportsModule;
 });
