@@ -3,6 +3,7 @@ define(['angular', 'angularMocks',
     'notification',
     'application/recruiter/controllers/tdprWeekTableController',
     'application/recruiter/services/tdprDateService',
+    'application/recruiter/services/tdprScheduleService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
     describe('scheduleServiceTest', function () {
         'use strict';

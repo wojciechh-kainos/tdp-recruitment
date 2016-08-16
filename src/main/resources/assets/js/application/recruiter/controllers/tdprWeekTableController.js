@@ -1,7 +1,7 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService'
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter, $filter) {
+                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter, $filter, tdprScheduleService) {
 
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;
@@ -16,7 +16,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.filterSlots = function () {
             $scope.slotsTimes = $filter('slotsByTime')(slotsTimes, $scope.startTime, $scope.endTime);
-        }
+        };
 
         $scope.displayedStartDate = $scope.days[0];
         $scope.displayedEndDate = $scope.days[4];
@@ -42,27 +42,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             showDataForWeek(offset);
         };
 
-        $scope.changeSlotType = function (slot, slotId, day, person, changeTo) {
-            var date = dateFilter(day, "yyyy-MM-dd");
-            if (slot !== undefined) {
-                if (changeTo !== undefined) {
-                    // There is still availability type to change
-                    slot.type = changeTo;
-                } else {
-                    // There is no more availability types, so we need to clear slot
-                    slot.type = "";
-                    return;
-                }
-            } else {
-                person.slotsList.push({
-                    day: date,
-                    person: person.id,
-                    number: slotId,
-                    type: changeTo
-                });
-            }
-            person.changesPending = true;
-        };
+
 
         $scope.refreshPersonsData = function () {
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
@@ -74,35 +54,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
+
         $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
-            var date = dateFilter(day, "yyyy-MM-dd");
-
-            if (slot === undefined) {
-                // Add available slot for future changes
-                return $scope.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name);
-            } else {
-                // Cycle through
-                // Available/maybe - full - init - maybe
-
-                var newType = undefined;
-
-                switch(slot.type) {
-                    case AvailabilityEnum.available.name:
-                    case AvailabilityEnum.maybe.name:
-                    case AvailabilityEnum.init.name:
-                        newType = AvailabilityEnum.full.name;
-                    break;
-
-                    case AvailabilityEnum.full.name:
-                        newType = AvailabilityEnum.init.name;
-                    break;
-                }
-
-                if (newType !== undefined) {
-                    return $scope.changeSlotType(slot, slotId, date, person, newType);
-                }
-
-            }
+            return tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, person);
         };
 
         $scope.changeSlotSubmitChanges = function (personData) {
