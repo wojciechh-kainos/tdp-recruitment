@@ -203,11 +203,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                 }
             }, function(failure) {
-               VerifyProblemsWithGettingNote();
+               notifyProblemsWithGettingNote();
                }
         )}
 
-        function VerifyProblemsWithGettingNote() {
+        function notifyProblemsWithGettingNote() {
             Notification.warning({
                 message: 'Something went wrong with getting your note.',
                 delay: 2000});
@@ -221,12 +221,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                     $scope.warnMessage = "Please remember to submit your note.";
                     if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
-
                 } else {
                     $scope.warnMessage = "You didn't submit any notes last week.";
                 }
             },function(failure) {
-                  VerifyProblemsWithGettingNote();
+                  notifyProblemsWithGettingNote();
              })
         }
 
