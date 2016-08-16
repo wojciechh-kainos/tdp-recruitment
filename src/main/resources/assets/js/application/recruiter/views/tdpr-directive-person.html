@@ -5,7 +5,7 @@ Default working hours:
 Note for this week:
 {{note}}
 ">
-    <span>{{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span>
+    <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})"><span>{{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span></span></a>
         <div style="display: inline;" ng-if="personData.changesPending" >
 
             <span class="glyphicon glyphicon-ok" aria-hidden="true"
