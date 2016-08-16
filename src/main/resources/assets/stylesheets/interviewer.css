@@ -196,3 +196,44 @@ button {
 .mouse-pointer{
     cursor: pointer;
 }
+
+/* interviewer details and adding interviewer*/
+#interviewer-details-h1 {
+  font-size: 48px;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  color: #375D81;
+}
+
+.interviewer-form {
+  display: inline-block;
+}
+
+.interviewer-form label {
+  font-weight: normal;
+  margin: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.error-container {
+  color: red;
+}
+
+.btn-wrapper {
+  width: 100%;
+}
+
+.details-checkbox {
+  margin-top: 12px !important;
+}
+
+.input {
+  width: 100%;
+}
