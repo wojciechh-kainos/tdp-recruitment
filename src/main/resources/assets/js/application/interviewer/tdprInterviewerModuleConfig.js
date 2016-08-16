@@ -13,7 +13,8 @@ define(['angular' 
             }).state("tdpr.interviewer.home", { 
                 url: "/{id}/home", 
                 params : {
-                    isRecruiter : false
+                    isRecruiter : false,
+                    personName : ''
                 },
                 views: { 
                     "@": { 
