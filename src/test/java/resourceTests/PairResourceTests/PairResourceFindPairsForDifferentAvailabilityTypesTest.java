@@ -10,11 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import resources.PairResource;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -48,20 +44,13 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
         AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
         AvailabilityTypes typeMaybe = MockDataUtil.createAvailableType((long) 5, AvailabilityTypesEnum.maybe);
-
-        SlotsTimes sameSlotsTimesFirst = MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0));
-        SlotsTimes sameSlotsTimesSecond = MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0));
-        SlotsTimes sameSlotsTimeThird = MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0));
+        List<SlotsTimes> expectedSameSlotsTimes = MockDataUtil.createSlotsTimesList(1,3);
 
         Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
-        mockSlots.add(MockDataUtil.createSlot((long)1, sameSlotsTimesFirst, firstPerson, date, typeAvailable));
-        mockSlots.add(MockDataUtil.createSlot((long)2, sameSlotsTimesSecond, firstPerson, date, typeAvailable));
-        mockSlots.add(MockDataUtil.createSlot((long)3, sameSlotsTimeThird, firstPerson, date, typeAvailable));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, firstPerson, date, typeAvailable));
 
         Persons secondPerson = MockDataUtil.createPersons((long)2, "SECOND", isDev, isTest, isOps);
-        mockSlots.add(MockDataUtil.createSlot((long)4, sameSlotsTimesFirst, secondPerson, date, typeMaybe));
-        mockSlots.add(MockDataUtil.createSlot((long)5, sameSlotsTimesSecond, secondPerson,  date, typeMaybe));
-        mockSlots.add(MockDataUtil.createSlot((long)6, sameSlotsTimeThird, secondPerson, date, typeMaybe));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, date, typeMaybe));
 
         resource = new PairResource(mockDao);
     }
