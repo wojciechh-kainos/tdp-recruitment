@@ -37,20 +37,26 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var date = dateFilter(day, "yyyy-MM-dd");
             var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
 
+            if (person.changesPending === false || angular.isUndefined(person.changesPending)) {
+                person.oldSlotList = angular.copy(person.slotsList);
+                person.changesPending = true;
+            }
+
             if (findResult !== -1) {
                 if (changeTo !== undefined) {
                     // There is still availability type to change
                     person.slotsList[findResult].type = AvailabilityEnum[changeTo].name;
                 } else {
+
                     // There is no more availability types, so we need to clear slot
                     person.slotsList[findResult] = {};
-
                     // Remove that slot from list
                     person.slotsList = _.filter(person.slotsList,
                         function (value) {
                             return _.size(value) > 0;
                         });
                 }
+
             } else {
                 person.slotsList.push({
                     day: date,
@@ -59,7 +65,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     type: changeTo
                 });
             }
-            person.changesPending = true;
         };
 
         $scope.refreshPersonsData = function () {
@@ -68,7 +73,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     $scope.persons = persons;
                 }
             ).catch(function () {
-                Notification.error({message: "Failed to refersh persons data", delay: 3000});
+                Notification.error({message: "Failed to refresh persons data", delay: 3000});
             });
         };
 
@@ -105,5 +110,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 }
             );
         };
+
+        $scope.changeSlotDiscardChanges = function(personData) {
+            personData.slotsList = angular.copy(personData.oldSlotList);
+            personData.oldSlotList = [];
+            personData.changesPending = false;
+        }
+
     });
 });
