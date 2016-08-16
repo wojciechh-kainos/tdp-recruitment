@@ -232,8 +232,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                     $scope.warnMessage = "Please remember to submit your note.";
                     if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
-                } else {
+                }
+                if (response.status === 204){
                     $scope.warnMessage = "You didn't submit any notes last week.";
+                } else {
+                     Notification.warning({
+                        message: 'Something went wrong.',
+                        delay: 2000});
                 }
             },function(failure) {
                    Notification.warning({
