@@ -10,7 +10,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
         var isRecruiter = false;
-        var isNotificationShown = false;
 
         var note;
         var id = $stateParams.id;
@@ -71,10 +70,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.changeSlotStatus = function() {
             if($scope.relativeDayNumber<0 && !isRecruiter){
-                if(!isNotificationShown) {
-                    Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
-                }
-                isNotificationShown=!isNotificationShown;
+                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
             $scope.hasSlotChanged = true;
