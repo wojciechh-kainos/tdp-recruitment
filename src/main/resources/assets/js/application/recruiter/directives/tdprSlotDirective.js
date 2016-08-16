@@ -5,12 +5,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             templateUrl: 'js/application/recruiter/views/tdpr-directive-slot.html',
             replace: true,
             scope: {
-                slotData: '='
+                slotData: '=',
+                slotTimeData: '='
             },
             link: function (scope, element, attributes) {
                 scope.getClass = function () {
-                  return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
+                    return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
                 };
+
+                scope.getTooltipString = function () {
+                    return scope.slotTimeData.startTime + ' - ' + scope.slotTimeData.endTime;
+                }
             }
         }
 
