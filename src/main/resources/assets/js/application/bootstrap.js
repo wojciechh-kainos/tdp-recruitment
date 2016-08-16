@@ -5,6 +5,7 @@ define([
     , 'application/tdprModuleConfig'
     , 'application/recruiter/tdprRecruiterModuleConfig'
     , 'application/constants/tdprConstantsModuleConfig'
+    , 'application/reports/tdprReportsModuleConfig'
 ], function (angular) {
     'use strict';
 
