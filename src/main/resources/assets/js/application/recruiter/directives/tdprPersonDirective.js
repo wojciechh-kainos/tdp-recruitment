@@ -6,9 +6,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             scope: {
                 personData: '=',
                 slotsTimes: '=',
-                days: '='
+                days: '=',
+                changeSlotType: '&',
+                submitSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
+
+                scope.defaultStartHour = scope.personData.defaultStartHour.slice(0,5);
+                scope.defaultFinishHour = scope.personData.defaultFinishHour.slice(0,5);
+                scope.note = scope.personData.notesList ? '"' + scope.personData.notesList[0].description + '"': 'none';
+
                 scope.getSlot = function (slotNumber, day) {
                     return scope.personData.slotsList.find(function (slot) {
                         return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day.getDay());
@@ -19,6 +26,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 };
             }
         }
-        
+
     });
 });

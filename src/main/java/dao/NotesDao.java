@@ -2,12 +2,10 @@ package dao;
 
 import com.google.inject.Inject;
 import domain.Notes;
-import domain.Persons;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.Date;
-import java.util.List;
 
 public class NotesDao extends AbstractDAO<Notes>{
 
@@ -26,7 +24,7 @@ public class NotesDao extends AbstractDAO<Notes>{
         return note;
     }
 
-    public Notes getByIdAndDate(Long personId,Date startDate) {
+    public Notes getByPersonIdAndDate(Long personId, Date startDate) {
         return uniqueResult( namedQuery("Notes.getNoteByPersonIdAndDate")
               .setParameter("id", personId)
               .setDate("date", startDate));

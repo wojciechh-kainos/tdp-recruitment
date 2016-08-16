@@ -1,4 +1,14 @@
-<th class="person-name">{{personData.firstName + ' ' + personData.lastName}}</th>
+<th class="person-name" tooltip-placement="right"
+    uib-tooltip="
+Default working hours:
+{{defaultStartHour}}-{{defaultFinishHour}}
+Note for this week:
+{{note}}
+">
+    <span>{{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span>
+    <input class="submit-changes-button" type="button" value="Submit"
+           ng-click="submitSlotChanges({person: personData})" ng-if="personData.changesPending"/>
 <td ng-repeat="day in days">
-    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"></slot>
+    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"
+          ng-click="changeSlotType({slot: getSlot(slotTime.id, day), slotId: slotTime.id, day: day, person: personData})"></slot>
 </td>
