@@ -35,21 +35,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
-            var findResult = _.findIndex(person.slotsList, {'day': date, 'number': slotId});
-
-            if (findResult !== -1) {
+            if (slot !== undefined) {
                 if (changeTo !== undefined) {
                     // There is still availability type to change
-                    person.slotsList[findResult].type = AvailabilityEnum[changeTo].name;
+                    slot.type = AvailabilityEnum[changeTo].name;
                 } else {
                     // There is no more availability types, so we need to clear slot
-                    person.slotsList[findResult] = {};
-
-                    // Remove that slot from list
-                    person.slotsList = _.filter(person.slotsList,
-                        function (value) {
-                            return _.size(value) > 0;
-                        });
+                    slot.type = "";
+                    return;
                 }
             } else {
                 person.slotsList.push({
@@ -68,7 +61,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     $scope.persons = persons;
                 }
             ).catch(function () {
-                Notification.error({message: "Failed to refersh persons data", delay: 3000});
+                Notification.error({message: "Failed to refresh persons data", delay: 3000});
             });
         };
 
@@ -77,17 +70,33 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
             if (slot === undefined) {
                 // Add available slot for future changes
-                return $scope.changeSlotType(slot, slotId, date, person, AvailabilityEnum.available.name);
+                return $scope.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name);
             } else {
-                var newTypeId = parseInt(AvailabilityEnum[slot.type].id) + 1;
-                var newType = _.findKey(AvailabilityEnum, {'id': newTypeId.toString()});
+                // Cycle through
+                // Available/maybe - full - init - maybe
 
-                return $scope.changeSlotType(slot, slotId, date, person, newType);
+                var newType = undefined;
+
+                switch(slot.type) {
+                    case AvailabilityEnum.available.name:
+                    case AvailabilityEnum.maybe.name:
+                        newType = AvailabilityEnum.full.name;
+                    break;
+
+                    case AvailabilityEnum.full.name:
+                        newType = AvailabilityEnum.init.name;
+                    break;
+
+                    case AvailabilityEnum.init.name:
+                        newType = AvailabilityEnum.maybe.name;
+                    break;
+                }
+
+                if (newType !== undefined) {
+                    return $scope.changeSlotType(slot, slotId, date, person, newType);
+                }
+
             }
-        };
-
-        $scope.changeSlotTypeCycle = function (slot, slotId, day, personData) {
-            $scope.changeSlotTypeCycleThrough(slot, slotId, day, personData);
         };
 
         $scope.changeSlotSubmitChanges = function (personData) {
