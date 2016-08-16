@@ -9,6 +9,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
+        $scope.isRecruiter = $state.params.isRecruiter;
+        $scope.personName = $state.params.personName;
 
         var note;
         var id = $stateParams.id;
@@ -56,6 +58,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
             $scope.getSlots(id);
             getNote(id, startDate);
+        }
+
+        $scope.goBackToRecruiterView = function(){
+            $state.go('tdpr.recruiter.home');
         }
 
         $scope.discardChanges = function() {
