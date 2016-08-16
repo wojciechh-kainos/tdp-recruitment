@@ -200,10 +200,19 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
                 }
+                else{
+                    var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
+                    tdprPersonService.getNote(personId, previousDate).then(function(response) {
+                         if(response.status === 200) {
+                            $scope.noteContent = response.data;
+                            $scope.temporaryContent = response.data.description;
+                        }
+                    },function(failure) {
+                          VerifyProblemsWithGettingNote();
+                     })
+                }
             }, function(failure) {
-               Notification.warning({
-                    message: 'Something went wrong with getting your note.',
-                    delay: 2000});
+               VerifyProblemsWithGettingNote();
                }
         )}
 
@@ -211,6 +220,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             var day = d.getDay(),
                 diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
             return new Date(d.setDate(diff+i)); //i = 0 - monday
+        }
+
+        function VerifyProblemsWithGettingNote() {
+            Notification.warning({
+                message: 'Something went wrong with getting your note.',
+                delay: 2000});
         }
 
         function verifyNoUnsavedChanges() {
