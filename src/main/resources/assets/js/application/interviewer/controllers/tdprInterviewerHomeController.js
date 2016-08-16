@@ -209,15 +209,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                 }
             }, function(failure) {
-               notifyProblemsWithGettingNote();
+                Notification.warning({
+                   message: 'Something went wrong with getting your note.',
+                   delay: 2000});
                }
         )}
-
-        function notifyProblemsWithGettingNote() {
-            Notification.warning({
-                message: 'Something went wrong with getting your note.',
-                delay: 2000});
-        }
 
        $scope.getNoteFromPreviousWeek = function() {
             var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
@@ -231,7 +227,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.warnMessage = "You didn't submit any notes last week.";
                 }
             },function(failure) {
-                  notifyProblemsWithGettingNote();
+                   Notification.warning({
+                      message: 'Something went wrong with getting your note.',
+                      delay: 2000});
              })
         }
 
