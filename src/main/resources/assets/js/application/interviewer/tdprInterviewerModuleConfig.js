@@ -9,6 +9,10 @@ define(['angular' 
           $stateProvider 
             .state("tdpr.interviewer", { 
                 abstract: true ,
+                params : {
+                    isRecruiter : false,
+                    personName : ''
+                },
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", { 
                 url: "/{id}/home", 

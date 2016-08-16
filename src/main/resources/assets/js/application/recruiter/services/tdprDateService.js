@@ -1,5 +1,5 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprDateService', function (dateFilter) {
+    tdprRecruiterModule.service('tdprDateService', function () {
 
         function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
@@ -20,5 +20,6 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             }
             return weekDays;
         };
+
     })
 });
