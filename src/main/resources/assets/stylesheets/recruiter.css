@@ -12,8 +12,8 @@
 }
 
 .slot {
-    min-width: 16px;
-    height: 20px;
+    min-width: 20px;
+    height: 24px;
     cursor: pointer;
     border: 1px solid #375D81;
 }
@@ -22,10 +22,6 @@
     display: block;
     width: 100%;
     height: 100%;
-}
-
-.slot:hover {
-    background-color: white;
 }
 
 .availabilities-table-container {
@@ -64,17 +60,19 @@
     background-color: #375D81;
     color: white;
     font-weight: bold;
-
 }
 
-.slot-times-th{
+.slot-times-th {
     width: 100%;
+    padding: 0 10px 0 10px;
     border: 1px solid black;
 }
+
 .day-th {
     border-right: 2px solid black;
     box-sizing: border-box;
 }
+
 .day-th:last-of-type {
     border-right: 1px solid black;
 }
@@ -97,24 +95,31 @@
 .cell-size-3 {
     width: 50px;
 }
+
 .cell-size-4 {
     width: 38px;
 }
+
 .cell-size-5 {
     width: 30px;
 }
+
 .cell-size-6 {
     width: 25px;
 }
+
 .cell-size-7 {
     width: 22px;
 }
+
 .cell-size-8 {
     width: 19px;
 }
+
 .cell-size-9 {
     width: 17px;
 }
+
 .red {
     color: red;
 }
