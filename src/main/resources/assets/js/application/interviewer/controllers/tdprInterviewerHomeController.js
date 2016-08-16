@@ -162,6 +162,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
+                $scope.warnMessage = "";
                 $scope.temporaryContent = response.data.description;
                 $scope.noteContent = response.data;
             }, function(failure) {
@@ -195,37 +196,38 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function getNote(personId, date) {
             createNote("", personId, date);
+            $scope.warnMessage = "";
             tdprPersonService.getNote(personId, date).then(function(response) {
                 if(response.status === 200) {
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
-                }
-                else{
-                    var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
-                    tdprPersonService.getNote(personId, previousDate).then(function(response) {
-                         if(response.status === 200) {
-                            $scope.noteContent = response.data;
-                            $scope.temporaryContent = response.data.description;
-                        }
-                    },function(failure) {
-                          VerifyProblemsWithGettingNote();
-                     })
                 }
             }, function(failure) {
                VerifyProblemsWithGettingNote();
                }
         )}
 
-        function getDayOfTheWeek(d, i) {
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-            return new Date(d.setDate(diff+i)); //i = 0 - monday
-        }
-
         function VerifyProblemsWithGettingNote() {
             Notification.warning({
                 message: 'Something went wrong with getting your note.',
                 delay: 2000});
+        }
+
+       $scope.getNoteFromPreviousWeek = function() {
+            var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
+            tdprPersonService.getNote(id, previousDate).then(function(response) {
+                 if(response.status === 200) {
+                    $scope.noteContent = response.data;
+                    $scope.temporaryContent = response.data.description;
+                    $scope.warnMessage = "Please remember to submit your note.";
+                    if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
+
+                } else {
+                    $scope.warnMessage = "You didn't submit any notes last week.";
+                }
+            },function(failure) {
+                  VerifyProblemsWithGettingNote();
+             })
         }
 
         function verifyNoUnsavedChanges() {
