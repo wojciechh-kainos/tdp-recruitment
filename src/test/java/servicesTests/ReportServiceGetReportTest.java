@@ -7,7 +7,6 @@ import domain.Persons;
 import domain.Report;
 import domain.Slots;
 import io.dropwizard.jackson.Jackson;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,15 +19,18 @@ import java.sql.Date;
 import java.util.List;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportServiceGetReportTest {
 
-    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
     private Persons mockPerson;
     private List<Slots> mockSlotsList;
+    private Date mockStartDate = null;
+    private Date mockEndDate = null;
+
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
     private ReportService reportService;
     private Report expectedReport;
 
@@ -44,21 +46,23 @@ public class ReportServiceGetReportTest {
         mockSlotsList = MAPPER.readValue(fixture("fixtures/slots.json"),
                 MAPPER.getTypeFactory().constructCollectionType(List.class, Slots.class));
 
-        expectedReport = new Report(mockPerson, 0L,0L,0L);
+        expectedReport = new Report(mockPerson, 0L,1L,1L);
         reportService = new ReportService(slotsDao, personsDao);
 
     }
 
     @Test
     public void getReportTest() {
-        Date startDate = null;
-        Date endDate = null;
-
         when(personsDao.getById(mockPerson.getId())).thenReturn(mockPerson);
-        when(slotsDao.getForPersonForWeek(mockPerson.getId(), startDate, endDate)).thenReturn(mockSlotsList);
+        when(slotsDao.getForPersonForWeek(mockPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSlotsList);
 
-        Report report = reportService.getReport(mockPerson.getId(), startDate, endDate);
-        assertThat(report.equals(expectedReport));
+        Report report = reportService.getReport(mockPerson.getId(), mockStartDate, mockEndDate);
+        assertEquals("Report should have expected number of available slots",
+                expectedReport.getNumberOfAvailableSlots(),report.getNumberOfAvailableSlots());
+        assertEquals("Report should have expected number of full slots",
+                expectedReport.getNumberOfFullSlots(), report.getNumberOfFullSlots());
+        assertEquals("Report should have expected number of init slots",
+                expectedReport.getNumberOfInitSlots(), report.getNumberOfInitSlots());
     }
 
 
