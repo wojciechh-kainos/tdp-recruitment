@@ -16,7 +16,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         this.reformatSlots = function (slots, personId) {
-            return _.map(slots,
+            var filtered = _.filter(slots, function (value) {
+                return value.type !== "";
+            });
+
+            return _.map(filtered,
                 function (value) {
                     return {
                         slotsDate: value.day,
