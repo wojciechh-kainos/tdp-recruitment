@@ -178,17 +178,20 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 if(failure.status === 406) {
                     $scope.temporaryContent = $scope.noteContent.description;
                 }
-                    Notification.warning({
-                        message: 'Something went wrong with sending your note.',
-                        delay: 2000});
+                Notification.warning({
+                    message: 'Something went wrong with sending your note.',
+                    delay: 2000});
             });
         }
 
         $scope.markSlots = function(slot) {
-            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+            if(slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id) {
                 return;
+            } else if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+               return;
+            } else {
+                slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
             }
-            slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
@@ -227,6 +230,14 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     delay: 2000});
                 return false;
             } else return true;
+        }
+
+        $scope.getClass = function(typeId) {
+            for (var type in $scope.AvailabilityEnum) {
+                if($scope.AvailabilityEnum[type].id == typeId) {
+                    return $scope.AvailabilityEnum[type].className;
+                }
+            }
         }
     });
 });

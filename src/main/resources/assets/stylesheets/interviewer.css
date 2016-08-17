@@ -80,6 +80,10 @@ h1.interviewer-header {
     border: solid white;
 }
 
+.availability-table td[ng-mousedown] {
+    cursor: pointer;
+}
+
 #hours-th {
     color: #375D81;
     background-color: white;
