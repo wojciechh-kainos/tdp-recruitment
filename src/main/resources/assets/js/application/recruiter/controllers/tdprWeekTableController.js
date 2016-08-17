@@ -1,7 +1,20 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService'
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter, $filter, tdprScheduleService) {
+                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, dateFilter, $filter,
+                                                                        tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
+
+        $scope.getPairs = function(){
+            var startDate =  $scope.displayedStartDate.getFullYear() + "-" + ($scope.displayedStartDate.getUTCMonth() + 1) + "-" + $scope.displayedStartDate.getDate();
+            var endDate =  $scope.displayedEndDate.getFullYear() + "-" + ($scope.displayedEndDate.getMonth() + 1) + "-" + $scope.displayedEndDate.getDate();
+            $scope.persons = tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], startDate, endDate).then(
+                function (persons) {
+                    $scope.persons = persons;
+                }
+            ).catch(function () {
+                Notification.error({message: "Failed to get pairs", delay: 3000});
+            });
+        };
 
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;

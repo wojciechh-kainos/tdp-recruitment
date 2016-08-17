@@ -43,7 +43,7 @@ public class SlotsDao extends AbstractDAO<Slots> {
 
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
-        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isWeb", isOps), isOps);
 
         return list(criteria);
     }

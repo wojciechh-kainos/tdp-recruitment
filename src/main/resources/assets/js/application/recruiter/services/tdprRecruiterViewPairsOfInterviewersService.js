@@ -15,7 +15,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 switch(roles[i]){
                     case "isDev": pathParams += "&isDev=true"; break;
                     case "isTest": pathParams += "&isTest=true"; break;
-                    case "isOps": pathParams += "&isOps=true"; break;
+                    case "isWeb": pathParams += "&isOps=true"; break;
                 }
             }
 
@@ -28,13 +28,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 return false;
             }
 
-            return $http.get('api/pair/find?' + pathParams).then(function(response){
-                return response.data;
-            },
-            function(error){
-                error.message = "Getting data form server failed";
-                return $q.reject(error.message);
-            });
+            return $http.get('api/pairs?' + pathParams).then(function(response){
+                    return response.data;
+                },
+                function(error){
+                    error.message = "Getting data form server failed";
+                    return $q.reject(error.message);
+                });
         }
 
         return service;
