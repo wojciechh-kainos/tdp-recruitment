@@ -44,8 +44,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             showDataForWeek(offset);
         };
 
-
-
         $scope.refreshPersonsData = function () {
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
                 function (persons) {
@@ -82,6 +80,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.getPreviousWeekDates();
+        $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
 
