@@ -33,7 +33,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             personData.changesPending = false;
         }
 
-
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");
 
@@ -61,9 +60,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 if (newType !== undefined) {
                     return this.changeSlotType(slot, slotId, date, person, newType);
                 }
-
             }
         };
-
     }]);
 });
