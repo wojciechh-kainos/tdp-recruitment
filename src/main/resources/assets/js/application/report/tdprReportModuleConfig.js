@@ -21,15 +21,6 @@ define(['angular'
                 }
             })
             .state("tdpr.report.home", {
-                url: '/home',
-                views: {
-                    "@": {
-                        templateUrl: '/js/application/report/views/tdpr-report-home.html',
-                        controller: 'tdprReportController'
-                    }
-                }
-            })
-            .state("tdpr.report.details", {
                 url: '/details',
                 views: {
                     "main@report": {

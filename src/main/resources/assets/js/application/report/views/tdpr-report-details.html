@@ -30,19 +30,35 @@
         <input class="form-control" type="text" ng-model="inputString"/>
     </div>
 </div>
+<job-profile selected-profiles="checkedProfiles"></job-profile>
 
 <div class="availabilities-table-container">
     <table id="availabilities-table">
         <thead>
         <tr>
             <td></td>
-            <td class="day-th">Init hours</td>
-            <td class="day-th">Full hours</td>
-            <td class="day-th">Remaining hours</td>
+            <td class="day-th">
+                <span ng-click="sortBy('numberOfInitSlots')">
+                    Init hours
+                </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfInitSlots'" ng-class="{sortReverse: sortReverse}"></span>
+            </td>
+            <td class="day-th">
+                <span ng-click="sortBy('numberOfFullSlots')">
+                    Full hours
+                </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfFullSlots'" ng-class="{sortReverse: sortReverse}"></span>
+            </td>
+            <td class="day-th">
+                <span ng-click="sortBy('numberOfAvailableSlots')">
+                    Remaining hours
+                </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableSlots'" ng-class="{sortReverse: sortReverse}"></span>
+            </td>
         </tr>
         </thead>
         <tbody>
-            <tr report ng-repeat="reportElement in reportsElements | personNameFilter: inputString" report-data="reportElement" person-info="reportElement.person"></tr>
+            <tr report ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse" report-data="reportElement" person-info="reportElement.person"></tr>
         </tbody>
     </table>
 </div>

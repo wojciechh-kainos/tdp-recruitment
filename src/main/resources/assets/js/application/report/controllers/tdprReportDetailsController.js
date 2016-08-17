@@ -1,9 +1,16 @@
 define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
     , 'application/report/directives/tdprReportDirective'
+    , 'application/report/directives/tdprJobProfileDirective'
     , 'application/report/filters/tdprReportByPersonNameFilter'
+    , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, dateFilter) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
+
+        $scope.sortBy = function(column) {
+            $scope.sortColumn = column;
+            $scope.sortReverse = !$scope.sortReverse;
+        }
 
         function activate(){
             console.log($state.params.dateStart);
@@ -29,5 +36,6 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         activate();
+
     })
 });
