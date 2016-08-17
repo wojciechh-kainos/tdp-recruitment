@@ -1,40 +1,46 @@
 [
-  {"id":259,"number":1,"type":"available","day":"2016-08-09"},
-  {"id":260,"number":1,"type":"available","day":"2016-08-11"},
-  {"id":261,"number":2,"type":"available","day":"2016-08-09"},
-  {"id":262,"number":3,"type":"available","day":"2016-08-09"},
-  {"id":263,"number":3,"type":"available","day":"2016-08-11"},
-  {"id":264,"number":4,"type":"available","day":"2016-08-09"},
-  {"id":265,"number":5,"type":"maybe","day":"2016-08-08"},
-  {"id":266,"number":5,"type":"unavailable","day":"2016-08-09"},
-  {"id":267,"number":5,"type":"available","day":"2016-08-10"},
-  {"id":268,"number":6,"type":"maybe","day":"2016-08-08"},
-  {"id":269,"number":6,"type":"unavailable","day":"2016-08-09"},
-  {"id":270,"number":6,"type":"available","day":"2016-08-10"},
-  {"id":271,"number":7,"type":"available","day":"2016-08-08"},
-  {"id":272,"number":7,"type":"available","day":"2016-08-09"},
-  {"id":273,"number":7,"type":"available","day":"2016-08-10"},
-  {"id":274,"number":7,"type":"available","day":"2016-08-11"},
-  {"id":275,"number":8,"type":"available","day":"2016-08-08"},
-  {"id":276,"number":8,"type":"available","day":"2016-08-09"},
-  {"id":277,"number":8,"type":"available","day":"2016-08-10"},
-  {"id":278,"number":9,"type":"available","day":"2016-08-08"},
-  {"id":279,"number":9,"type":"available","day":"2016-08-09"},
-  {"id":280,"number":9,"type":"maybe","day":"2016-08-10"},
-  {"id":281,"number":10,"type":"available","day":"2016-08-08"},
-  {"id":282,"number":10,"type":"available","day":"2016-08-09"},
-  {"id":283,"number":10,"type":"maybe","day":"2016-08-10"},
-  {"id":284,"number":11,"type":"available","day":"2016-08-08"},
-  {"id":285,"number":11,"type":"available","day":"2016-08-09"},
-  {"id":286,"number":11,"type":"maybe","day":"2016-08-10"},
-  {"id":287,"number":12,"type":"available","day":"2016-08-08"},
-  {"id":288,"number":12,"type":"maybe","day":"2016-08-09"},
-  {"id":289,"number":12,"type":"maybe","day":"2016-08-10"},
-  {"id":290,"number":13,"type":"available","day":"2016-08-08"},
-  {"id":291,"number":13,"type":"maybe","day":"2016-08-09"},
-  {"id":292,"number":13,"type":"maybe","day":"2016-08-10"},
-  {"id":293,"number":14,"type":"available","day":"2016-08-08"},
-  {"id":294,"number":14,"type":"maybe","day":"2016-08-09"},
-  {"id":295,"number":14,"type":"maybe","day":"2016-08-11"},
-  {"id":296,"number":14,"type":"maybe","day":"2016-08-12"}
+    {
+      "id": 259,
+      "person": {
+        "id": 1,
+        "email": "a@a.com",
+        "firstName": "Marek",
+        "lastName": "Dzik",
+        "isDev": true,
+        "isTest": false,
+        "isWeb": false,
+        "bandLevel": 1,
+        "defaultStartHour": "08:00:00",
+        "defaultFinishHour": "16:00:00",
+        "slotsList": null,
+        "notesList": null
+      },
+      "slot": {},
+      "type": {
+        "type": "available"
+      },
+      "slotsDate": "2016-08-09"
+    },
+    {
+      "id": 240,
+      "person": {
+        "id": 2,
+        "email": "a@a.com",
+        "firstName": "Marek",
+        "lastName": "Dzik",
+        "isDev": true,
+        "isTest": false,
+        "isWeb": false,
+        "bandLevel": 1,
+        "defaultStartHour": "08:00:00",
+        "defaultFinishHour": "16:00:00",
+        "slotsList": null,
+        "notesList": null
+      },
+      "slot": {},
+      "type": {
+        "type": "available"
+      },
+      "slotsDate": "2016-08-09"
+    }
 ]
