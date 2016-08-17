@@ -352,6 +352,30 @@ define(['angular', 'angularMocks',
             });
         });
 
+
+        describe('discardSlotChanges', function() {
+
+            it('should revert changes made to slotList', function () {
+                person.slotsList = [{
+                    "day": weekStart,
+                    "number": 7,
+                    "type": AvailabilityEnum.available.name
+                }];
+                var startList = person.slotsList;
+
+                $scope.changeSlotTypeCycleThrough(person.slotsList[0], 7, weekStart, person);
+
+
+                $scope.changeSlotDiscardChanges(person);
+
+
+                expect(startList).toEqual(person.slotsList);
+
+            });
+        });
+
+
+
         describe('changeSlotTypeCycleThrough - filtering, response statuses', function () {
 
             it('should create put request with change slot number 8 from full to init state and filter for only one day', function () {
