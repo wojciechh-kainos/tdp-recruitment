@@ -64,7 +64,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.goBackToRecruiterView = function(){
             $state.go('tdpr.recruiter.home');
-        }
+        };
 
         $scope.discardChanges = function() {
             $scope.clearTable();
@@ -148,7 +148,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});
-            }, function(response){
+            }, function(){
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
             });
 
@@ -174,7 +174,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
-                $scope.warnMessage = "";
                 $scope.temporaryContent = response.data.description;
                 $scope.noteContent = response.data;
             }, function(failure) {
@@ -211,13 +210,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function getNote(personId, date) {
             createNote("", personId, date);
-            $scope.warnMessage = "";
             tdprPersonService.getNote(personId, date).then(function(response) {
                 if(response.status === 200) {
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
                 }
-            }, function(failure) {
+            }, function() {
                 Notification.warning({
                    message: 'Something went wrong with getting your note.',
                    delay: 2000});
@@ -230,22 +228,22 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                  if(response.status === 200) {
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
-                    $scope.warnMessage = "Please remember to submit your note.";
-                    if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
+                    Notification.warning("Please remember to submit your note.");
+                    if(response.data.description === "") Notification.warning("There was no content last week.");
                 }
                 else if (response.status === 204){
-                    $scope.warnMessage = "You didn't submit any notes last week.";
+                    Notification.warning("You didn't submit any notes last week.")
                 } else {
                      Notification.warning({
                         message: 'Something went wrong.',
                         delay: 2000});
                 }
-            },function(failure) {
+            },function() {
                    Notification.warning({
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
              })
-        }
+        };
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
