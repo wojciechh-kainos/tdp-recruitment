@@ -38,7 +38,7 @@ define(['angular' 
               }
           }); 
 
-          $urlRouterProvider.otherwise("/recruiter");
+          $urlRouterProvider.otherwise("/404");
         });
 
 
