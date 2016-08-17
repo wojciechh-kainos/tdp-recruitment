@@ -5,9 +5,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                                                                         tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
 
         $scope.getPairs = function(){
-            var startDate =  $scope.displayedStartDate.getFullYear() + "-" + ($scope.displayedStartDate.getUTCMonth() + 1) + "-" + $scope.displayedStartDate.getDate();
-            var endDate =  $scope.displayedEndDate.getFullYear() + "-" + ($scope.displayedEndDate.getMonth() + 1) + "-" + $scope.displayedEndDate.getDate();
-            $scope.persons = tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], startDate, endDate).then(
+            $scope.persons = tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
                 function (persons) {
                     $scope.persons = persons;
                 }

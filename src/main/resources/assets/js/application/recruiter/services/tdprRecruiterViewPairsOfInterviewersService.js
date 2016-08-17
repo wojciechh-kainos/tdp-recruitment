@@ -2,7 +2,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprRecruiterViewPairsOfInterviewersService', ['$http', '$q', function ($http, $q) {
         var service = {};
 
-        service.createPathParams = function(roles, startDay, endDay){
+        service.createPathParams = function(roles, startDate, endDate){
+
+            var startDay =  startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+            var endDay =  endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
 
             if(roles.length == 0 || !roles || !startDay || !endDay){
                 return false;
