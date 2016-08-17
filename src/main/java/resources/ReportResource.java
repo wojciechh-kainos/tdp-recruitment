@@ -7,6 +7,7 @@ import domain.Persons;
 import domain.Report;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
+import services.ReportService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,51 +24,43 @@ public class ReportResource {
 
     private PersonsDao personsDao;
     private SlotsDao slotsDao;
+    private ReportService reportService;
 
     @Inject
-    public ReportResource(SlotsDao slotsDao, PersonsDao personsDao) {
+    public ReportResource(SlotsDao slotsDao, PersonsDao personsDao, ReportService reportService) {
         this.slotsDao = slotsDao;
         this.personsDao = personsDao;
+        this.reportService = reportService;
     }
 
     @GET
-    @Path("/{date_from}/{date_to}")
+    @Path("/forId/{date_from}/{date_to}")
     @UnitOfWork
-    public Report GetReport(
+    public Report getReport(
                             @PathParam("date_from") String date_from,
                             @PathParam("date_to") String date_to,
-                            @QueryParam("personId") long person_id) throws ParseException{
+                            @QueryParam("personId") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
 
-        Long availableCount = 0L;
-        Long fullCount = 0L;
-        Long initCount = 0L;
-        Long wastedCount = 0L;
+        return reportService.getReport(person_id, startDate, endDate);
+    }
 
-        Persons person = personsDao.getById(person_id);
+    @GET
+    @Path("/forAll/{date_from}/{date_to}")
+    @UnitOfWork
+    public List<Report> getAllReports(
+                            @PathParam("date_from") String date_from,
+                            @PathParam("date_to") String date_to) throws ParseException {
 
-        List<Slots> slotsList = slotsDao.getForPersonForWeek(person_id, startDate, endDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-        for (Iterator<Slots> i = slotsList.iterator(); i.hasNext(); ){
-            Slots slot = i.next();
+        Date startDate = formatter.parse(date_from);
+        Date endDate = formatter.parse(date_to);
 
-            if (slot.getType().getType().equals("available")){
-                availableCount +=1;
-            }
-
-            else if(slot.getType().getType().equals("full")){
-                fullCount +=1;
-            }
-
-            else if(slot.getType().getType().equals("init")){
-                initCount +=1;
-            }
-        }
-
-        return new Report(person, initCount, availableCount, fullCount, wastedCount);
+        return reportService.getAllReports(startDate, endDate);
     }
 }
