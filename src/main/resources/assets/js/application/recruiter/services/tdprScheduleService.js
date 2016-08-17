@@ -4,7 +4,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         this.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
 
-            if (person.changesPending === false || angular.isUndefined(person.changesPending)) {
+            if (!person.changesPending || angular.isUndefined(person.changesPending)) {
                         person.oldSlotList = angular.copy(person.slotsList);
                         person.changesPending = true;
                     }
