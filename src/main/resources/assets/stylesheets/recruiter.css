@@ -48,7 +48,7 @@
     cursor: pointer;
 }
 
-.submit-changes-button {
+.changes-button {
     font-size: smaller;
 }
 
@@ -124,3 +124,10 @@
     color: red;
 }
 
+.glyphicon-ok {
+    color: green;
+}
+
+.glyphicon-remove {
+    color: #b20000;
+}
