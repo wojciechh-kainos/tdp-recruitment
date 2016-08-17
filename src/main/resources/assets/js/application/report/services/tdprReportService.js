@@ -3,7 +3,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
 
         var format = 'dd-MM-yyyy';
 
-        this.getReport(dateFrom, dateTo, personId){
+        this.getReport = function(dateFrom, dateTo, personId){
             return $http.get('/api/report/' + dateFilter(dateFrom, format) + '/' + dateFilter(dateTo, format) + '/' + personId)
             .then(
             function(response){
@@ -15,7 +15,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             })
         }
 
-        this.getReports(dateFrom, dateTo){
+        this.getReports = function(dateFrom, dateTo){
             return $http.get('/api/report/' + dateFilter(dateFrom, format) + '/' + dateFilter(dateTo, format))
             .then(
             function(response){
