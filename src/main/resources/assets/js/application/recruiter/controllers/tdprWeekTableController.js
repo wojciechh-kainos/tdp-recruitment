@@ -42,8 +42,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             showDataForWeek(offset);
         };
 
-
-
         $scope.refreshPersonsData = function () {
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
                 function (persons) {
@@ -54,7 +52,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-
         $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             return tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, person);
         };
@@ -63,7 +60,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var endDate = new Date($scope.days[4]);
             endDate.setDate(endDate.getDate() + 1);
 
-            tdprRecruiterSlotsService.updateSlots(personData.slotsList, personData.id, $scope.days[0], endDate).then(
+            tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
                 function () {
                     personData.changesPending = false;
                     Notification.success({message: 'Your changes were saved successfully!', delay: 3500});

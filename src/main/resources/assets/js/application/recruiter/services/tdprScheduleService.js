@@ -13,7 +13,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     return;
                 }
             } else {
-                person.slotsList.push({
+                person.slotList.push({
                     day: date,
                     person: person.id,
                     number: slotId,
@@ -22,7 +22,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             }
             person.changesPending = true;
         };
-
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");

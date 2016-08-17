@@ -137,7 +137,9 @@ define(['angular', 'angularMocks',
             persons = [person];
         });
 
-        beforeEach(inject(function ($controller, _$q_, _$rootScope_, _$state_, _$filter_, _$httpBackend_, _dateFilter_, _tdprPersonsService_, _tdprDateService_, _JobProfileEnum_, _Notification_, _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
+        beforeEach(inject(function ($controller, _$q_, _$rootScope_, _$state_, _$filter_, _$httpBackend_,
+         _dateFilter_, _tdprPersonsService_, _tdprDateService_, _JobProfileEnum_, _Notification_,
+          _tdprRecruiterSlotsService_, _AvailabilityEnum_) {
             $state = _$state_;
             $scope = _$rootScope_.$new();
 
@@ -189,7 +191,7 @@ define(['angular', 'angularMocks',
         describe('changeSlotTypeCycleThrough', function () {
             it('should create put request with new added full slot at number 8', function () {
 
-                person.slotsList = [
+                person.slotList = [
                     {
                         "day": weekStart,
                         "person": 9,
@@ -231,7 +233,7 @@ define(['angular', 'angularMocks',
 
 
                 $scope.changeSlotTypeCycleThrough(undefined, testSlotId, testDay, person);
-                tdprRecruiterSlotsService.updateSlots(person.slotsList, person.id, weekStart, weekEnd).then(function (response) {
+                tdprRecruiterSlotsService.updateSlots(person.slotList, person.id, weekStart, weekEnd).then(function (response) {
                     expect(response.status).toEqual(200);
                 });
 

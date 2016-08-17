@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "person")
 @NamedQueries({
-        @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
-        @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
+        @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
+        @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
-public class Persons {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,13 +67,13 @@ public class Persons {
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Slots> slotsList = new ArrayList<>();
+    private List<Slot> slotList = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Notes> notesList = new ArrayList<>();
+    private List<Note> noteList = new ArrayList<>();
 
-    public Persons() {
+    public Person() {
     }
 
     public Boolean getActive() {
@@ -172,20 +172,20 @@ public class Persons {
         this.activationCode = activationCode;
     }
 
-    public List<Slots> getSlotsList() {
-        return slotsList;
+    public List<Slot> getSlotList() {
+        return slotList;
     }
 
-    public void setSlotsList(List<Slots> slotsList) {
-        this.slotsList = slotsList;
+    public void setSlotList(List<Slot> slotList) {
+        this.slotList = slotList;
     }
 
-    public List<Notes> getNotesList() {
-        return notesList;
+    public List<Note> getNoteList() {
+        return noteList;
     }
 
-    public void setNotesList(List<Notes> notesList) {
-        this.notesList = notesList;
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
     }
 
     public Time getDefaultStartHour() {return defaultStartHour;}
