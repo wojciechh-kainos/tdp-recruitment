@@ -194,7 +194,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                    $scope.relativeDayNumber < 0) {
                     return;
                 }
-
+            }
+            
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
 
