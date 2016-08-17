@@ -25,12 +25,12 @@ public class ReportResource {
     }
 
     @GET
-    @Path("/forId/{date_from}/{date_to}")
+    @Path("/{date_from}/{date_to}/{id}")
     @UnitOfWork
     public Report getReport(
                             @PathParam("date_from") String date_from,
                             @PathParam("date_to") String date_to,
-                            @QueryParam("personId") long person_id) throws ParseException {
+                            @PathParam("personId") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -41,7 +41,7 @@ public class ReportResource {
     }
 
     @GET
-    @Path("/forAll/{date_from}/{date_to}")
+    @Path("/{date_from}/{date_to}")
     @UnitOfWork
     public List<Report> getAllReports(
                             @PathParam("date_from") String date_from,
