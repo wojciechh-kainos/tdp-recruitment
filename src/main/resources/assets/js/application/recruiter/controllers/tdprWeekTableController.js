@@ -25,7 +25,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.offset = 0;
 
         $scope.changeWeek = function (offset) {
-            offset == WeekNavigateEnum.current ? $scope.offset = WeekNavigateEnum.current : $scope.offset += offset;
+
+            if(offset === WeekNavigateEnum.current){
+                $scope.offset = WeekNavigateEnum.current;
+            }else{
+                $scope.offset += offset;
+            }
+
             $scope.days = tdprDateService.getWeekWithOffset($scope.offset);
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(function (data) {
                 $scope.persons = data;
@@ -33,7 +39,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             $scope.displayedStartDate = $scope.days[0];
             $scope.displayedEndDate = $scope.days[4];
         };
-
 
         $scope.refreshPersonsData = function () {
             tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
@@ -44,7 +49,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 Notification.error({message: "Failed to refresh persons data", delay: 3000});
             });
         };
-
 
         $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             return tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, person);
