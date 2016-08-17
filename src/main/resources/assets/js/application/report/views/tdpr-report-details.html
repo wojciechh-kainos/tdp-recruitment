@@ -2,6 +2,8 @@
     <h1>Display reports</h1>
 </div>
 
+<job-profile selected-profiles="checkedProfiles"></job-profile>
+
 <div class="row options">
     <div class="col-md-1">
         <label class="control-label" for="start_date">Start date:</label>
@@ -17,20 +19,21 @@
     </div>
     <div class="col-md-4">
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
-        <button class="btn btn-default">Current week</button>
-        <button class="btn btn-default">Previous week</button>
+        <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
+        <button class="btn btn-default">Previous month</button>
     </div>
 </div>
 
 <div class="row options">
-    <div class="col-md-1">
+    <div class="col-md-1 col-md-offset-4">
         <label>Search:</label>
     </div>
     <div class="col-md-3">
         <input class="form-control" type="text" ng-model="inputString"/>
     </div>
+
 </div>
-<job-profile selected-profiles="checkedProfiles"></job-profile>
+
 
 <div class="availabilities-table-container">
     <table id="availabilities-table">

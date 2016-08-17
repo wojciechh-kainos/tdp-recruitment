@@ -35,6 +35,16 @@ define(['angular', 'application/report/tdprReportModule'
             )
         }
 
+        $scope.getPreviousWeekReports = function(){
+            var today = new Date();
+            $scope.startDate = new Date(today.setDate(today.getDate() - 7));
+            while($scope.startDate.getUTCDay() !== 1){
+                $scope.startDate = new Date(today.setDate(today.getDate() - 1));
+            }
+            $scope.endDate = new Date($scope.endDate.setDate($scope.startDate.getDate() + 6));
+            $scope.getReports();
+        }
+
         activate();
 
     })
