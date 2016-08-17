@@ -10,13 +10,25 @@
         <thead>
         <tr>
             <td></td>
-            <td class="day-th">Init hours</td>
-            <td class="day-th">Full hours</td>
-            <td class="day-th">Remaining hours</td>
+            <td class="day-th">
+                <span ng-click="sortColumn = 'numberOfInitSlots'; sortReverse=!sortReverse">
+                    Init hours
+                </span>
+            </td>
+            <td class="day-th">
+                <span ng-click="sortColumn = 'numberOfFullSlots'; sortReverse=!sortReverse">
+                    Full hours
+                </span>
+            </td>
+            <td class="day-th">
+                <span ng-click="sortColumn = 'numberOfAvailableSlots'; sortReverse=!sortReverse">
+                    Remaining hours
+                </span>
+            </td>
         </tr>
         </thead>
         <tbody>
-            <tr report ng-repeat="reportElement in reportsElements | personNameFilter: inputString" report-data="reportElement" person-info="reportElement.person"></tr>
+            <tr report ng-repeat="reportElement in reportsElements | personNameFilter: inputString | orderBy:sortColumn:sortReverse" report-data="reportElement" person-info="reportElement.person"></tr>
         </tbody>
     </table>
 </div>
