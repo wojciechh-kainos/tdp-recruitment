@@ -4,6 +4,7 @@ import static io.dropwizard.testing.FixtureHelpers.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Persons;
+import domain.Slots;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,12 +17,12 @@ public class TestingTest {
 
     @Test
     public void deserializesFromJSON() throws Exception {
-        final Persons person = MAPPER.readValue(fixture("fixtures/persons.json"), Persons.class);
+//        final Persons person = MAPPER.readValue(fixture("fixtures/persons.json"), Persons.class);
+
+        final Slots slot = MAPPER.readValue(fixture("fixtures/slots.json"), Slots.class);
 
 
-
-
-        System.out.println(person.getEmail());
+        System.out.println(slot.getType());
 
 
         assertThat(1)
