@@ -48,7 +48,6 @@ public class ReportServiceGetReportTest {
 
         expectedReport = new Report(mockPerson, 0L,1L,1L);
         reportService = new ReportService(slotsDao, personsDao);
-
     }
 
     @Test
