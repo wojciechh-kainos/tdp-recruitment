@@ -1,11 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import domain.Persons;
 import domain.Report;
-import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.ReportService;
 
@@ -14,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -22,14 +17,10 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ReportResource {
 
-    private PersonsDao personsDao;
-    private SlotsDao slotsDao;
     private ReportService reportService;
 
     @Inject
-    public ReportResource(SlotsDao slotsDao, PersonsDao personsDao, ReportService reportService) {
-        this.slotsDao = slotsDao;
-        this.personsDao = personsDao;
+    public ReportResource(ReportService reportService) {
         this.reportService = reportService;
     }
 

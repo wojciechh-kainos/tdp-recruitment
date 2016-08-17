@@ -42,11 +42,11 @@ public class ReportService {
             Slots slot = i.next();
 
             if (slot.getType().getType().equals("available")) {
-                availableCount +=1;
+                availableCount += 1;
             } else if(slot.getType().getType().equals("full")) {
-                fullCount +=1;
+                fullCount += 1;
             } else if(slot.getType().getType().equals("init")) {
-                initCount +=1;
+                initCount += 1;
             }
         }
         wastedCount = availableCount - ( fullCount + initCount );
@@ -55,11 +55,11 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {
-        List<Persons> persList = personsDao.findAll();
+        List<Persons> personsList = personsDao.findAll();
 
         List<Report> reportList = new ArrayList<>();
 
-        for (Iterator<Persons> i = persList.iterator(); i.hasNext(); ) {
+        for (Iterator<Persons> i = personsList.iterator(); i.hasNext(); ) {
             Persons person = i.next();
             reportList.add(getReport(person.getId(), startDate, endDate));
         }
