@@ -13,8 +13,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             },
             link: function (scope, element, attributes) {
 
-                scope.defaultStartHour = scope.personData.defaultStartHour.slice(0,5);
-                scope.defaultFinishHour = scope.personData.defaultFinishHour.slice(0,5);
+                
                 scope.note = scope.personData.notesList ? '"' + scope.personData.notesList[0].description + '"': 'none';
 
                 scope.getSlot = function (slotNumber, day) {

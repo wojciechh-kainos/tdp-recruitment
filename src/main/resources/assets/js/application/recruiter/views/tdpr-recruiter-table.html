@@ -55,6 +55,11 @@
         </table>
     </div>
 
+    <select ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes"
+            ng-model="startTime" ng-change="filterSlots()"></select>
+    <select ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
+            ng-model="endTime" ng-change="filterSlots()"></select>
+
     <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
 
     <input class="submit-changes-button" type="button" ng-click="refreshPersonsData()" value="Refresh"/>
