@@ -40,8 +40,6 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
                     expect(response.status).toEqual(400);
                 });
                 $httpBackend.flush();
-                
-
             })
         })
     })

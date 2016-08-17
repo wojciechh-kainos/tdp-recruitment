@@ -23,7 +23,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             person.changesPending = true;
         };
 
-
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");
 
@@ -33,7 +32,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             } else {
                 // Cycle through
                 // Available/maybe - full - init - maybe
-
                 var newType = undefined;
 
                 switch(slot.type) {
@@ -51,7 +49,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 if (newType !== undefined) {
                     return this.changeSlotType(slot, slotId, date, person, newType);
                 }
-
             }
         };
 
