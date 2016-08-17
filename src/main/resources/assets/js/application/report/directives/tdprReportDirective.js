@@ -5,7 +5,8 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             templateUrl: 'js/application/report/views/tdpr-directive-report.html',
             replace: true,
             scope: {
-
+                reportData: '=',
+                personInfo: '='
             },
             link: function (scope, element, attributes) {
 

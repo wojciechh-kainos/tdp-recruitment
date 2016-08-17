@@ -1,13 +1,15 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
     tdprReportModule.filter('personNameFilter', function(){
         return function(reports, phrase){
-            if(phrase === undefined || phrase === ''){
+            if ( phrase === undefined ) {
                 return reports;
             }
-            var words = phrase.split();
-            var response = [];
-            return _.filter(reports, function(value, key){
-                return _.includes(value.person.firstName.toLowerCase(), phrase.toLowerCase()) || _.includes(value.person.lastName.toLowerCase(), phrase.toLowerCase());
+            var searchPhrase = phrase.toLowerCase();
+            return _.filter(reports, function(value){
+                var firstName = value.person.firstName.toLowerCase();
+                var lastName = value.person.lastName.toLowerCase();
+
+                return _.includes(firstName, searchPhrase) || _.includes(lastName, searchPhrase) || _.includes(firstName + ' ' + lastName, searchPhrase) || _.includes(lastName + ' ' + firstName, searchPhrase);
             })
         }
     });
