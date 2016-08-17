@@ -43,6 +43,10 @@ define(['angular'
         dev: "isDev",
         web: "isWeb",
         test: "isTest"
+    }).constant('JobProfileEnumNames', {
+        dev: "Developer",
+        web: "Web",
+        test: "Tester"
     }).constant('BandLevelEnum',{
         "1": "1 - Principal",
         "2": "2 - Manager",

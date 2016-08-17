@@ -1,0 +1,5 @@
+<div class="legend">
+    <label class="mouse-pointer" ng-repeat="(key,value) in JobProfileEnum">
+        <input type="checkbox" ng-model="selectedProfiles[value]" /> {{JobProfileEnumNames[key]}}
+    </label>
+</div>
