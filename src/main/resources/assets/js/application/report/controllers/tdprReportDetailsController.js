@@ -6,8 +6,10 @@ define(['angular', 'application/report/tdprReportModule'
     tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
         console.log($state.params);
 
-        $scope.sortColumn = 'person.lastName';
-        $scope.sortReverse = false;
+        $scope.sortBy = function(column) {
+            $scope.sortColumn = column;
+            $scope.sortReverse = !$scope.sortReverse;
+        }
 
         tdprReportService.getReports($state.params.dateStart, $state.params.dateEnd).then(
             function (response) {

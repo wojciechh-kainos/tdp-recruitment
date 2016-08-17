@@ -11,17 +11,17 @@
         <tr>
             <td></td>
             <td class="day-th">
-                <span ng-click="sortColumn = 'numberOfInitSlots'; sortReverse=!sortReverse" ng-mouseover="">
+                <span ng-click="sortBy('numberOfInitSlots')">
                     Init hours
                 </span>
             </td>
             <td class="day-th">
-                <span ng-click="sortColumn = 'numberOfFullSlots'; sortReverse=!sortReverse">
+                <span ng-click="sortBy('numberOfFullSlots')">
                     Full hours
                 </span>
             </td>
             <td class="day-th">
-                <span ng-click="sortColumn = 'numberOfAvailableSlots'; sortReverse=!sortReverse">
+                <span ng-click="sortBy('numberOfAvailableSlots')">
                     Remaining hours
                 </span>
             </td>
