@@ -242,7 +242,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                    Notification.warning({
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
-             })
+             });
+           enableNoteEditing();
         };
 
         function verifyNoUnsavedChanges() {
