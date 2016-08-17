@@ -38,8 +38,7 @@
                     '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
                     '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
                     ng-mousedown="markSlots(slot); changeSlotStatus() "
-                    ng-mouseover="mousedown ? markSlots(slot) : ''"
-                    >
+                    ng-mouseover="mousedown ? markSlots(slot) : ''">
                 </td>
             </tr>
         </tbody>
