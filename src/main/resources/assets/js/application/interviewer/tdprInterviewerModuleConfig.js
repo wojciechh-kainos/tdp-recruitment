@@ -23,13 +23,7 @@ define(['angular' 
                     } 
                 },
                 resolve: {
-                    person: function(tdprPersonService, $stateParams, $state) {
-                        return tdprPersonService.getPersonDetails($stateParams.id).then(function (response) {
-                            return response;
-                        }, function () {
-                            $state.go('tdpr.404');
-                    });
-                }
+                    person: getPersonDetails
               }
             }).state("tdpr.interviewer.details", {
               url: "/{id}/details",
@@ -40,18 +34,21 @@ define(['angular' 
                   }
               },
               resolve:{
-                  person: function(tdprPersonService, $stateParams, $state){
-                      return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {
-                          return response;
-                      }, function () {
-                          $state.go('tdpr.404');
-                      });
-                  }
+                  person: getPersonDetails
               }
           }); 
 
           $urlRouterProvider.otherwise("/recruiter");
-        }); 
+        });
+
+
+     function getPersonDetails(tdprPersonService, $stateParams, $state){
+         return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {
+             return response;
+         }, function () {
+             $state.go('tdpr.404');
+         });
+     }
 
     return tdprInterviewerModule; 
 });
