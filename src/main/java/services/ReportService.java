@@ -12,9 +12,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by radoslawl on 16/08/16.
- */
 public class ReportService {
 
     private PersonsDao personsDao;
