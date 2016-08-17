@@ -1,5 +1,5 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter'], function ($http, $q, dateFilter) {
+    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter', function ($http, $q, dateFilter) {
 
         var format = 'dd-MM-yyyy';
 
@@ -26,5 +26,5 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
                 return $q.reject(error.message)
             })
         }
-    })
+    }])
 });
