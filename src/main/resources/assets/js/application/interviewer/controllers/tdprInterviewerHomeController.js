@@ -230,6 +230,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.temporaryContent = response.data.description;
                     Notification.warning("Please remember to submit your note.");
                     if(response.data.description === "") Notification.warning("There was no content last week.");
+                    enableNoteEditing();
                 }
                 else if (response.status === 204){
                     Notification.warning("You didn't submit any notes last week.")
@@ -243,7 +244,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
              });
-           enableNoteEditing();
         };
 
         function verifyNoUnsavedChanges() {
