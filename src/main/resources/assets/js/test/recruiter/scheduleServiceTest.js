@@ -3,6 +3,7 @@ define(['angular', 'angularMocks',
     'notification',
     'application/recruiter/controllers/tdprWeekTableController',
     'application/recruiter/services/tdprDateService',
+    'application/recruiter/services/tdprScheduleService',
     'application/recruiter/services/tdprRecruiterSlotsService'], function (angular) {
     describe('scheduleServiceTest', function () {
         'use strict';
@@ -186,7 +187,7 @@ define(['angular', 'angularMocks',
         });
 
         describe('changeSlotTypeCycleThrough', function () {
-            it('should create put request with new added available slot at number 8', function () {
+            it('should create put request with new added full slot at number 8', function () {
 
                 person.slotsList = [
                     {
@@ -221,7 +222,7 @@ define(['angular', 'angularMocks',
                         "day": weekStart,
                         "person": 9,
                         "number": testSlotId,
-                        "type": AvailabilityEnum.available.name
+                        "type": AvailabilityEnum.full.name
                     }
                 ], person.id);
 
@@ -295,7 +296,7 @@ define(['angular', 'angularMocks',
                 $httpBackend.flush();
             });
 
-            it('should create put request with removed slot at number 8', function () {
+            it('should create put request with init call change to full at slot number 8', function () {
 
                 person.slotsList = [
                     {
@@ -314,7 +315,7 @@ define(['angular', 'angularMocks',
                         "day": weekStart,
                         "person": 9,
                         "number": testSlotId,
-                        "type": AvailabilityEnum.maybe.name
+                        "type": AvailabilityEnum.init.name
                     }
                 ];
 
@@ -330,6 +331,12 @@ define(['angular', 'angularMocks',
                         "day": weekStart,
                         "person": 9,
                         "number": 9,
+                        "type": AvailabilityEnum.full.name
+                    },
+                    {
+                        "day": weekStart,
+                        "person": 9,
+                        "number": testSlotId,
                         "type": AvailabilityEnum.full.name
                     }
                 ], person.id);
