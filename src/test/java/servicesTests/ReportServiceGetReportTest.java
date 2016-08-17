@@ -8,6 +8,7 @@ import domain.Report;
 import domain.Slots;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,9 +17,11 @@ import services.ReportService;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +29,7 @@ import static org.mockito.Mockito.when;
 public class ReportServiceGetReportTest {
 
     private Persons mockPerson;
+    private List<Persons> mockPersons;
     private List<Slots> mockSlotsList;
     private Date mockStartDate = null;
     private Date mockEndDate = null;
@@ -42,12 +46,20 @@ public class ReportServiceGetReportTest {
 
     @Before
     public void setUp() throws IOException {
-        mockPerson = MAPPER.readValue(fixture("fixtures/persons.json"), Persons.class);
+        mockPersons = MAPPER.readValue(fixture("fixtures/persons.json"),
+                MAPPER.getTypeFactory().constructCollectionType(List.class, Persons.class));
+        mockPerson = mockPersons.get(0);
         mockSlotsList = MAPPER.readValue(fixture("fixtures/slots.json"),
                 MAPPER.getTypeFactory().constructCollectionType(List.class, Slots.class));
 
-        expectedReport = new Report(mockPerson, 0L,1L,1L);
+        expectedReport = new Report(mockPerson, 0L,2L,2L);
         reportService = new ReportService(slotsDao, personsDao);
+
+        List<Report> expectedReports = new ArrayList<>();
+
+//        for(Persons p : mockPersons)
+//        expectedReports.add(new Report(mockPersons.get(0).));
+
     }
 
     @Test
@@ -56,12 +68,21 @@ public class ReportServiceGetReportTest {
         when(slotsDao.getForPersonForWeek(mockPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSlotsList);
 
         Report report = reportService.getReport(mockPerson.getId(), mockStartDate, mockEndDate);
-        assertEquals("Report should have expected number of available slots",
-                expectedReport.getNumberOfAvailableSlots(),report.getNumberOfAvailableSlots());
-        assertEquals("Report should have expected number of full slots",
-                expectedReport.getNumberOfFullSlots(), report.getNumberOfFullSlots());
-        assertEquals("Report should have expected number of init slots",
-                expectedReport.getNumberOfInitSlots(), report.getNumberOfInitSlots());
+
+        assertEquals("Report should have expected number of slots", expectedReport, report);
+    }
+
+    @Test
+    @Ignore
+    public void getAllReportsTest() {
+        Date startDate = null;
+        Date endDate = null;
+
+        when(personsDao.findAll()).thenReturn(mockPersons);
+        when(slotsDao.getForPersonForWeek(mockPerson.getId(), startDate, endDate)).thenReturn(mockSlotsList);
+
+        List<Report> achieved = reportService.getAllReports(startDate, endDate);
+        assertThat(achieved.equals(expectedReport));
     }
 
 
