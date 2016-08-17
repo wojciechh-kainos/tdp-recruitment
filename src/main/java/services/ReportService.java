@@ -7,7 +7,6 @@ import domain.Persons;
 import domain.Report;
 import domain.Slots;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;

@@ -4,9 +4,9 @@ package resourceTests;
  * Created by radoslawl on 17/08/16.
  */
 
+import domain.Persons;
 import domain.Report;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,33 +14,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import resources.ReportResource;
 import services.ReportService;
 
-import dao.NotesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import domain.Notes;
-import domain.Persons;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import resources.PersonsResource;
-import services.MailService;
-
-import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportResourceTest {
