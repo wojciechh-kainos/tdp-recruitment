@@ -10,8 +10,8 @@ define(['angular'
                 url: '/report',
                 abstract: true,
                 params: {
-                    dateStart: '08-08-2016',
-                    dateEnd: '25-08-2016',
+                    dateStart: '',
+                    dateEnd: '',
                     personId: false
                 },
                 views: {

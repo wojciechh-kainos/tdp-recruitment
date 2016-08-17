@@ -1,9 +1,35 @@
-<h1>Display reports</h1>
+<div class="row">
+    <h1>Display reports</h1>
+</div>
 
-<input type="text" ng-model="inputString"/>
+<div class="row options">
+    <div class="col-md-1">
+        <label class="control-label" for="start_date">Start date:</label>
+    </div>
+    <div class="col-md-3">
+        <input type="date" class="form-control col-md-10" id="start_date" ng-model="startDate">
+    </div>
+    <div class="col-md-1">
+        <label class="control-label" for="end_date">End date:</label>
+    </div>
+    <div class="col-md-3">
+         <input type="date" class="form-control" id="end_date" ng-model="endDate">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" ng-click="getReports()">Show report</button>
+        <button class="btn btn-default">Current week</button>
+        <button class="btn btn-default">Previous week</button>
+    </div>
+</div>
 
-{{inputString}}
-
+<div class="row options">
+    <div class="col-md-1">
+        <label>Search:</label>
+    </div>
+    <div class="col-md-3">
+        <input class="form-control" type="text" ng-model="inputString"/>
+    </div>
+</div>
 
 <div class="availabilities-table-container">
     <table id="availabilities-table">
