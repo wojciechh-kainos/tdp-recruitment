@@ -11,6 +11,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.mousedown = false;
         $scope.isRecruiter = $state.params.isRecruiter;
         $scope.personName = $state.params.personName;
+        $scope.editNote = false;
+        $scope.buttonTitle = 'Edit note';
 
         var note;
         var id = $stateParams.id;
@@ -172,6 +174,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
+                $scope.warnMessage = "";
                 $scope.temporaryContent = response.data.description;
                 $scope.noteContent = response.data;
             }, function(failure) {
@@ -191,7 +194,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                    $scope.relativeDayNumber < 0) {
                     return;
                 }
-            }
 
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
@@ -214,17 +216,41 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function getNote(personId, date) {
             createNote("", personId, date);
+            $scope.warnMessage = "";
             tdprPersonService.getNote(personId, date).then(function(response) {
                 if(response.status === 200) {
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
                 }
             }, function(failure) {
-               Notification.warning({
-                    message: 'Something went wrong with getting your note.',
-                    delay: 2000});
+                Notification.warning({
+                   message: 'Something went wrong with getting your note.',
+                   delay: 2000});
                }
         )}
+
+       $scope.getNoteFromPreviousWeek = function() {
+            var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
+            tdprPersonService.getNote(id, previousDate).then(function(response) {
+                 if(response.status === 200) {
+                    $scope.noteContent = response.data;
+                    $scope.temporaryContent = response.data.description;
+                    $scope.warnMessage = "Please remember to submit your note.";
+                    if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
+                }
+                else if (response.status === 204){
+                    $scope.warnMessage = "You didn't submit any notes last week.";
+                } else {
+                     Notification.warning({
+                        message: 'Something went wrong.',
+                        delay: 2000});
+                }
+            },function(failure) {
+                   Notification.warning({
+                      message: 'Something went wrong with getting your note.',
+                      delay: 2000});
+             })
+        }
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {

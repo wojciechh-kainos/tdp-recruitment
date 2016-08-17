@@ -133,10 +133,25 @@ h1.interviewer-header {
     border: 1px solid #3498DB;
     background-color: transparent;
     width: 110px;
+    margin-bottom: 1px;
 }
 
 .button:hover {
     background-color: #3498DB;
+    color: white;
+}
+
+.button-note {
+    border-radius: 5px;
+    color: white;
+    border: 1px solid #337ab7;
+    background-color: #337ab7;
+    width: 200px;
+    margin-bottom: 15px;
+}
+
+.button-note:hover {
+    background-color: #286090;
     color: white;
 }
 
@@ -184,4 +199,45 @@ button {
 
 .mouse-pointer{
     cursor: pointer;
+}
+
+/* interviewer details and adding interviewer*/
+#interviewer-details-h1 {
+  font-size: 48px;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  color: #375D81;
+}
+
+.interviewer-form {
+  display: inline-block;
+}
+
+.interviewer-form label {
+  font-weight: normal;
+  margin: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.error-container {
+  color: red;
+}
+
+.btn-wrapper {
+  width: 100%;
+}
+
+.details-checkbox {
+  margin-top: 12px !important;
+}
+
+.input {
+  width: 100%;
 }
