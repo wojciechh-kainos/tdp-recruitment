@@ -32,17 +32,70 @@ public class PairResource {
 
     @GET
     @UnitOfWork
-    public List<Pair> findPairs(@QueryParam("startDate") String startDate,
-                          @QueryParam("endDate") String endDate,
-                          @QueryParam("isDev") Boolean isDev,
-                          @QueryParam("isTest") Boolean isTest,
-                          @QueryParam("isOps") Boolean isOps) {
+    public List<Persons> findPairs(@QueryParam("startDate") String startDate,
+                                @QueryParam("endDate") String endDate,
+                                @QueryParam("isDev") Boolean isDev,
+                                @QueryParam("isTest") Boolean isTest,
+                                @QueryParam("isOps") Boolean isOps) {
 
         List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
         List<Persons> persons = findPersonsInSlots(slots);
         List<Slots> filteredSlots = findTriplesInSlots(slots);
+        List<Pair> pairs = findPairsForAllPersons(filteredSlots, persons);
 
-        return findPairsForAllPersons(filteredSlots, persons);
+        List<Persons> pp = mergePairsIntoPersons(pairs);
+        List<Persons> filteredPersons = transformPairs(pp);
+
+        return filteredPersons;
+    }
+
+
+    private List<Persons> transformPairs(List<Persons> pairedPersons) {
+        List<Persons> persons = new ArrayList<>();
+
+        pairedPersons
+                .stream()
+                .forEach(person -> {
+                    if (persons.stream().anyMatch(p -> p.getId().equals(person.getId()))) {
+                        Persons foundPerson = getPersonsListElement(persons, person.getId());
+                        List<Slots> foundSlots = foundPerson.getSlotsList();
+                        List<Slots> newSlots = person.getSlotsList();
+
+                        newSlots
+                                .stream()
+                                .filter(ns -> foundSlots.stream().anyMatch(fs -> ns.getId().equals(fs.getId())))
+                                .peek(newSlots::add);
+
+                    } else {
+                        persons.add(person);
+                    }
+                });
+
+        return persons;
+    }
+
+    private Persons getPersonsListElement(List<Persons> persons, Long personId) {
+        return persons.stream().filter(person -> person.getId().equals(personId)).findFirst().get();
+    }
+
+    private List<Persons> mergePairsIntoPersons(List<Pair> pairs) {
+        return pairs
+                .stream()
+                .flatMap(pair -> {
+                    List<Persons> persons = new ArrayList<>();
+
+                    Persons sp = pair.getSearchPerson().clone();
+                    Persons mp = pair.getMatchPerson().clone();
+
+                    sp.setSlotsList(pair.getSearchSlots());
+                    mp.setSlotsList(pair.getMatchSlots());
+
+                    persons.add(sp);
+                    persons.add(mp);
+
+                    return persons.stream();
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<Persons> findPersonsInSlots(List<Slots> slots) {
@@ -134,25 +187,45 @@ public class PairResource {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private Stream<Pair> findAllPairsForPerson(List<Slots> slots, Persons person) {
-        List<Slots> remainingSlots = slotsByPerson(slots, predicateSlots(person).negate());
-        List<Slots> searchSlots = slotsByPerson(slots, predicateSlots(person));
-        List<Slots> pairedSlots = remainingSlots
+    private List<Slots> findPairsInSlots(List<Slots> remainingSlots, List<Slots> searchSlots) {
+        return remainingSlots
                 .stream()
                 .filter(rs -> searchSlots
                         .stream()
                         .filter(ss -> rs.getSlot().equals(ss.getSlot())
                                 && rs.getSlotsDate().equals(ss.getSlotsDate())
-                                && rs.getType().getType().equals(AvailabilityTypesEnum.available) || rs.getType().getType().equals(AvailabilityTypesEnum.maybe))
+                                && (rs.getType().getType().equals(AvailabilityTypesEnum.available) || rs.getType().getType().equals(AvailabilityTypesEnum.maybe)))
                         .collect(Collectors.toCollection(ArrayList::new))
                         .size() > 0)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private List<Slots> findPairsForPersonAndMerge(List<Slots> remainingSlots, List<Slots> searchSlots) {
+        List<Slots> pairedSlotsToPerson = findPairsInSlots(remainingSlots, searchSlots);
+        List<Slots> searchPersonPairs = findPairsInSlots(searchSlots, remainingSlots);
+        pairedSlotsToPerson.addAll(searchPersonPairs);
+
+        return pairedSlotsToPerson;
+    }
+
+    private Stream<Pair> findAllPairsForPerson(List<Slots> slots, Persons person) {
+        List<Slots> remainingSlots = slotsByPerson(slots, predicateSlots(person).negate());
+        List<Slots> searchSlots = slotsByPerson(slots, predicateSlots(person));
+
+        List<Slots> pairedSlots = findPairsForPersonAndMerge(remainingSlots, searchSlots);
+
 
         return pairedSlots
                 .stream()
                 .map(Slots::getPerson)
+                .filter(p -> !p.equals(person))
                 .distinct()
-                .map(foundPerson -> new Pair(person, foundPerson, slotsByPerson(pairedSlots, predicateSlots(foundPerson))));
+                .map(foundPerson -> new Pair(
+                        person,
+                        foundPerson,
+                        slotsByPerson(pairedSlots, predicateSlots(person)),
+                        slotsByPerson(pairedSlots, predicateSlots(foundPerson))
+                ));
     }
 
     private List<Slots> withSlotsFromUnpairedPersons(List<Slots> slots, List<Persons> persons) {

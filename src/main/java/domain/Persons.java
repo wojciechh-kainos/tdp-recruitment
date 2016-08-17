@@ -19,7 +19,7 @@ import java.util.Set;
         @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
         @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
 })
-public class Persons {
+public class Persons implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,6 +75,17 @@ public class Persons {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private Set<Notes> notesList = new HashSet<Notes>();
+
+
+    @Override
+    public Persons clone(){
+        try{
+            final Persons result = (Persons) super.clone();
+            return result;
+        } catch(final CloneNotSupportedException ex){
+            throw new AssertionError();
+        }
+    }
 
     public Persons() {
     }
