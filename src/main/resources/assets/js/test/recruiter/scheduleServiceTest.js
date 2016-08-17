@@ -361,7 +361,7 @@ define(['angular', 'angularMocks',
                     "number": 7,
                     "type": AvailabilityEnum.available.name
                 }];
-                var startList = person.slotsList;
+                var startList = angular.copy(person.slotsList);
 
                 $scope.changeSlotTypeCycleThrough(person.slotsList[0], 7, weekStart, person);
 
