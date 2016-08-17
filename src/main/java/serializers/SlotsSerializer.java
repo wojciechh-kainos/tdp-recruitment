@@ -19,7 +19,7 @@ public class SlotsSerializer extends StdSerializer<Slots>{
         jgen.writeNumberField("id", slot.getId());
         jgen.writeNumberField("number", slot.getSlot().getId());
         jgen.writeStringField("type", slot.getType().getType().toString());
-        jgen.writeStringField("person", slot.getPerson().getId().toString());
+        jgen.writeStringField("day", slot.getSlotsDate().toString());
         jgen.writeEndObject();
     }
 
