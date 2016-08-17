@@ -10,9 +10,14 @@ define(['angular'
                 url: '/report',
                 abstract: true,
                 params: {
-                    dateStart: '',
-                    dateEnd: '',
+                    dateStart: '08-08-2016',
+                    dateEnd: '25-08-2016',
                     personId: false
+                },
+                views: {
+                    "@": {
+                        templateUrl: "/js/application/report/views/tdpr-report-index.html"
+                    }
                 }
             })
             .state("tdpr.report.home", {
@@ -27,7 +32,7 @@ define(['angular'
             .state("tdpr.report.details", {
                 url: '/details',
                 views: {
-                    "@": {
+                    "main@report": {
                         templateUrl: '/js/application/report/views/tdpr-report-details.html',
                         controller: 'tdprReportDetailsController'
                     }

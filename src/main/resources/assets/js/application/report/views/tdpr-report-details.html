@@ -4,4 +4,21 @@
 
 {{inputString}}
 
-<report ng-repeat="report in reportsElements | personNameFilter: inputString" report-data="report" person-info="report.person"></report>
+
+<div class="availabilities-table-container">
+    <table id="availabilities-table">
+        <thead>
+        <tr>
+            <td></td>
+            <td class="day-th">Init hours</td>
+            <td class="day-th">Full hours</td>
+            <td class="day-th">Remaining hours</td>
+        </tr>
+        </thead>
+        <tbody>
+            <tr report ng-repeat="reportElement in reportsElements | personNameFilter: inputString" report-data="reportElement" person-info="reportElement.person"></tr>
+        </tbody>
+    </table>
+</div>
+
+<a ui-sref="tdpr.recruiter.home">Back</a>

@@ -3,7 +3,7 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         return {
             restrict: 'AE',
             templateUrl: 'js/application/report/views/tdpr-directive-report.html',
-            replace: true,
+            replace: false,
             scope: {
                 reportData: '=',
                 personInfo: '='
