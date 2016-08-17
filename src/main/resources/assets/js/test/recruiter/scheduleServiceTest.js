@@ -362,10 +362,7 @@ define(['angular', 'angularMocks',
                 var startList = angular.copy(person.slotsList);
 
                 $scope.changeSlotTypeCycleThrough(person.slotsList[0], 7, weekStart, person);
-
-
                 $scope.changeSlotDiscardChanges(person);
-
 
                 expect(startList).toEqual(person.slotsList);
 
