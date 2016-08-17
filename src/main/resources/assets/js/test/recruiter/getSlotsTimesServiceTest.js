@@ -1,6 +1,6 @@
 define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTimesService'], function (angular) {
 
-    describe('tdprRecruiterGetSlotsTimesService', function () {
+    describe('tdprSlotsTimesService', function () {
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
         var $httpBackend;

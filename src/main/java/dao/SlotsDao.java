@@ -1,7 +1,6 @@
 package dao;
 
 import com.google.inject.Inject;
-import domain.Persons;
 import domain.Slots;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
@@ -12,8 +11,6 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.List;
-
-import static org.postgresql.hostchooser.HostRequirement.master;
 
 public class SlotsDao extends AbstractDAO<Slots> {
 
