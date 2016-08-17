@@ -30,6 +30,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
             $scope.displayedStartDate = $scope.days[0];
             $scope.displayedEndDate = $scope.days[4];
+
+            $scope.getPreviousWeekDates();
         };
 
         $scope.showNextWeek = function () {
@@ -114,6 +116,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 }
             );
         };
+
+        $scope.getPreviousWeekDates = function() {
+            $scope.previousDays = tdprDateService.getWeekWithOffset(offset-1);
+        };
+
+        $scope.getPreviousWeekDates();
     });
 });
 

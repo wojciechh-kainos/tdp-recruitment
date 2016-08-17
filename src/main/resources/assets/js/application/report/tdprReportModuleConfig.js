@@ -1,20 +1,35 @@
 define(['angular'
     , 'application/report/tdprReportModule'
     , 'application/report/controllers/tdprReportController'
+    , 'application/report/controllers/tdprReportDetailsController'
 ], function (angular, tdprReportModule) {
 
     tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("tdpr.report", {
                 url: '/report',
-                abstract: true
+                abstract: true,
+                params: {
+                    dateStart: '',
+                    dateEnd: '',
+                    personId: false
+                }
             })
             .state("tdpr.report.home", {
                 url: '/home',
                 views: {
                     "@": {
-                        templateUrl: '/js/application/report/views/tdpr-reports-home.html',
-                        controller: 'tdprReportsController'
+                        templateUrl: '/js/application/report/views/tdpr-report-home.html',
+                        controller: 'tdprReportController'
+                    }
+                }
+            })
+            .state("tdpr.report.details", {
+                url: '/details',
+                views: {
+                    "@": {
+                        templateUrl: '/js/application/report/views/tdpr-report-details.html',
+                        controller: 'tdprReportDetailsController'
                     }
                 }
             });

@@ -57,4 +57,7 @@
 <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
 
 <input class="submit-changes-button" type="button" ng-click="refreshPersonsData()" value="Refresh" />
+
+<a ui-sref="tdpr.report.details({dateStart: days[0], dateEnd: days[4], personId: true})">Get reports for current week</a>
+<a ui-sref="tdpr.report.details({dateStart: previousDays[0], dateEnd: previousDays[4], personId: true})">Get reports for previous week</a>
 </div>
