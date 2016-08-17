@@ -8,7 +8,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
         var responseData = {
             person : 'person',
             numberOfAvailableSlots : 5
-        }
+        };
 
         beforeEach(inject(function (_tdprReportService_, _$httpBackend_) {
             $service = _tdprReportService_;
@@ -20,7 +20,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
                 $httpBackend.expectGET('/api/report/13-01-2016/20-01-2016/1').respond(200, responseData);
                 $service.getReport('13-01-2016', '20-01-2016', 1).then(function(response){
                     expect(response).toEqual(responseData);
-                })
+                });
                 $httpBackend.flush();
             });
         })
