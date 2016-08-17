@@ -9,14 +9,12 @@ public class Report {
     private Long numberOfInitSlots;
     private Long numberOfFullSlots;
     private Long numberOfAvailableSlots;
-    private Long numberOfWastedSlots;
 
-    public Report(Persons person, Long numberOfInitSlots, Long numberOfAvailableSlots, Long numberOfFullSlots, Long numberOfWastedSlots) {
+    public Report(Persons person, Long numberOfInitSlots, Long numberOfAvailableSlots, Long numberOfFullSlots) {
         this.numberOfInitSlots = numberOfInitSlots;
         this.person = person;
         this.numberOfAvailableSlots = numberOfAvailableSlots;
         this.numberOfFullSlots = numberOfFullSlots;
-        this.numberOfWastedSlots = numberOfWastedSlots;
     }
 
     public Long getNumberOfInitSlots() {
@@ -51,11 +49,4 @@ public class Report {
         this.numberOfAvailableSlots = numberOfAvailableSlots;
     }
 
-    public Long getNumberOfWastedSlots() {
-        return numberOfWastedSlots;
-    }
-
-    public void setNumberOfWastedSlots(Long numberOfWastedSlots) {
-        this.numberOfWastedSlots = numberOfWastedSlots;
-    }
 }

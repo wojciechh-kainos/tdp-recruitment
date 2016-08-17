@@ -31,7 +31,6 @@ public class ReportService {
         Long availableCount = 0L;
         Long fullCount = 0L;
         Long initCount = 0L;
-        Long wastedCount = 0L;
 
         Persons person = personsDao.getById(personId);
 
@@ -48,9 +47,7 @@ public class ReportService {
                 initCount += 1;
             }
         }
-        wastedCount = availableCount - ( fullCount + initCount );
-
-        return new Report(person, initCount, availableCount, fullCount, wastedCount);
+        return new Report(person, initCount, availableCount, fullCount);
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {

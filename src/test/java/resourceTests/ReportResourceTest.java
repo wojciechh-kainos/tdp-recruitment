@@ -60,7 +60,7 @@ public class ReportResourceTest {
         }
 
         Long hours = new Long(200);
-        Report expected = new Report(p, hours, hours, hours, hours);
+        Report expected = new Report(p, hours, hours, hours);
 
         when(reportService.getReport(personId, startDate, endDate)).thenReturn(expected);
 
