@@ -54,8 +54,6 @@ public class ReportServiceGetReportTest {
     @Mock
     private static SlotsDao slotsDao;
 
-
-
     @Before
     public void setUp() throws IOException {
         mockPersons = MAPPER.readValue(fixture("fixtures/persons.json"),
@@ -74,7 +72,7 @@ public class ReportServiceGetReportTest {
                     .collect(Collectors.toCollection(ArrayList::new));
 
         expectedFirstReport = new Report(firstMockPerson, 1L,2L,1L);
-        expectedSecondReport = new Report(firstMockPerson, 0L,2L,1L);
+        expectedSecondReport = new Report(mockSecondPerson, 0L,2L,2L);
         reportService = new ReportService(slotsDao, personsDao);
 
         expectedReports = Arrays.asList(expectedFirstReport,expectedSecondReport);
@@ -91,17 +89,17 @@ public class ReportServiceGetReportTest {
     }
 
     @Test
-    @Ignore
     public void getAllReportsTest() {
         Date startDate = null;
         Date endDate = null;
 
         when(personsDao.findAll()).thenReturn(mockPersons);
-        when(slotsDao.getForPersonForWeek(firstMockPerson.getId(), startDate, endDate)).thenReturn(mockSlotsList);
+        when(personsDao.getById(firstMockPerson.getId())).thenReturn(firstMockPerson);
+        when(personsDao.getById(mockSecondPerson.getId())).thenReturn(mockSecondPerson);
+        when(slotsDao.getForPersonForWeek(firstMockPerson.getId(), startDate, endDate)).thenReturn(mockFirstPersonSlotsList);
+        when(slotsDao.getForPersonForWeek(mockSecondPerson.getId(), startDate, endDate)).thenReturn(mockSecondPersonSlotsList);
 
         List<Report> achieved = reportService.getAllReports(startDate, endDate);
-        assertThat(achieved.equals(expectedFirstReport));
+        assertEquals(expectedReports, achieved);
     }
-
-
 }
