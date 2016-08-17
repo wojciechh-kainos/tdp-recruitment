@@ -57,8 +57,12 @@
                 </div>
 
                 <div class="col-lg-1">
-                    <button class="btn btn-primary" type="button" ng-model="editNote" ng-click="editNoteSwitch()" ng-init="editNote = false; buttonTitle = 'Edit note'">{{buttonTitle}}</button>
+                        <button class="button-note" type="button" ng-model="editNote" ng-click="editNoteSwitch()">{{buttonTitle}}</button>
+                        <button class="button-note" type="button" ng-click="getNoteFromPreviousWeek()">Get note from previous week</button>
                 </div>
+            </div>
+            <div class="row">
+                {{warnMessage}}
             </div>
             <hr>
             <div>
