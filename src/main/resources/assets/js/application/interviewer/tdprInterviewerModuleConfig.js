@@ -21,7 +21,16 @@ define(['angular' 
                         templateUrl: "/html/partials/interviewer/tdp-interviewer-home.html", 
                         controller: "tdprInterviewerHomeController" 
                     } 
+                },
+                resolve: {
+                    person: function(tdprPersonService, $stateParams, $state) {
+                        return tdprPersonService.getPersonDetails($stateParams.id).then(function (response) {
+                            return response;
+                        }, function () {
+                            $state.go('tdpr.404');
+                    });
                 }
+              }
             }).state("tdpr.interviewer.details", {
               url: "/{id}/details",
               views: {
@@ -31,8 +40,12 @@ define(['angular' 
                   }
               },
               resolve:{
-                  person: function(tdprPersonService, $stateParams){
-                      return tdprPersonService.getPersonDetails($stateParams.id);
+                  person: function(tdprPersonService, $stateParams, $state){
+                      return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {
+                          return response;
+                      }, function () {
+                          $state.go('tdpr.404');
+                      });
                   }
               }
           }); 
