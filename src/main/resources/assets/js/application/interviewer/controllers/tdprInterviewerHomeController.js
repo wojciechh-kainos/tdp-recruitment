@@ -185,14 +185,17 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.markSlots = function(slot) {
-            if(slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id) {
-                return;
-            } else if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
-               return;
-            } else {
-                slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
+            if(!$scope.isRecruiter) {
+                if(slot.type === AvailabilityEnum.full.id ||
+                   slot.type === AvailabilityEnum.init.id ||
+                   $scope.relativeDayNumber < 0) {
+                    return;
+                }
             }
+
+            slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
+
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
         };
