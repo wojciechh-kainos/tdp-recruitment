@@ -13,16 +13,19 @@
                 <span ng-click="sortBy('numberOfInitSlots')">
                     Init hours
                 </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfInitSlots'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
             <td class="day-th">
                 <span ng-click="sortBy('numberOfFullSlots')">
                     Full hours
                 </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfFullSlots'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
             <td class="day-th">
                 <span ng-click="sortBy('numberOfAvailableSlots')">
                     Remaining hours
                 </span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableSlots'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
         </tr>
         </thead>

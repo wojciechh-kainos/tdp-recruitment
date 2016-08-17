@@ -1,3 +1,11 @@
 .day-th {
     cursor: pointer;
 }
+
+.sortOrder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+
+.sortOrder.sortReverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
