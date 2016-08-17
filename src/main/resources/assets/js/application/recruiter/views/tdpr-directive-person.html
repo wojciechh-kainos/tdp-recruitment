@@ -15,6 +15,6 @@ Note for this week:
 
     </div>
 <td ng-repeat="day in days">
-    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" ng-class="getClass()"
+    <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" slot-time-data="slotTime" ng-class="getClass()"
           ng-click="changeSlotType({slot: getSlot(slotTime.id, day), slotId: slotTime.id, day: day, person: personData})"></slot>
 </td>

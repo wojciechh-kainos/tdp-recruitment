@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="interviewer-header" id="interviewer-header" ng-show="!isRecruiter">Your availability</h1>
     <h1 class="interviewer-header" id="interviewer-header-for-recruiter" ng-show="isRecruiter">Availability of {{personName}}</h1>
-    <h4 id="description">click on slots to change availability</h4>
+    <h4 id="description">Click on slots to change availability</h4>
 
     <hr>
     <div id="date-container">
@@ -56,8 +56,12 @@
                 </div>
 
                 <div class="col-lg-1">
-                    <button class="btn btn-primary" type="button" ng-model="editNote" ng-click="editNoteSwitch()" ng-init="editNote = false; buttonTitle = 'Edit note'">{{buttonTitle}}</button>
+                        <button class="button-note" type="button" ng-model="editNote" ng-click="editNoteSwitch()">{{buttonTitle}}</button>
+                        <button class="button-note" type="button" ng-click="getNoteFromPreviousWeek()">Get note from previous week</button>
                 </div>
+            </div>
+            <div class="row">
+                {{warnMessage}}
             </div>
             <hr>
             <div>
