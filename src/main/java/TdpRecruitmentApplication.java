@@ -1,4 +1,3 @@
-import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
