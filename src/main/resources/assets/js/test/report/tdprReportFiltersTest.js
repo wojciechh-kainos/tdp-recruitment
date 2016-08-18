@@ -1,4 +1,5 @@
 define(['angular', 'angularMocks'
+    , 'lodash'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
     , 'application/report/tdprReportModule'], function (angular) {

@@ -7,7 +7,7 @@ require.config({
         'angular': 'lib/angular/angular',
         'uiRouter': 'lib/angular-ui-router/release/angular-ui-router.min',
         'ui-bootstrap': 'lib/angular-bootstrap/ui-bootstrap-tpls',
-        'lodash': 'lib/lodash/dist/lodash',
+        'lodash': 'lib/lodash/lodash',
         'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'moment' : 'lib/moment/moment',
         'angular-moment' : 'lib/angular-moment/angular-moment'

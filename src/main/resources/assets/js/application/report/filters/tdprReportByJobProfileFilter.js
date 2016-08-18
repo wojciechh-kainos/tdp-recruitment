@@ -5,6 +5,14 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
                 return reports;
             }
 
+            if (typeof jobProfile === 'string' || jobProfile instanceof String) {
+                return _.filter(reports,
+                    function (report) {
+                        return report.person[jobProfile]
+                    }
+                );
+            }
+
             return _.filter(reports,
                 function (report) {
                     return _.find(jobProfile, function (value, key) {
