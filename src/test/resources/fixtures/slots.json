@@ -4,7 +4,11 @@
       "person": {
         "id": 1
       },
-      "slot": {},
+      "slot": {
+        "id": 1,
+        "startTime": "08:00:00",
+        "endTime": "08:30:00"
+      },
       "type": {
         "type": "available"
       },
@@ -15,7 +19,11 @@
       "person": {
         "id": 1
       },
-      "slot": {},
+      "slot": {
+        "id": 2,
+        "startTime": "08:30:00",
+        "endTime": "09:00:00"
+      },
       "type": {
         "type": "available"
       },
@@ -26,7 +34,11 @@
       "person": {
         "id": 1
       },
-      "slot": {},
+      "slot": {
+        "id": 3,
+        "startTime": "09:00:00",
+        "endTime": "09:30:00"
+      },
       "type": {
         "type": "full"
       },
@@ -37,7 +49,11 @@
       "person": {
         "id": 1
       },
-      "slot": {},
+      "slot": {
+        "id": 4,
+        "startTime": "09:30:00",
+        "endTime": "10:00:00"
+      },
       "type": {
         "type": "init"
       },
@@ -48,7 +64,11 @@
       "person": {
         "id": 2
       },
-      "slot": {},
+      "slot": {
+        "id": 5,
+        "startTime": "10:00:00",
+        "endTime": "10:30:00"
+      },
       "type": {
         "type": "available"
       },
@@ -59,7 +79,11 @@
       "person": {
         "id": 2
       },
-      "slot": {},
+      "slot": {
+        "id": 6,
+        "startTime": "10:30:00",
+        "endTime": "11:00:00"
+      },
       "type": {
         "type": "available"
       },
@@ -70,7 +94,11 @@
       "person": {
         "id": 2
       },
-      "slot": {},
+      "slot": {
+        "id": 7,
+        "startTime": "11:00:00",
+        "endTime": "11:30:00"
+      },
       "type": {
         "type": "full"
       },
@@ -81,7 +109,11 @@
       "person": {
         "id": 2
       },
-      "slot": {},
+      "slot": {
+        "id": 8,
+        "startTime": "11:30:00",
+        "endTime": "12:00:00"
+      },
       "type": {
         "type": "full"
       },
