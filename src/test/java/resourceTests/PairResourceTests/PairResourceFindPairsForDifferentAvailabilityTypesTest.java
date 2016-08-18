@@ -20,8 +20,6 @@ import static org.mockito.Mockito.when;
 
 public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
-    private final int TODAY_OFFSET = 0;
-    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
@@ -36,9 +34,10 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
     @Before
     public void setUp(){
+        int TODAY_OFFSET = 0;
         Date date = MockDataUtil.createDate(TODAY_OFFSET);
+        int TOMORROW_OFFSET = 1;
         Date nextDate = MockDataUtil.createDate(TOMORROW_OFFSET);
-
         startDate = MockDataUtil.convertDateToString(date);
         endDate = MockDataUtil.convertDateToString(nextDate);
 
@@ -48,7 +47,6 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
         Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, firstPerson, date, typeAvailable));
-
         Persons secondPerson = MockDataUtil.createPersons((long)2, "SECOND", isDev, isTest, isOps);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, date, typeMaybe));
 
@@ -58,11 +56,11 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
     @Test
     public void testFindPairForDifferentAvailabilityTypes(){
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        List<Pair> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List<Persons> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
-        assertEquals("One pair should be found", 1, pairs.size());
+        assertEquals("One pair should be found", 2, pairs.size());
 
-        Pair pair = pairs.get(0);
-        assertEquals("Pair should have 3 elements", 3, pair.getSlots().size());
+        Persons pair = pairs.get(0);
+        assertEquals("Pair should have 3 elements", 3, pair.getSlotsList().size());
     }
 }

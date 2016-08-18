@@ -21,14 +21,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsInUnorderedSlotsTest {
 
-    private final int TODAY_OFFSET = 0;
-    private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
     private String startDate;
     private String endDate;
-
     private PairResource resource;
     private List<Slots> mockSlots = new ArrayList<>();
 
@@ -36,8 +33,9 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
     private static SlotsDao mockDao;
 
     @Before
-    public void setUp(){
-
+    public void setUp() {
+        int TODAY_OFFSET = 0;
+        int TOMORROW_OFFSET = 1;
         Date date = MockDataUtil.createDate(TODAY_OFFSET);
         Date nextDate = MockDataUtil.createDate(TOMORROW_OFFSET);
 
@@ -54,26 +52,24 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
         SlotsTimes sameSlotsTimeSeventh = MockDataUtil.createSlotsTimes((long) 8, LocalTime.of(11, 30, 0), LocalTime.of(12, 0, 0));
 
         List<SlotsTimes> unorderedSlotsTimes = Arrays.asList(sameSlotsTimesFirst, sameSlotsTimesSecond,
-                                                                sameSlotsTimeThird, sameSlotsTimeFourth,
-                                                                     sameSlotsTimeFifth, sameSlotsTimeSixth, sameSlotsTimeSeventh);
+                sameSlotsTimeThird, sameSlotsTimeFourth,
+                sameSlotsTimeFifth, sameSlotsTimeSixth, sameSlotsTimeSeventh);
 
-        Persons firstPerson = MockDataUtil.createPersons((long)1, "FIRST", isDev, isTest, isOps);
+        Persons firstPerson = MockDataUtil.createPersons((long) 1, "FIRST", isDev, isTest, isOps);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, firstPerson, date, availabilityType));
-
-        Persons secondPerson = MockDataUtil.createPersons((long)2, "SECOND", isDev, isTest, isOps);
+        Persons secondPerson = MockDataUtil.createPersons((long) 2, "SECOND", isDev, isTest, isOps);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, secondPerson, date, availabilityType));
 
         resource = new PairResource(mockDao);
     }
 
     @Test
-    public void testFindPairForWeekInUnorderedSlots(){
+    public void testFindPairForWeekInUnorderedSlots() {
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        List<Pair> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Persons pair = pairs.get(0);
 
-        assertEquals("One pair should be found", 1, pairs.size());
-
-        Pair pair = pairs.get(0);
-        assertEquals("Pair should have 6 elements", 6, pair.getSlots().size());
+        assertEquals("Two persons should be found", 2, pairs.size());
+        assertEquals("First person should have 6 slots in slotsList", 6, pair.getSlotsList().size());
     }
 }

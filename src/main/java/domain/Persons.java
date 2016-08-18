@@ -206,4 +206,9 @@ public class Persons implements Cloneable {
     public Time getDefaultFinishHour() {return defaultFinishHour;}
 
     public void setDefaultFinishHour(Time defaultFinishHour) {this.defaultFinishHour = defaultFinishHour;}
+
+    @Override
+    public String toString(){
+        return "personId: " + id;
+    }
 }

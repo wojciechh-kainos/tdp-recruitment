@@ -33,10 +33,10 @@ public class PairResource {
     @GET
     @UnitOfWork
     public List<Persons> findPairs(@QueryParam("startDate") String startDate,
-                                @QueryParam("endDate") String endDate,
-                                @QueryParam("isDev") Boolean isDev,
-                                @QueryParam("isTest") Boolean isTest,
-                                @QueryParam("isOps") Boolean isOps) {
+                                   @QueryParam("endDate") String endDate,
+                                   @QueryParam("isDev") Boolean isDev,
+                                   @QueryParam("isTest") Boolean isTest,
+                                   @QueryParam("isOps") Boolean isOps) {
 
         List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
         List<Persons> persons = findPersonsInSlots(slots);
@@ -59,13 +59,13 @@ public class PairResource {
                     if (persons.stream().anyMatch(p -> p.getId().equals(person.getId()))) {
                         Persons foundPerson = getPersonsListElement(persons, person.getId());
                         List<Slots> foundSlots = foundPerson.getSlotsList();
-                        List<Slots> newSlots = person.getSlotsList();
+                        foundSlots.addAll(person.getSlotsList());
 
-                        newSlots
-                                .stream()
-                                .filter(ns -> foundSlots.stream().anyMatch(fs -> ns.getId().equals(fs.getId())))
-                                .peek(newSlots::add);
-
+                        foundPerson
+                                .setSlotsList(foundSlots
+                                        .stream()
+                                        .distinct()
+                                        .collect(Collectors.toCollection(ArrayList::new)));
                     } else {
                         persons.add(person);
                     }
