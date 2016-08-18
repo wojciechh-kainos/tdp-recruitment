@@ -14,7 +14,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
 
         beforeEach(inject(function (_tdprReportService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
             reportService = _tdprReportService_;
-            dateService = jasmine.createSpyObj('tdprDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate'])
+            dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
             $scope = _$rootScope_.$new();
             $state = _$state_;
             $httpBackend = _$httpBackend_;
@@ -23,16 +23,27 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
                 $scope : $scope,
                 $state : $state,
                 tdprReportService : reportService,
-                tdprDateService : dateService
+                tdprReportDateService : dateService
             });
         }));
 
-        describe('Function setLastWeekDate', function(){
-            it('should set this week dates in $scope', function(){
+        describe('Function activate', function(){
+            it('function from dateService should be triggered when state params empty', function(){
                 $state.params.dateStart = '';
                 $state.params.dateEnd = '';
                 $scope.activate();
                 expect(dateService.getLastWeekStartDate).toHaveBeenCalled();
+                expect(dateService.getLastWeekEndDate).toHaveBeenCalled();
+            });
+
+            it('function from dateService should be triggered when state params empty, $scope values of start and end date should be equal $state values', function(){
+                $state.params.dateStart = '2016-08-08';
+                $state.params.dateEnd = '2016-08-14';
+                $scope.activate();
+                expect(dateService.getLastWeekStartDate).not.toHaveBeenCalled();
+                expect(dateService.getLastWeekEndDate).not.toHaveBeenCalled();
+                expect($scope.startDate).toEqual(new Date($state.params.dateStart));
+                expect($scope.endDate).toEqual(new Date($state.params.dateEnd));
             });
         })
     })
