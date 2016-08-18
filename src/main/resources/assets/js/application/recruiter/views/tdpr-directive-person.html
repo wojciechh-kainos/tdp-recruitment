@@ -3,7 +3,7 @@
         <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})" tooltip-placement="right"
            uib-tooltip="
 Default working hours:
-{{defaultStartHour | limitTo: 5}}-{{defaultFinishHour | limitTo: 5}}
+{{personData.defaultStartHour | limitTo: 5}}-{{personData.defaultFinishHour | limitTo: 5}}
 Note for this week:
 {{note}}
 ">
