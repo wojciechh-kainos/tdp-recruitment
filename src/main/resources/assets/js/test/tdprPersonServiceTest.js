@@ -27,7 +27,7 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                        "admin": false,
                        "isDev": true,
                        "isTest": false,
-                       "isWeb": false,
+                       "isOps": false,
                        "bandLevel": 1,
                        "activationCode": null,
                        "active": true,

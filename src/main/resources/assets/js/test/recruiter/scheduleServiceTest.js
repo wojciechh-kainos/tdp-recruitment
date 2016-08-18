@@ -76,7 +76,7 @@ define(['angular', 'angularMocks',
 
                 $provide.constant('JobProfileEnum', {
                     dev: "isDev",
-                    web: "isWeb",
+                    ops: "isOps",
                     test: "isTest"
                 });
 
@@ -128,7 +128,7 @@ define(['angular', 'angularMocks',
                 "id": 1,
                 "isDev": true,
                 "isTest": false,
-                "isWeb": false,
+                "isOps": false,
                 "lastName": "Test",
                 "password": null,
                 "slotsList": null

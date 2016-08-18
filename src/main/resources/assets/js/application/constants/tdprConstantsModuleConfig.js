@@ -41,7 +41,7 @@ define(['angular'
         }
     }).constant('JobProfileEnum', {
         dev: "isDev",
-        web: "isWeb",
+        ops: "isOps",
         test: "isTest"
     }).constant('BandLevelEnum',{
         "1": "1 - Principal",

@@ -19,4 +19,5 @@
     <include file="changelogs/addDefaultWorkingHoursPersonsTable.xml"/>
     <include file="changelogs/changeTableNames.xml"/>
     <include file="changelogs/changeColumnName.xml"/>
+    <include file="changelogs/changeColumnNameInPerson.xml"/>
 </databaseChangeLog>

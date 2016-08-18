@@ -44,8 +44,8 @@ public class Person {
     @Column(name = "is_test")
     private Boolean isTest;
 
-    @Column(name = "is_web")
-    private Boolean isWeb;
+    @Column(name = "is_ops")
+    private Boolean isOps;
 
     @NotNull
     @Column(name = "band_level")
@@ -148,12 +148,12 @@ public class Person {
         this.isTest = isTest;
     }
 
-    public Boolean getIsWeb() {
-        return isWeb;
+    public Boolean getIsOps() {
+        return isOps;
     }
 
-    public void setIsWeb(Boolean isWeb) {
-        this.isWeb = isWeb;
+    public void setIsOps(Boolean isOps) {
+        this.isOps = isOps;
     }
 
     public Integer getBandLevel() {
