@@ -64,7 +64,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.goBackToRecruiterView = function(){
             $state.go('tdpr.recruiter.home');
-        }
+        };
 
         $scope.discardChanges = function() {
             $scope.clearTable();
@@ -157,6 +157,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
+            disableNoteEditing();
         };
 
         function enableNoteEditing() {
@@ -245,7 +246,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
              })
-        }
+        };
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
