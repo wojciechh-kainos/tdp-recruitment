@@ -20,7 +20,7 @@ define(['angular', 'application/report/tdprReportModule'
             $scope.columnMap[column].reverse = $scope.sortReverse = !$scope.columnMap[column].reverse;
         };
 
-        function activate() {
+        $scope.activate = function() {
 
             if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
                 $scope.startDate = tdprDateService.getLastWeekStartDate();
@@ -56,7 +56,7 @@ define(['angular', 'application/report/tdprReportModule'
             $scope.getReports();
         };
 
-        activate();
+        $scope.activate();
 
 //        $scope.getPreviousWeekReportsLegacy = function (offset) {
 //            var week = tdprDateService.getWeekWithOffset(offset);

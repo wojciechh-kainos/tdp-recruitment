@@ -9,20 +9,15 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
         var $state;
         var $scope;
         var getReportsDeferred;
+        var $controller;
 
-        beforeEach(inject(function (_tdprReportService_, _tdprDateService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
+        beforeEach(inject(function (_tdprReportService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
             reportService = _tdprReportService_;
-            dateService = _tdprDateService_;
+            dateService = jasmine.createSpyObj('tdprDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate'])
             $scope = _$rootScope_.$new();
             $state = _$state_;
             $httpBackend = _$httpBackend_;
             getReportsDeferred = $q.defer();
-
-            spyOn(dateService, 'getLastWeekStartDate').and.returnValue(new Date());
-            spyOn(dateService, 'getLastWeekEndDate').and.returnValue(new Date());
-            spyOn(dateService, 'getLastMonthStartDate').and.returnValue(new Date());
-            spyOn(dateService, 'getLastMonthEndDate').and.returnValue(new Date());
-
             $controller('tdprReportDetailsController', {
                 $scope : $scope,
                 $state : $state,
@@ -35,7 +30,8 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
             it('should set this week dates in $scope', function(){
                 $state.params.dateStart = '';
                 $state.params.dateEnd = '';
-                expect(true).toEqual(true);
+                $scope.activate();
+                expect(dateService.getLastWeekStartDate).toHaveBeenCalled();
             });
         })
     })
