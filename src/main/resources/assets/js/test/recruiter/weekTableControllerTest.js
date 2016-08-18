@@ -15,6 +15,11 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
         var updateSlotsDeferred;
         var fetchPersonsDeferred;
+        var WeekNavigateEnum = {
+            previous : -1,
+            next : 1,
+            current : 0
+        };
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
@@ -85,6 +90,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                     Notification: Notification,
                     tdprRecruiterSlotsService: tdprRecruiterSlotsService,
                     AvailabilityEnum: AvailabilityEnum,
+                    WeekNavigateEnum: WeekNavigateEnum,
                     tdprScheduleService: tdprScheduleService
                 });
             })
@@ -107,11 +113,11 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
             });
         });
 
-        describe('showNextWeek', function () {
+        describe('changeWeek', function () {
             it('should call dateService with correct offset', function () {
-                $scope.showNextWeek();
-                $scope.showNextWeek();
-                $scope.showNextWeek();
+                $scope.changeWeek(WeekNavigateEnum.next);
+                $scope.changeWeek(WeekNavigateEnum.next);
+                $scope.changeWeek(WeekNavigateEnum.next);
 
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(1);
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(2);
@@ -119,46 +125,18 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(3);
                 expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
             });
-        });
 
-        describe('showPreviousWeek', function () {
             it('should call dateService with correct offset', function () {
-                $scope.showPreviousWeek();
-                $scope.showPreviousWeek();
-                $scope.showPreviousWeek();
+               $scope.changeWeek(WeekNavigateEnum.previous);
+               $scope.changeWeek(WeekNavigateEnum.previous);
+               $scope.changeWeek(WeekNavigateEnum.previous);
 
-                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-1);
-                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-2);
-                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-3);
-                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(3);
-                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
-            });
-        });
-
-        describe('refreshPersonsData', function () {
-            it('should update persons data on success', function () {
-                var expectedValue = "some dummy return value";
-                fetchPersonsDeferred.resolve(expectedValue);
-
-                $scope.refreshPersonsData();
-                $scope.$apply();
-
-                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalled();
-                expect($scope.persons).toEqual(expectedValue);
-            });
-
-            it('should show notification on error', function () {
-                fetchPersonsDeferred.reject();
-
-                $scope.refreshPersonsData();
-                $scope.$apply();
-
-                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalled();
-                expect(Notification.error).toHaveBeenCalledWith({
-                    message: "Failed to refresh persons data",
-                    delay: 3000
-                });
-            });
+               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-1);
+               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-2);
+               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-3);
+               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(3);
+               expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
+           });
         });
 
         describe('changeSlotSubmitChanges', function () {
