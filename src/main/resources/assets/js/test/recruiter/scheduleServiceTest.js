@@ -80,6 +80,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
                 tdprScheduleService.changeSlotType(slot, slot.number, day, person, undefined);
 
                 expect(slot.type).toEqual("");
+                expect(person.changesPending).toEqual(true);
             });
 
             it('should create new slot if it does not exists', function () {

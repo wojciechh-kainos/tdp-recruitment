@@ -3,14 +3,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
+
+            if (!person.changesPending || angular.isUndefined(person.changesPending)) {
+                person.oldSlotList = angular.copy(person.slotsList);
+                person.changesPending = true;
+            }
+
             if (slot !== undefined) {
-                if (changeTo !== undefined) {
-                    // There is still availability type to change
+                if (changeTo !== undefined) { // there is still availability type to change
                     slot.type = changeTo;
-                } else {
-                    // There is no more availability types, so we need to clear slot
+                } else { // there are no more availability types, so we need to clear slot
                     slot.type = "";
-                    return;
                 }
             } else {
                 person.slotsList.push({
@@ -20,7 +23,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     type: changeTo
                 });
             }
-            person.changesPending = true;
+        };
+
+        this.changeSlotDiscardChanges = function (personData) {
+            personData.slotsList = angular.copy(personData.oldSlotList);
+            personData.oldSlotList = [];
+            personData.changesPending = false;
         };
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
@@ -34,13 +42,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 // Available/maybe - full - init - maybe
                 var newType = undefined;
 
-                switch(slot.type) {
+                switch (slot.type) {
                     case AvailabilityEnum.available.name:
                     case AvailabilityEnum.maybe.name:
                     case AvailabilityEnum.init.name:
                         newType = AvailabilityEnum.full.name;
                         break;
-
                     case AvailabilityEnum.full.name:
                         newType = AvailabilityEnum.init.name;
                         break;
@@ -51,6 +58,5 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
             }
         };
-
     }]);
 });
