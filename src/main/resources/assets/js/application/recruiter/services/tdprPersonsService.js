@@ -18,7 +18,12 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             return $http.put("/api/person/create/", person).then(function (response) {
                 return response;
             }, function (err) {
-                err.message = "Interviewer adding failed.";
+
+                if (err.status == 409) {
+                    err.message = "Email address already in use.";
+                } else {
+                    err.message = "Interviewer adding failed.";
+                }
                 return $q.reject(err);
             });
         };

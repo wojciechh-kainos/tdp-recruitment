@@ -13,7 +13,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
 import services.MailService;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -44,10 +46,19 @@ public class PersonsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Persons createPerson(Persons person) {
-        personsDao.create(person);
-        mailService.sendEmail(person.getEmail(), person.getId());
-        return person;
+
+        if (personsDao.findByEmail(person.getEmail()).isEmpty()) {
+
+            personsDao.create(person);
+            mailService.sendEmail(person.getEmail(), person.getId());
+
+            return person;
+
+        } else {
+            throw new WebApplicationException(Response.Status.CONFLICT);
+        }
     }
+
 
     @GET
     @Path("/all")
@@ -60,8 +71,8 @@ public class PersonsResource {
         persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
             Notes note = notesDao.getByPersonIdAndDate(p.getId(), start);
-            if(note != null) {
-                if(!note.getDescription().isEmpty()) {
+            if (note != null) {
+                if (!note.getDescription().isEmpty()) {
                     p.setNotesList(Arrays.asList(note));
                 }
             }
@@ -76,14 +87,14 @@ public class PersonsResource {
     public Notes getNote(@PathParam("personId") Long personId,
                          @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return notesDao.getByPersonIdAndDate(personId,date);
+        return notesDao.getByPersonIdAndDate(personId, date);
     }
 
     @PUT
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Response createOrUpdate(Notes note){
+    public Response createOrUpdate(Notes note) {
         Date now = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(note.getDate());
@@ -100,7 +111,7 @@ public class PersonsResource {
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Response getPersonById(@PathParam("id") Long id){
+    public Response getPersonById(@PathParam("id") Long id) {
         Persons person = personsDao.getById(id);
         if (person == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

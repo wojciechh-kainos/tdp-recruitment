@@ -13,7 +13,8 @@ import java.util.List;
 @Table(name = "persons")
 @NamedQueries({
         @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
-        @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
+        @NamedQuery(name = "Persons.findAll", query = "select p from Persons p"),
+        @NamedQuery(name = "Persons.findByEmail", query = "select p from Persons p where email = :email")
 })
 public class Persons {
 

@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import resources.PersonsResource;
 import services.MailService;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.text.ParseException;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +43,8 @@ public class PersonsResourcesTest {
     private static List<Notes> stubNoteDB;
     private static Date date;
     private static String dateString;
-    private static Persons person;
+    private static Persons firstPerson;
+    private static Persons secondPerson;
     private static Notes note, note2, note3;
 
     @BeforeClass
@@ -51,15 +54,22 @@ public class PersonsResourcesTest {
         c.setTime(date3); // Now use today date.
         c.add(Calendar.DATE, 10); // Adding 10 days
 
-        person = new Persons();
-        person.setId(1L);
+        firstPerson = new Persons();
+        firstPerson.setEmail("TEST@TEST.PL");
+        firstPerson.setId(1L);
+
+        secondPerson = new Persons();
+        secondPerson.setEmail("TEST@TEST.PL");
+        secondPerson.setId(2L);
+
         dateString = "26-07-2016";
         date = Date.valueOf("2016-07-26");
-        note = new Notes(1L, person, "note nr 1", date);
-        note2 = new Notes(2L, person, "note nr 2", date);
-        note3 = new Notes(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
+        note = new Notes(1L, firstPerson, "note nr 1", date);
+        note2 = new Notes(2L, firstPerson, "note nr 2", date);
+        note3 = new Notes(2L, firstPerson, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
         stubNoteDB = new ArrayList<>();
         stubNoteDB.add(note);
+
     }
 
     @Before
@@ -94,5 +104,41 @@ public class PersonsResourcesTest {
         Response result = resource.createOrUpdate(note3);
 
         assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
+    }
+
+    @Test
+    public void testCreatePerson(){
+
+        mockPersonsDao.create(firstPerson);
+
+        //  TODO: 18/08/16.
+
+        verify(mockPersonsDao, times(1)).create(firstPerson);
+
+    }
+
+    @Test
+    public void testCreatePersonWithEmailInUse(){
+
+        mockPersonsDao.create(firstPerson);
+
+        //TODO: initialize Response r object here because assertEquals is not working inside the catch block.
+
+
+        try {
+            resource.createPerson(secondPerson);
+        }
+        catch (WebApplicationException e) {
+            Response r = e.getResponse();
+
+            assertEquals(Response.Status.CONFLICT, r.getStatusInfo());
+
+        }
+
+
+        verify(mockPersonsDao, times(1)).create(firstPerson);
+        verify(mockPersonsDao, times(1)).create(secondPerson);
+        verify(mockPersonsDao, times(1)).findByEmail(secondPerson.getEmail());
+
     }
 }
