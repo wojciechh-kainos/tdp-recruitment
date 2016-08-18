@@ -148,7 +148,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});
-            }, function(){
+            }, function(response){
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
             });
 
@@ -157,6 +157,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
+            disableNoteEditing();
         };
 
         function enableNoteEditing() {
@@ -223,7 +224,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     $scope.noteContent = response.data;
                     $scope.temporaryContent = response.data.description;
                 }
-            }, function() {
+            }, function(failure) {
                 Notification.warning({
                    message: 'Something went wrong with getting your note.',
                    delay: 2000});
@@ -247,7 +248,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                         message: 'Something went wrong.',
                         delay: 2000});
                 }
-            },function() {
+            },function(failure) {
                    Notification.warning({
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
