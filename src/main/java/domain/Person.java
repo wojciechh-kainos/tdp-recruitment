@@ -22,6 +22,7 @@ public class Person {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String email;
 
     @NotNull
