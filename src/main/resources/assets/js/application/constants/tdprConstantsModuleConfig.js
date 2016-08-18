@@ -50,6 +50,10 @@ define(['angular'
         "4": "4 - Senior associate",
         "5": "5 - Associate",
         "6": "6 - Trainee"
+    }).constant('WeekNavigateEnum',{
+        previous : -1,
+        next : 1,
+        current : 0
     });
 
     return tdprConstantsModule;
