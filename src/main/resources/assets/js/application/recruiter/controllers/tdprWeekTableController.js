@@ -39,16 +39,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             $scope.displayedEndDate = $scope.days[4];
         };
 
-        $scope.refreshPersonsData = function () {
-            tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
-                function (persons) {
-                    $scope.persons = persons;
-                }
-            ).catch(function () {
-                Notification.error({message: "Failed to refresh persons data", delay: 3000});
-            });
-        };
-
         $scope.changeSlotSubmitChanges = function (personData) {
             var endDate = new Date($scope.days[4]);
             endDate.setDate(endDate.getDate() + 1);
@@ -70,4 +60,3 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
-

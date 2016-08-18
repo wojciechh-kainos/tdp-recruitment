@@ -139,32 +139,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
            });
         });
 
-        describe('refreshPersonsData', function () {
-            it('should update persons data on success', function () {
-                var expectedValue = "some dummy return value";
-                fetchPersonsDeferred.resolve(expectedValue);
-
-                $scope.refreshPersonsData();
-                $scope.$apply();
-
-                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalled();
-                expect($scope.persons).toEqual(expectedValue);
-            });
-
-            it('should show notification on error', function () {
-                fetchPersonsDeferred.reject();
-
-                $scope.refreshPersonsData();
-                $scope.$apply();
-
-                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalled();
-                expect(Notification.error).toHaveBeenCalledWith({
-                    message: "Failed to refresh persons data",
-                    delay: 3000
-                });
-            });
-        });
-
         describe('changeSlotSubmitChanges', function () {
             it('should show notification on success', function () {
                 updateSlotsDeferred.resolve();

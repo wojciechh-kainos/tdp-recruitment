@@ -1,5 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprScheduleService', ['dateFilter', 'AvailabilityEnum', function (dateFilter, AvailabilityEnum) {
+        var that = this;
 
         this.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
@@ -36,7 +37,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
             if (slot === undefined) {
                 // Add available slot for future changes
-                return this.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name);
+                that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name);
             } else {
                 // Cycle through
                 // Available/maybe - full - init - maybe
@@ -54,7 +55,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
 
                 if (newType !== undefined) {
-                    return this.changeSlotType(slot, slotId, date, person, newType);
+                    that.changeSlotType(slot, slotId, date, person, newType);
                 }
             }
         };
