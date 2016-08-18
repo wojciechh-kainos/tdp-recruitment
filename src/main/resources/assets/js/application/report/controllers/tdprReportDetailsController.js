@@ -5,7 +5,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, moment) {
 
         $scope.sortBy = function(column) {
             $scope.sortColumn = column;
@@ -13,16 +13,13 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         function activate(){
-            console.log($state.params.dateStart);
-            console.log($state.params.dateEnd);
+
             if($state.params.dateStart === '' || $state.params.dateEnd === ''){
-                var today = new Date();
-                $scope.endDate = new Date();
-                $scope.startDate = new Date(today.setDate(today.getDate() - 7));
+                setLastWeekDate();
             }
             else{
-                $scope.endDate = new Date($state.params.dateEnd);
-                $scope.startDate = new Date($state.params.dateStart);
+                $scope.endDate = moment($state.params.dateEnd).toDate();
+                $scope.startDate = moment($state.params.dateStart).toDate();
             }
             $scope.getReports();
         }
@@ -36,16 +33,26 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         $scope.getPreviousWeekReports = function(){
-            var today = new Date();
-            $scope.startDate = new Date(today.setDate(today.getDate() - 7));
-            while($scope.startDate.getUTCDay() !== 1){
-                $scope.startDate = new Date(today.setDate(today.getDate() - 1));
-            }
-            $scope.endDate = new Date($scope.endDate.setDate($scope.startDate.getDate() + 6));
+            setLastWeekDate();
+            $scope.getReports();
+        }
+
+        $scope.getPreviousMonthReports = function(){
+            setLastMonthDate();
             $scope.getReports();
         }
 
         activate();
+
+        function setLastWeekDate(){
+            $scope.startDate = moment().subtract(1,'week').startOf('week').add(1,'day').toDate();
+            $scope.endDate = moment($scope.startDate).add(6,'day').toDate();
+        }
+
+        function setLastMonthDate(){
+            $scope.startDate = moment().subtract(1,'month').startOf('month').toDate();
+            $scope.endDate = moment($scope.startDate).endOf('month').toDate();
+        }
 
     })
 });
