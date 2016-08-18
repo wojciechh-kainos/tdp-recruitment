@@ -32,7 +32,6 @@ public class SlotResource {
                            @PathParam("date_from") String date_from,
                            @PathParam("date_to") String date_to,
                            @QueryParam("personId") long person_id, List<Slot> slots) throws ParseException {
-
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date now = new Date();
         Date startDate = formatter.parse(date_from);
