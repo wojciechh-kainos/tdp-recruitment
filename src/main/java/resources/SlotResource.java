@@ -28,13 +28,12 @@ public class SlotResource {
     @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Response update(Slot[] slots,
+    public Response update(
                            @PathParam("date_from") String date_from,
                            @PathParam("date_to") String date_to,
-                           @QueryParam("personId") long person_id) throws ParseException {
+                           @QueryParam("personId") long person_id, List<Slot> slots) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
         Date now = new Date();
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);

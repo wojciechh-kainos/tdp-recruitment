@@ -40,7 +40,7 @@ public class SlotDaoTest extends BaseTest{
         Slot slot = new Slot();
         slot.setSlotDate(new Date(LocalDate.now().toDate().getTime()));
         slot.setPerson(person);
-        slot.setSlot(slotsTime);
+        slot.setSlotTime(slotsTime);
         slot.setType(availabilityType);
 
         id = slotDao.create(slot);

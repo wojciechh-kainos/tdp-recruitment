@@ -16,7 +16,7 @@ public class SlotSerializer extends StdSerializer<Slot>{
     public void serialize(Slot slot, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
         jgen.writeNumberField("id", slot.getId());
-        jgen.writeNumberField("number", slot.getSlot().getId());
+        jgen.writeNumberField("number", slot.getSlotTime().getId());
         jgen.writeStringField("type", slot.getType().getName());
         jgen.writeStringField("day", slot.getSlotDate().toString());
         jgen.writeEndObject();

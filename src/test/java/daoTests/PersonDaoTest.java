@@ -44,7 +44,7 @@ public class PersonDaoTest extends BaseTest {
 
         Slot slot = new Slot();
         slot.setSlotDate(new Date(LocalDate.now().toDate().getTime()));
-        slot.setSlot(slotTime);
+        slot.setSlotTime(slotTime);
         slot.setType(availabilityType);
 
         getSession().beginTransaction();

@@ -72,11 +72,11 @@ public class Slot {
         this.person = person;
     }
 
-    public SlotTime getSlot() {
+    public SlotTime getSlotTime() {
         return slotTime;
     }
 
-    public void setSlot(SlotTime slotTime) {
+    public void setSlotTime(SlotTime slotTime) {
         this.slotTime = slotTime;
     }
 

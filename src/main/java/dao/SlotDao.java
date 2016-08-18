@@ -56,7 +56,7 @@ public class SlotDao extends AbstractDAO<Slot> {
                 .executeUpdate();
     }
 
-    public void updateForPersonAndWeek(Slot[] slots, Long personId, Date from, Date to) {
+    public void updateForPersonAndWeek(List<Slot> slots, Long personId, Date from, Date to) {
         deleteForPersonBetweenDates(personId, from, to);
         for (Slot slot : slots) persist(slot);
     }

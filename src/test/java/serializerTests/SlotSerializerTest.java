@@ -43,7 +43,7 @@ public class SlotSerializerTest {
 
         slot = new Slot();
         slot.setPerson(person);
-        slot.setSlot(slotTime);
+        slot.setSlotTime(slotTime);
         slot.setType(availabilityType);
 
     }
