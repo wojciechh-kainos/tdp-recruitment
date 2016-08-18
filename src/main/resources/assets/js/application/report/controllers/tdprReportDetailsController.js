@@ -4,48 +4,76 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/directives/tdprJobProfileDirective'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
+    , 'application/recruiter/services/tdprDateService'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, moment, tdprDateService) {
 
-        $scope.sortBy = function(column) {
+        $scope.sortBy = function (column) {
             $scope.sortColumn = column;
             $scope.sortReverse = !$scope.sortReverse;
-        }
+        };
 
-        function activate(){
-            console.log($state.params.dateStart);
-            console.log($state.params.dateEnd);
-            if($state.params.dateStart === '' || $state.params.dateEnd === ''){
-                var today = new Date();
-                $scope.endDate = new Date();
-                $scope.startDate = new Date(today.setDate(today.getDate() - 7));
+        function activate() {
+
+            if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
+                setLastWeekDate();
             }
-            else{
-                $scope.endDate = new Date($state.params.dateEnd);
-                $scope.startDate = new Date($state.params.dateStart);
+            else {
+                $scope.endDate = moment($state.params.dateEnd).toDate();
+                $scope.startDate = moment($state.params.dateStart).toDate();
             }
             $scope.getReports();
         }
 
-        $scope.getReports = function(){
+        $scope.getReports = function () {
             tdprReportService.getReports($scope.startDate, $scope.endDate).then(
                 function (response) {
                     $scope.reportsElements = response;
                 }
             )
-        }
+        };
 
-        $scope.getPreviousWeekReports = function(){
-            var today = new Date();
-            $scope.startDate = new Date(today.setDate(today.getDate() - 7));
-            while($scope.startDate.getUTCDay() !== 1){
-                $scope.startDate = new Date(today.setDate(today.getDate() - 1));
-            }
-            $scope.endDate = new Date($scope.endDate.setDate($scope.startDate.getDate() + 6));
+        $scope.getPreviousWeekReportsLegacy = function (offset) {
+            var week = tdprDateService.getWeekWithOffset(offset);
+            $scope.startDate = week[0];
+            $scope.endDate = week[4];
             $scope.getReports();
-        }
+        };
+
+        $scope.getPreviousWeekReports = function () {
+            setLastWeekDate();
+            $scope.getReports();
+        };
+
+        $scope.getPreviousMonthReports = function () {
+            setLastMonthDate();
+            $scope.getReports();
+        };
+
+        $scope.getMonthReports = function (offset) {
+            var endDate = new Date();
+            endDate.setUTCMonth(endDate.getUTCMonth() + offset + 1);
+            endDate.setUTCDate(0);
+
+            var startDate = new Date(endDate);
+            startDate.setUTCDate(1);
+
+            $scope.startDate = startDate;
+            $scope.endDate = endDate;
+            $scope.getReports();
+        };
 
         activate();
+
+        function setLastWeekDate() {
+            $scope.startDate = moment().subtract(1, 'week').startOf('week').add(1, 'day').toDate();
+            $scope.endDate = moment($scope.startDate).add(6, 'day').toDate();
+        }
+
+        function setLastMonthDate() {
+            $scope.startDate = moment().subtract(1, 'month').startOf('month').toDate();
+            $scope.endDate = moment($scope.startDate).endOf('month').toDate();
+        }
 
     })
 });

@@ -19,8 +19,12 @@
     </div>
     <div class="col-md-4">
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
-        <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
-        <button class="btn btn-default">Previous month</button>
+        <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(0)">Current week</button>
+        <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(-1)">Previous week</button>
+        <button class="btn btn-default" ng-click="getMonthReports(0)">Current month</button>
+        <button class="btn btn-default" ng-click="getMonthReports(-1)">Previous month</button>
+        <button class="btn btn-default" ng-click="getPreviousWeekReports()" >Previous week</button>
+        <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
     </div>
 </div>
 
@@ -41,22 +45,22 @@
         <tr>
             <td></td>
             <td class="day-th">
-                <span ng-click="sortBy('numberOfInitSlots')">
+                <span ng-click="sortBy('numberOfInitMinutes')">
                     Init hours
                 </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfInitSlots'" ng-class="{sortReverse: sortReverse}"></span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfInitMinutes'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
             <td class="day-th">
-                <span ng-click="sortBy('numberOfFullSlots')">
+                <span ng-click="sortBy('numberOfFullMinutes')">
                     Full hours
                 </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfFullSlots'" ng-class="{sortReverse: sortReverse}"></span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfFullMinutes'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
             <td class="day-th">
-                <span ng-click="sortBy('numberOfAvailableSlots')">
+                <span ng-click="sortBy('numberOfAvailableMinutes')">
                     Remaining hours
                 </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableSlots'" ng-class="{sortReverse: sortReverse}"></span>
+                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableMinutes'" ng-class="{sortReverse: sortReverse}"></span>
             </td>
         </tr>
         </thead>

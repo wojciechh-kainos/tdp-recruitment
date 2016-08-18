@@ -6,23 +6,23 @@ package domain;
 public class Report {
 
     private Persons person;
-    private Long numberOfInitSlots;
-    private Long numberOfFullSlots;
-    private Long numberOfAvailableSlots;
+    private Long numberOfInitMinutes;
+    private Long numberOfFullMinutes;
+    private Long numberOfAvailableMinutes;
 
-    public Report(Persons person, Long numberOfInitSlots, Long numberOfAvailableSlots, Long numberOfFullSlots) {
-        this.numberOfInitSlots = numberOfInitSlots;
+    public Report(Persons person, Long numberOfInitMinutes, Long numberOfAvailableMinutes, Long numberOfFullMinutes) {
+        this.numberOfInitMinutes = numberOfInitMinutes;
         this.person = person;
-        this.numberOfAvailableSlots = numberOfAvailableSlots;
-        this.numberOfFullSlots = numberOfFullSlots;
+        this.numberOfAvailableMinutes = numberOfAvailableMinutes;
+        this.numberOfFullMinutes = numberOfFullMinutes;
     }
 
-    public Long getNumberOfInitSlots() {
-        return numberOfInitSlots;
+    public Long getNumberOfInitMinutes() {
+        return numberOfInitMinutes;
     }
 
-    public void setNumberOfInitSlots(Long numberOfInitSlots) {
-        this.numberOfInitSlots = numberOfInitSlots;
+    public void setNumberOfInitMinutes(Long numberOfInitMinutes) {
+        this.numberOfInitMinutes = numberOfInitMinutes;
     }
 
     public Persons getPerson() {
@@ -33,20 +33,20 @@ public class Report {
         this.person = person;
     }
 
-    public Long getNumberOfFullSlots() {
-        return numberOfFullSlots;
+    public Long getNumberOfFullMinutes() {
+        return numberOfFullMinutes;
     }
 
-    public void setNumberOfFullSlots(Long numberOfFullSlots) {
-        this.numberOfFullSlots = numberOfFullSlots;
+    public void setNumberOfFullMinutes(Long numberOfFullMinutes) {
+        this.numberOfFullMinutes = numberOfFullMinutes;
     }
 
-    public Long getNumberOfAvailableSlots() {
-        return numberOfAvailableSlots;
+    public Long getNumberOfAvailableMinutes() {
+        return numberOfAvailableMinutes;
     }
 
-    public void setNumberOfAvailableSlots(Long numberOfAvailableSlots) {
-        this.numberOfAvailableSlots = numberOfAvailableSlots;
+    public void setNumberOfAvailableMinutes(Long numberOfAvailableMinutes) {
+        this.numberOfAvailableMinutes = numberOfAvailableMinutes;
     }
 
     @Override
@@ -57,20 +57,20 @@ public class Report {
         Report report = (Report) o;
 
         if (person != null ? !person.equals(report.person) : report.person != null) return false;
-        if (numberOfInitSlots != null ? !numberOfInitSlots.equals(report.numberOfInitSlots) : report.numberOfInitSlots != null)
+        if (numberOfInitMinutes != null ? !numberOfInitMinutes.equals(report.numberOfInitMinutes) : report.numberOfInitMinutes != null)
             return false;
-        if (numberOfFullSlots != null ? !numberOfFullSlots.equals(report.numberOfFullSlots) : report.numberOfFullSlots != null)
+        if (numberOfFullMinutes != null ? !numberOfFullMinutes.equals(report.numberOfFullMinutes) : report.numberOfFullMinutes != null)
             return false;
-        return numberOfAvailableSlots != null ? numberOfAvailableSlots.equals(report.numberOfAvailableSlots) : report.numberOfAvailableSlots == null;
+        return numberOfAvailableMinutes != null ? numberOfAvailableMinutes.equals(report.numberOfAvailableMinutes) : report.numberOfAvailableMinutes == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = person != null ? person.hashCode() : 0;
-        result = 31 * result + (numberOfInitSlots != null ? numberOfInitSlots.hashCode() : 0);
-        result = 31 * result + (numberOfFullSlots != null ? numberOfFullSlots.hashCode() : 0);
-        result = 31 * result + (numberOfAvailableSlots != null ? numberOfAvailableSlots.hashCode() : 0);
+        result = 31 * result + (numberOfInitMinutes != null ? numberOfInitMinutes.hashCode() : 0);
+        result = 31 * result + (numberOfFullMinutes != null ? numberOfFullMinutes.hashCode() : 0);
+        result = 31 * result + (numberOfAvailableMinutes != null ? numberOfAvailableMinutes.hashCode() : 0);
         return result;
     }
 
@@ -78,9 +78,9 @@ public class Report {
     public String toString() {
         return "Report{" +
                 "person=" + person +
-                ", numberOfInitSlots=" + numberOfInitSlots +
-                ", numberOfFullSlots=" + numberOfFullSlots +
-                ", numberOfAvailableSlots=" + numberOfAvailableSlots +
+                ", numberOfInitMinutes=" + numberOfInitMinutes +
+                ", numberOfFullMinutes=" + numberOfFullMinutes +
+                ", numberOfAvailableMinutes=" + numberOfAvailableMinutes +
                 '}';
     }
 }
