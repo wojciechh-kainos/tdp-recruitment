@@ -1,9 +1,9 @@
-import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
 import domain.*;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -35,7 +35,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void initialize(Bootstrap<TdpRecruitmentApplicationConfiguration> bootstrap) {
-        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/assets", "/", "index.html"));
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(migrationsBundle);
 
