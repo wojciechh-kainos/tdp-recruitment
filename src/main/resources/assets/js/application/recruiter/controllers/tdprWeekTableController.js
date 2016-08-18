@@ -83,6 +83,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 }
             );
         };
+
+        $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
 

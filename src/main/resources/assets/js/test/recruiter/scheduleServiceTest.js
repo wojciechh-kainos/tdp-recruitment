@@ -285,7 +285,6 @@ define(['angular', 'angularMocks',
                     }
                 ], person.id);
 
-
                 $httpBackend.expect('PUT', '/api/slots/' + weekStartString + '/' + weekEndString  + '?personId=' + person.id, expectedSlots).respond(200);
 
                 $scope.changeSlotTypeCycleThrough(person.slotsList[2], testSlotId, testDay, person);
@@ -349,6 +348,24 @@ define(['angular', 'angularMocks',
                 });
 
                 $httpBackend.flush();
+            });
+        });
+
+        describe('discardSlotChanges', function() {
+
+            it('should revert changes made to slotList', function () {
+                person.slotsList = [{
+                    "day": weekStart,
+                    "number": 7,
+                    "type": AvailabilityEnum.available.name
+                }];
+                var startList = angular.copy(person.slotsList);
+
+                $scope.changeSlotTypeCycleThrough(person.slotsList[0], 7, weekStart, person);
+                $scope.changeSlotDiscardChanges(person);
+
+                expect(startList).toEqual(person.slotsList);
+
             });
         });
 
@@ -460,7 +477,6 @@ define(['angular', 'angularMocks',
 
                 $httpBackend.flush();
             });
-
 
             it('should create put request which resolves with 200 status - changing slots in future', function () {
 

@@ -3,6 +3,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.changeSlotType = function (slot, slotId, day, person, changeTo) {
             var date = dateFilter(day, "yyyy-MM-dd");
+
+            if (!person.changesPending || angular.isUndefined(person.changesPending)) {
+                        person.oldSlotList = angular.copy(person.slotsList);
+                        person.changesPending = true;
+                    }
             if (slot !== undefined) {
                 if (changeTo !== undefined) {
                     // There is still availability type to change
@@ -20,9 +25,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     type: changeTo
                 });
             }
-            person.changesPending = true;
         };
 
+        this.changeSlotDiscardChanges = function(personData) {
+            personData.slotsList = angular.copy(personData.oldSlotList);
+            personData.oldSlotList = [];
+            personData.changesPending = false;
+        }
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             var date = dateFilter(day, "yyyy-MM-dd");
@@ -51,9 +60,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 if (newType !== undefined) {
                     return this.changeSlotType(slot, slotId, date, person, newType);
                 }
-
             }
         };
-
     }]);
 });
