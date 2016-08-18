@@ -15,7 +15,7 @@
         <label class="control-label" for="end_date">End date:</label>
     </div>
     <div class="col-md-3">
-         <input type="date" class="form-control" id="end_date" ng-model="endDate">
+        <input type="date" class="form-control" id="end_date" ng-model="endDate">
     </div>
     <div class="col-md-4">
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
@@ -23,14 +23,14 @@
         <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(-1)">Previous week</button>
         <button class="btn btn-default" ng-click="getMonthReports(0)">Current month</button>
         <button class="btn btn-default" ng-click="getMonthReports(-1)">Previous month</button>
-        <button class="btn btn-default" ng-click="getPreviousWeekReports()" >Previous week</button>
+        <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
         <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
     </div>
 </div>
 
 <div class="row options">
     <div class="col-md-1 col-md-offset-4">
-        <label>Search:</label>
+        <label class="control-label">Search:</label>
     </div>
     <div class="col-md-3">
         <input class="form-control" type="text" ng-model="inputString"/>
@@ -38,25 +38,46 @@
 
 </div>
 
+<div class="row options">
+    <div class="col-md-1 col-md-offset-4">
+        Showing reports for date range: {{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}
+    </div>
 
-<div class="availabilities-table-container">
-    <table id="availabilities-table">
-        <thead class="columnHeading">
+</div>
+
+
+<div class="row options">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        <table style="width: 100%">
+            <thead class="columnHeading">
             <tr>
                 <td class="day-th" ng-repeat="(column, value) in columnMap">
-                    <span  ng-click="sortBy(column)">
+                    <span ng-click="sortBy(column)">
                         <span>
                             {{value.columnName}}
                         </span>
-                        <span class="sortOrder" ng-show="sortColumn===column" ng-class="{sortReverse: value.reverse}"></span>
+                        <span class="sortOrder" ng-show="sortColumn===column"
+                              ng-class="{sortReverse: value.reverse}"></span>
                     </span>
                 </td>
             </tr>
-        </thead>
-        <tbody>
-            <tr report ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse" report-data="reportElement" person-info="reportElement.person"></tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <tr report
+                ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse"
+                report-data="reportElement" person-info="reportElement.person"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-2">
+
+    </div>
+
 </div>
 
 <a ui-sref="tdpr.recruiter.home">Back</a>

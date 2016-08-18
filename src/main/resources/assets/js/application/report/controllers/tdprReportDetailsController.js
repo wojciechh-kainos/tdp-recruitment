@@ -18,7 +18,7 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.sortBy = function(column) {
             $scope.sortColumn = column;
             $scope.columnMap[column].reverse = $scope.sortReverse = !$scope.columnMap[column].reverse;
-        }
+        };
 
         function activate() {
 
@@ -33,8 +33,11 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         $scope.getReports = function () {
+
             tdprReportService.getReports($scope.startDate, $scope.endDate).then(
                 function (response) {
+                    $scope.currentReportStart = $scope.startDate;
+                    $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
                     $scope.sortBy('person.lastName');
                 }
