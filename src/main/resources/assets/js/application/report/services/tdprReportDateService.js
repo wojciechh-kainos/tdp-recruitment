@@ -1,5 +1,5 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.service('tdprDateService', [ 'moment', function (moment) {
+    tdprReportModule.service('tdprReportDateService', [ 'moment', function (moment) {
 
         this.getLastWeekStartDate = function() {
            return moment().subtract(1, 'week').isoWeekday('Monday').toDate();

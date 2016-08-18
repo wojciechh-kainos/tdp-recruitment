@@ -1,12 +1,12 @@
 define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
-    , 'application/report/services/tdprDateService'
+    , 'application/report/services/tdprReportDateService'
     , 'application/report/directives/tdprReportDirective'
     , 'application/report/directives/tdprJobProfileDirective'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprDateService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService) {
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -23,8 +23,8 @@ define(['angular', 'application/report/tdprReportModule'
         function activate() {
 
             if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
-                $scope.startDate = tdprDateService.getLastWeekStartDate();
-                $scope.endDate = tdprDateService.getLastWeekEndDate();
+                $scope.startDate = tdprReportDateService.getLastWeekStartDate();
+                $scope.endDate = tdprReportDateService.getLastWeekEndDate();
             }
             else {
                 $scope.endDate = new Date($state.params.dateEnd);
@@ -45,21 +45,21 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.getPreviousWeekReports = function () {
-            $scope.startDate = tdprDateService.getLastWeekStartDate();
-            $scope.endDate = tdprDateService.getLastWeekEndDate();
+            $scope.startDate = tdprReportDateService.getLastWeekStartDate();
+            $scope.endDate = tdprReportDateService.getLastWeekEndDate();
             $scope.getReports();
         };
 
         $scope.getPreviousMonthReports = function () {
-            $scope.startDate = tdprDateService.getLastMonthStartDate();
-            $scope.endDate = tdprDateService.getLastMonthEndDate();
+            $scope.startDate = tdprReportDateService.getLastMonthStartDate();
+            $scope.endDate = tdprReportDateService.getLastMonthEndDate();
             $scope.getReports();
         };
 
         activate();
 
 //        $scope.getPreviousWeekReportsLegacy = function (offset) {
-//            var week = tdprDateService.getWeekWithOffset(offset);
+//            var week = tdprReportDateService.getWeekWithOffset(offset);
 //            $scope.startDate = week[0];
 //            $scope.endDate = week[4];
 //            $scope.getReports();

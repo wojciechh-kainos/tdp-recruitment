@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/report/services/tdprReportService','application/report/services/tdprDateService', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
+define(['angular', 'angularMocks', 'application/report/services/tdprReportService','application/report/services/tdprReportDateService', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
 
     describe('tdprReportService', function () {
         beforeEach(angular.mock.module('tdprReportModule'));
@@ -10,9 +10,9 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
         var $scope;
         var getReportsDeferred;
 
-        beforeEach(inject(function (_tdprReportService_, _tdprDateService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
+        beforeEach(inject(function (_tdprReportService_, _tdprReportDateService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
             reportService = _tdprReportService_;
-            dateService = _tdprDateService_;
+            dateService = _tdprReportDateService_;
             $scope = _$rootScope_.$new();
             $state = _$state_;
             $httpBackend = _$httpBackend_;

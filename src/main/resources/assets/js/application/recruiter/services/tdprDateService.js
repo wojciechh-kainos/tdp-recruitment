@@ -1,11 +1,11 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprDateService', function () {
 
-        this.getDayOfTheWeek = function (d, i) {
+        function getDayOfTheWeek(d, i) {
             var day = d.getDay(),
                 diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
             return new Date(d.setDate(diff + i)); //i = 0 - monday
-        };
+        }
 
         this.getCurrentWeek = function () {
             return this.getWeekWithOffset(0);
@@ -16,7 +16,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             today.setDate(today.getDate() + offset * 7);
             var weekDays = [];
             for (var i = 0; i < 5; i++) {  //iterate from monday to friday
-                weekDays.push(this.getDayOfTheWeek(today, i));
+                weekDays.push(getDayOfTheWeek(today, i));
             }
             return weekDays;
         };
