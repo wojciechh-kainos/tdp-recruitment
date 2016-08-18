@@ -1,4 +1,4 @@
-.day-th {
+.columnHeading {
     cursor: pointer;
 }
 
@@ -8,6 +8,10 @@
 
 .sortOrder.sortReverse:after {
   content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+
+.hourCell {
+    cursor: auto;
 }
 
 .options{

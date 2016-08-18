@@ -5,24 +5,27 @@
 <job-profile selected-profiles="checkedProfiles"></job-profile>
 
 <div class="row options">
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label class="control-label" for="start_date">Start date:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <input type="date" class="form-control col-md-10" id="start_date" ng-model="startDate">
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label class="control-label" for="end_date">End date:</label>
     </div>
-    <div class="col-md-3">
-         <input type="date" class="form-control" id="end_date" ng-model="endDate">
-    </div>
     <div class="col-md-4">
+        <input type="date" class="form-control" id="end_date" ng-model="endDate">
+    </div>
+</div>
+
+<div class="row options">
+    <div class="col-md-12">
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
-        <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(0)">Current week</button>
-        <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(-1)">Previous week</button>
-        <button class="btn btn-default" ng-click="getMonthReports(0)">Current month</button>
-        <button class="btn btn-default" ng-click="getMonthReports(-1)">Previous month</button>
+        <!--<button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(0)">Current week</button>-->
+        <!--<button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(-1)">Previous week</button>-->
+        <!--<button class="btn btn-default" ng-click="getMonthReports(0)">Current month</button>-->
+        <!--<button class="btn btn-default" ng-click="getMonthReports(-1)">Previous month</button>-->
         <button class="btn btn-default" ng-click="getPreviousWeekReports()" >Previous week</button>
         <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
     </div>
@@ -30,7 +33,7 @@
 
 <div class="row options">
     <div class="col-md-1 col-md-offset-4">
-        <label>Search:</label>
+        <label class="control-label">Search:</label>
     </div>
     <div class="col-md-3">
         <input class="form-control" type="text" ng-model="inputString"/>
@@ -38,36 +41,45 @@
 
 </div>
 
+<div class="row options">
+    <div class="col-md-12">
+        Showing reports for date range: {{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}
+    </div>
+</div>
 
-<div class="availabilities-table-container">
-    <table id="availabilities-table">
-        <thead>
-        <tr>
-            <td></td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfInitMinutes')">
-                    Init hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfInitMinutes'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfFullMinutes')">
-                    Full hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfFullMinutes'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfAvailableMinutes')">
-                    Remaining hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableMinutes'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-            <tr report ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse" report-data="reportElement" person-info="reportElement.person"></tr>
-        </tbody>
-    </table>
+
+<div class="row options">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        <table style="width: 100%">
+            <thead class="columnHeading">
+            <tr>
+                <td class="day-th" ng-repeat="(column, value) in columnMap">
+                    <span ng-click="sortBy(column)">
+                        <span>
+                            {{value.columnName}}
+                        </span>
+                        <span class="sortOrder" ng-show="sortColumn===column"
+                              ng-class="{sortReverse: value.reverse}"></span>
+                    </span>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr report
+                ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse"
+                report-data="reportElement" person-info="reportElement.person"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-2">
+
+    </div>
+
 </div>
 
 <a ui-sref="tdpr.recruiter.home">Back</a>

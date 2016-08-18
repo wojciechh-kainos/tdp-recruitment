@@ -30,7 +30,7 @@ public class ReportResource {
     public Report getReport(
                             @PathParam("date_from") String date_from,
                             @PathParam("date_to") String date_to,
-                            @PathParam("personId") long person_id) throws ParseException {
+                            @PathParam("id") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
