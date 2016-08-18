@@ -1,4 +1,4 @@
-<th class="person-name">{{personInfo.firstName}} {{personInfo.lastName}}</th>
-<td class="slot">{{reportData.numberOfInitMinutes / 60}}</td>
-<td class="slot">{{reportData.numberOfFullMinutes / 60}}</td>
-<td class="slot">{{reportData.numberOfAvailableMinutes / 60}}</td>
+<th class="slot hourCell">{{personInfo.lastName}} {{personInfo.firstName}}</th>
+<td class="slot hourCell">{{reportData.numberOfInitSlots * 0.5}}</td>
+<td class="slot hourCell">{{reportData.numberOfFullSlots * 0.5}}</td>
+<td class="slot hourCell">{{reportData.numberOfAvailableSlots * 0.5}}</td>
