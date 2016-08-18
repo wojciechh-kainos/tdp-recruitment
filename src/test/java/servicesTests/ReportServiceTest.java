@@ -70,8 +70,8 @@ public class ReportServiceTest {
                 .filter(slot -> slot.getPerson().getId().equals(mockSecondPerson.getId()))
                     .collect(Collectors.toCollection(ArrayList::new));
 
-        expectedFirstReport = new Report(mockFirstPerson, 1L,2L,1L);
-        expectedSecondReport = new Report(mockSecondPerson, 0L,2L,2L);
+        expectedFirstReport = new Report(mockFirstPerson, 30L,60L,30L);
+        expectedSecondReport = new Report(mockSecondPerson, 0L,60L,60L);
         reportService = new ReportService(slotsDao, personsDao);
 
         expectedReports = Arrays.asList(expectedFirstReport,expectedSecondReport);

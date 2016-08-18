@@ -1,6 +1,5 @@
 define(['angular'
     , 'application/report/tdprReportModule'
-    , 'application/report/controllers/tdprReportController'
     , 'application/report/controllers/tdprReportDetailsController'
 ], function (angular, tdprReportModule) {
 
