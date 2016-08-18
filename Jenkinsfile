@@ -19,4 +19,7 @@ node {
     stage 'karma test'
     sh './node_modules/karma/bin/karma start karma.conf.js'
 
+    stage 'fatJar'
+    sh 'gradle fatJar'
+
 }
