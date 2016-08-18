@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByJobProfileFilter'
     , 'application/recruiter/services/tdprDateService'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprDateService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, moment, tdprDateService) {
 
         $scope.sortBy = function (column) {
             $scope.sortColumn = column;
@@ -14,14 +14,13 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         function activate() {
+
             if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
-                var today = new Date();
-                $scope.endDate = new Date();
-                $scope.startDate = new Date(today.setDate(today.getDate() - 7));
+                setLastWeekDate();
             }
             else {
-                $scope.endDate = new Date($state.params.dateEnd);
-                $scope.startDate = new Date($state.params.dateStart);
+                $scope.endDate = moment($state.params.dateEnd).toDate();
+                $scope.startDate = moment($state.params.dateStart).toDate();
             }
             $scope.getReports();
         }
@@ -34,10 +33,20 @@ define(['angular', 'application/report/tdprReportModule'
             )
         };
 
-        $scope.getPreviousWeekReports = function (offset) {
+        $scope.getPreviousWeekReportsLegacy = function (offset) {
             var week = tdprDateService.getWeekWithOffset(offset);
             $scope.startDate = week[0];
             $scope.endDate = week[4];
+            $scope.getReports();
+        };
+
+        $scope.getPreviousWeekReports = function () {
+            setLastWeekDate();
+            $scope.getReports();
+        };
+
+        $scope.getPreviousMonthReports = function () {
+            setLastMonthDate();
             $scope.getReports();
         };
 
@@ -55,6 +64,16 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         activate();
+
+        function setLastWeekDate() {
+            $scope.startDate = moment().subtract(1, 'week').startOf('week').add(1, 'day').toDate();
+            $scope.endDate = moment($scope.startDate).add(6, 'day').toDate();
+        }
+
+        function setLastMonthDate() {
+            $scope.startDate = moment().subtract(1, 'month').startOf('month').toDate();
+            $scope.endDate = moment($scope.startDate).endOf('month').toDate();
+        }
 
     })
 });
