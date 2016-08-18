@@ -1,19 +1,21 @@
-<th class="person-name" tooltip-placement="right"
-    uib-tooltip="
+<th class="person-name">
+    <div class="person-name-text">
+        <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})" tooltip-placement="right"
+           uib-tooltip="
 Default working hours:
 {{defaultStartHour | limitTo: 5}}-{{defaultFinishHour | limitTo: 5}}
 Note for this week:
 {{note}}
 ">
-    <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})"><span>{{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span></span></a>
-        <div style="display: inline;" ng-if="personData.changesPending" >
-
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"
-                  ng-click="submitSlotChanges({person: personData})"></span>
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"
-                  ng-click="discardSlotChanges({person: personData})"></span>
-
+            {{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span></a>
     </div>
+    <div class="person-name-buttons" ng-if="personData.changesPending" >
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                  ng-click="submitSlotChanges({person: personData})" uib-tooltip="Submit"></span>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"
+                  ng-click="discardSlotChanges({person: personData})" uib-tooltip="Discard"></span>
+    </div>
+</th>
 <td ng-repeat="day in days">
     <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" slot-time-data="slotTime" ng-class="getClass()"
           ng-click="changeSlotType({slot: getSlot(slotTime.id, day), slotId: slotTime.id, day: day, person: personData})"></slot>

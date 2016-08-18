@@ -42,17 +42,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             showDataForWeek(offset);
         };
 
-        $scope.refreshPersonsData = function () {
-            tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
-                function (persons) {
-                    $scope.persons = persons;
-                }
-            ).catch(function () {
-                Notification.error({message: "Failed to refresh persons data", delay: 3000});
-            });
-        };
-
-
         $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
             return tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, person);
         };

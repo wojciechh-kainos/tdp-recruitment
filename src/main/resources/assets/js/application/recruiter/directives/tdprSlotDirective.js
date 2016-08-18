@@ -13,8 +13,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
                 };
 
-                scope.getTooltipString = function () {
-                    return scope.slotTimeData.startTime.slice(0,5) + '-' + scope.slotTimeData.endTime.slice(0,5) + ' ' + (scope.slotData ? scope.slotData.type : '');
+                scope.getSlotType = function () {
+                    return scope.slotData ? scope.slotData.type : '';
                 };
             }
         }
