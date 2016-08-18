@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, moment, tdprDateService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprDateService) {
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -27,8 +27,8 @@ define(['angular', 'application/report/tdprReportModule'
                 $scope.endDate = tdprDateService.getLastWeekEndDate();
             }
             else {
-                $scope.endDate = moment($state.params.dateEnd).toDate();
-                $scope.startDate = moment($state.params.dateStart).toDate();
+                $scope.endDate = new Date($state.params.dateEnd);
+                $scope.startDate = new Date($state.params.dateStart);
             }
             $scope.getReports();
         }

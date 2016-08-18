@@ -1,5 +1,5 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.service('tdprDateService', function (moment) {
+    tdprReportModule.service('tdprDateService', [ 'moment', function (moment) {
 
         this.getLastWeekStartDate = function() {
            return moment().subtract(1, 'week').isoWeekday('Monday').toDate();
@@ -16,5 +16,5 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
         this.getLastMonthEndDate = function() {
            return moment(this.getLastMonthStartDate()).endOf('month').toDate();
         }
-    })
+    }])
 });

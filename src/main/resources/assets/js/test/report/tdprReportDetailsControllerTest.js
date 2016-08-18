@@ -1,28 +1,33 @@
-define(['angular', 'angularMocks', 'application/report/services/tdprReportService', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
+define(['angular', 'angularMocks', 'application/report/services/tdprReportService','application/report/services/tdprDateService', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
 
     describe('tdprReportService', function () {
         beforeEach(angular.mock.module('tdprReportModule'));
 
         var $httpBackend;
-        var $service;
+        var reportService;
+        var dateService;
         var $state;
         var $scope;
         var getReportsDeferred;
-        var responseData = {
-            person : 'person',
-            numberOfAvailableSlots : 5
-        };
 
-        beforeEach(inject(function (_tdprReportService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
-            $service = _tdprReportService_;
+        beforeEach(inject(function (_tdprReportService_, _tdprDateService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
+            reportService = _tdprReportService_;
+            dateService = _tdprDateService_;
             $scope = _$rootScope_.$new();
             $state = _$state_;
             $httpBackend = _$httpBackend_;
             getReportsDeferred = $q.defer();
+
+            spyOn(dateService, 'getLastWeekStartDate').and.returnValue(new Date());
+            spyOn(dateService, 'getLastWeekEndDate').and.returnValue(new Date());
+            spyOn(dateService, 'getLastMonthStartDate').and.returnValue(new Date());
+            spyOn(dateService, 'getLastMonthEndDate').and.returnValue(new Date());
+
             $controller('tdprReportDetailsController', {
                 $scope : $scope,
                 $state : $state,
-                tdprReportService : $service
+                tdprReportService : reportService,
+                tdprDateService : dateService
             });
         }));
 
