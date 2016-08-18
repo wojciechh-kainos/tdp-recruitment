@@ -8,7 +8,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 slotsTimes: '=',
                 days: '=',
                 changeSlotType: '&',
-                submitSlotChanges: '&'
+                submitSlotChanges: '&',
+                discardSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
 
