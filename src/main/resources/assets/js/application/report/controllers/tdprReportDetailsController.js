@@ -7,12 +7,19 @@ define(['angular', 'application/report/tdprReportModule'
 ], function (angular, tdprReportModule) {
     tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
 
+        $scope.columnMap = {
+            'person.lastName': {reverse: true, columnName: "Person"},
+            'numberOfInitSlots':  {reverse: true, columnName: "Init hours"},
+            'numberOfFullSlots':  {reverse: true, columnName: "Full hours"},
+            'numberOfAvailableSlots':  {reverse: true, columnName: "Unused hours"}
+        };
+
         $scope.sortBy = function(column) {
             $scope.sortColumn = column;
-            $scope.sortReverse = !$scope.sortReverse;
+            $scope.columnMap[column].reverse = $scope.sortReverse = !$scope.columnMap[column].reverse;
         }
 
-        function activate(){
+        function activate() {
             console.log($state.params.dateStart);
             console.log($state.params.dateEnd);
             if($state.params.dateStart === '' || $state.params.dateEnd === ''){
@@ -31,6 +38,7 @@ define(['angular', 'application/report/tdprReportModule'
             tdprReportService.getReports($scope.startDate, $scope.endDate).then(
                 function (response) {
                     $scope.reportsElements = response;
+                    $scope.sortBy('person.lastName');
                 }
             )
         }

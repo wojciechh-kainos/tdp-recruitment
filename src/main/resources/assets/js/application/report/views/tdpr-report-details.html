@@ -37,28 +37,17 @@
 
 <div class="availabilities-table-container">
     <table id="availabilities-table">
-        <thead>
-        <tr>
-            <td></td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfInitSlots')">
-                    Init hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfInitSlots'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfFullSlots')">
-                    Full hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfFullSlots'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-            <td class="day-th">
-                <span ng-click="sortBy('numberOfAvailableSlots')">
-                    Remaining hours
-                </span>
-                <span class="sortOrder" ng-show="sortColumn==='numberOfAvailableSlots'" ng-class="{sortReverse: sortReverse}"></span>
-            </td>
-        </tr>
+        <thead class="columnHeading">
+            <tr>
+                <td class="day-th" ng-repeat="(column, value) in columnMap">
+                    <span  ng-click="sortBy(column)">
+                        <span>
+                            {{value.columnName}}
+                        </span>
+                        <span class="sortOrder" ng-show="sortColumn===column" ng-class="{sortReverse: value.reverse}"></span>
+                    </span>
+                </td>
+            </tr>
         </thead>
         <tbody>
             <tr report ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse" report-data="reportElement" person-info="reportElement.person"></tr>
