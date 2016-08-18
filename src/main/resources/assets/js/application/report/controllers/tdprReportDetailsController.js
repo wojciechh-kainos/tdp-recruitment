@@ -10,9 +10,9 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
-            'numberOfInitSlots':  {reverse: true, columnName: "Init hours"},
-            'numberOfFullSlots':  {reverse: true, columnName: "Full hours"},
-            'numberOfAvailableSlots':  {reverse: true, columnName: "Unused hours"}
+            'numberOfInitMinutes':  {reverse: true, columnName: "Init hours"},
+            'numberOfFullMinutes':  {reverse: true, columnName: "Full hours"},
+            'numberOfAvailableMinutes':  {reverse: true, columnName: "Unused hours"}
         };
 
         $scope.sortBy = function(column) {
