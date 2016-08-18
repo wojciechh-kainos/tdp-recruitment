@@ -33,7 +33,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprSlotsTime
 
                 $service.fetchSlotsTimes().then(function (response) {
                     expect(response).toEqual(expectedSlotsTimes);
-                    expect(response.length).toEqual(18);
+                    expect(response.length).toEqual(4);
                 });
 
                 $httpBackend.flush();
