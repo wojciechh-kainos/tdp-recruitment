@@ -100,8 +100,12 @@ public class PersonResource {
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Person getPersonById(@PathParam("id") Long id){
-         return personDao.getById(id);
+    public Response getPersonById(@PathParam("id") Long id){
+        Person person = personDao.getById(id);
+        if (person == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(person).build();
     }
 
     @PUT

@@ -12,7 +12,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 discardSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
-
                 scope.note = scope.personData.noteList ? '"' + scope.personData.noteList[0].description + '"': 'none';
 
                 scope.getSlot = function (slotNumber, day) {
