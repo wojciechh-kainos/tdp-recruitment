@@ -3,9 +3,8 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/directives/tdprReportDirective'
     , 'application/report/filters/tdprReportByPersonNameFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportServic) {
         console.log($state.params);
-
         tdprReportService.getReports($state.params.dateStart, $state.params.dateEnd).then(
             function (response) {
                 console.log(response);
