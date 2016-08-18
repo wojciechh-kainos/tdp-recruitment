@@ -6,7 +6,9 @@ import dao.SlotsDao;
 import domain.Persons;
 import domain.Report;
 import domain.Slots;
+import domain.SlotsTimes;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -33,15 +35,21 @@ public class ReportService {
 
         List<Slots> slotsList = slotsDao.getForPersonForWeek(personId, startDate, endDate);
 
-        for (Iterator<Slots> i = slotsList.iterator(); i.hasNext(); ){
-            Slots slot = i.next();
+        for (Slots slot : slotsList) {
+            SlotsTimes slotTime = slot.getSlot();
 
-            if (slot.getType().getType().equals("available")) {
-                availableCount += 1;
-            } else if(slot.getType().getType().equals("full")) {
-                fullCount += 1;
-            } else if(slot.getType().getType().equals("init")) {
-                initCount += 1;
+            Long slotDuration = (slotTime.getEndTime().getTime() - slotTime.getStartTime().getTime())/60000;
+
+            switch (slot.getType().getType()) {
+                case "available":
+                    availableCount += slotDuration;
+                    break;
+                case "full":
+                    fullCount += slotDuration;
+                    break;
+                case "init":
+                    initCount += slotDuration;
+                    break;
             }
         }
         return new Report(person, initCount, availableCount, fullCount);
@@ -52,8 +60,7 @@ public class ReportService {
 
         List<Report> reportList = new ArrayList<>();
 
-        for (Iterator<Persons> i = personsList.iterator(); i.hasNext(); ) {
-            Persons person = i.next();
+        for (Persons person : personsList) {
             reportList.add(getReport(person.getId(), startDate, endDate));
         }
 
