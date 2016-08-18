@@ -33,12 +33,12 @@ define(['angular', 'application/report/tdprReportModule'
             )
         };
 
-        $scope.getPreviousWeekReportsLegacy = function (offset) {
-            var week = tdprDateService.getWeekWithOffset(offset);
-            $scope.startDate = week[0];
-            $scope.endDate = week[4];
-            $scope.getReports();
-        };
+//        $scope.getPreviousWeekReportsLegacy = function (offset) {
+//            var week = tdprDateService.getWeekWithOffset(offset);
+//            $scope.startDate = week[0];
+//            $scope.endDate = week[4];
+//            $scope.getReports();
+//        };
 
         $scope.getPreviousWeekReports = function () {
             setLastWeekDate();
@@ -50,24 +50,24 @@ define(['angular', 'application/report/tdprReportModule'
             $scope.getReports();
         };
 
-        $scope.getMonthReports = function (offset) {
-            var endDate = new Date();
-            endDate.setUTCMonth(endDate.getUTCMonth() + offset + 1);
-            endDate.setUTCDate(0);
-
-            var startDate = new Date(endDate);
-            startDate.setUTCDate(1);
-
-            $scope.startDate = startDate;
-            $scope.endDate = endDate;
-            $scope.getReports();
-        };
+//        $scope.getMonthReports = function (offset) {
+//            var endDate = new Date();
+//            endDate.setUTCMonth(endDate.getUTCMonth() + offset + 1);
+//            endDate.setUTCDate(0);
+//
+//            var startDate = new Date(endDate);
+//            startDate.setUTCDate(1);
+//
+//            $scope.startDate = startDate;
+//            $scope.endDate = endDate;
+//            $scope.getReports();
+//        };
 
         activate();
 
         function setLastWeekDate() {
-            $scope.startDate = moment().subtract(1, 'week').startOf('week').add(1, 'day').toDate();
-            $scope.endDate = moment($scope.startDate).add(6, 'day').toDate();
+            $scope.startDate = moment().subtract(1, 'week').isoWeekday('Monday').toDate();
+            $scope.endDate = moment($scope.startDate).isoWeekday('Sunday').toDate();
         }
 
         function setLastMonthDate() {
