@@ -17,6 +17,10 @@
             <span class="{{::AvailabilityEnum.unavailable.className}} legend-block"></span> Unavailable</label>
         <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.maybe.id}}"/>
             <span class="{{::AvailabilityEnum.maybe.className}} legend-block"></span> Maybe</label>
+        <label>
+            <span class="{{::AvailabilityEnum.init.className}} legend-block"></span> Init Call</label>
+        <label>
+            <span class="{{::AvailabilityEnum.full.className}} legend-block"></span> Full</label>
     </div>
 
     <table class="availability-table" ng-mousedown="mousedown = true" ng-mouseup="mousedown = false">
@@ -34,12 +38,9 @@
             <tr ng-repeat="slotsForDay in slotsForWeek">
                 <th class="slot-time">{{slotTimes[$index]}}</th>
                 <td ng-repeat="slot in slotsForDay track by $index"
-                    ng-class="{'{{::AvailabilityEnum.available.className}}': slot.type === AvailabilityEnum.available.id,
-                    '{{::AvailabilityEnum.unavailable.className}}': slot.type === AvailabilityEnum.unavailable.id,
-                    '{{::AvailabilityEnum.maybe.className}}': slot.type === AvailabilityEnum.maybe.id}"
+                    ng-class="getClass(slot.type)"
                     ng-mousedown="markSlots(slot); changeSlotStatus() "
-                    ng-mouseover="mousedown ? markSlots(slot) : ''"
-                    >
+                    ng-mouseover="mousedown ? markSlots(slot) : ''">
                 </td>
             </tr>
         </tbody>

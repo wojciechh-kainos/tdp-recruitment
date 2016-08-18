@@ -14,7 +14,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
 
-
         $scope.filterSlots = function () {
             $scope.slotsTimes = $filter('slotsByTime')(slotsTimes, $scope.startTime, $scope.endTime);
         };
@@ -50,10 +49,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-        $scope.changeSlotTypeCycleThrough = function (slot, slotId, day, person) {
-            return tdprScheduleService.changeSlotTypeCycleThrough(slot, slotId, day, person);
-        };
-
         $scope.changeSlotSubmitChanges = function (personData) {
             var endDate = new Date($scope.days[4]);
             endDate.setDate(endDate.getDate() + 1);
@@ -69,6 +64,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 }
             );
         };
+
+        $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
+
+        $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
 

@@ -64,7 +64,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.goBackToRecruiterView = function(){
             $state.go('tdpr.recruiter.home');
-        }
+        };
 
         $scope.discardChanges = function() {
             $scope.clearTable();
@@ -157,6 +157,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
+            disableNoteEditing();
         };
 
         function enableNoteEditing() {
@@ -181,18 +182,26 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 if(failure.status === 406) {
                     $scope.temporaryContent = $scope.noteContent.description;
                 }
-                    Notification.warning({
-                        message: 'Something went wrong with sending your note.',
-                        delay: 2000});
+                Notification.warning({
+                    message: 'Something went wrong with sending your note.',
+                    delay: 2000});
             });
         }
 
         $scope.markSlots = function(slot) {
-            if($scope.relativeDayNumber < 0 && !$scope.isRecruiter){
-                return;
+            if(!$scope.isRecruiter) {
+                if(isSlotTypeFullOrInit(slot) || $scope.relativeDayNumber < 0) {
+                    return;
+                }
             }
+
             slot.type === $scope.currentType ? slot.type = AvailabilityEnum.empty.id : slot.type = $scope.currentType
         };
+
+        function isSlotTypeFullOrInit(slot) {
+            return slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id;
+        }
+
         $scope.goDetails = function(){
               $state.go('tdpr.interviewer.details', {'id' : id});
         };
@@ -245,7 +254,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                       message: 'Something went wrong with getting your note.',
                       delay: 2000});
              })
-        }
+        };
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {
@@ -254,6 +263,14 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     delay: 2000});
                 return false;
             } else return true;
+        }
+
+        $scope.getClass = function(typeId) {
+            for (var type in $scope.AvailabilityEnum) {
+                if($scope.AvailabilityEnum[type].id == typeId) {
+                    return $scope.AvailabilityEnum[type].className;
+                }
+            }
         }
     });
 });

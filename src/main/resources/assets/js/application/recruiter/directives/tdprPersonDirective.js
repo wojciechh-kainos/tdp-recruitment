@@ -8,11 +8,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 slotsTimes: '=',
                 days: '=',
                 changeSlotType: '&',
-                submitSlotChanges: '&'
+                submitSlotChanges: '&',
+                discardSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
-
-                
                 scope.note = scope.personData.notesList ? '"' + scope.personData.notesList[0].description + '"': 'none';
 
                 scope.getSlot = function (slotNumber, day) {

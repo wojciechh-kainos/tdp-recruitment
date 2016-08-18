@@ -27,35 +27,41 @@
     <div class="availabilities-table-container">
         <table id="availabilities-table">
             <thead>
-                <tr>
-                    <td></td>
-                    <td class="day-th" ng-repeat="day in days">{{day | date: 'EEEE dd.MM.yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td ng-repeat="day in days">
-                        <table class="slot-times-th">
-                            <tr>
-                                <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
-                                    <span uib-tooltip="{{slotTime.startTime | limitTo:5}}-{{slotTime.endTime | limitTo:5}}" class="rotate mouse-pointer">
+            <tr>
+                <td></td>
+                <td class="day-th" ng-repeat="day in days">{{day | date: 'EEEE dd.MM.yyyy'}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ng-repeat="day in days">
+                    <table class="slot-times-th">
+                        <tr>
+                            <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
+                                    <span uib-tooltip="{{slotTime.startTime | limitTo:5}}-{{slotTime.endTime | limitTo:5}}"
+                                          class="rotate mouse-pointer">
                                         {{slotTime.startTime | limitTo:5}}</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             </thead>
             <tbody>
-                <tr person slots-times="slotsTimes" person-data="person" days="days" ng-repeat="person in persons | jobProfileFilter: currentJobProfile" submit-slot-changes="changeSlotSubmitChanges(person)" change-slot-type="changeSlotTypeCycleThrough(slot, slotId, day, person)"></tr>
+            <tr person slots-times="slotsTimes" person-data="person" days="days"
+                ng-repeat="person in persons | jobProfileFilter: currentJobProfile"
+                submit-slot-changes="changeSlotSubmitChanges(person)"
+                discard-slot-changes="changeSlotDiscardChanges(person)"
+                change-slot-type="changeSlotTypeCycleThrough(slot, slotId, day, person)"></tr>
             </tbody>
         </table>
     </div>
 
-    <select ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes" ng-model="startTime" ng-change="filterSlots()"></select>
-    <select ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes" ng-model="endTime" ng-change="filterSlots()"></select>
+    <select ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes"
+            ng-model="startTime" ng-change="filterSlots()"></select>
+    <select ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
+            ng-model="endTime" ng-change="filterSlots()"></select>
 
+    <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
 
-<a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
-
-<input class="submit-changes-button" type="button" ng-click="refreshPersonsData()" value="Refresh" />
+    <input class="submit-changes-button" type="button" ng-click="refreshPersonsData()" value="Refresh"/>
 </div>
