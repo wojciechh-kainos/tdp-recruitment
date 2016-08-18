@@ -2,6 +2,11 @@
     width: 100%
 }
 
+.border-down {
+    border-bottom: 1px solid #aaa;
+    color: #808080;
+}
+
 .columnHeading {
     cursor: pointer;
 }
