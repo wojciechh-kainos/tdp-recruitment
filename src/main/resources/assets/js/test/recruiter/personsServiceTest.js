@@ -40,9 +40,27 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
                     expect(response.status).toEqual(400);
                 });
                 $httpBackend.flush();
-                
-
             })
-        })
+        });
+
+        describe('createPerson', function () {
+            it('should return created person on success', function () {
+                $httpBackend.expectPUT('/api/person/create/').respond(200, data);
+
+                service.createPerson({}).then(function (response) {
+                    expect(response.data).toEqual(data);
+                });
+                $httpBackend.flush();
+            });
+
+            it('should return error message on error', function () {
+                $httpBackend.expectPUT('/api/person/create/').respond(400);
+
+                service.createPerson({}).then(undefined, function (response) {
+                    expect(response.message).toEqual("Interviewer adding failed.");
+                });
+                $httpBackend.flush();
+            });
+        });
     })
 });
