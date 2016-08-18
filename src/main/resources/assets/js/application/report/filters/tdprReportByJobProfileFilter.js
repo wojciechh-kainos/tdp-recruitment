@@ -1,13 +1,17 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.filter('jobProfileFilter', function(){
-        return function(reports, jobProfile){
-             if(jobProfile == undefined || jobProfile == ""){
+    tdprReportModule.filter('jobReportProfileFilter', function () {
+        return function (reports, jobProfile) {
+            if (jobProfile === undefined) {
                 return reports;
-             }
+            }
 
-            return reports.filter(function(report){
-                return report.person[jobProfile];
-            });
+            return _.filter(reports,
+                function (report) {
+                    return _.find(jobProfile, function (value, key) {
+                        return value === true && report.person[key] === value;
+                    });
+                }
+            );
         }
     });
-})
+});

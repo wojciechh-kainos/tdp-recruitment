@@ -1,4 +1,7 @@
-define(['angular', 'angularMocks','application/report/filters/tdprReportByPersonNameFilter','application/report/filters/tdprReportByJobProfileFilter' , 'application/report/tdprReportModule'], function (angular) {
+define(['angular', 'angularMocks'
+    , 'application/report/filters/tdprReportByPersonNameFilter'
+    , 'application/report/filters/tdprReportByJobProfileFilter'
+    , 'application/report/tdprReportModule'], function (angular) {
     describe('tdprReportFilters', function () {
         beforeEach(angular.mock.module('tdprReportModule'));
 
@@ -67,7 +70,13 @@ define(['angular', 'angularMocks','application/report/filters/tdprReportByPerson
 
         describe('By job profile filter', function(){
             it('should return 1 person if isDev checked', function(){
-                expect(filter('jobProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
+                var selected = {
+                    isDev: true,
+                    isTest: false,
+                    isWeb: false
+                };
+
+                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(1);
             })
         })
     })

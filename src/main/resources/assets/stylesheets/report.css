@@ -1,0 +1,16 @@
+.day-th {
+    cursor: pointer;
+}
+
+.sortOrder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+
+.sortOrder.sortReverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+
+.options{
+    margin-top:2%;
+    margin-bottom:2%;
+}
