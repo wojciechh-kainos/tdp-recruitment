@@ -5,19 +5,22 @@
 <job-profile selected-profiles="checkedProfiles"></job-profile>
 
 <div class="row options">
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label class="control-label" for="start_date">Start date:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <input type="date" class="form-control col-md-10" id="start_date" ng-model="startDate">
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label class="control-label" for="end_date">End date:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <input type="date" class="form-control" id="end_date" ng-model="endDate">
     </div>
-    <div class="col-md-4">
+</div>
+
+<div class="row options">
+    <div class="col-md-12">
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
         <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(0)">Current week</button>
         <button class="btn btn-default" ng-click="getPreviousWeekReportsLegacy(-1)">Previous week</button>
@@ -26,6 +29,7 @@
         <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
         <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
     </div>
+
 </div>
 
 <div class="row options">
@@ -39,10 +43,9 @@
 </div>
 
 <div class="row options">
-    <div class="col-md-1 col-md-offset-4">
+    <div class="col-md-12">
         Showing reports for date range: {{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}
     </div>
-
 </div>
 
 
