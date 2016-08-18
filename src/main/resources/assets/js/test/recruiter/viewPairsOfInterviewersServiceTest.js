@@ -12,19 +12,19 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
 
         describe('createPathParams', function(){
             it('should return path params when getting at least one role, start day and end day', function(){
-                var pathParams = service.createPathParams(["isDev"], '2015-12-13', '2015-12-17');
+                var pathParams = service.createPathParams(["isDev"], new Date('2015-12-13'), new Date('2015-12-17'));
                 var expectedPathParams = 'startDate=2015-12-13&endDate=2015-12-17&isDev=true';
                 expect(pathParams).toEqual(expectedPathParams);
             });
 
             it('should return path params when getting at least two roles, start day and end day', function(){
-                var pathParams = service.createPathParams(["isDev", "isOps"], '2015-12-13', '2015-12-17');
+                var pathParams = service.createPathParams(["isDev", "isOps"], new Date('2015-12-13'), new Date('2015-12-17'));
                 var expectedPathParams = 'startDate=2015-12-13&endDate=2015-12-17&isDev=true&isOps=true';
                 expect(pathParams).toEqual(expectedPathParams);
             });
 
             it("should return false when roles not set", function(){
-                var pathParams = service.createPathParams('2015-12-13', '2015-12-17');
+                var pathParams = service.createPathParams(new Date('2015-12-13'), new Date('2015-12-17'));
                 expect(pathParams).toEqual(false);
             });
 
@@ -36,7 +36,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
 
         describe('getPairs', function(){
             it("should return false when any of function arguments not set", function(){
-                var response = service.getPairs(["isDev"], '2015-12-13');
+                var response = service.getPairs(["isDev"], new Date('2015-12-13'));
                 expect(response).toEqual(false);
             })
         })

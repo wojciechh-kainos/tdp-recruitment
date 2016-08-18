@@ -2,7 +2,26 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprRecruiterViewPairsOfInterviewersService', ['$http', '$q', function ($http, $q) {
         var service = {};
 
+        service.getPairs = function(roles, startDay, endDay){
+            var pathParams = this.createPathParams(roles, startDay, endDay);
+            if(!pathParams){
+                return false;
+            }
+
+            return $http.get('api/pairs?' + pathParams).then(function(response){
+                    return response.data;
+                },
+                function(error){
+                    error.message = "Getting data form server failed";
+                    return $q.reject(error.message);
+                });
+        }
+
         service.createPathParams = function(roles, startDate, endDate){
+
+            if(!roles || !startDate || !endDate){
+                return false;
+            }
 
             var startDay =  startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
             var endDay =  endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
@@ -18,26 +37,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 switch(roles[i]){
                     case "isDev": pathParams += "&isDev=true"; break;
                     case "isTest": pathParams += "&isTest=true"; break;
+                    case "isOps": pathParams += "&isOps=true"; break;
                     case "isWeb": pathParams += "&isOps=true"; break;
                 }
             }
 
             return pathParams;
-        }
-
-        service.getPairs = function(roles, startDay, endDay){
-            var pathParams = this.createPathParams(roles, startDay, endDay);
-            if(!pathParams){
-                return false;
-            }
-
-            return $http.get('api/pairs?' + pathParams).then(function(response){
-                    return response.data;
-                },
-                function(error){
-                    error.message = "Getting data form server failed";
-                    return $q.reject(error.message);
-                });
         }
 
         return service;
