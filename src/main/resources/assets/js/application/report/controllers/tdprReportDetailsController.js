@@ -30,6 +30,7 @@ define(['angular', 'application/report/tdprReportModule'
                 $scope.startDate = new Date($state.params.dateStart);
             }
             $scope.getReports();
+            $scope.sortBy('person.lastName');
         };
 
         $scope.getReports = function () {
@@ -38,7 +39,6 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportStart = $scope.startDate;
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
-                    $scope.sortBy('person.lastName');
                     Notification.success({message: 'Report successfully downloaded.', delay: 2000});
                 }
             )
