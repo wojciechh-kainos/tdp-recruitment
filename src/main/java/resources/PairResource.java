@@ -34,7 +34,7 @@ public class PairResource {
                                    @QueryParam("isTest") Boolean isTest,
                                    @QueryParam("isOps") Boolean isOps) {
 
-        List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
+        List<Slots> slots = slotsDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps);
         PairFinder pf = new PairFinder();
 
         return pf.findPairs(slots);

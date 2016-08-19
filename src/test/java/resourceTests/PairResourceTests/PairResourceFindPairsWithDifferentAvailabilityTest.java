@@ -19,7 +19,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PairResourceFindPairsWithDifferentAvailability {
+public class PairResourceFindPairsWithDifferentAvailabilityTest {
 
     private final int TODAY_OFFSET = 0;
     private final int TOMORROW_OFFSET = 1;
@@ -48,7 +48,7 @@ public class PairResourceFindPairsWithDifferentAvailability {
     @Test
     @Ignore
     public void testFindPairs() {
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
         assertEquals("There should be no pairs found", pairs.size(), 0);
