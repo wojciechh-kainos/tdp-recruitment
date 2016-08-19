@@ -1,7 +1,7 @@
-define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService'
+define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService) {
+                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
 
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;
@@ -13,6 +13,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.persons = persons;
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
+
+        $scope.getPairs = function(){
+            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
+                function (persons) {
+                    $scope.persons = persons;
+                }
+            ).catch(function () {
+                Notification.error({message: "Failed to get pairs", delay: 3000});
+            });
+        };
 
         $scope.filterSlots = function () {
             $scope.slotsTimes = $filter('slotsByTime')(slotsTimes, $scope.startTime, $scope.endTime);
