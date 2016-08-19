@@ -6,13 +6,13 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             }
 
             if (typeof jobProfile === 'string' || jobProfile instanceof String) {
-                if (jobProfile == "") {
+                if (jobProfile === "") {
                     return reports;
                 }
 
                 return _.filter(reports,
                     function (report) {
-                        return report.person[jobProfile]
+                        return report.person[jobProfile];
                     }
                 );
             }
