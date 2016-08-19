@@ -34,15 +34,8 @@ public class SlotsResource {
                            @QueryParam("personId") long person_id) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-        Date now = new Date();
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
-
-        // Don't allow users to submit availabilities older than current week
-        if (now.compareTo(startDate) > 0 && now.compareTo(endDate) > 0) {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        }
 
         slotsDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
         return Response.status(Response.Status.CREATED).build();
