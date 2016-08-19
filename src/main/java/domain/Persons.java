@@ -2,6 +2,7 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,14 +23,17 @@ public class Persons {
     private Long id;
 
     @NotNull
+    @Length(max = 100)
     private String email;
 
     @NotNull
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 100)
+    @Length(max = 35)
     private String firstName;
 
     @NotNull
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 100)
+    @Length(max = 35)
     private String lastName;
 
     @JsonIgnore
