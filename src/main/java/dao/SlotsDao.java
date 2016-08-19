@@ -66,6 +66,10 @@ public class SlotsDao extends AbstractDAO<Slots> {
         for (Slots slot : slots) persist(slot);
     }
 
+    public void updateForPersonAndWeekFromRecruiter(Slots[] slots) {
+        for (Slots slot : slots) persist(slot);
+    }
+
     public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
         return list(namedQuery("Slots.getForPersonForWeek")
                 .setParameter("personId", personId)

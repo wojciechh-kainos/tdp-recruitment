@@ -62,3 +62,7 @@ h2 {
 .cell-selected {
     background-color: cyan;
 }
+
+.center {
+    text-align: center;
+}

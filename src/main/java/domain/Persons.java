@@ -77,10 +77,9 @@ public class Persons implements Cloneable {
     @Override
     public Persons clone(){
         try{
-            final Persons result = (Persons) super.clone();
-            return result;
+            return (Persons) super.clone();
         } catch(final CloneNotSupportedException ex){
-            throw new AssertionError();
+            throw new RuntimeException(ex);
         }
     }
 

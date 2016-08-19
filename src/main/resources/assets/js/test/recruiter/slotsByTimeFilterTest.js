@@ -1,4 +1,4 @@
-define(['angular', 'application/recruiter/filters/tdprSlotsByTimeFilter', 'application/recruiter/tdprRecruiterModule'], function (angular) {
+define(['angular', 'application/recruiter/filters/tdprSlotsByTimeFilter', 'application/recruiter/tdprRecruiterModule'], function () {
     describe('Slots by time filter', function () {
         'use strict';
 
@@ -32,12 +32,8 @@ define(['angular', 'application/recruiter/filters/tdprSlotsByTimeFilter', 'appli
             {"id": 18, "startTime": "16:30:00", "endTime": "17:00:00"}];
 
         it('should return only some of the slots', function () {
-
-
-            // Act.
             result = $filter('slotsByTime')(data, '12:00:00', '14:00:00');
 
-            // Assert.
             expect(result).toEqual(
                 [{"id": 9, "startTime": "12:00:00", "endTime": "12:30:00"},
                     {"id": 10, "startTime": "12:30:00", "endTime": "13:00:00"},
@@ -47,7 +43,6 @@ define(['angular', 'application/recruiter/filters/tdprSlotsByTimeFilter', 'appli
         });
 
         it('should ignore constrains if params are undefined', function () {
-
             result = $filter('slotsByTime')(data, '12:00:00');
 
             expect(result).toEqual(
@@ -62,7 +57,6 @@ define(['angular', 'application/recruiter/filters/tdprSlotsByTimeFilter', 'appli
                     {"id": 17, "startTime": "16:00:00", "endTime": "16:30:00"},
                     {"id": 18, "startTime": "16:30:00", "endTime": "17:00:00"}]
             );
-
         })
     });
 });
