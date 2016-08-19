@@ -1,7 +1,7 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
     tdprReportModule.filter('personNameFilter', function () {
         return function (reports, phrase) {
-            if (phrase === undefined) {
+            if (phrase === null || phrase === undefined) {
                 return reports;
             }
             var searchPhrase = phrase.toLowerCase();
