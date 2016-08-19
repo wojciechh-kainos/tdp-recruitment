@@ -205,4 +205,26 @@ public class Persons implements Cloneable {
     public Time getDefaultFinishHour() {return defaultFinishHour;}
 
     public void setDefaultFinishHour(Time defaultFinishHour) {this.defaultFinishHour = defaultFinishHour;}
+
+    @Override
+    public String toString() {
+        return "Persons{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", admin=" + admin +
+                ", isDev=" + isDev +
+                ", isTest=" + isTest +
+                ", isWeb=" + isWeb +
+                ", bandLevel=" + bandLevel +
+                ", activationCode='" + activationCode + '\'' +
+                ", defaultStartHour=" + defaultStartHour +
+                ", defaultFinishHour=" + defaultFinishHour +
+                ", active=" + active +
+                ", slotsList=" + slotsList +
+                ", notesList=" + notesList +
+                '}';
+    }
 }
