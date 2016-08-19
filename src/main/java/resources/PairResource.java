@@ -188,9 +188,13 @@ public class PairResource {
     }
 
     private List<Slots> findPairsInSlots(List<Slots> remainingSlots, List<Slots> searchSlots) {
+        final List<Slots> filteredSlots = searchSlots.stream()
+                .filter(slot -> (slot.getType().getType().equals(AvailabilityTypesEnum.available)
+                        || slot.getType().getType().equals(AvailabilityTypesEnum.maybe)))
+                        .collect(Collectors.toList());
         return remainingSlots
                 .stream()
-                .filter(rs -> searchSlots
+                .filter(rs -> filteredSlots
                         .stream()
                         .filter(ss -> rs.getSlot().equals(ss.getSlot())
                                 && rs.getSlotsDate().equals(ss.getSlotsDate())
