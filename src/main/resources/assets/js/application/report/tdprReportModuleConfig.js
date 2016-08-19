@@ -6,7 +6,6 @@ define(['angular'
     tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("tdpr.report", {
-
                 abstract: true,
                 params: {
                     dateStart: '',
