@@ -1,5 +1,7 @@
 package domain;
 
+import constants.TdpConstants;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
@@ -45,5 +47,10 @@ public class SlotsTimes {
 
     public void setEndTime(Time endTime) {
         this.endTime = endTime;
+    }
+
+    public double getSlotDurationInMinutes() {
+        long duration = this.endTime.getTime() - this.startTime.getTime();
+        return duration / TdpConstants.MILISECONDS_IN_HOUR;
     }
 }

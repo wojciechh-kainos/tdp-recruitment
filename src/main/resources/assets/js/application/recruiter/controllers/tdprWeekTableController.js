@@ -56,7 +56,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
-
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
