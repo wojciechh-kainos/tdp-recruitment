@@ -29,7 +29,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
-        function updateDate(){
+        function isEligibleToEdit() {
+          return $scope.relativeDayNumber < 0 && !$scope.isRecruiter;
+        }
+
+        function updateDate() {
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             endDate  = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
             $scope.displayedStartDate = startDate.replace(/-/g,'.');
@@ -76,7 +80,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.changeSlotStatus = function() {
-            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+            if(isEligibleToEdit()){
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
@@ -84,7 +88,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.editNoteSwitch = function() {
-            if ($scope.isRecruiter === false && $scope.relativeDayNumber < 0) {
+            if (isEligibleToEdit()) {
               Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
               return;
             }
@@ -134,7 +138,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.updateSlots = function () {
-            if ($scope.isRecruiter === false && $scope.relativeDayNumber < 0) {
+            if (isEligibleToEdit()) {
               Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
               return;
             }
@@ -239,7 +243,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         )}
 
         $scope.getNoteFromPreviousWeek = function() {
-          if ($scope.isRecruiter === false && $scope.relativeDayNumber < 0) {
+          if (isEligibleToEdit()) {
             Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
             return;
           }
