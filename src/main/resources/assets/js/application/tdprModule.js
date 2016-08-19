@@ -6,6 +6,6 @@ define(['angular', 'uiRouter', 'notification'
     , 'application/report/tdprReportModule'
     , 'moment'
     , 'angular-moment'
-], function(angular) {
+], function (angular) {
     return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'ui-notification', 'tdprReportModule', 'angularMoment']);
 });

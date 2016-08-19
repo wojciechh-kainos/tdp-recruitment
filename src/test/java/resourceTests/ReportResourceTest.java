@@ -1,9 +1,5 @@
 package resourceTests;
 
-/**
- * Created by radoslawl on 17/08/16.
- */
-
 import domain.Persons;
 import domain.Report;
 import org.junit.Before;

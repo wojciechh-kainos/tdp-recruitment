@@ -14,7 +14,9 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
 
                 scope.JobProfileEnum = JobProfileEnum;
                 scope.JobProfileEnumNames = JobProfileEnumNames;
-                scope.selectedProfiles = _.forEach(mapped, function (value, key) { mapped[key] = true; });
+                scope.selectedProfiles = _.forEach(mapped, function (value, key) {
+                    mapped[key] = true;
+                });
             }
         }
 

@@ -10,17 +10,17 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
-            'numberOfInitMinutes':  {reverse: true, columnName: "Init hours"},
-            'numberOfFullMinutes':  {reverse: true, columnName: "Full hours"},
-            'numberOfAvailableMinutes':  {reverse: true, columnName: "Unused hours"}
+            'numberOfInitMinutes': {reverse: true, columnName: "Init hours"},
+            'numberOfFullMinutes': {reverse: true, columnName: "Full hours"},
+            'numberOfAvailableMinutes': {reverse: true, columnName: "Unused hours"}
         };
 
-        $scope.sortBy = function(column) {
+        $scope.sortBy = function (column) {
             $scope.sortColumn = column;
             $scope.columnMap[column].reverse = $scope.sortReverse = !$scope.columnMap[column].reverse;
         };
 
-        $scope.activate = function() {
+        $scope.activate = function () {
 
             if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
                 $scope.startDate = tdprReportDateService.getLastWeekStartDate();
@@ -31,7 +31,7 @@ define(['angular', 'application/report/tdprReportModule'
                 $scope.startDate = new Date($state.params.dateStart);
             }
             $scope.getReports();
-        }
+        };
 
         $scope.getReports = function () {
             tdprReportService.getReports($scope.startDate, $scope.endDate).then(
@@ -57,34 +57,6 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.activate();
-
-//        $scope.getPreviousWeekReportsLegacy = function (offset) {
-//            var week = tdprReportDateService.getWeekWithOffset(offset);
-//            $scope.startDate = week[0];
-//            $scope.endDate = week[4];
-//            $scope.getReports();
-//        };
-//        $scope.getMonthReports = function (offset) {
-//            var endDate = new Date();
-//            endDate.setUTCMonth(endDate.getUTCMonth() + offset + 1);
-//            endDate.setUTCDate(0);
-//
-//            var startDate = new Date(endDate);
-//            startDate.setUTCDate(1);
-//
-//            $scope.startDate = startDate;
-//            $scope.endDate = endDate;
-//            $scope.getReports();
-//        };
-//        function setLastWeekDate() {
-//            $scope.startDate = moment().subtract(1, 'week').isoWeekday('Monday').toDate();
-//            $scope.endDate = moment($scope.startDate).isoWeekday('Sunday').toDate();
-//        }
-//
-//        function setLastMonthDate() {
-//            $scope.startDate = moment().subtract(1, 'month').startOf('month').toDate();
-//            $scope.endDate = moment($scope.startDate).endOf('month').toDate();
-//        }
 
     })
 });

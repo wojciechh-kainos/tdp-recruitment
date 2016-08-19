@@ -1,8 +1,5 @@
 package domain;
 
-/**
- * Created by radoslawl on 16/08/16.
- */
 public class Report {
 
     private Persons person;

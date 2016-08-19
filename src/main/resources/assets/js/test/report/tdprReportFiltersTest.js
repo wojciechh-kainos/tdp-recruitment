@@ -10,21 +10,30 @@ define(['angular', 'angularMocks'
 
         var dataForTesting = [
             {
-                person : {
-                    firstName : "Jakub",
-                    lastName : "Raniszewski",
-                    isDev : true,
-                    isTest : true,
-                    isWeb : true
+                person: {
+                    firstName: "Jakub",
+                    lastName: "Raniszewski",
+                    isDev: true,
+                    isTest: true,
+                    isWeb: true
                 }
             },
             {
-                person : {
-                    firstName : "Jan",
-                    lastName : "Nowak",
-                    isDev : false,
-                    isTest : false,
-                    isWeb : false
+                person: {
+                    firstName: "Jan",
+                    lastName: "Nowak",
+                    isDev: false,
+                    isTest: false,
+                    isWeb: false
+                }
+            },
+            {
+                person: {
+                    firstName: "Andrzej",
+                    lastName: "Kowalski",
+                    isDev: false,
+                    isTest: false,
+                    isWeb: true
                 }
             }
         ];
@@ -34,43 +43,43 @@ define(['angular', 'angularMocks'
         }));
 
         describe('By person name filter', function () {
-            it('should return 1 report', function(){
+            it('should return 1 report', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Jan').length).toEqual(1);
             });
 
-            it('should return 2 reports', function(){
+            it('should return 2 reports', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Ja').length).toEqual(2);
             });
 
-            it('should return 1 reports', function(){
+            it('should return 1 reports', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Rani').length).toEqual(1);
             });
 
-            it('should return 1 reports', function(){
+            it('should return 1 reports', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Jakub Raniszewski').length).toEqual(1);
             });
 
-            it('should return 1 reports', function(){
+            it('should return 1 reports', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Nowak Jan').length).toEqual(1);
             });
         });
 
-        describe('By person name filter', function(){
-            it('should return 2 reports when phrase empty', function(){
-                expect(filter('personNameFilter')(dataForTesting, '').length).toEqual(2);
-            })
+        describe('By person name filter', function () {
+            it('should return 3 reports when phrase empty', function () {
+                expect(filter('personNameFilter')(dataForTesting, '').length).toEqual(3);
+            });
 
-            it('should return 2 reports when phrase undefined', function(){
-                expect(filter('personNameFilter')(dataForTesting).length).toEqual(2);
-            })
+            it('should return 3 reports when phrase undefined', function () {
+                expect(filter('personNameFilter')(dataForTesting).length).toEqual(3);
+            });
 
-            it('should return 0 persons when phrase does not fill', function(){
+            it('should return 0 persons when phrase does not fill', function () {
                 expect(filter('personNameFilter')(dataForTesting, 'Alicja').length).toEqual(0);
             })
         });
 
-        describe('By job profile filter', function(){
-            it('should return 1 person if isDev checked', function(){
+        describe('By job profile filter', function () {
+            it('should return 1 person if isDev checked, object filter', function () {
                 var selected = {
                     isDev: true,
                     isTest: false,
@@ -78,7 +87,25 @@ define(['angular', 'angularMocks'
                 };
 
                 expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(1);
-            })
+            });
+
+            it('should return 1 person if isDev checked, string filter', function () {
+                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
+            });
+
+            it('should return 1 person if isDev checked, string filter', function () {
+                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
+            });
+
+            it('should return 2 person if isDev and isWeb checked, object filter', function () {
+                var selected = {
+                    isDev: true,
+                    isTest: false,
+                    isWeb: true
+                };
+
+                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(2);
+            });
         })
     })
 });
