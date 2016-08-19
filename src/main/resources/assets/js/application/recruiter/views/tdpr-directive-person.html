@@ -7,7 +7,8 @@ Default working hours:
 Note for this week:
 {{note}}
 ">
-            {{personData.firstName + ' ' + personData.lastName}} <span class="red" ng-show="note != 'none'">*</span></a>
+            {{personData.firstName.length + personData.lastName.length < 27 ? personData.firstName : personData.firstName[0] + '.'}}{{' ' + personData.lastName}}
+            <span class="red" ng-show="note != 'none'">*</span></a>
     </div>
     <div class="person-name-buttons" ng-if="personData.changesPending" >
             <span class="glyphicon glyphicon-ok" aria-hidden="true"

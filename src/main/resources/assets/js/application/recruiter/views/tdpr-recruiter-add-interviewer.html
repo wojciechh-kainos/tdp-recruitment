@@ -48,7 +48,7 @@
             <p class="int-err center" ng-show="interviewerForm.lastName.$error.maxlength">Last name cannot have more than 35 characters.</p>
         </div>
         <div class="center btn-wrapper">
-            <input class="btn btn-primary" type="submit" ng-click="intForm.$vaild ? create(person) : showError()" value="Submit"
+            <input class="btn btn-primary" type="submit" ng-click="interviewerForm.$valid ? create(person) : showError()" value="Submit"
                ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
             <img ng-if="createInterviewerPromise.resolved"

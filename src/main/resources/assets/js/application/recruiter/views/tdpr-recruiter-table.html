@@ -3,10 +3,25 @@
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
     <div id="date-container">
+        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
         <span class="navigate1">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
-        <button class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
+    </div>
+
+    <div class="legend">
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
+            <span>Developer</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
+            <span> Tester</span>
+        </label>
+        <label class="mouse-pointer">
+            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.web}}"/>
+            <span> WebOps</span>
+        </label>
     </div>
 
     <form class="form-inline">
@@ -22,25 +37,11 @@
                     ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
                     ng-model="endTime" ng-change="filterSlots()"></select>
         </div>
-    </form>
-
-    <div class="legend">
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
-            <span>Developer</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
-            <span> Tester</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.web}}"/>
-            <span> WebOps</span>
-        </label>
 
         <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
+        <button class="button navigate1" ng-click="refreshPersonsData()">Clear</button>
+    </form>
 
-    </div>
 
     <div class="availabilities-table-container">
         <table id="availabilities-table">
@@ -76,7 +77,8 @@
     </div>
 
 
-    <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
-    | <a ui-sref="tdpr.report.home">Reports</a>
+    <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+
+    | <a id="reports-btn" ui-sref="tdpr.report.home">Reports</a>
 
 </div>

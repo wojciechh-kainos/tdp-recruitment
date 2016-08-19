@@ -28,6 +28,11 @@
     margin-bottom:2%;
 }
 
+#back-btn {
+    font-size: larger;
+}
+
 #report-header {
     color: #375D81
 }
+
