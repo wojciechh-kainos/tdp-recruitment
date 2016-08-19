@@ -87,9 +87,4 @@ public class Slots {
     public void setType(AvailabilityTypes type) {
         this.type = type;
     }
-
-    @Override
-    public String toString(){
-        return "id: " + id + " | person: " + person.getId() + " | time: " + slot.getId() + " | date: " + slotsDate.toString() + " | type: " + type.getType().toString();
-    }
 }
