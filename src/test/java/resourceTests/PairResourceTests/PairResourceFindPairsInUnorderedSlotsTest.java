@@ -65,7 +65,7 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
 
     @Test
     public void testFindPairForWeekInUnorderedSlots() {
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Persons pair = pairs.get(0);
 

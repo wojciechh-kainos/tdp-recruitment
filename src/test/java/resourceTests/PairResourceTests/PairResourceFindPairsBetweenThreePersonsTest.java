@@ -61,7 +61,7 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeek() {
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Persons firstPair = pairs.get(0);
         Persons secondPair = pairs.get(1);

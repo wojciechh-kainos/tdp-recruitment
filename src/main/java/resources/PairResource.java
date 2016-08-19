@@ -38,7 +38,7 @@ public class PairResource {
                                    @QueryParam("isTest") Boolean isTest,
                                    @QueryParam("isOps") Boolean isOps) {
 
-        List<Slots> slots = slotsDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps);
+        List<Slots> slots = slotsDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps);
         List<Persons> persons = findPersonsInSlots(slots);
         List<Slots> filteredSlots = findTriplesInSlots(slots);
         List<Pair> pairs = findPairsForAllPersons(filteredSlots, persons);

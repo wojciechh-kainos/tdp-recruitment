@@ -55,7 +55,7 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
     @Test
     public void testFindPairForDifferentAvailabilityTypes(){
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Persons> pairs  = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
         assertEquals("One pair should be found", 2, pairs.size());
