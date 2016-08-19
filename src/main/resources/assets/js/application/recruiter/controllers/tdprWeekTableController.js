@@ -65,6 +65,20 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             );
         };
 
+        $scope.refreshPersonsData = function () {
+            $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
+            $scope.startTime = slotsTimes[0].startTime;
+            $scope.filterSlots();
+
+            tdprPersonsService.fetchPersonsWithSlotsForDates($scope.days[0], $scope.days[4]).then(
+                function (persons) {
+                    $scope.persons = persons;
+                }
+            ).catch(function () {
+                Notification.error({message: "Failed to refresh persons data", delay: 3000});
+            });
+        };
+
         $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });

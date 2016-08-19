@@ -51,6 +51,8 @@
     font-size: medium;
 }
 
+
+
 .changes-button {
     font-size: smaller;
 }
@@ -70,6 +72,10 @@
     font-size: larger;
 }
 
+#reports-btn {
+    font-size: larger;
+}
+
 .day-th, .slot-time-th {
     background-color: #375D81;
     color: white;
@@ -86,15 +92,22 @@
 
 .day-th {
     box-sizing: border-box;
-    font-size: large;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
     padding-left: 12px;
     padding-right: 12px;
 }
 
+.availabilities-table-container .day-th {
+    font-size: large;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
 .availabilities-table {
     border: 2px solid black;
+}
+
+.form-inline .navigate1 {
+    margin: 20px;
 }
 
 .person-name-text .tooltip-inner {
