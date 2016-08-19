@@ -6,7 +6,6 @@ define(['angular'
     tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state("tdpr.report", {
-                url: '/report',
                 abstract: true,
                 params: {
                     dateStart: '',
@@ -20,7 +19,7 @@ define(['angular'
                 }
             })
             .state("tdpr.report.home", {
-                url: '/details',
+                url: '/report',
                 views: {
                     "main@report": {
                         templateUrl: '/js/application/report/views/tdpr-report-details.html',

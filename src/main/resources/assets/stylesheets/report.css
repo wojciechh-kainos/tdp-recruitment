@@ -7,19 +7,19 @@
     color: #808080;
 }
 
-.columnHeading {
+.column-heading {
     cursor: pointer;
 }
 
-.sortOrder:after {
+.sort-order:after {
   content: '\25b2';   /* BLACK UP-POINTING TRIANGLE */
 }
 
-.sortOrder.sortReverse:after {
+.sort-order.sortReverse:after {
   content: '\25bc';   /* BLACK DOWN-POINTING TRIANGLE */
 }
 
-.hourCell {
+.hour-cell {
     cursor: auto;
 }
 

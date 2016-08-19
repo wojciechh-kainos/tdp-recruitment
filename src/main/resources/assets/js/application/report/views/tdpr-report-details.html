@@ -1,5 +1,6 @@
 <div class="row options">
-    <h1>Display reports</h1>
+    <h1>Reports</h1>
+    <hr>
 </div>
 
 <job-profile selected-profiles="checkedProfiles"></job-profile>
@@ -28,38 +29,32 @@
 </div>
 
 <div class="row options">
-    <div class="col-md-1 col-md-offset-4">
-        <label class="control-label">Search:</label>
+    <div class="col-md-12">
+        <hr>
+        <h4>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h4>
     </div>
-    <div class="col-md-3">
+</div>
+
+<div class="row options">
+    <div class="col-md-1 col-md-offset-2">
+        <label class="control-label">Filter by person:</label>
+    </div>
+    <div class="col-md-2">
         <input class="form-control" type="text" ng-model="inputString"/>
     </div>
-
 </div>
 
 <div class="row options">
-    <div class="col-md-12">
-        <h3 class="border-down">Showing reports for date range:</h3>
-        <h3>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h3>
-    </div>
-</div>
-
-
-<div class="row options">
-    <div class="col-md-2">
-
-    </div>
-
-    <div class="col-md-8">
+    <div class="col-md-8 col-md-offset-2">
         <table id="report-table">
-            <thead class="columnHeading">
+            <thead class="column-heading">
             <tr>
                 <td class="day-th" ng-repeat="(column, value) in columnMap">
                     <span ng-click="sortBy(column)">
                         <span>
                             {{value.columnName}}
                         </span>
-                        <span class="sortOrder" ng-show="sortColumn===column"
+                        <span class="sort-order" ng-show="sortColumn===column"
                               ng-class="{sortReverse: value.reverse}"></span>
                     </span>
                 </td>
@@ -72,11 +67,6 @@
             </tbody>
         </table>
     </div>
-
-    <div class="col-md-2">
-
-    </div>
-
 </div>
 
 <a ui-sref="tdpr.recruiter.home">Back</a>
