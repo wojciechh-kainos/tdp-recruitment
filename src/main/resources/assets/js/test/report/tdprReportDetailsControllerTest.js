@@ -1,28 +1,32 @@
-define(['angular', 'angularMocks', 'application/report/services/tdprReportService', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
+define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
 
     describe('tdprReportService', function () {
         beforeEach(angular.mock.module('tdprReportModule'));
 
-        var $httpBackend;
         var reportService;
         var dateService;
         var $state;
         var $scope;
-        var getReportsDeferred;
         var $controller;
+        var $httpBackend;
+        var Notification;
+        var deferredPromise;
 
-        beforeEach(inject(function (_tdprReportService_, _$httpBackend_, _$rootScope_, _$state_, $q, $controller) {
-            reportService = _tdprReportService_;
+        beforeEach(inject(function (_$rootScope_, _$state_, $controller, _$q_) {
+            reportService = jasmine.createSpyObj('tdprReportService', ['getReports']);
+
             dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
             $scope = _$rootScope_.$new();
             $state = _$state_;
-            $httpBackend = _$httpBackend_;
-            getReportsDeferred = $q.defer();
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+            deferredPromise = _$q_.defer();
+            reportService.getReports.and.returnValue(deferredPromise.promise);
             $controller('tdprReportDetailsController', {
                 $scope : $scope,
                 $state : $state,
                 tdprReportService : reportService,
-                tdprReportDateService : dateService
+                tdprReportDateService : dateService,
+                Notification : Notification
             });
         }));
 
@@ -44,8 +48,23 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
                 expect($scope.startDate).toEqual(new Date($state.params.dateStart));
                 expect($scope.endDate).toEqual(new Date($state.params.dateEnd));
             });
+        })
 
+        describe('Notification', function(){
+            it('should return success when get data from server', function(){
+                deferredPromise.resolve();
+                $scope.$apply();
 
+                expect(reportService.getReports).toHaveBeenCalledTimes(1);
+                expect(Notification.success).toHaveBeenCalledWith({message : 'Success !', delay : 3500});
+            });
+
+            it('should return error message when server does not return data', function(){
+                deferredPromise.reject({message : "error"});
+                $scope.$apply();
+
+                expect(Notification.error).toHaveBeenCalledWith({message : "error", delay : 3500});
+            });
         })
     })
 });

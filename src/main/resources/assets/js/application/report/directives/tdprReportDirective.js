@@ -7,9 +7,6 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             scope: {
                 reportData: '=',
                 personInfo: '='
-            },
-            link: function (scope, element, attributes) {
-
             }
         }
 

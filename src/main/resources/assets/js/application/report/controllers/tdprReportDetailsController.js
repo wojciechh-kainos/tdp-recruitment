@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, Notification) {
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -21,7 +21,6 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.activate = function () {
-
             if ($state.params.dateStart === '' || $state.params.dateEnd === '') {
                 $scope.startDate = tdprReportDateService.getLastWeekStartDate();
                 $scope.endDate = tdprReportDateService.getLastWeekEndDate();
@@ -40,6 +39,12 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
                     $scope.sortBy('person.lastName');
+                    Notification.success({message: 'Success !', delay: 3500});
+                }
+            )
+            .catch(
+                function (status) {
+                    Notification.error({message: status.message, delay: 3500});
                 }
             )
         };
@@ -57,6 +62,5 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.activate();
-
     })
 });
