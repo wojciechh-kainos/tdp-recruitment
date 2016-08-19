@@ -1,3 +1,6 @@
 <td class="slot" ng-class="getClass()">
-    <span class="slot-span" uib-tooltip="{{ getTooltipString() }}"></span>
+    <span class="slot-span" uib-tooltip="
+{{slotTimeData.startTime | limitTo: 5}}-{{slotTimeData.endTime | limitTo: 5}}
+{{getSlotType()}}
+"></span>
 </td>
