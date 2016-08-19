@@ -1,6 +1,8 @@
 package dao;
 
 import com.google.inject.Inject;
+import domain.AvailabilityTypes;
+import domain.AvailabilityTypesEnum;
 import domain.Slots;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
@@ -31,19 +33,22 @@ public class SlotsDao extends AbstractDAO<Slots> {
         namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slots> findBetweenPerJobProfile(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps){
+    public List<Slots> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
         Criteria criteria = criteria();
+
         Criteria criteriaPerson = criteria.createCriteria("person");
-
-        criteria.add(Restrictions.ge("slotsDate", start));
-        criteria.add(Restrictions.le("slotsDate", end));
-
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isWeb", isOps), isOps);
+
+        Criteria criteriaAvail = criteria.createCriteria("type");
+        criteriaAvail.add(Restrictions.or(Restrictions.eq("type", AvailabilityTypesEnum.maybe), Restrictions.eq("type", AvailabilityTypesEnum.available)));
+
+        criteria.add(Restrictions.ge("slotsDate", start));
+        criteria.add(Restrictions.le("slotsDate", end));
 
         return list(criteria);
     }

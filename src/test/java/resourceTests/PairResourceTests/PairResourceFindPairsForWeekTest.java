@@ -59,7 +59,7 @@ public class PairResourceFindPairsForWeekTest {
 
         resource = new PairResource(mockDao);
 
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
     }
 
@@ -101,4 +101,6 @@ public class PairResourceFindPairsForWeekTest {
                         .allMatch(slot -> slot.getSlotsDate().equals(expectedDate)));
 
     }
+
+
 }
