@@ -16,7 +16,7 @@ import java.util.List;
         @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
         @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
 })
-public class Persons {
+public class Persons implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +76,16 @@ public class Persons {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Notes> notesList = new ArrayList<>();
+
+
+    @Override
+    public Persons clone(){
+        try{
+            return (Persons) super.clone();
+        } catch(final CloneNotSupportedException ex){
+            throw new RuntimeException(ex);
+        }
+    }
 
     public Persons() {
     }
