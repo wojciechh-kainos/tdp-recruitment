@@ -60,7 +60,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
             });
 
             it('should return error message when server does not return data', function(){
-                deferredPromise.reject({message : "Unable to get data from server!"});
+                deferredPromise.reject("Unable to get data from server!");
                 $scope.$apply();
 
                 expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : 3500});
