@@ -10,9 +10,9 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
-            'numberOfInitMinutes': {reverse: true, columnName: "Init hours"},
-            'numberOfFullMinutes': {reverse: true, columnName: "Full hours"},
-            'numberOfAvailableMinutes': {reverse: true, columnName: "Unused hours"}
+            'initHours': {reverse: true, columnName: "Init hours"},
+            'fullHours': {reverse: true, columnName: "Full hours"},
+            'availableHours': {reverse: true, columnName: "Unused hours"}
         };
 
         $scope.sortBy = function (column) {
@@ -39,12 +39,12 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
                     $scope.sortBy('person.lastName');
-                    Notification.success({message: 'Report successfully download.', delay: 2000});
+                    Notification.success({message: 'Report successfully downloaded.', delay: 2000});
                 }
             )
             .catch(
                 function (status) {
-                    Notification.error({message: status.message, delay: 3500});
+                    Notification.error({message: status, delay: 3500});
                 }
             )
         };

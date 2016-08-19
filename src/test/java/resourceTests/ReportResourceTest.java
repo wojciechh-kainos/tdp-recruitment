@@ -1,5 +1,6 @@
 package resourceTests;
 
+import constants.TdpConstants;
 import domain.Persons;
 import domain.Report;
 import org.junit.Before;
@@ -41,31 +42,20 @@ public class ReportResourceTest {
     }
 
     @Test
-    public void getReportForPersonId() {
+    public void getReportForPersonId() throws ParseException {
         String inputStartDate = "12-01-2016";
         String inputEndDate = "12-02-2016";
 
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            startDate = formatter.parse(inputStartDate);
-             endDate = formatter.parse(inputEndDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+        Date startDate = formatter.parse(inputStartDate);
+        Date endDate = formatter.parse(inputEndDate);
 
-        Long hours = new Long(200);
+        Double hours = 200.0;
         Report expected = new Report(p, hours, hours, hours);
 
         when(reportService.getReport(personId, startDate, endDate)).thenReturn(expected);
 
-        Report achieved = null;
-        try {
-            achieved = reportResource.getReport(inputStartDate, inputEndDate, personId);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Report achieved = reportResource.getReport(inputStartDate, inputEndDate, personId);
 
         assertEquals(expected, achieved);
     }

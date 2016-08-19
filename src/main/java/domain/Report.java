@@ -3,23 +3,24 @@ package domain;
 public class Report {
 
     private Persons person;
-    private Long numberOfInitMinutes;
-    private Long numberOfFullMinutes;
-    private Long numberOfAvailableMinutes;
+    private Double initHours;
+    private Double fullHours;
+    private Double availableHours;
 
-    public Report(Persons person, Long numberOfInitMinutes, Long numberOfAvailableMinutes, Long numberOfFullMinutes) {
-        this.numberOfInitMinutes = numberOfInitMinutes;
+
+    public Report(Persons person, Double initHours, Double availableHours, Double fullHours) {
+        this.initHours = initHours;
         this.person = person;
-        this.numberOfAvailableMinutes = numberOfAvailableMinutes;
-        this.numberOfFullMinutes = numberOfFullMinutes;
+        this.availableHours = availableHours;
+        this.fullHours = fullHours;
     }
 
-    public Long getNumberOfInitMinutes() {
-        return numberOfInitMinutes;
+    public Double getInitHours() {
+        return initHours;
     }
 
-    public void setNumberOfInitMinutes(Long numberOfInitMinutes) {
-        this.numberOfInitMinutes = numberOfInitMinutes;
+    public void setInitHours(Double initHours) {
+        this.initHours = initHours;
     }
 
     public Persons getPerson() {
@@ -30,20 +31,20 @@ public class Report {
         this.person = person;
     }
 
-    public Long getNumberOfFullMinutes() {
-        return numberOfFullMinutes;
+    public Double getFullHours() {
+        return fullHours;
     }
 
-    public void setNumberOfFullMinutes(Long numberOfFullMinutes) {
-        this.numberOfFullMinutes = numberOfFullMinutes;
+    public void setFullHours(Double fullHours) {
+        this.fullHours = fullHours;
     }
 
-    public Long getNumberOfAvailableMinutes() {
-        return numberOfAvailableMinutes;
+    public Double getAvailableHours() {
+        return availableHours;
     }
 
-    public void setNumberOfAvailableMinutes(Long numberOfAvailableMinutes) {
-        this.numberOfAvailableMinutes = numberOfAvailableMinutes;
+    public void setAvailableHours(Double availableHours) {
+        this.availableHours = availableHours;
     }
 
     @Override
@@ -54,20 +55,20 @@ public class Report {
         Report report = (Report) o;
 
         if (person != null ? !person.equals(report.person) : report.person != null) return false;
-        if (numberOfInitMinutes != null ? !numberOfInitMinutes.equals(report.numberOfInitMinutes) : report.numberOfInitMinutes != null)
+        if (initHours != null ? !initHours.equals(report.initHours) : report.initHours != null)
             return false;
-        if (numberOfFullMinutes != null ? !numberOfFullMinutes.equals(report.numberOfFullMinutes) : report.numberOfFullMinutes != null)
+        if (fullHours != null ? !fullHours.equals(report.fullHours) : report.fullHours != null)
             return false;
-        return numberOfAvailableMinutes != null ? numberOfAvailableMinutes.equals(report.numberOfAvailableMinutes) : report.numberOfAvailableMinutes == null;
+        return availableHours != null ? availableHours.equals(report.availableHours) : report.availableHours == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = person != null ? person.hashCode() : 0;
-        result = 31 * result + (numberOfInitMinutes != null ? numberOfInitMinutes.hashCode() : 0);
-        result = 31 * result + (numberOfFullMinutes != null ? numberOfFullMinutes.hashCode() : 0);
-        result = 31 * result + (numberOfAvailableMinutes != null ? numberOfAvailableMinutes.hashCode() : 0);
+        result = 31 * result + (initHours != null ? initHours.hashCode() : 0);
+        result = 31 * result + (fullHours != null ? fullHours.hashCode() : 0);
+        result = 31 * result + (availableHours != null ? availableHours.hashCode() : 0);
         return result;
     }
 
@@ -75,9 +76,9 @@ public class Report {
     public String toString() {
         return "Report{" +
                 "person=" + person +
-                ", numberOfInitMinutes=" + numberOfInitMinutes +
-                ", numberOfFullMinutes=" + numberOfFullMinutes +
-                ", numberOfAvailableMinutes=" + numberOfAvailableMinutes +
+                ", initHours=" + initHours +
+                ", fullHours=" + fullHours +
+                ", availableHours=" + availableHours +
                 '}';
     }
 }

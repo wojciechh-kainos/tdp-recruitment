@@ -1,6 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
+import constants.TdpConstants;
 import domain.Report;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.ReportService;
@@ -32,7 +33,7 @@ public class ReportResource {
                             @PathParam("date_to") String date_to,
                             @PathParam("id") long person_id) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
@@ -47,7 +48,7 @@ public class ReportResource {
                             @PathParam("date_from") String date_from,
                             @PathParam("date_to") String date_to) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);

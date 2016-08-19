@@ -48,7 +48,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 expect($scope.startDate).toEqual(new Date($state.params.dateStart));
                 expect($scope.endDate).toEqual(new Date($state.params.dateEnd));
             });
-        })
+        });
 
         describe('Notification', function(){
             it('should return success when get data from server', function(){
@@ -56,14 +56,14 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $scope.$apply();
 
                 expect(reportService.getReports).toHaveBeenCalledTimes(1);
-                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully download.', delay : 2000});
+                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully downloaded.', delay : 2000});
             });
 
             it('should return error message when server does not return data', function(){
-                deferredPromise.reject({message : "error"});
+                deferredPromise.reject({message : "Unable to get data from server!"});
                 $scope.$apply();
 
-                expect(Notification.error).toHaveBeenCalledWith({message : "error", delay : 3500});
+                expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : 3500});
             });
         })
     })

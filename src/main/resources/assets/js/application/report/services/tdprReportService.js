@@ -9,7 +9,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
                         return response.data;
                     },
                     function (error) {
-                        error.message = "Unable to get data from server.";
+                        error.message = "Unable to get data from server!";
                         return $q.reject(error.message)
                     })
         };
@@ -21,7 +21,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
                         return response.data;
                     },
                     function (error) {
-                        error.message = "Unable to get data from server.";
+                        error.message = "Unable to get data from server!";
                         return $q.reject(error.message)
                     })
         };

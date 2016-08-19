@@ -1,6 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
+import constants.TdpConstants;
 import dao.SlotsDao;
 import domain.Slots;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -33,7 +34,7 @@ public class SlotsResource {
                            @PathParam("date_to") String date_to,
                            @QueryParam("personId") long person_id) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date now = new Date();
         Date startDate = formatter.parse(date_from);
@@ -55,7 +56,7 @@ public class SlotsResource {
                                          @QueryParam("startDate") String startDate,
                                          @QueryParam("endDate") String endDate) throws ParseException {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);

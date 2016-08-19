@@ -1,7 +1,7 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
     tdprReportModule.filter('jobReportProfileFilter', function () {
         return function (reports, jobProfile) {
-            if (jobProfile === undefined) {
+            if (jobProfile === null || jobProfile === undefined) {
                 return reports;
             }
 

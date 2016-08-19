@@ -8,6 +8,7 @@ import domain.Report;
 import domain.Slots;
 import domain.SlotsTimes;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,9 +28,9 @@ public class ReportService {
 
     public Report getReport(long personId, Date startDate, Date endDate) {
 
-        Long availableCount = 0L;
-        Long fullCount = 0L;
-        Long initCount = 0L;
+        Double availableCount = 0.0;
+        Double fullCount = 0.0;
+        Double initCount = 0.0;
 
         Persons person = personsDao.getById(personId);
 
@@ -38,7 +39,7 @@ public class ReportService {
         for (Slots slot : slotsList) {
             SlotsTimes slotTime = slot.getSlot();
 
-            Long slotDuration = (slotTime.getEndTime().getTime() - slotTime.getStartTime().getTime())/60000;
+            Double slotDuration = slotTime.getSlotDurationInMinutes();
 
             switch (slot.getType().getType()) {
                 case "available":

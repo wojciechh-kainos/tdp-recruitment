@@ -1,6 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
+import constants.TdpConstants;
 import dao.NotesDao;
 import dao.PersonsDao;
 import dao.SlotsDao;
@@ -29,7 +30,7 @@ public class PersonsResource {
     private SlotsDao slotsDao;
     private NotesDao notesDao;
     private MailService mailService;
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
     public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
