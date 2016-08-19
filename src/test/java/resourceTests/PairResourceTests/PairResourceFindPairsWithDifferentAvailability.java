@@ -47,7 +47,7 @@ public class PairResourceFindPairsWithDifferentAvailability {
 
     @Test
     @Ignore
-    public void testFindPairs() {
+    public void testFindPairsShouldFindNoPairs() {
         when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
         List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
@@ -70,9 +70,8 @@ public class PairResourceFindPairsWithDifferentAvailability {
         Persons person = MockDataUtil.createPersons(2L, "Second", isDev, isTest, isOps);
         AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
         AvailabilityTypes typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
-        List<Slots> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
 
-        return slots;
+        return MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
     }
 
 }

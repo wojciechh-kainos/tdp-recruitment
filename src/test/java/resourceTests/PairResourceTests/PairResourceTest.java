@@ -28,6 +28,7 @@ public class PairResourceTest {
     private PairResource resource;
     private List<Slots> mockSlots = new ArrayList<>();
     private List<SlotsTimes> expectedSlotsTimes;
+    private List<Persons> persons;
 
     @Mock
     private static SlotsDao mockDao;
@@ -55,22 +56,33 @@ public class PairResourceTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(differentSlotsTime, secondPerson, sameDate, availabilityType));
 
         resource = new PairResource(mockDao);
+        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
     }
 
     @Test
-    public void testFindPairs() {
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+    public void testFindPairsShouldFindTwoPersons() {
+        assertEquals("Should find 2 persons with persons", 2, persons.size());
+    }
 
-        List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
-        Persons pair = pairs.get(0);
-
-        assertEquals("Should find 2 persons with pairs", 2, pairs.size());
-        assertEquals("First person should have 3 slots in slotsList", 3, pair.getSlotsList().size());
-        assertTrue("SlotsTimes of all paired persons should be equal to expectedSlotsTimes",
-                pair
-                        .getSlotsList()
+    @Test
+    public void testFindPairsEveryPersonShouldHaveThreeSlots() {
+        assertTrue("First person should have 3 slots in slotsList",
+                persons
                         .stream()
-                        .map(Slots::getSlot)
-                        .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)));
+                        .allMatch(person -> person.getSlotsList().size() == 3));
+    }
+
+    @Test
+    public void testFindPairsEveryPairShouldHaveSlotsTimesAsExpected() {
+        assertTrue("SlotsTimes of all paired persons should be equal to expectedSlotsTimes",
+                persons
+                        .stream()
+                        .allMatch(person -> person
+                                .getSlotsList()
+                                .stream()
+                                .map(Slots::getSlot)
+                                .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)))
+        );
     }
 }

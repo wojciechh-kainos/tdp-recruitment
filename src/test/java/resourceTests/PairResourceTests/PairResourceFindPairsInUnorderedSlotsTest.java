@@ -21,19 +21,20 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsInUnorderedSlotsTest {
 
-    private final Boolean isDev = true;
-    private final Boolean isTest = false;
-    private final Boolean isOps = false;
-    private String startDate;
-    private String endDate;
-    private PairResource resource;
     private List<Slots> mockSlots = new ArrayList<>();
+    private List<Persons> persons;
 
     @Mock
     private static SlotsDao mockDao;
 
     @Before
     public void setUp() {
+        final Boolean isDev = true;
+        final Boolean isTest = false;
+        final Boolean isOps = false;
+        String startDate;
+        String endDate;
+        PairResource resource;
         int TODAY_OFFSET = 0;
         int TOMORROW_OFFSET = 1;
         Date date = MockDataUtil.createDate(TODAY_OFFSET);
@@ -61,15 +62,20 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, secondPerson, date, availabilityType));
 
         resource = new PairResource(mockDao);
+
+        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
     }
 
     @Test
-    public void testFindPairForWeekInUnorderedSlots() {
-        when(mockDao.findBetweenPerJobProfile(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
-        Persons pair = pairs.get(0);
+    public void testFindPairForWeekInUnorderedSlotsShouldFindTwoPersons() {
+        assertEquals("Two persons should be found", 2, persons.size());
+    }
 
-        assertEquals("Two persons should be found", 2, pairs.size());
-        assertEquals("First person should have 6 slots in slotsList", 6, pair.getSlotsList().size());
+    @Test
+    public void testFindPairForWeekInUnorderedSlotsShouldFindSixSlotsInFirstPerson() {
+        Persons firstPerson = persons.get(0);
+        assertEquals("First person should have 6 slots in slotsList", 6, firstPerson.getSlotsList().size());
+
     }
 }
