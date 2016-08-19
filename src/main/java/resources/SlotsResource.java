@@ -58,4 +58,12 @@ public class SlotsResource {
 
         return slotsDao.getForPersonForWeek(id, start, end);
     }
+
+    @PUT
+    @Path("recruiter")
+    @UnitOfWork
+    public Response updateRecruiter(Slots[] slots) {
+        slotsDao.updateForPersonAndWeekFromRecruiter(slots);
+        return Response.status(Response.Status.CREATED).build();
+    }
 }
