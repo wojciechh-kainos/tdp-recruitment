@@ -1,5 +1,6 @@
 <div class="row options">
-    <h1>Display reports</h1>
+    <h1>Reports</h1>
+    <hr>
 </div>
 
 <job-profile selected-profiles="checkedProfiles"></job-profile>
@@ -38,8 +39,9 @@
 
 <div class="row options">
     <div class="col-md-12">
-        <h3 class="border-down">Showing reports for date range:</h3>
-        <h3>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h3>
+        <h3>Reports for given dates:</h3>
+        <hr>
+        <h4>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h4>
     </div>
 </div>
 
