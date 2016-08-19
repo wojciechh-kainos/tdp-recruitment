@@ -7,6 +7,7 @@ import domain.Notes;
 import domain.Persons;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -77,6 +78,7 @@ public class PersonsResourcesTest {
         verify(mockNotesDao, times(1)).getByPersonIdAndDate(1L,date);
     }
 
+    @Ignore
     @Test
     public void testCreateNote(){
         when(mockNotesDao.createOrUpdate(note2)).thenReturn(note2);
