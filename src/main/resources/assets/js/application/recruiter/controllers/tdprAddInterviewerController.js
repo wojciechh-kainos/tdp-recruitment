@@ -18,5 +18,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
           $state.go('tdpr.recruiter.home');
         };
 
+        $scope.showError = function () {
+          Notification.error({message: 'Cannot submit invalid form, please change incorrect fields', delay: 2200});
+        };
     });
 });
