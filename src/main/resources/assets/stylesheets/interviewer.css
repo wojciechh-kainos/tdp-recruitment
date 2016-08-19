@@ -237,3 +237,9 @@ button {
 .input {
   width: 100%;
 }
+
+.int-err {
+  color: #C0392B;
+  margin: 0px;
+  margin-top: 40px;
+}
