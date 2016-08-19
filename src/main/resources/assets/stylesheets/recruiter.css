@@ -12,8 +12,8 @@
 }
 
 .slot {
-    min-width: 20px;
-    height: 24px;
+    min-width: 25px;
+    height: 29px;
     cursor: pointer;
     border: 1px solid #375D81;
 }
@@ -27,18 +27,20 @@
 .availabilities-table-container {
     min-width: 800px;
     overflow-x: auto;
-    margin-left: 185px;
+    margin-top: 20px;
+    margin-left: 245px;
     overflow-y: visible;
     padding-bottom: 1px;
 }
 
 .container {
+    width: 95%;
     position: relative;
     font-family: 'Lato', sans-serif;
 }
 
 .person-name {
-    width: 201px;
+    width: 261px;
     position: absolute;
     left: 0;
     text-align: right;
@@ -46,6 +48,7 @@
     padding-right: 5px;
     color: #375D81;
     cursor: pointer;
+    font-size: medium;
 }
 
 .changes-button {
@@ -54,6 +57,17 @@
 
 #recruiter-header {
     color: #375D81
+}
+
+#current-week-btn {
+    color: #fff;
+    background-color: #337ab7;
+    position: absolute;
+    left: 10%;
+}
+
+#add-interviewer-btn {
+    font-size: larger;
 }
 
 .day-th, .slot-time-th {
@@ -65,16 +79,18 @@
 .slot-times-th {
     width: 100%;
     padding: 0 10px 0 10px;
-    border: 1px solid black;
+    border-right: 1px solid #233c54;
+    border-top: 1px solid #233c54;
+    border-left: 1px solid #233c54;
 }
 
 .day-th {
-    border-right: 2px solid black;
     box-sizing: border-box;
-}
-
-.day-th:last-of-type {
-    border-right: 1px solid black;
+    font-size: large;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .availabilities-table {
@@ -96,37 +112,33 @@
 }
 
 .cell-size-1 {
-    width: 150px;
+    width: 211px;
 }
 .cell-size-2 {
-    width: 75px;
+    width: 108px;
 }
 .cell-size-3 {
-    width: 50px;
+    width: 73px;
 }
 
 .cell-size-4 {
-    width: 38px;
+    width: 55px;
 }
 
 .cell-size-5 {
-    width: 30px;
+    width: 44px;
 }
 
 .cell-size-6 {
-    width: 25px;
+    width: 37px;
 }
 
 .cell-size-7 {
-    width: 22px;
+    width: 31px;
 }
 
 .cell-size-8 {
-    width: 19px;
-}
-
-.cell-size-9 {
-    width: 17px;
+    width: 27px;
 }
 
 .red {

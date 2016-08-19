@@ -3,10 +3,10 @@
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
     <div id="date-container">
+        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
         <span class="navigate1">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
-        <button class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
     </div>
 
     <form class="form-inline">
@@ -73,6 +73,6 @@
     </div>
 
 
-    <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+    <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
 
 </div>
