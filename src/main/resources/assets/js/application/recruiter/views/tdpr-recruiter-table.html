@@ -37,6 +37,9 @@
             <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.web}}"/>
             <span> WebOps</span>
         </label>
+
+        <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
+
     </div>
 
     <div class="availabilities-table-container">
@@ -74,5 +77,7 @@
 
 
     <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+
+    | <a ui-sref="tdpr.report.home">Reports</a>
 
 </div>

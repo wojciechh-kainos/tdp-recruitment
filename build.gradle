@@ -55,6 +55,7 @@ dependencies {
             'io.dropwizard:dropwizard-db:' + dropwizardVersion,
 //            'io.dropwizard:dropwizard-forms:' + dropwizardVersion,
             'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-testing:' + dropwizardVersion,
             'com.github.dirkraft.dropwizard-file-assets:dropwizard-file-assets:0.0.2'
     )
 

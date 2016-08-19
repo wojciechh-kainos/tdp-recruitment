@@ -9,6 +9,8 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import resources.PairResource;
+import resources.ReportResource;
 import resources.SlotsResource;
 import resources.SlotsTimesResource;
 import resources.PersonsResource;
@@ -51,8 +53,10 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         module.setSessionFactory(hibernateBundle.getSessionFactory());
 
         environment.jersey().register(guiceBundle.getInjector().getInstance(PersonsResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(PairResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsTimesResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
     }
 
     public static void main(final String[] args) throws Exception {

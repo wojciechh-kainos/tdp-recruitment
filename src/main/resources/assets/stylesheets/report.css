@@ -1,0 +1,29 @@
+#report-table {
+    width: 100%
+}
+
+.border-down {
+    border-bottom: 1px solid #aaa;
+    color: #808080;
+}
+
+.column-heading {
+    cursor: pointer;
+}
+
+.sort-order:after {
+  content: '\25b2';   /* BLACK UP-POINTING TRIANGLE */
+}
+
+.sort-order.sortReverse:after {
+  content: '\25bc';   /* BLACK DOWN-POINTING TRIANGLE */
+}
+
+.hour-cell {
+    cursor: auto;
+}
+
+.options{
+    margin-top:2%;
+    margin-bottom:2%;
+}

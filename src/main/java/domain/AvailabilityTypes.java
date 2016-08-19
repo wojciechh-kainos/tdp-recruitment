@@ -11,13 +11,12 @@ public class AvailabilityTypes {
     private long id;
 
     @NotNull
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private AvailabilityTypesEnum type;
 
-    public String getType() {
-        return type;
-    }
+    public AvailabilityTypesEnum getType() { return type; }
 
-    public void setType(String type) {
+    public void setType(AvailabilityTypesEnum type) {
         this.type = type;
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
         @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
         @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
 })
-public class Persons {
+public class Persons implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +72,16 @@ public class Persons {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Notes> notesList = new ArrayList<>();
+
+
+    @Override
+    public Persons clone(){
+        try{
+            return (Persons) super.clone();
+        } catch(final CloneNotSupportedException ex){
+            throw new RuntimeException(ex);
+        }
+    }
 
     public Persons() {
     }
@@ -195,4 +205,26 @@ public class Persons {
     public Time getDefaultFinishHour() {return defaultFinishHour;}
 
     public void setDefaultFinishHour(Time defaultFinishHour) {this.defaultFinishHour = defaultFinishHour;}
+
+    @Override
+    public String toString() {
+        return "Persons{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", admin=" + admin +
+                ", isDev=" + isDev +
+                ", isTest=" + isTest +
+                ", isWeb=" + isWeb +
+                ", bandLevel=" + bandLevel +
+                ", activationCode='" + activationCode + '\'' +
+                ", defaultStartHour=" + defaultStartHour +
+                ", defaultFinishHour=" + defaultFinishHour +
+                ", active=" + active +
+                ", slotsList=" + slotsList +
+                ", notesList=" + notesList +
+                '}';
+    }
 }
