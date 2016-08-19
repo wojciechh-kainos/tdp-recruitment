@@ -46,14 +46,14 @@
 <div class="row options">
     <div class="col-md-8 col-md-offset-2">
         <table id="report-table">
-            <thead class="columnHeading">
+            <thead class="column-heading">
             <tr>
                 <td class="day-th" ng-repeat="(column, value) in columnMap">
                     <span ng-click="sortBy(column)">
                         <span>
                             {{value.columnName}}
                         </span>
-                        <span class="sortOrder" ng-show="sortColumn===column"
+                        <span class="sort-order" ng-show="sortColumn===column"
                               ng-class="{sortReverse: value.reverse}"></span>
                     </span>
                 </td>
