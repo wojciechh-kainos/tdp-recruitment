@@ -29,19 +29,18 @@
 </div>
 
 <div class="row options">
-    <div class="col-md-1 col-md-offset-4">
-        <label class="control-label">Search:</label>
-    </div>
-    <div class="col-md-3">
-        <input class="form-control" type="text" ng-model="inputString"/>
+    <div class="col-md-12">
+        <hr>
+        <h4>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h4>
     </div>
 </div>
 
 <div class="row options">
-    <div class="col-md-12">
-        <h3>Reports for given dates:</h3>
-        <hr>
-        <h4>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h4>
+    <div class="col-md-1 col-md-offset-2">
+        <label class="control-label">Filter by person:</label>
+    </div>
+    <div class="col-md-2">
+        <input class="form-control" type="text" ng-model="inputString"/>
     </div>
 </div>
 
