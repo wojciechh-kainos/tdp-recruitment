@@ -3,16 +3,9 @@ package services;
 import com.google.inject.Inject;
 import dao.PersonsDao;
 import dao.SlotsDao;
-import domain.Persons;
-import domain.Report;
-import domain.Slots;
-import domain.SlotsTimes;
-
-import java.math.BigDecimal;
-import java.sql.Time;
+import domain.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class ReportService {
@@ -42,14 +35,16 @@ public class ReportService {
             Double slotDuration = slotTime.getSlotDurationInMinutes();
 
             switch (slot.getType().getType()) {
-                case "available":
+                case available:
                     availableCount += slotDuration;
                     break;
-                case "full":
+                case full:
                     fullCount += slotDuration;
                     break;
-                case "init":
+                case init:
                     initCount += slotDuration;
+                    break;
+                default:
                     break;
             }
         }
