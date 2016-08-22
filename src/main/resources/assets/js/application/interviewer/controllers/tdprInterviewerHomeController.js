@@ -38,7 +38,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function replaceDashesWithDots(string) {
-            string.replace(/-/g, '.');
+            return string.replace(/-/g, '.');
+        }
+
+        function removeSecondsFromTime(string) {
+            return string.slice(0, 5); // i.e. 10:30:00 -> 10:30
         }
 
         function updateDate() {
@@ -63,8 +67,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             updateDate();
             tdprSlotsService.getSlotsTimes().then(function (response) {
                 for (var i = 0; i < response.data.length; i++) {
-                    var startTime = response.data[i].startTime.slice(0, 5);
-                    var endTime = response.data[i].endTime.slice(0, 5);
+                    var startTime = removeSecondsFromTime(response.data[i].startTime);
+                    var endTime = removeSecondsFromTime(response.data[i].endTime);
                     $scope.slotTimes.push(startTime + "-" + endTime);
                 }
             });
