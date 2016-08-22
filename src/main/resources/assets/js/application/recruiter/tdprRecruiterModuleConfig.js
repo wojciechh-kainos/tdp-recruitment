@@ -9,6 +9,7 @@ define(['angular'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
     , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
 ], function (angular, tdprRecruiterModule) {
 

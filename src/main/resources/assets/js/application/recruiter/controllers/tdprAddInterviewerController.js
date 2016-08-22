@@ -1,8 +1,7 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprAddInterviewerController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum, JobProfileEnum) {
+    tdprRecruiterModule.controller("tdprAddInterviewerController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum) {
         $scope.BandLevelEnum = BandLevelEnum;
-        $scope.JobProfileEnum = JobProfileEnum;
 
         $scope.create = function (person) {
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));

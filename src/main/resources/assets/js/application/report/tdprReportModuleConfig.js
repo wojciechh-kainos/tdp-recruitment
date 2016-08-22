@@ -1,6 +1,10 @@
 define(['angular'
     , 'application/report/tdprReportModule'
     , 'application/report/controllers/tdprReportDetailsController'
+    , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/directives/tdprJobProfileDirective'
+    , 'application/report/directives/tdprReportDirective'
+    , 'application/report/filters/tdprReportByPersonNameFilter'
 ], function (angular, tdprReportModule) {
 
     tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {

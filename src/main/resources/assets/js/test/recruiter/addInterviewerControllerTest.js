@@ -37,8 +37,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                     tdprPersonsService: tdprPersonsService,
                     $state: $state,
                     Notification: Notification,
-                    BandLevelEnum: BandLevelEnum,
-                    JobProfileEnum: JobProfileEnum
+                    BandLevelEnum: BandLevelEnum
                 });
             })
         );
