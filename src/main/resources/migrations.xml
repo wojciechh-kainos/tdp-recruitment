@@ -18,4 +18,5 @@
     <include file="changelogs/US7_pairsPopulateSlotsTable.xml"/>
     <include file="changelogs/FixNoteBug_modifyNoteTable.xml"/>
     <include file="changelogs/addDefaultWorkingHoursPersonsTable.xml"/>
+    <include file="changelogs/addOtherJobPosition.xml"/>
 </databaseChangeLog>

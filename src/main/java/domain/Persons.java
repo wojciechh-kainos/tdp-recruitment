@@ -51,6 +51,9 @@ public class Persons implements Cloneable {
     @Column(name = "is_web")
     private Boolean isWeb;
 
+    @Column(name = "is_other")
+    private Boolean isOther;
+
     @NotNull
     @Column(name = "band_level")
     private Integer bandLevel;
@@ -170,6 +173,14 @@ public class Persons implements Cloneable {
         this.isWeb = isWeb;
     }
 
+    public Boolean getIsOther() {
+        return isOther;
+    }
+
+    public void setIsOther(Boolean other) {
+        isOther = other;
+    }
+
     public Integer getBandLevel() {
         return bandLevel;
     }
@@ -222,6 +233,7 @@ public class Persons implements Cloneable {
                 ", isDev=" + isDev +
                 ", isTest=" + isTest +
                 ", isWeb=" + isWeb +
+                ", isOther=" + isOther +
                 ", bandLevel=" + bandLevel +
                 ", activationCode='" + activationCode + '\'' +
                 ", defaultStartHour=" + defaultStartHour +
