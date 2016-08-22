@@ -33,11 +33,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             return $scope.relativeDayNumber < 0 && !$scope.isRecruiter;
         }
 
+        function replaceDashesWithDots(string) {
+            string.replace(/-/g, '.');
+        }
+
         function updateDate() {
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat);
             endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat);
-            $scope.displayedStartDate = startDate.replace(/-/g, '.');
-            $scope.displayedEndDate = endDate.replace(/-/g, '.');
+            $scope.displayedStartDate = replaceDashesWithDots(startDate);
+            $scope.displayedEndDate = replaceDashesWithDots(endDate);
         }
 
         $scope.getSlots = function (personId) {
