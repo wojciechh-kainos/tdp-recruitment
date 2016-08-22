@@ -17,7 +17,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     slot.type = "";
                 }
             } else {
-                person.slotsList.push({
+                person.slotList.push({
                     day: date,
                     person: person.id,
                     number: slotId,
@@ -27,7 +27,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         };
 
         this.changeSlotDiscardChanges = function (personData) {
-            personData.slotsList = angular.copy(personData.oldSlotList);
+            personData.slotList = angular.copy(personData.oldSlotList);
             personData.oldSlotList = [];
             personData.changesPending = false;
         };

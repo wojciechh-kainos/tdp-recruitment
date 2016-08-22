@@ -1,9 +1,8 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotsDao;
+import dao.SlotDao;
 import domain.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,7 +13,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -30,18 +28,18 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     private final Boolean isOps = false;
     private final Date sameDate = MockDataUtil.createDate(TODAY_OFFSET);
     private final Date differentDate = MockDataUtil.createDate(TOMORROW_OFFSET);
-    private final AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
-    private final AvailabilityTypes typeUnavailable = MockDataUtil.createAvailableType(4L, AvailabilityTypesEnum.unavailable);
-    private final AvailabilityTypes typeMaybe = MockDataUtil.createAvailableType(5L, AvailabilityTypesEnum.maybe);
+    private final AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
+    private final AvailabilityType typeUnavailable = MockDataUtil.createAvailableType(4L, AvailabilityTypeEnum.unavailable);
+    private final AvailabilityType typeMaybe = MockDataUtil.createAvailableType(5L, AvailabilityTypeEnum.maybe);
     private String startDate = MockDataUtil.convertDateToString(sameDate);
     private String endDate = MockDataUtil.convertDateToString(differentDate);
 
     private PairResource resource;
-    private List<Slots> mockSlots = new ArrayList<>();
-    private List<Persons> persons;
+    private List<Slot> mockSlots = new ArrayList<>();
+    private List<Person> persons;
 
     @Mock
-    private static SlotsDao mockDao;
+    private static SlotDao mockDao;
 
     @Before
     public void setUp() {
@@ -66,7 +64,7 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         assertTrue("There should be only person with id=2 and id=3",
                 persons
                         .stream()
-                        .map(Persons::getId)
+                        .map(Person::getId)
                         .allMatch(personIds::contains));
     }
 
@@ -77,25 +75,25 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         assertTrue("There should be only SlotTimes with ids between 9 and 13",
                 persons
                         .stream()
-                        .map(person -> person.getSlotsList()
+                        .map(person -> person.getSlotList()
                                 .stream()
-                                .map(slot -> slot.getSlot().getId())
+                                .map(slot -> slot.getSlotTime().getId())
                                 .allMatch(slotsTimesIds::contains))
                         .allMatch(isTrue -> isTrue));
     }
 
-    private List<Slots> createFirstPerson() {
-        List<SlotsTimes> slotsTimes = MockDataUtil.createSlotsTimesList(2, 11);
-        Persons person = MockDataUtil.createPersons(1L, "First", isDev, isTest, isOps);
+    private List<Slot> createFirstPerson() {
+        List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(2, 11);
+        Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps);
 
         return MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeUnavailable);
     }
 
-    private List<Slots> createSecondPerson() {
-        List<SlotsTimes> slotsTimes = MockDataUtil.createSlotsTimesList(1, 18);
-        Persons person = MockDataUtil.createPersons(2L, "Second", isDev, isTest, isOps);
+    private List<Slot> createSecondPerson() {
+        List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(1, 18);
+        Person person = MockDataUtil.createPerson(2L, "Second", isDev, isTest, isOps);
 
-        List<Slots> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
+        List<Slot> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
         slots.get(1).setType(typeUnavailable);
         slots.get(2).setType(typeMaybe);
         slots.get(3).setType(typeMaybe);
@@ -112,11 +110,11 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         return slots;
     }
 
-    private List<Slots> createThirdPerson() {
-        List<SlotsTimes> slotsTimes = MockDataUtil.createSlotsTimesList(7, 18);
-        Persons person = MockDataUtil.createPersons(3L, "Third", isDev, isTest, isOps);
+    private List<Slot> createThirdPerson() {
+        List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(7, 18);
+        Person person = MockDataUtil.createPerson(3L, "Third", isDev, isTest, isOps);
 
-        List<Slots> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
+        List<Slot> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
         slots.get(7).setType(typeMaybe);
         slots.get(8).setType(typeMaybe);
         slots.get(9).setType(typeMaybe);
