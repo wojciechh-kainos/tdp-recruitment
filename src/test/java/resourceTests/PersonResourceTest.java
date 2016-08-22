@@ -47,7 +47,6 @@ public class PersonResourceTest {
     private static Note note, note2, note3;
     private static Person firstPerson;
     private static Person secondPerson;
-    private static Response r;
     private static List<Person> mockList = new ArrayList<>();
 
     @BeforeClass
