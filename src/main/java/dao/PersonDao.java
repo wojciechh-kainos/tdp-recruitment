@@ -26,12 +26,12 @@ public class PersonDao extends AbstractDAO<Person>{
         namedQuery("Person.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Person> findAll(){
-        return namedQuery("Person.findAll").list();
+    public List<Person> findAllActive(){
+        return namedQuery("Person.findAllActive").list();
     }
 
-    public List<Person> findAllForManaging(){
-        return namedQuery("Person.findAllForManaging").list();
+    public List<Person> findAll(){
+        return namedQuery("Person.findAll").list();
     }
 
     public void update(Person person){currentSession().update(person);}
