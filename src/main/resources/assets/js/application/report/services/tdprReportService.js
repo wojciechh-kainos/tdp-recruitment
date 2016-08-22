@@ -1,9 +1,8 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter', function ($http, $q, dateFilter) {
-        var format = 'dd-MM-yyyy';
+    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter', function ($http, $q, dateFilter, DateFormat) {
 
         this.getReport = function (dateFrom, dateTo, personId) {
-            return $http.get('/api/report/' + dateFilter(dateFrom, format) + '/' + dateFilter(dateTo, format) + '/' + personId)
+            return $http.get('/api/report/' + dateFilter(dateFrom, DateFormat) + '/' + dateFilter(dateTo, DateFormat) + '/' + personId)
                 .then(
                     function (response) {
                         return response.data;
@@ -15,7 +14,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
         };
 
         this.getReports = function (dateFrom, dateTo) {
-            return $http.get('/api/report/' + dateFilter(dateFrom, format) + '/' + dateFilter(dateTo, format))
+            return $http.get('/api/report/' + dateFilter(dateFrom, DateFormat) + '/' + dateFilter(dateTo, DateFormat))
                 .then(
                     function (response) {
                         return response.data;
