@@ -45,21 +45,21 @@ define(['angular'
         test: "isTest",
         other: "isOther"
     }).constant('JobProfileEnumNames', {
-        dev: {name: "Developer", column: "isDev"},
-        ops: {name: "WebOps", column: "isOps"},
-        test: {name: "Tester", column: "isTest"},
-        other: {name: "Other", column: "isOther"}
-    }).constant('BandLevelEnum',{
+        isDev: {name: "Developer", column: "isDev"},
+        isOps: {name: "WebOps", column: "isOps"},
+        isTest: {name: "Tester", column: "isTest"},
+        isOther: {name: "Other", column: "isOther"}
+    }).constant('BandLevelEnum', {
         "1": "1 - Principal",
         "2": "2 - Manager",
         "3": "3 - Consultant",
         "4": "4 - Senior associate",
         "5": "5 - Associate",
         "6": "6 - Trainee"
-    }).constant('WeekNavigateEnum',{
-        previous : -1,
-        next : 1,
-        current : 0
+    }).constant('WeekNavigateEnum', {
+        previous: -1,
+        next: 1,
+        current: 0
     });
 
     return tdprConstantsModule;

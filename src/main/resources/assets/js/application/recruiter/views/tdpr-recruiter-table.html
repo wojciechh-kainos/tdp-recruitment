@@ -9,20 +9,7 @@
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
     </div>
 
-    <div class="legend">
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
-            <span>Developer</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
-            <span> Tester</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.ops}}"/>
-            <span> WebOps</span>
-        </label>
-    </div>
+    <job-profile selected-profiles="currentJobProfile" is-radio="true"></job-profile>
 
     <form class="form-inline">
         <div class="form-group">
@@ -67,7 +54,7 @@
             </thead>
             <tbody>
             <tr person slots-times="slotsTimes" person-data="person" days="days"
-                ng-repeat="person in persons | jobProfileFilter: currentJobProfile"
+                ng-repeat="person in persons | jobReportProfileFilter: currentJobProfile"
                 submit-slot-changes="changeSlotSubmitChanges(person)"
                 discard-slot-changes="changeSlotDiscardChanges(person)"
                 change-slot-type="changeSlotTypeCycleThrough(slot, slotId, day, person)">

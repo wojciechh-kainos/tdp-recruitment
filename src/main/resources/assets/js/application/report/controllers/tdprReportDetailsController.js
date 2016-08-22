@@ -2,9 +2,9 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
     , 'application/report/services/tdprReportDateService'
     , 'application/report/directives/tdprReportDirective'
-    , 'application/report/directives/tdprJobProfileDirective'
+    , 'application/common/directives/tdprJobProfileDirective'
     , 'application/report/filters/tdprReportByPersonNameFilter'
-    , 'application/report/filters/tdprReportByJobProfileFilter'
+    , 'application/common/filters/tdprJobProfileFilter'
 ], function (angular, tdprReportModule) {
     tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, Notification) {
 
