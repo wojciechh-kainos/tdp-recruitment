@@ -1,10 +1,10 @@
 package daoTests;
 
 import databaseHelper.BaseTest;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import domain.AvailabilityType;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -16,17 +16,17 @@ import java.sql.Date;
 import static junit.framework.TestCase.assertEquals;
 
 @Ignore
-public class PersonsDaoTest extends BaseTest {
+public class PersonDaoTest extends BaseTest {
 
     private static final Long FIRST = new Long(1) ;
-    private Persons person;
-    private SlotsTimes slotsTime;
-    private AvailabilityTypes availabilityType;
-    private Persons personFromDb;
+    private Person person;
+    private SlotTime slotTime;
+    private AvailabilityType availabilityType;
+    private Person personFromDb;
 
     @Before
     public void setUp() {
-        person = new Persons();
+        person = new Person();
         person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
         person.setLastName("TEST_SURNAME");
@@ -36,44 +36,44 @@ public class PersonsDaoTest extends BaseTest {
         person.setBandLevel(2);
 
         availabilityType = getAvailabilityTypeFromDb(FIRST);
-        slotsTime = getSlotTimeFromDb(FIRST);
+        slotTime = getSlotTimeFromDb(FIRST);
     }
 
     @Test
     public void testCreatePersonsWithSlots() {
 
-        Slots slot = new Slots();
-        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
-        slot.setSlot(slotsTime);
+        Slot slot = new Slot();
+        slot.setSlotDate(new Date(LocalDate.now().toDate().getTime()));
+        slot.setSlotTime(slotTime);
         slot.setType(availabilityType);
 
         getSession().beginTransaction();
 
         getSession().save(person);
         slot.setPerson(person);
-        person.getSlotsList().add(slot);
+        person.getSlotList().add(slot);
         getSession().save(slot);
 
-        Long personId = personsDao.create(person);
+        Long personId = personDao.create(person);
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        personFromDb = personsDao.getById(personId);
+        personFromDb = personDao.getById(personId);
         getSession().getTransaction().commit();
 
         assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
-        assertEquals("New person slots list should contain ids of all slots.", person.getSlotsList().size(), personFromDb.getSlotsList().size());
+        assertEquals("New person slots list should contain ids of all slots.", person.getSlotList().size(), personFromDb.getSlotList().size());
     }
 
     @Test
     public void testCreatePersons() {
 
         getSession().beginTransaction();
-        Long id = personsDao.create(person);
+        Long id = personDao.create(person);
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        personFromDb = personsDao.getById(id);
+        personFromDb = personDao.getById(id);
         getSession().getTransaction().commit();
 
         assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
@@ -82,11 +82,11 @@ public class PersonsDaoTest extends BaseTest {
     @After
     public void tearDown() {
         getSession().beginTransaction();
-        personFromDb.getSlotsList().forEach(s -> slotsDao.deleteById(s.getId()));
+        personFromDb.getSlotList().forEach(s -> slotDao.deleteById(s.getId()));
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        personsDao.deleteById(personFromDb.getId());
+        personDao.deleteById(personFromDb.getId());
         getSession().getTransaction().commit();
     }
 
