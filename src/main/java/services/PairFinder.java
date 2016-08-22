@@ -1,8 +1,6 @@
 package services;
 
-import domain.Pair;
-import domain.Persons;
-import domain.Slots;
+import domain.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -13,13 +11,21 @@ import java.util.stream.Stream;
 
 public class PairFinder {
 
-    public List<Persons> findPairs(List<Slots> slots){
+    public List<Persons> findPairs(List<Slots> slots) {
         List<Persons> persons = findPersonsInSlots(slots);
-        List<Slots> filteredSlots = findTriplesInSlots(slots);
-        List<Pair> pairs = findPairsForAllPersons(filteredSlots, persons);
+        List<Pair> pairs = findPairsForAllPersons(slots, persons);
         List<Persons> pairsIntoPersons = mergePairsIntoPersons(pairs);
+        List<Persons> groupedPersons = transformPairs(pairsIntoPersons);
 
-        return transformPairs(pairsIntoPersons);
+        return filterTriples(groupedPersons);
+    }
+
+    private List<Persons> filterTriples(List<Persons> persons) {
+        return persons
+                .stream()
+                .peek(person -> person.setSlotsList(findTriplesInSlots(person.getSlotsList())))
+                .filter(person -> person.getSlotsList().size() > 0)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<Persons> findPersonsInSlots(List<Slots> slots) {
@@ -212,14 +218,22 @@ public class PairFinder {
     }
 
     private List<Slots> findPairsInSlots(List<Slots> remainingSlots, List<Slots> searchSlots) {
-        return remainingSlots
+        List<Slots> foundSlots = new ArrayList<>();
+
+        remainingSlots
                 .stream()
-                .filter(rs -> searchSlots
+                .forEach(rs -> searchSlots
                         .stream()
-                        .filter(ss -> rs.getSlot().equals(ss.getSlot())
-                                && rs.getSlotsDate().equals(ss.getSlotsDate()))
-                        .collect(Collectors.toCollection(ArrayList::new))
-                        .size() > 0)
-                .collect(Collectors.toCollection(ArrayList::new));
+                        .forEach(ss -> {
+                            if (rs.getSlot().getId() == ss.getSlot().getId()
+                                    && rs.getSlotsDate().equals(ss.getSlotsDate())
+                                    && (rs.getType().getType() == AvailabilityTypesEnum.available || rs.getType().getType() == AvailabilityTypesEnum.maybe)
+                                    && (ss.getType().getType() == AvailabilityTypesEnum.available || ss.getType().getType() == AvailabilityTypesEnum.maybe)) {
+                                foundSlots.add(rs);
+                            }
+                        })
+                );
+
+        return foundSlots;
     }
 }

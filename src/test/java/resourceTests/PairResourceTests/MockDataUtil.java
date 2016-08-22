@@ -79,11 +79,24 @@ public class MockDataUtil {
 
     public static List<SlotsTimes> createSlotsTimesList(int startIndex, int endIndex) {
         List<SlotsTimes> slotsTimes = new ArrayList<>();
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 4, LocalTime.of(9, 30, 0), LocalTime.of(10, 0, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 5, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 1   , LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 2   , LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 3   , LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 4   , LocalTime.of(9, 30, 0), LocalTime.of(10, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 5   , LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 6   , LocalTime.of(11, 0, 0), LocalTime.of(11, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 7   , LocalTime.of(12, 0, 0), LocalTime.of(12, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 8   , LocalTime.of(12, 30, 0), LocalTime.of(13, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 9   , LocalTime.of(13, 0, 0), LocalTime.of(13, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 10  , LocalTime.of(13, 30, 0), LocalTime.of(14, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 11  , LocalTime.of(14, 0, 0), LocalTime.of(14, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 12  , LocalTime.of(14, 30, 0), LocalTime.of(15, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 13  , LocalTime.of(15, 0, 0), LocalTime.of(15, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 14  , LocalTime.of(15, 30, 0), LocalTime.of(16, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 15  , LocalTime.of(16, 0, 0), LocalTime.of(16, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 16  , LocalTime.of(16, 30, 0), LocalTime.of(17, 0, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 17  , LocalTime.of(17, 0, 0), LocalTime.of(17, 30, 0)));
+        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 18  , LocalTime.of(17, 30, 0), LocalTime.of(18, 0, 0)));
 
         return slotsTimes
                 .stream()
