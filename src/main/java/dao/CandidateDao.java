@@ -18,6 +18,10 @@ public class CandidateDao extends AbstractDAO<Candidate>{
         return namedQuery("Candidate.findAll").list();
     }
 
+    public Candidate findById(Long id){
+        return get(id);
+    }
+
     public void deleteById(Long id){
         namedQuery("Candidate.deleteById").setParameter("id", id).executeUpdate();
     }

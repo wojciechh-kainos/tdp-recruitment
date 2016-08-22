@@ -71,6 +71,29 @@ public class CandidateDaoTest extends BaseTest {
         assertEquals("In the list from DB should be only one candidate", candidatesFromDbAfter.size(), candidatesFromDbBefore.size());
     }
 
+    @Test
+    public void testUpdate(){
+        getSession().beginTransaction();
+        returnedId = candidateDao.create(exampleCandidate);
+        getSession().getTransaction().commit();
+
+        String note = "My example note";
+        exampleCandidate.setNote(note);
+        String position = "Software Engineer";
+        exampleCandidate.setPosition(position);
+
+        getSession().beginTransaction();
+        candidateDao.update(exampleCandidate);
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        Candidate candidateFromDb = candidateDao.findById(returnedId);
+        getSession().getTransaction().commit();
+
+        assertEquals("Text of the note should be 'My example note''", note, candidateFromDb.getNote());
+        assertEquals("Position of candidate should be 'Software Engineer'", position, candidateFromDb.getPosition());
+    }
+
     @After
     public void tearDown() {
         getSession().beginTransaction();
