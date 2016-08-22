@@ -5,7 +5,11 @@ import com.google.common.io.Resources;
 import domain.Persons;
 import org.joda.time.DateTime;
 
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -45,10 +49,18 @@ public class Interview {
         this.interviewee = interviewee;
     }
 
-    public MimeMessage createInvitation() {
+    public MimeMultipart createInvitation() throws MessagingException {
+        MimeMultipart body = new MimeMultipart("alternative");
+        BodyPart textContent = new MimeBodyPart();
+        BodyPart calendarPart = new MimeBodyPart();
 
+        textContent.setContent("Text", "text/plain; charset=utf-8");
+        calendarPart.setContent(createCalendarEvent(), "text/calendar;method=REQUEST");
 
-        return null;
+        body.addBodyPart(textContent);
+        body.addBodyPart(calendarPart);
+
+        return body;
     }
 
     public String createCalendarEvent(){
