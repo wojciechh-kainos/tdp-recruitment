@@ -1,10 +1,10 @@
 package resourceTests;
 
-import dao.NotesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import domain.Notes;
-import domain.Persons;
+import dao.NoteDao;
+import dao.PersonDao;
+import dao.SlotDao;
+import domain.Note;
+import domain.Person;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import resources.PersonsResource;
+import resources.PersonResource;
 import services.MailService;
 
 import javax.ws.rs.core.Response;
@@ -26,24 +26,24 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PersonsResourcesTest {
+public class PersonResourceTest {
 
-    PersonsResource resource;
+    PersonResource resource;
 
     @Mock
-    NotesDao mockNotesDao;
+    NoteDao mockNoteDao;
     @Mock
-    SlotsDao mockSlotsDao;
+    SlotDao mockSlotDao;
     @Mock
-    PersonsDao mockPersonsDao;
+    PersonDao mockPersonDao;
     @Mock
     MailService mockMailService;
 
-    private static List<Notes> stubNoteDB;
+    private static List<Note> stubNoteDB;
     private static Date date;
     private static String dateString;
-    private static Persons person;
-    private static Notes note, note2, note3;
+    private static Person person;
+    private static Note note, note2, note3;
 
     @BeforeClass
     public static void setUpBeforeClass(){
@@ -52,46 +52,46 @@ public class PersonsResourcesTest {
         c.setTime(date3); // Now use today date.
         c.add(Calendar.DATE, 10); // Adding 10 days
 
-        person = new Persons();
+        person = new Person();
         person.setId(1L);
         dateString = "26-07-2016";
         date = Date.valueOf("2016-07-26");
-        note = new Notes(1L, person, "note nr 1", date);
-        note2 = new Notes(2L, person, "note nr 2", date);
-        note3 = new Notes(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
+        note = new Note(1L, person, "note nr 1", date);
+        note2 = new Note(2L, person, "note nr 2", date);
+        note3 = new Note(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
         stubNoteDB = new ArrayList<>();
         stubNoteDB.add(note);
     }
 
     @Before
     public void setUp(){
-        resource = new PersonsResource(mockPersonsDao, mockSlotsDao, mockMailService, mockNotesDao);
+        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao);
     }
 
     @Test
     public void testGetNote()throws ParseException{
-        when(mockNotesDao.getByPersonIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
+        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
 
-        Notes result = resource.getNote(1L,dateString);
+        Note result = resource.getNote(1L,dateString);
 
         assertEquals(stubNoteDB.get(0),result);
-        verify(mockNotesDao, times(1)).getByPersonIdAndDate(1L,date);
+        verify(mockNoteDao, times(1)).getByPersonIdAndDate(1L,date);
     }
 
     @Ignore
     @Test
     public void testCreateNote(){
-        when(mockNotesDao.createOrUpdate(note2)).thenReturn(note2);
+        when(mockNoteDao.createOrUpdate(note2)).thenReturn(note2);
 
         Response result = resource.createOrUpdate(note2);
 
         assertEquals(Response.Status.NOT_ACCEPTABLE.getStatusCode(), result.getStatus());
-        verify(mockNotesDao, times(0)).createOrUpdate(note2);
+        verify(mockNoteDao, times(0)).createOrUpdate(note2);
     }
 
     @Test
     public void testCreateNoteWithCorrectDate(){
-        when(mockNotesDao.createOrUpdate(note3)).thenReturn(note3);
+        when(mockNoteDao.createOrUpdate(note3)).thenReturn(note3);
 
         Response result = resource.createOrUpdate(note3);
 

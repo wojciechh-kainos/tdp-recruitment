@@ -4,20 +4,19 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "availability_types")
-public class AvailabilityTypes {
+@Table(name = "availability_type")
+public class AvailabilityType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    private AvailabilityTypesEnum type;
+    private AvailabilityTypeEnum name;
 
-    public AvailabilityTypesEnum getType() { return type; }
+    public AvailabilityTypeEnum getName() { return name; }
 
-    public void setType(AvailabilityTypesEnum type) {
-        this.type = type;
+    public void setName(AvailabilityTypeEnum name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -27,5 +26,4 @@ public class AvailabilityTypes {
     public void setId(long id) {
         this.id = id;
     }
-
 }

@@ -27,12 +27,12 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                        "admin": false,
                        "isDev": true,
                        "isTest": false,
-                       "isWeb": false,
+                       "isOps": false,
                        "bandLevel": 1,
                        "activationCode": null,
                        "active": true,
-                       "slotsList": null,
-                       "notesList": null
+                       "slotList": null,
+                       "noteList": null
                      },
                      "description": "First week!",
                      "date": "2016-08-01"
