@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="US-36_listOfCandidates_candidatesTable" author="kuba">
+        <createTable tableName="candidate">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"></constraints>
+            </column>
+
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"></constraints>
+            </column>
+
+            <column name="position" type="varchar(100)">
+                <constraints nullable="false"></constraints>
+            </column>
+
+            <column name="note" type="text">
+                <constraints nullable="true"></constraints>
+            </column>
+
+            <column name="recruiter" type="bigint">
+                <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id" nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
