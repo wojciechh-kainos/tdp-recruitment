@@ -213,7 +213,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.markSlots = function (slot) {
             if (!$scope.isRecruiter) {
-                if (isSlotTypeFullOrInit(slot) || $scope.relativeDayNumber < 0) {
+                if (isSlotTypeFullOrInit(slot) || !isPresentOrFutureWeek()) { // users can't change slots for past weeks or if they've full or init scheduled
                     return;
                 }
             }
