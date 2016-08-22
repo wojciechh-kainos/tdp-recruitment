@@ -2,11 +2,11 @@ package resources;
 
 import com.google.inject.Inject;
 import constants.TdpConstants;
-import dao.NotesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import domain.Notes;
-import domain.Persons;
+import dao.NoteDao;
+import dao.PersonDao;
+import dao.SlotDao;
+import domain.Note;
+import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
@@ -24,19 +24,19 @@ import java.util.*;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
-public class PersonsResource {
+public class PersonResource {
 
-    private PersonsDao personsDao;
-    private SlotsDao slotsDao;
-    private NotesDao notesDao;
+    private PersonDao personDao;
+    private SlotDao slotDao;
+    private NoteDao noteDao;
     private MailService mailService;
     SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
-    public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
-        this.personsDao = personsDao;
-        this.slotsDao = slotsDao;
-        this.notesDao = notesDao;
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao) {
+        this.personDao = personDao;
+        this.slotDao = slotDao;
+        this.noteDao = noteDao;
         this.mailService = mailService;
     }
 
@@ -44,11 +44,11 @@ public class PersonsResource {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Persons createPerson(Persons person) {
+    public Person createPerson(Person person) {
 
-        if (personsDao.findByEmail(person.getEmail()).isEmpty()) {
+        if (personDao.findByEmail(person.getEmail()).isEmpty()) {
 
-            personsDao.create(person);
+            personDao.create(person);
             mailService.sendEmail(person.getEmail(), person.getId());
 
             return person;
@@ -65,13 +65,13 @@ public class PersonsResource {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        List<Persons> persons = personsDao.findAll();
-        persons.forEach(p -> p.setSlotsList(slotsDao.getForPersonForWeek(p.getId(), start, end)));
+        List<Person> persons = personDao.findAll();
+        persons.forEach(p -> p.setSlotList(slotDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
-            Notes note = notesDao.getByPersonIdAndDate(p.getId(), start);
-            if (note != null) {
-                if (!note.getDescription().isEmpty()) {
-                    p.setNotesList(Arrays.asList(note));
+            Note note = noteDao.getByPersonIdAndDate(p.getId(), start);
+            if(note != null) {
+                if(!note.getDescription().isEmpty()) {
+                    p.setNoteList(Arrays.asList(note));
                 }
             }
         });
@@ -82,26 +82,26 @@ public class PersonsResource {
     @GET
     @Path("/{personId}/getNote")
     @UnitOfWork
-    public Notes getNote(@PathParam("personId") Long personId,
-                         @QueryParam("date") String startDate) throws ParseException {
+    public Note getNote(@PathParam("personId") Long personId,
+                        @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return notesDao.getByPersonIdAndDate(personId, date);
+        return noteDao.getByPersonIdAndDate(personId,date);
     }
 
     @PUT
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Response createOrUpdate(Notes note){
-        notesDao.createOrUpdate(note);
+    public Response createOrUpdate(Note note){
+        noteDao.createOrUpdate(note);
         return Response.status(Response.Status.ACCEPTED).entity(note).build();
     }
 
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Response getPersonById(@PathParam("id") Long id) {
-        Persons person = personsDao.getById(id);
+    public Response getPersonById(@PathParam("id") Long id){
+        Person person = personDao.getById(id);
         if (person == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -112,8 +112,8 @@ public class PersonsResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Persons updatePerson(Persons person) {
-        personsDao.update(person);
+    public Person updatePerson(Person person) {
+        personDao.update(person);
         return person;
     }
 }

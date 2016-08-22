@@ -2,8 +2,8 @@ package resources;
 
 import com.google.inject.Inject;
 import constants.TdpConstants;
-import dao.SlotsDao;
-import domain.Slots;
+import dao.SlotDao;
+import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
@@ -16,54 +16,53 @@ import java.util.List;
 
 @Path("/slots")
 @Produces(MediaType.APPLICATION_JSON)
-public class SlotsResource {
+public class SlotResource {
 
-    private SlotsDao slotsDao;
+    private SlotDao slotDao;
 
     @Inject
-    public SlotsResource(SlotsDao slotsDao) {
-        this.slotsDao = slotsDao;
+    public SlotResource(SlotDao slotDao) {
+        this.slotDao = slotDao;
     }
 
     @PUT
     @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Response update(Slots[] slots,
+    public Response update(List<Slot> slots,
                            @PathParam("date_from") String date_from,
                            @PathParam("date_to") String date_to,
                            @QueryParam("personId") long person_id) throws ParseException {
 
-        Date now = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date startDate = formatter.parse(date_from);
         Date endDate = formatter.parse(date_to);
 
-        slotsDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
+        slotDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @GET
     @Path("/week")
     @UnitOfWork
-    public List<Slots> fetchSlotsForWeek(@QueryParam("id") Long id,
-                                         @QueryParam("startDate") String startDate,
-                                         @QueryParam("endDate") String endDate) throws ParseException {
+    public List<Slot> fetchSlotsForWeek(@QueryParam("id") Long id,
+                                        @QueryParam("startDate") String startDate,
+                                        @QueryParam("endDate") String endDate) throws ParseException {
 
         SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);
 
-        return slotsDao.getForPersonForWeek(id, start, end);
+        return slotDao.getForPersonForWeek(id, start, end);
     }
 
     @PUT
     @Path("recruiter")
     @UnitOfWork
-    public Response updateRecruiter(Slots[] slots) {
-        slotsDao.updateForPersonAndWeekFromRecruiter(slots);
+    public Response updateRecruiter(List<Slot> slots) {
+        slotDao.updateForPersonAndWeekFromRecruiter(slots);
         return Response.status(Response.Status.CREATED).build();
     }
 }

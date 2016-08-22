@@ -1,7 +1,7 @@
 package resources;
 
-import dao.SlotsTimesDao;
-import domain.SlotsTimes;
+import dao.SlotTimeDao;
+import domain.SlotTime;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.inject.Inject;
@@ -13,20 +13,20 @@ import java.util.List;
 
 @Path("/slots_times")
 @Produces(MediaType.APPLICATION_JSON)
-public class SlotsTimesResource {
+public class SlotTimeResource {
 
-    private SlotsTimesDao slotsTimesDao;
+    private SlotTimeDao slotTimeDao;
 
     @Inject
-    public SlotsTimesResource(SlotsTimesDao slotsTimesDao) {
-        this.slotsTimesDao = slotsTimesDao;
+    public SlotTimeResource(SlotTimeDao slotTimeDao) {
+        this.slotTimeDao = slotTimeDao;
     }
 
     @GET
     @Path("/all")
     @UnitOfWork
-    public List<SlotsTimes> getAll() {
-        return slotsTimesDao.getAll();
+    public List<SlotTime> getAll() {
+        return slotTimeDao.getAll();
     }
 
 }
