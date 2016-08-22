@@ -179,7 +179,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }, function (response) {
                 Notification.error({message: 'Something went wrong, changes not saved', delay: 2000});
             });
-            var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat));
+            var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
 
             sendNote(note);
             $scope.hasSlotChanged = false;
