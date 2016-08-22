@@ -13,6 +13,13 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
         beforeEach(inject(function ($controller, _$q_, _$rootScope_, _$state_) {
+                var JobProfileEnum = {
+                    isDev: {name: "Developer", column: "isDev"},
+                    isOps: {name: "WebOps", column: "isOps"},
+                    isTest: {name: "Tester", column: "isTest"},
+                    isOther: {name: "Other", column: "isOther"}
+                };
+
                 var BandLevelEnum = {
                     "1": "1 - Principal",
                     "2": "2 - Manager",
@@ -37,7 +44,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                     tdprPersonsService: tdprPersonsService,
                     $state: $state,
                     Notification: Notification,
-                    BandLevelEnum: BandLevelEnum
+                    BandLevelEnum: BandLevelEnum,
+                    JobProfileEnum: JobProfileEnum
                 });
             })
         );

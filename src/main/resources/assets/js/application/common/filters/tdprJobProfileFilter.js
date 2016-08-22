@@ -13,7 +13,7 @@ define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
                 return _.filter(toFilter,
                     function (filtering) {
                         if (filtering.person === null || filtering.person === undefined) {
-                            return report[jobProfile];
+                            return filtering[jobProfile];
                         } else {
                             return filtering.person[jobProfile];
                         }

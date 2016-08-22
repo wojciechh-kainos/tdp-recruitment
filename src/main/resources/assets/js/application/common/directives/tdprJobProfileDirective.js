@@ -9,9 +9,9 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                 isRadio: '='
             },
             link: function (scope, element, attributes) {
-                scope.JobProfiles = JobProfileEnum;
+                scope.JobProfileEnum = JobProfileEnum;
 
-                var mapped = _.mapKeys(scope.JobProfiles, function (value) {
+                var mapped = _.mapKeys(scope.JobProfileEnum, function (value) {
                     return value.column;
                 });
 
@@ -30,7 +30,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                 scope.selectedProfiles = changeSelections(true);
 
                 // Initial selected for radio
-                scope.selectedProfiles.selected = scope.JobProfiles.isDev.column;
+                scope.selectedProfiles.selected = scope.JobProfileEnum.isDev.column;
                 scope.change = function (column) {
                     scope.selectedProfiles = changeSelections(false, column);
                 };
