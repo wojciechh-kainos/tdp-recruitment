@@ -14,8 +14,8 @@ public class MailService {
 
 
     public void sendEmail(String recipient, Long id) {
-        MailingThread mt = new MailingThread(applicationConfiguration, recipient, id);
-        mt.start();
+//        MailingThread mt = new MailingThread(applicationConfiguration, recipient, id);
+//        mt.start();
     }
 
 
