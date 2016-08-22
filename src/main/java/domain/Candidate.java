@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
         @NamedQuery(name = "Candidate.findAll", query = "SELECT c from Candidate c where c.isDeleted=false"),
         @NamedQuery(name = "Candidate.deleteById", query = "UPDATE Candidate SET isDeleted = true WHERE id = :id"),
-        @NamedQuery(name = "Candidate.deleteAll", query = "DELETE FROM Candidate")
+        @NamedQuery(name = "Candidate.deleteAll", query = "DELETE FROM Candidate WHERE id = :id")
 })
 public class Candidate {
     @Id

@@ -22,8 +22,8 @@ public class CandidateDao extends AbstractDAO<Candidate>{
         namedQuery("Candidate.deleteById").setParameter("id", id).executeUpdate();
     }
 
-    public void deleteAll(){
-        namedQuery("Candidate.deleteAll").executeUpdate();
+    public void delete(Long id){
+        namedQuery("Candidate.deleteAll").setParameter("id", id).executeUpdate();
     }
 
     public Long create(Candidate candidate){

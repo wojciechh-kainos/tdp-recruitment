@@ -15,6 +15,7 @@ public class CandidateDaoTest extends BaseTest {
 
     private Candidate exampleCandidate;
     private Persons exampleRecruiter;
+    private Long returnedId;
 
     @Before
     public void setUp(){
@@ -33,23 +34,47 @@ public class CandidateDaoTest extends BaseTest {
     }
 
     @Test
-    public void testCreateCandidate(){
+    public void testCreateAndFindAll(){
         getSession().beginTransaction();
-        Long returnedId = candidateDao.create(exampleCandidate);
+        List<Candidate> candidatesFromDbBefore = candidateDao.findAll();
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        List<Candidate> candidatesFromDb = candidateDao.findAll();
+        returnedId = candidateDao.create(exampleCandidate);
         getSession().getTransaction().commit();
 
-        assertEquals("In the list from DB should be only one candidate", candidatesFromDb.size(), 1);
-        assertEquals("Candidate's recruiter id should be equal exampleRecruiter id", candidatesFromDb.get(0).getRecruiter().getId(), exampleRecruiter.getId());
+        getSession().beginTransaction();
+        List<Candidate> candidatesFromDbAfter = candidateDao.findAll();
+        getSession().getTransaction().commit();
+
+        assertEquals("In the list from DB should be only one candidate", candidatesFromDbAfter.size()-1, candidatesFromDbBefore.size());
+    }
+
+    @Test
+    public void testDeleteById(){
+        getSession().beginTransaction();
+        List<Candidate> candidatesFromDbBefore = candidateDao.findAll();
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        returnedId = candidateDao.create(exampleCandidate);
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        candidateDao.deleteById(returnedId);
+        getSession().getTransaction().commit();
+
+        getSession().beginTransaction();
+        List<Candidate> candidatesFromDbAfter = candidateDao.findAll();
+        getSession().getTransaction().commit();
+
+        assertEquals("In the list from DB should be only one candidate", candidatesFromDbAfter.size(), candidatesFromDbBefore.size());
     }
 
     @After
     public void tearDown() {
         getSession().beginTransaction();
-        candidateDao.deleteAll();
+        candidateDao.delete(returnedId);
         getSession().getTransaction().commit();
     }
 }
