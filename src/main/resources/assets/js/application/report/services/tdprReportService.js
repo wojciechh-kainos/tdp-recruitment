@@ -6,8 +6,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             return $http.get('/api/report/' + dateFilter(dateFrom, format) + '/' + dateFilter(dateTo, format))
                 .then(
                     function (response) {
-                         var reports = response.data.map(sumOfHours);
-                         return reports;
+                         return response.data.map(sumOfHours);
                     },
                     function (error) {
                         error.message = "Unable to get data from server!";
