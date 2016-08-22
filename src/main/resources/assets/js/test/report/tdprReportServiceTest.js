@@ -10,6 +10,13 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
             numberOfAvailableSlots : 5
         };
 
+
+        beforeEach(function () {
+            module(function ($provide) {
+                $provide.value('DateFormat', 'dd-MM-yyyy');
+            });
+        });
+
         beforeEach(inject(function (_tdprReportService_, _$httpBackend_) {
             $service = _tdprReportService_;
             $httpBackend = _$httpBackend_;
