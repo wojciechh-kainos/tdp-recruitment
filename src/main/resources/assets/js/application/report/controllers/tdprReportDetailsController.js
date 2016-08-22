@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, Notification) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, Notification) {
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -64,12 +64,23 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.activate();
 
         $scope.generateCSV = function() {
-            $scope.reportsElements.map(function(item){
+            $scope.reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles)
+            $scope.reportsForCSV.map(function(item){
                 item.initHours = item.initHours.toString().replace(".", ",");
                 item.fullHours = item.fullHours.toString().replace(".", ",");
                 item.availableHours = item.availableHours.toString().replace(".", ",");
                 return item;
             });
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+            reportsForCSV.forEach(function(infoArray, index){
+
+               dataString = infoArray.join(";");
+               csvContent += index < data.length ? dataString+ "\n" : dataString;
+
+            });
+
+            return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
         };
 
     })
