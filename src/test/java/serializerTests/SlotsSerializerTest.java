@@ -2,10 +2,7 @@ package serializerTests;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import serializers.SlotsSerializer;
@@ -39,7 +36,7 @@ public class SlotsSerializerTest {
         slotsTime.setId(new Long(1));
 
         availabilityType = new AvailabilityTypes();
-        availabilityType.setType("init");
+        availabilityType.setType(AvailabilityTypesEnum.init);
 
         slot = new Slots();
         slot.setPerson(person);

@@ -2,6 +2,7 @@ package daoTests;
 
 import databaseHelper.BaseTest;
 import domain.AvailabilityTypes;
+import domain.AvailabilityTypesEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class AvailabilityTypesDaoTest extends BaseTest{
 
         AvailabilityTypes anotherAvailabilityTypes = availabilityTypesDao.getById(1);
         assertEquals("First returned availabilityTypes should be type available",
-                "available", anotherAvailabilityTypes.getType());
+                AvailabilityTypesEnum.available, anotherAvailabilityTypes.getType());
 
         getSession().getTransaction().commit();
     }

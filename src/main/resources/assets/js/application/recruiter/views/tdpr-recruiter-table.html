@@ -3,26 +3,11 @@
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
     <div id="date-container">
+        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
         <span class="navigate1">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
-        <button class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
     </div>
-
-    <form class="form-inline">
-        <div class="form-group">
-            <label class="navigate1">From: </label>
-            <select class="form-control"
-                    ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes"
-                    ng-model="startTime" ng-change="filterSlots()"></select>
-        </div>
-        <div class="form-group">
-            <label class="navigate1">To: </label>
-            <select class="form-control"
-                    ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
-                    ng-model="endTime" ng-change="filterSlots()"></select>
-        </div>
-    </form>
 
     <div class="legend">
         <label class="mouse-pointer">
@@ -38,6 +23,25 @@
             <span> WebOps</span>
         </label>
     </div>
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="navigate1">From: </label>
+            <select class="form-control"
+                    ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes"
+                    ng-model="startTime" ng-change="filterSlots()"></select>
+        </div>
+        <div class="form-group">
+            <label class="navigate1">To: </label>
+            <select class="form-control"
+                    ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
+                    ng-model="endTime" ng-change="filterSlots()"></select>
+        </div>
+
+        <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
+        <button class="button navigate1" ng-click="refreshPersonsData()">Clear</button>
+    </form>
+
 
     <div class="availabilities-table-container">
         <table id="availabilities-table">
@@ -73,6 +77,8 @@
     </div>
 
 
-    <a ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+    <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+
+    | <a id="reports-btn" ui-sref="tdpr.report.home">Reports</a>
 
 </div>

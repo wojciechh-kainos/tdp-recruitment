@@ -40,23 +40,23 @@ h2 {
 }
 
 .cell-avail-available {
-    background-color: #87D37C;
+    background-color: #42BD9A;
 }
 
 .cell-avail-unavailable {
-    background-color: #F44336;
+    background-color: #FA1B69;
 }
 
 .cell-avail-maybe {
-    background-color: #B0BEC5;
+    background-color: #CDCDD0;
 }
 
 .cell-avail-init {
-    background: #FFEB3B;
+    background: #F5D76E;
 }
 
 .cell-avail-full {
-    background: #AB47BC;
+    background: #6666A4;
 }
 
 .cell-selected {
