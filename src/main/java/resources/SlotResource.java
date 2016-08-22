@@ -61,7 +61,7 @@ public class SlotResource {
     @PUT
     @Path("recruiter")
     @UnitOfWork
-    public Response updateRecruiter(Slot[] slots) {
+    public Response updateRecruiter(List<Slot> slots) {
         slotDao.updateForPersonAndWeekFromRecruiter(slots);
         return Response.status(Response.Status.CREATED).build();
     }

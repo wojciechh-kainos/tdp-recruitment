@@ -65,7 +65,7 @@ public class SlotDao extends AbstractDAO<Slot> {
         for (Slot slot : slots) persist(slot);
     }
 
-    public void updateForPersonAndWeekFromRecruiter(Slot[] slots) {
+    public void updateForPersonAndWeekFromRecruiter(List<Slot> slots) {
         for (Slot slot : slots) persist(slot);
     }
 
