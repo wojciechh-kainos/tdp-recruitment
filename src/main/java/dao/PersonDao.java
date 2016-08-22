@@ -30,5 +30,9 @@ public class PersonDao extends AbstractDAO<Person>{
         return namedQuery("Person.findAll").list();
     }
 
+    public List<Person> findAllForManaging(){
+        return namedQuery("Person.findAllForManaging").list();
+    }
+
     public void update(Person person){currentSession().update(person);}
 }

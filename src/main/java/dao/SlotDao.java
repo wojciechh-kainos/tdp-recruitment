@@ -39,6 +39,7 @@ public class SlotDao extends AbstractDAO<Slot> {
         Criteria criteria = criteria();
 
         Criteria criteriaPerson = criteria.createCriteria("person");
+        criteriaPerson.add(Restrictions.eq("active", true));
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
