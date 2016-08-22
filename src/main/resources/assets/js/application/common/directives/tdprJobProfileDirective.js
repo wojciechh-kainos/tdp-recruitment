@@ -27,10 +27,15 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                     });
                 };
 
-                scope.selectedProfiles = changeSelections(true);
+                if (scope.isRadio === true) {
+                    scope.selectedProfiles = changeSelections(false, scope.JobProfileEnum.isDev.column);
 
-                // Initial selected for radio
-                scope.selectedProfiles.selected = scope.JobProfileEnum.isDev.column;
+                    // Initial selected for radio
+                    scope.selectedProfiles.selected = scope.JobProfileEnum.isDev.column;
+                } else {
+                    scope.selectedProfiles = changeSelections(true);
+                }
+
                 scope.change = function (column) {
                     scope.selectedProfiles = changeSelections(false, column);
                 };
