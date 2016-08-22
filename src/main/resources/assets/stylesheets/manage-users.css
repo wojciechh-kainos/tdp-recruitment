@@ -1,6 +1,6 @@
 .table-wrapper {
     height: 80%;
-    width: 80%;
+    width: 60%;
     margin: auto;
 }
 
@@ -18,4 +18,22 @@
 
 .table-wrapper th {
     font-size: 24px;
+    text-align: center;
+}
+
+.table-wrapper thead {
+    background-color: #375D81;
+    color: white;
+}
+
+.table-wrapper table {
+    text-align: center;
+}
+
+#right-header {
+    border-top-right-radius: 20px;
+}
+
+#left-header {
+    border-top-left-radius: 20px;
 }
