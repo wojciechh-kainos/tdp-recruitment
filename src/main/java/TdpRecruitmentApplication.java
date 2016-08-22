@@ -1,3 +1,4 @@
+import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
@@ -12,6 +13,8 @@ import io.dropwizard.setup.Environment;
 import resources.SlotResource;
 import resources.SlotTimeResource;
 import resources.PersonResource;
+import resources.PairResource;
+import resources.ReportResource;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -51,8 +54,10 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         module.setSessionFactory(hibernateBundle.getSessionFactory());
 
         environment.jersey().register(guiceBundle.getInjector().getInstance(PersonResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(PairResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotTimeResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
     }
 
     public static void main(final String[] args) throws Exception {
