@@ -1,5 +1,5 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
-    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter', function ($http, $q, dateFilter, DateFormat) {
+    tdprReportModule.service('tdprReportService', ['$http', '$q', 'dateFilter', 'DateFormat', function ($http, $q, dateFilter, DateFormat) {
 
         this.getReport = function (dateFrom, dateTo, personId) {
             return $http.get('/api/report/' + dateFilter(dateFrom, DateFormat) + '/' + dateFilter(dateTo, DateFormat) + '/' + personId)
