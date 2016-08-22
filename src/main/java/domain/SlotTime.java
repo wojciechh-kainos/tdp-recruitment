@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 import java.sql.Time;
 
 @Entity
-@Table(name = "slots_times")
+@Table(name = "slot_time")
 @NamedQueries({
-        @NamedQuery(name = "SlotsTimes.getAll",
-                query = "select s from SlotsTimes s")})
+        @NamedQuery(name = "SlotTime.getAll",
+                query = "select s from SlotTime s")})
 
-public class SlotsTimes {
+public class SlotTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

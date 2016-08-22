@@ -5,50 +5,50 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Pair implements Serializable {
-    private Persons searchPerson;
-    private Persons matchPerson;
-    private List<Slots> searchSlots;
-    private List<Slots> matchSlots;
+    private Person searchPerson;
+    private Person matchPerson;
+    private List<Slot> searchSlots;
+    private List<Slot> matchSlots;
 
     public Pair(){
     }
 
-    public Pair(Persons searchPerson, Persons matchPerson, List<Slots> searchSlots, List<Slots> matchSlots) {
+    public Pair(Person searchPerson, Person matchPerson, List<Slot> searchSlots, List<Slot> matchSlots) {
         this.searchPerson = searchPerson;
         this.matchPerson = matchPerson;
         this.searchSlots = searchSlots;
         this.matchSlots = matchSlots;
     }
 
-    public Persons getSearchPerson() {
+    public Person getSearchPerson() {
         return searchPerson;
     }
 
-    public void setSearchPerson(Persons searchPerson) {
+    public void setSearchPerson(Person searchPerson) {
         this.searchPerson = searchPerson;
     }
 
-    public Persons getMatchPerson() {
+    public Person getMatchPerson() {
         return matchPerson;
     }
 
-    public void setMatchPerson(Persons matchPerson) {
+    public void setMatchPerson(Person matchPerson) {
         this.matchPerson = matchPerson;
     }
 
-    public List<Slots> getSearchSlots() {
+    public List<Slot> getSearchSlots() {
         return searchSlots;
     }
 
-    public void setSearchSlots(List<Slots> searchSlots) {
+    public void setSearchSlots(List<Slot> searchSlots) {
         this.searchSlots = searchSlots;
     }
 
-    public List<Slots> getMatchSlots() {
+    public List<Slot> getMatchSlots() {
         return matchSlots;
     }
 
-    public void setMatchSlots(List<Slots> matchSlots) {
+    public void setMatchSlots(List<Slot> matchSlots) {
         this.matchSlots = matchSlots;
     }
 }
