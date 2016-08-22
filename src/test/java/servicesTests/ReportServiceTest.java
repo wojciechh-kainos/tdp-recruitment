@@ -1,11 +1,11 @@
 package servicesTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import domain.Persons;
+import dao.PersonDao;
+import dao.SlotDao;
+import domain.Person;
 import domain.Report;
-import domain.Slots;
+import domain.Slot;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,13 +32,13 @@ public class ReportServiceTest {
     private Date mockStartDate = null;
     private Date mockEndDate = null;
 
-    private List<Persons> mockPersons;
-    private Persons mockFirstPerson;
-    private Persons mockSecondPerson;
+    private List<Person> mockPersons;
+    private Person mockFirstPerson;
+    private Person mockSecondPerson;
 
-    private List<Slots> mockSlotsList;
-    private List<Slots> mockFirstPersonSlotsList;
-    private List<Slots> mockSecondPersonSlotsList;
+    private List<Slot> mockSlotList;
+    private List<Slot> mockFirstPersonSlotList;
+    private List<Slot> mockSecondPersonSlotList;
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
     private ReportService reportService;
@@ -48,25 +48,25 @@ public class ReportServiceTest {
     private List<Report> expectedReports;
 
     @Mock
-    private static PersonsDao personsDao;
+    private static PersonDao personsDao;
 
     @Mock
-    private static SlotsDao slotsDao;
+    private static SlotDao slotsDao;
 
     @Before
     public void setUp() throws IOException {
         mockPersons = MAPPER.readValue(fixture("fixtures/persons.json"),
-                MAPPER.getTypeFactory().constructCollectionType(List.class, Persons.class));
+                MAPPER.getTypeFactory().constructCollectionType(List.class, Person.class));
         mockFirstPerson = mockPersons.get(0);
         mockSecondPerson = mockPersons.get(1);
-        mockSlotsList = MAPPER.readValue(fixture("fixtures/slots.json"),
-                MAPPER.getTypeFactory().constructCollectionType(List.class, Slots.class));
+        mockSlotList = MAPPER.readValue(fixture("fixtures/slots.json"),
+                MAPPER.getTypeFactory().constructCollectionType(List.class, Slot.class));
 
-        mockFirstPersonSlotsList = mockSlotsList.stream()
+        mockFirstPersonSlotList = mockSlotList.stream()
                 .filter(slot -> slot.getPerson().getId().equals(mockFirstPerson.getId()))
                     .collect(Collectors.toCollection(ArrayList::new));
 
-        mockSecondPersonSlotsList = mockSlotsList.stream()
+        mockSecondPersonSlotList = mockSlotList.stream()
                 .filter(slot -> slot.getPerson().getId().equals(mockSecondPerson.getId()))
                     .collect(Collectors.toCollection(ArrayList::new));
 
@@ -80,7 +80,7 @@ public class ReportServiceTest {
     @Test
     public void getReportTest() {
         when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
-        when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotsList);
+        when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
 
         Report report = reportService.getReport(mockFirstPerson.getId(), mockStartDate, mockEndDate);
 
@@ -92,8 +92,8 @@ public class ReportServiceTest {
         when(personsDao.findAll()).thenReturn(mockPersons);
         when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
         when(personsDao.getById(mockSecondPerson.getId())).thenReturn(mockSecondPerson);
-        when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotsList);
-        when(slotsDao.getForPersonForWeek(mockSecondPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSecondPersonSlotsList);
+        when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
+        when(slotsDao.getForPersonForWeek(mockSecondPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSecondPersonSlotList);
 
         List<Report> achieved = reportService.getAllReports(mockStartDate, mockEndDate);
         assertEquals(expectedReports, achieved);

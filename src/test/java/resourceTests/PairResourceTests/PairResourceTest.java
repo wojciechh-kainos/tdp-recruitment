@@ -1,6 +1,6 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotsDao;
+import dao.SlotDao;
 import domain.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,12 +26,12 @@ public class PairResourceTest {
     private String endDate;
 
     private PairResource resource;
-    private List<Slots> mockSlots = new ArrayList<>();
-    private List<SlotsTimes> expectedSlotsTimes;
-    private List<Persons> persons;
+    private List<Slot> mockSlots = new ArrayList<>();
+    private List<SlotTime> expectedSlotTimes;
+    private List<Person> persons;
 
     @Mock
-    private static SlotsDao mockDao;
+    private static SlotDao mockDao;
 
     @Before
     public void setUp() {
@@ -43,17 +43,17 @@ public class PairResourceTest {
         startDate = MockDataUtil.convertDateToString(sameDate);
         endDate = MockDataUtil.convertDateToString(differentDate);
 
-        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
-        List<SlotsTimes> differentSlotsTime = MockDataUtil.createSlotsTimesList(5, 5);
-        expectedSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
+        AvailabilityType availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
+        List<SlotTime> differentSlotsTime = MockDataUtil.createSlotTimeList(5, 5);
+        expectedSlotTimes = MockDataUtil.createSlotTimeList(1, 3);
 
-        Persons firstPerson = MockDataUtil.createPersons((long) 1, "FIRST", isDev, isTest, isOps);
-        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSlotsTimes, firstPerson, sameDate, availabilityType));
-        mockSlots.add(MockDataUtil.createSlot(expectedSlotsTimes.get(0), firstPerson, differentDate, availabilityType));
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSlotTimes, firstPerson, sameDate, availabilityType));
+        mockSlots.add(MockDataUtil.createSlot(expectedSlotTimes.get(0), firstPerson, differentDate, availabilityType));
 
-        Persons secondPerson = MockDataUtil.createPersons((long) 2, "SECOND", isDev, isTest, isOps);
-        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSlotsTimes, secondPerson, sameDate, availabilityType));
-        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(differentSlotsTime, secondPerson, sameDate, availabilityType));
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSlotTimes, secondPerson, sameDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(differentSlotsTime, secondPerson, sameDate, availabilityType));
 
         resource = new PairResource(mockDao);
         when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
@@ -70,19 +70,19 @@ public class PairResourceTest {
         assertTrue("First person should have 3 slots in slotsList",
                 persons
                         .stream()
-                        .allMatch(person -> person.getSlotsList().size() == 3));
+                        .allMatch(person -> person.getSlotList().size() == 3));
     }
 
     @Test
     public void testFindPairsEveryPairShouldHaveSlotsTimesAsExpected() {
-        assertTrue("SlotsTimes of all paired persons should be equal to expectedSlotsTimes",
+        assertTrue("SlotsTimes of all paired persons should be equal to expectedSlotTimes",
                 persons
                         .stream()
                         .allMatch(person -> person
-                                .getSlotsList()
+                                .getSlotList()
                                 .stream()
-                                .map(Slots::getSlot)
-                                .allMatch(searchedSlotTime -> expectedSlotsTimes.contains(searchedSlotTime)))
+                                .map(Slot::getSlotTime)
+                                .allMatch(searchedSlotTime -> expectedSlotTimes.contains(searchedSlotTime)))
         );
     }
 }
