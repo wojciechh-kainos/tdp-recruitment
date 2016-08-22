@@ -2,6 +2,7 @@
     <label class="mouse-pointer" ng-repeat="(key,value) in JobProfiles">
         <input ng-if="!isRadio" type="checkbox" ng-model="selectedProfiles[value.column]"/>
         <input ng-if="isRadio" type="radio" ng-model="selectedProfiles.radio" value="{{value.column}}"
-               ng-change="change(value.column)"/> {{value.name}}
+               ng-change="change(value.column)"/>
+        <span>{{value.name}}</span>
     </label>
 </div>

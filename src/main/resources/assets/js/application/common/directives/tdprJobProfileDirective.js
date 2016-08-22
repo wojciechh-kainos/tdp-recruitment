@@ -17,7 +17,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
 
                 var changeSelections = function (initial, selected) {
                     return _.forEach(mapped, function (value, key) {
-                        if (key !== "radio") {
+                        if (key !== "selected") {
                             if (initial === true) {
                                 mapped[key] = true;
                             } else {
@@ -30,7 +30,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                 scope.selectedProfiles = changeSelections(true);
 
                 // Initial selected for radio
-                scope.selectedProfiles.radio = scope.JobProfiles.isDev.column;
+                scope.selectedProfiles.selected = scope.JobProfiles.isDev.column;
                 scope.change = function (column) {
                     scope.selectedProfiles = changeSelections(false, column);
                 };
