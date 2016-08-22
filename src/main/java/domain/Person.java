@@ -2,6 +2,7 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,22 +16,24 @@ import java.util.List;
         @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
         @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
-public class Person {
+public class Person implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(unique = true)
+    @Length(max = 100)
     private String email;
 
     @NotNull
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 100)
+    @Length(max = 35)
     private String firstName;
 
     @NotNull
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 100)
+    @Length(max = 35)
     private String lastName;
 
     @JsonIgnore
@@ -75,6 +78,15 @@ public class Person {
     private List<Note> noteList = new ArrayList<>();
 
     public Person() {
+    }
+
+    @Override
+    public Person clone() {
+        try {
+            return (Person) super.clone();
+        } catch (final CloneNotSupportedException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public Boolean getActive() {
@@ -196,4 +208,26 @@ public class Person {
     public Time getDefaultFinishHour() {return defaultFinishHour;}
 
     public void setDefaultFinishHour(Time defaultFinishHour) {this.defaultFinishHour = defaultFinishHour;}
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", admin=" + admin +
+                ", isDev=" + isDev +
+                ", isTest=" + isTest +
+                ", isOps=" + isOps +
+                ", bandLevel=" + bandLevel +
+                ", activationCode='" + activationCode + '\'' +
+                ", defaultStartHour=" + defaultStartHour +
+                ", defaultFinishHour=" + defaultFinishHour +
+                ", active=" + active +
+                ", slotList=" + slotList +
+                ", noteList=" + noteList +
+                '}';
+    }
 }

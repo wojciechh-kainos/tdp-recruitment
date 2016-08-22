@@ -31,8 +31,8 @@ define(['angular', 'angularMocks', 'application/interviewer/services/tdprPersonS
                        "bandLevel": 1,
                        "activationCode": null,
                        "active": true,
-                       "slotsList": null,
-                       "notesList": null
+                       "slotList": null,
+                       "noteList": null
                      },
                      "description": "First week!",
                      "date": "2016-08-01"

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "email": "a@a.com",
+    "firstName": "Marek",
+    "lastName": "Dzik",
+    "isDev": true,
+    "isTest": false,
+    "isOps": false,
+    "bandLevel": 1,
+    "defaultStartHour": "08:00:00",
+    "defaultFinishHour": "16:00:00",
+    "slotList": null,
+    "noteList": null
+  },
+  {
+    "id": 2,
+    "email": "b@b.com",
+    "firstName": "Janek",
+    "lastName": "Smyk",
+    "isDev": true,
+    "isTest": false,
+    "isOps": false,
+    "bandLevel": 1,
+    "defaultStartHour": "09:00:00",
+    "defaultFinishHour": "17:00:00",
+    "slotList": null,
+    "noteList": null
+  }
+]

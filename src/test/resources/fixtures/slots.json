@@ -1,0 +1,122 @@
+[
+    {
+      "id": 1,
+      "person": {
+        "id": 1
+      },
+      "slotTime": {
+        "id": 1,
+        "startTime": "08:00:00",
+        "endTime": "08:30:00"
+      },
+      "type": {
+        "name": "available"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 2,
+      "person": {
+        "id": 1
+      },
+      "slotTime": {
+        "id": 2,
+        "startTime": "08:30:00",
+        "endTime": "09:00:00"
+      },
+      "type": {
+        "name": "available"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 3,
+      "person": {
+        "id": 1
+      },
+      "slotTime": {
+        "id": 3,
+        "startTime": "09:00:00",
+        "endTime": "09:30:00"
+      },
+      "type": {
+        "name": "full"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 4,
+      "person": {
+        "id": 1
+      },
+      "slotTime": {
+        "id": 4,
+        "startTime": "09:30:00",
+        "endTime": "10:00:00"
+      },
+      "type": {
+        "name": "init"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 5,
+      "person": {
+        "id": 2
+      },
+      "slotTime": {
+        "id": 5,
+        "startTime": "10:00:00",
+        "endTime": "10:30:00"
+      },
+      "type": {
+        "name": "available"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 6,
+      "person": {
+        "id": 2
+      },
+      "slotTime": {
+        "id": 6,
+        "startTime": "10:30:00",
+        "endTime": "11:00:00"
+      },
+      "type": {
+        "name": "available"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 7,
+      "person": {
+        "id": 2
+      },
+      "slotTime": {
+        "id": 7,
+        "startTime": "11:00:00",
+        "endTime": "11:30:00"
+      },
+      "type": {
+        "name": "full"
+      },
+      "slotDate": "2016-08-09"
+    },
+    {
+      "id": 8,
+      "person": {
+        "id": 2
+      },
+      "slotTime": {
+        "id": 8,
+        "startTime": "11:30:00",
+        "endTime": "12:00:00"
+      },
+      "type": {
+        "name": "full"
+      },
+      "slotDate": "2016-08-09"
+    }
+]

@@ -1,6 +1,7 @@
 package resources;
 
 import com.google.inject.Inject;
+import constants.TdpConstants;
 import dao.NoteDao;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -29,7 +30,7 @@ public class PersonResource {
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
     public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao) {
@@ -84,17 +85,8 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Response createOrUpdate(Note note){
-        Date now = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(note.getDate());
-        c.add(Calendar.DATE, 5); // Adding 5 days
-        Date comparisonDate = new Date(c.getTimeInMillis());
-        if (now.after(comparisonDate)) { // don't allow users to submit availabilities older than current week
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
-        } else {
-            noteDao.createOrUpdate(note);
-            return Response.status(Response.Status.ACCEPTED).entity(note).build();
-        }
+        noteDao.createOrUpdate(note);
+        return Response.status(Response.Status.ACCEPTED).entity(note).build();
     }
 
     @GET

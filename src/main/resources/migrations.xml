@@ -15,6 +15,7 @@
     <include file="changelogs/initialPopulateAvailabilityTypes.xml"/>
     <include file="changelogs/createNotesTable.xml"/>
     <include file="changelogs/addNotesColumnToPersonsTable.xml"/>
+    <include file="changelogs/US7_pairsPopulateSlotsTable.xml"/>
     <include file="changelogs/FixNoteBug_modifyNoteTable.xml"/>
     <include file="changelogs/addDefaultWorkingHoursPersonsTable.xml"/>
     <include file="changelogs/changeTableNames.xml"/>

@@ -1,0 +1,147 @@
+package resourceTests.PairResourceTests;
+
+import dao.SlotDao;
+import domain.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import resources.PairResource;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class PairResourceFindPairsBetweenThreePersonsTest {
+
+
+    private final Boolean isDev = true;
+    private final Boolean isTest = false;
+    private final Boolean isOps = false;
+    private String startDate;
+    private String endDate;
+    private PairResource resource;
+    private List<Slot> mockSlots = new ArrayList<>();
+    private List<SlotTime> expectedFirstPersonSlotsTimes, expectedSecondPersonSlotsTimes;
+
+    @Mock
+    private static SlotDao mockDao;
+
+    @Before
+    public void setUp() {
+        int TODAY_OFFSET = 0;
+        Date firstDate = MockDataUtil.createDate(TODAY_OFFSET);
+        int TOMORROW_OFFSET = 1;
+        Date secondDate = MockDataUtil.createDate(TOMORROW_OFFSET);
+        startDate = MockDataUtil.convertDateToString(firstDate);
+        endDate = MockDataUtil.convertDateToString(secondDate);
+
+        AvailabilityType availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
+        expectedFirstPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 3);
+        expectedSecondPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 5);
+
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, firstPerson, firstDate, availabilityType));
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, secondPerson, firstDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, secondPerson, secondDate, availabilityType));
+        Person thirdPerson = MockDataUtil.createPerson((long) 3, "THIRD", isDev, isTest, isOps);
+        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, thirdPerson, secondDate, availabilityType));
+
+        resource = new PairResource(mockDao);
+
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnThreePersons() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+
+        assertEquals("Three people should be found", 3, persons.size());
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnThreeSlotsForFirstPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person firstPair = persons.get(0);
+
+        assertEquals("First person should have 3 slot elements", 3, firstPair.getSlotList().size());
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInOneDayForFirstPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person firstPair = persons.get(0);
+
+        assertEquals("First person should have slots with one day only",
+                firstPair
+                        .getSlotList()
+                        .stream()
+                        .map(Slot::getSlotDate)
+                        .distinct()
+                        .count(), 1L);
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnSlotsWithExpectedSlotsTimes() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person firstPair = persons.get(0);
+
+        assertTrue("First person should have slots with expected slotsTimes",
+                firstPair
+                        .getSlotList()
+                        .stream()
+                        .map(Slot::getSlotTime)
+                        .allMatch(searchedSlotTime -> expectedFirstPersonSlotsTimes.contains(searchedSlotTime)));
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnEightSlotsForSecondPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person secondPair = persons.get(1);
+
+        assertEquals("Second person should have 8 slot elements", 8, secondPair.getSlotList().size());
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInTwoDaysForSecondPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person secondPair = persons.get(1);
+
+        assertEquals("Second person should have slots with two different days",
+                secondPair
+                        .getSlotList()
+                        .stream()
+                        .map(Slot::getSlotDate)
+                        .distinct()
+                        .count(), 2L);
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnFiveSlotsForThirdPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person thirdPair = persons.get(2);
+
+        assertEquals("Third person should have 5 slot elements", 5, thirdPair.getSlotList().size());
+    }
+
+    @Test
+    public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInOneDayForThirdPerson() {
+        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        Person thirdPair = persons.get(2);
+
+        assertEquals("Third person should have slots with one day only",
+                thirdPair
+                        .getSlotList()
+                        .stream()
+                        .map(Slot::getSlotDate)
+                        .distinct()
+                        .count(), 1L);
+    }
+}

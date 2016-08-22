@@ -43,6 +43,10 @@ define(['angular'
         dev: "isDev",
         ops: "isOps",
         test: "isTest"
+    }).constant('JobProfileEnumNames', {
+        dev: "Developer",
+        ops: "WebOps",
+        test: "Tester"
     }).constant('BandLevelEnum',{
         "1": "1 - Principal",
         "2": "2 - Manager",
@@ -50,6 +54,10 @@ define(['angular'
         "4": "4 - Senior associate",
         "5": "5 - Associate",
         "6": "6 - Trainee"
+    }).constant('WeekNavigateEnum',{
+        previous : -1,
+        next : 1,
+        current : 0
     });
 
     return tdprConstantsModule;

@@ -1,6 +1,7 @@
 package dao;
 
 import com.google.inject.Inject;
+import domain.AvailabilityTypeEnum;
 import domain.Slot;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
@@ -31,21 +32,24 @@ public class SlotDao extends AbstractDAO<Slot> {
         namedQuery("Slot.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slot> findBetween(String startDate, String endDate) {
+    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        Criteria criteria = currentSession().createCriteria(Slot.class);
-        addRestrictionIfNotNull(criteria, Restrictions.ge("slotDate", start), start);
-        addRestrictionIfNotNull(criteria, Restrictions.le("slotDate", end), end);
+        Criteria criteria = criteria();
 
-        return criteria.list();
-    }
+        Criteria criteriaPerson = criteria.createCriteria("person");
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
 
-    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value) {
-        if (value != null) {
-            criteria.add(expression);
-        }
+        Criteria criteriaAvail = criteria.createCriteria("type");
+        criteriaAvail.add(Restrictions.or(Restrictions.eq("name", AvailabilityTypeEnum.maybe), Restrictions.eq("name", AvailabilityTypeEnum.available)));
+
+        criteria.add(Restrictions.ge("slotDate", start));
+        criteria.add(Restrictions.le("slotDate", end));
+
+        return list(criteria);
     }
 
     public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
@@ -61,10 +65,20 @@ public class SlotDao extends AbstractDAO<Slot> {
         for (Slot slot : slots) persist(slot);
     }
 
+    public void updateForPersonAndWeekFromRecruiter(Slot[] slots) {
+        for (Slot slot : slots) persist(slot);
+    }
+
     public List<Slot> getForPersonForWeek(Long personId, Date start, Date end) {
         return list(namedQuery("Slot.getForPersonForWeek")
                 .setParameter("personId", personId)
                 .setDate("startDate", start)
                 .setDate("endDate", end));
+    }
+
+    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value) {
+        if (value != null) {
+            criteria.add(expression);
+        }
     }
 }
