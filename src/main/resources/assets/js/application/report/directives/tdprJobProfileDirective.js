@@ -1,5 +1,5 @@
 define(['angular', 'application/report/tdprReportModule'], function (angular, tdprReportModule) {
-    tdprReportModule.directive("jobProfile", function (JobProfileEnum, JobProfileEnumNames) {
+    tdprReportModule.directive("jobProfile", function (JobProfileEnumNames) {
         return {
             restrict: 'AE',
             templateUrl: 'js/application/report/views/tdpr-directive-job-profile.html',
@@ -8,12 +8,12 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
                 selectedProfiles: '='
             },
             link: function (scope, element, attributes) {
-                var mapped = _.mapKeys(JobProfileEnum, function (value, key) {
-                    return value;
+                scope.JobProfiles = JobProfileEnumNames;
+
+                var mapped = _.mapKeys(scope.JobProfiles, function (value, key) {
+                    return value.column;
                 });
 
-                scope.JobProfileEnum = JobProfileEnum;
-                scope.JobProfileEnumNames = JobProfileEnumNames;
                 scope.selectedProfiles = _.forEach(mapped, function (value, key) {
                     mapped[key] = true;
                 });

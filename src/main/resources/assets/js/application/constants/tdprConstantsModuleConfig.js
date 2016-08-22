@@ -42,11 +42,13 @@ define(['angular'
     }).constant('JobProfileEnum', {
         dev: "isDev",
         web: "isWeb",
-        test: "isTest"
+        test: "isTest",
+        other: "isOther"
     }).constant('JobProfileEnumNames', {
-        dev: "Developer",
-        web: "WebOps",
-        test: "Tester"
+        dev: {name: "Developer", column: "isDev"},
+        web: {name: "WebOps", column: "isWeb"},
+        test: {name: "Tester", column: "isTest"},
+        other: {name: "Other", column: "isOther"}
     }).constant('BandLevelEnum',{
         "1": "1 - Principal",
         "2": "2 - Manager",
