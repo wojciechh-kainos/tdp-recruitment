@@ -1,7 +1,16 @@
 <div class="availabilities-table-container">
     <table>
         <tr ng-repeat="p in persons">
-            <td>{{ p.firstName + " " + p.lastName }}</td>
+            <td>
+                <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : p.id, personName : p.firstName + ' ' + p.lastName})">
+                    {{ p.firstName + " " + p.lastName }}
+                    </a>
+                <button ng-click="deactivatePerson( p )">
+                    <span ng-if="p.active">disable</span>
+                    <span ng-if="!p.active">enable</span>
+                </button>
+            </td>
+            </a>
         </tr>
     </table>
 </div>

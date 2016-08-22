@@ -66,7 +66,6 @@ public class Person implements Cloneable {
     @Column(name = "default_finish_hour")
     private Time defaultFinishHour;
 
-    @JsonIgnore
     private Boolean active;
 
     @JsonManagedReference

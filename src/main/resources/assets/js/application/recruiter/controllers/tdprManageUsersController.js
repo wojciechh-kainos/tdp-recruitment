@@ -8,5 +8,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             return error.data;
         });
 
+        $scope.deactivatePerson = function( person ){
+            person.active = !person.active;
+            tdprPersonsService.deactivatePerson(person).then( function (response) {
+                console.log("deactivated");
+            }, function (error) {
+                console.log("error");
+            });
+        }
     });
 });

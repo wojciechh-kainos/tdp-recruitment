@@ -75,7 +75,7 @@ public class PersonResource {
     @Path("/all/withoutSlots")
     @UnitOfWork
     public List fetchPersonsWithoutSlots() {
-        return personsDao.findAll();
+        return personDao.findAll();
     }
 
     @GET
