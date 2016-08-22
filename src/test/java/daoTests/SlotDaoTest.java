@@ -1,10 +1,10 @@
 package daoTests;
 
 import databaseHelper.BaseTest;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import domain.AvailabilityType;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -16,14 +16,14 @@ import java.sql.Date;
 import static junit.framework.TestCase.assertTrue;
 
 @Ignore
-public class SlotsDaoTest extends BaseTest{
+public class SlotDaoTest extends BaseTest{
 
 
     private static final Long FIRST = new Long(1);
     private Long id;
-    private Persons person;
-    private SlotsTimes slotsTime;
-    private AvailabilityTypes availabilityType;
+    private Person person;
+    private SlotTime slotsTime;
+    private AvailabilityType availabilityType;
 
     @Before
     public void setUp(){
@@ -37,19 +37,19 @@ public class SlotsDaoTest extends BaseTest{
 
         getSession().beginTransaction();
 
-        Slots slot = new Slots();
-        slot.setSlotsDate(new Date(LocalDate.now().toDate().getTime()));
+        Slot slot = new Slot();
+        slot.setSlotDate(new Date(LocalDate.now().toDate().getTime()));
         slot.setPerson(person);
-        slot.setSlot(slotsTime);
+        slot.setSlotTime(slotsTime);
         slot.setType(availabilityType);
 
-        id = slotsDao.create(slot);
+        id = slotDao.create(slot);
 
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
 
-        Slots slotFromDb = slotsDao.findById(id);
+        Slot slotFromDb = slotDao.findById(id);
 
         getSession().getTransaction().commit();
 
@@ -60,14 +60,14 @@ public class SlotsDaoTest extends BaseTest{
     @After
     public void tearDown(){
         getSession().beginTransaction();
-        slotsDao.deleteById(id);
-        personsDao.deleteById(person.getId());
+        slotDao.deleteById(id);
+        personDao.deleteById(person.getId());
         getSession().getTransaction().commit();
     }
 
-    private Persons addPersonToDatabase() {
+    private Person addPersonToDatabase() {
         getSession().beginTransaction();
-        Persons person = new Persons();
+        Person person = new Person();
         person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
         person.setLastName("TEST_SURNAME");
@@ -75,11 +75,11 @@ public class SlotsDaoTest extends BaseTest{
         person.setActive(true);
         person.setAdmin(false);
         person.setBandLevel(2);
-        Long id = personsDao.create(person);
+        Long id = personDao.create(person);
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        Persons personFromDb = personsDao.getById(id);
+        Person personFromDb = personDao.getById(id);
         getSession().getTransaction().commit();
 
         return personFromDb;

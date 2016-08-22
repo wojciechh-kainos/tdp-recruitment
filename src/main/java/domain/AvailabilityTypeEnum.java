@@ -1,6 +1,6 @@
 package domain;
 
-public enum AvailabilityTypesEnum {
+public enum AvailabilityTypeEnum {
     available,
     full,
     init,
