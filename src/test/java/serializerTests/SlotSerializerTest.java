@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import domain.*;
 import org.junit.Before;
 import org.junit.Test;
-import serializers.SlotsSerializer;
+import serializers.SlotSerializer;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -15,32 +15,32 @@ import java.time.LocalDate;
 
 import static junit.framework.TestCase.assertTrue;
 
-public class SlotsSerializerTest {
+public class SlotSerializerTest {
 
-    private SlotsSerializer slotsSerializer;
+    private SlotSerializer slotsSerializer;
 
-    private Persons person;
-    private SlotsTimes slotsTime;
-    private AvailabilityTypes availabilityType;
-    private Slots slot;
+    private Person person;
+    private SlotTime slotTime;
+    private AvailabilityType availabilityType;
+    private Slot slot;
 
     private final String EXPECTED_STRING = "{\"id\":2,\"number\":1,\"type\":\"init\",\"day\":\"2009-10-11\"}";
 
     @Before
     public void setup() throws IOException {
-        slotsSerializer = new SlotsSerializer();
+        slotsSerializer = new SlotSerializer();
 
-        person = new Persons();
+        person = new Person();
 
-        slotsTime = new SlotsTimes();
-        slotsTime.setId(new Long(1));
+        slotTime = new SlotTime();
+        slotTime.setId(new Long(1));
 
-        availabilityType = new AvailabilityTypes();
-        availabilityType.setType(AvailabilityTypesEnum.init);
+        availabilityType = new AvailabilityType();
+        availabilityType.setName(AvailabilityTypeEnum.init);
 
-        slot = new Slots();
+        slot = new Slot();
         slot.setPerson(person);
-        slot.setSlot(slotsTime);
+        slot.setSlotTime(slotTime);
         slot.setType(availabilityType);
 
     }
@@ -50,7 +50,7 @@ public class SlotsSerializerTest {
 
         Date date = Date.valueOf(LocalDate.parse("2009-10-11"));
 
-        slot.setSlotsDate(date);
+        slot.setSlotDate(date);
         slot.setId(new Long(2));
 
         String string = getSerializedString(slot);
@@ -60,7 +60,7 @@ public class SlotsSerializerTest {
         assertTrue(string.equals(EXPECTED_STRING));
     }
 
-    private String getSerializedString(Slots slot) throws IOException {
+    private String getSerializedString(Slot slot) throws IOException {
         StringWriter stringWriter = new StringWriter();
 
         JsonGenerator jsonGenerator =

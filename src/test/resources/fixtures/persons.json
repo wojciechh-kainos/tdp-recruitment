@@ -6,12 +6,12 @@
     "lastName": "Dzik",
     "isDev": true,
     "isTest": false,
-    "isWeb": false,
+    "isOps": false,
     "bandLevel": 1,
     "defaultStartHour": "08:00:00",
     "defaultFinishHour": "16:00:00",
-    "slotsList": null,
-    "notesList": null
+    "slotList": null,
+    "noteList": null
   },
   {
     "id": 2,
@@ -20,11 +20,11 @@
     "lastName": "Smyk",
     "isDev": true,
     "isTest": false,
-    "isWeb": false,
+    "isOps": false,
     "bandLevel": 1,
     "defaultStartHour": "09:00:00",
     "defaultFinishHour": "17:00:00",
-    "slotsList": null,
-    "notesList": null
+    "slotList": null,
+    "noteList": null
   }
 ]
