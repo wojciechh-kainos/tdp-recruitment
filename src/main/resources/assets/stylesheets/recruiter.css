@@ -11,13 +11,6 @@
     white-space: nowrap;
 }
 
-.slot {
-    min-width: 25px;
-    height: 29px;
-    cursor: pointer;
-    border: 1px solid #375D81;
-}
-
 .slot-span {
     display: block;
     width: 100%;
@@ -33,12 +26,6 @@
     padding-bottom: 1px;
 }
 
-.container {
-    width: 95%;
-    position: relative;
-    font-family: 'Lato', sans-serif;
-}
-
 .person-name {
     width: 261px;
     position: absolute;
@@ -50,8 +37,6 @@
     cursor: pointer;
     font-size: medium;
 }
-
-
 
 .changes-button {
     font-size: smaller;
@@ -76,12 +61,6 @@
     font-size: larger;
 }
 
-.day-th, .slot-time-th {
-    background-color: #375D81;
-    color: white;
-    font-weight: bold;
-}
-
 .slot-times-th {
     width: 100%;
     padding: 0 10px 0 10px;
@@ -90,20 +69,10 @@
     border-left: 1px solid #233c54;
 }
 
-.day-th {
-    box-sizing: border-box;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
 .availabilities-table-container .day-th {
     font-size: large;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-}
-
-.availabilities-table {
-    border: 2px solid black;
 }
 
 .form-inline .navigate1 {
