@@ -1,13 +1,13 @@
 package databaseHelper;
 
-import dao.AvailabilityTypesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import dao.SlotsTimesDao;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import dao.AvailabilityTypeDao;
+import dao.PersonDao;
+import dao.SlotDao;
+import dao.SlotTimeDao;
+import domain.AvailabilityType;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -20,10 +20,10 @@ import org.junit.BeforeClass;
 public class BaseTest {
 
     private static SessionFactory sessionFactory;
-    protected static PersonsDao personsDao;
-    protected static SlotsDao slotsDao;
-    protected static SlotsTimesDao slotsTimesDao;
-    protected static AvailabilityTypesDao availabilityTypesDao;
+    protected static PersonDao personDao;
+    protected static SlotDao slotDao;
+    protected static SlotTimeDao slotTimeDao;
+    protected static AvailabilityTypeDao availabilityTypeDao;
 
     @BeforeClass
     public static void createInjector() throws Exception {
@@ -35,10 +35,10 @@ public class BaseTest {
         config.setProperty("hibernate.connection.password",dbConfig.getPassword());
         config.setProperty("hibernate.connection.driver_class",dbConfig.getDriverClass());
         config.setProperty("hibernate.current_session_context_class", "thread");
-        config.addAnnotatedClass(Persons.class);
-        config.addAnnotatedClass(SlotsTimes.class);
-        config.addAnnotatedClass(AvailabilityTypes.class);
-        config.addAnnotatedClass(Slots.class);
+        config.addAnnotatedClass(Person.class);
+        config.addAnnotatedClass(SlotTime.class);
+        config.addAnnotatedClass(AvailabilityType.class);
+        config.addAnnotatedClass(Slot.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();
@@ -48,10 +48,10 @@ public class BaseTest {
 
     @BeforeClass
     public static void createDao(){
-        personsDao = new PersonsDao(sessionFactory);
-        slotsDao = new SlotsDao(sessionFactory);
-        slotsTimesDao = new SlotsTimesDao(sessionFactory);
-        availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
+        personDao = new PersonDao(sessionFactory);
+        slotDao = new SlotDao(sessionFactory);
+        slotTimeDao = new SlotTimeDao(sessionFactory);
+        availabilityTypeDao = new AvailabilityTypeDao(sessionFactory);
     }
 
     public Session getSession()
@@ -66,19 +66,19 @@ public class BaseTest {
         return session;
     }
 
-    protected SlotsTimes getSlotTimeFromDb(Long id) {
+    protected SlotTime getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
-        SlotsTimes slotsTimeFromDb = slotsTimesDao.getById(id);
+        SlotTime slotsTimeFromDb = slotTimeDao.getById(id);
         getSession().getTransaction().commit();
 
         return slotsTimeFromDb;
     }
 
-    protected AvailabilityTypes getAvailabilityTypeFromDb(Long id) {
+    protected AvailabilityType getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
-        AvailabilityTypes availabilityTypeFromDb = availabilityTypesDao.getById(id);
+        AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id);
         getSession().getTransaction().commit();
 
         return availabilityTypeFromDb;

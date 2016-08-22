@@ -15,33 +15,33 @@ import java.util.stream.Collectors;
 
 public class MockDataUtil {
 
-    public static Slots createSlot(SlotsTimes slotsTimes, Persons person, Date date, AvailabilityTypes availabilityType) {
-        Slots slot = new Slots();
+    public static Slot createSlot(SlotTime slotTime, Person person, Date date, AvailabilityType availabilityType) {
+        Slot slot = new Slot();
         slot.setType(availabilityType);
-        slot.setSlot(slotsTimes);
+        slot.setSlotTime(slotTime);
         slot.setPerson(person);
-        slot.setSlotsDate(date);
-        person.getSlotsList().add(slot);
+        slot.setSlotDate(date);
+        person.getSlotList().add(slot);
         return slot;
     }
 
-    public static AvailabilityTypes createAvailableType(Long id, AvailabilityTypesEnum type) {
-        AvailabilityTypes availabilityType = new AvailabilityTypes();
-        availabilityType.setType(type);
+    public static AvailabilityType createAvailableType(Long id, AvailabilityTypeEnum type) {
+        AvailabilityType availabilityType = new AvailabilityType();
+        availabilityType.setName(type);
         availabilityType.setId(id);
         return availabilityType;
     }
 
-    public static SlotsTimes createSlotsTimes(Long id, LocalTime startTime, LocalTime endTime) {
-        SlotsTimes slotsTimes = new SlotsTimes();
-        slotsTimes.setId(id);
-        slotsTimes.setStartTime(Time.valueOf(startTime));
-        slotsTimes.setEndTime(Time.valueOf(endTime));
-        return slotsTimes;
+    public static SlotTime createSlotTime(Long id, LocalTime startTime, LocalTime endTime) {
+        SlotTime slotTime = new SlotTime();
+        slotTime.setId(id);
+        slotTime.setStartTime(Time.valueOf(startTime));
+        slotTime.setEndTime(Time.valueOf(endTime));
+        return slotTime;
     }
 
-    public static Persons createPersons(Long id, String uniqueValue, Boolean isDev, Boolean isTest, Boolean isOps) {
-        Persons person = new Persons();
+    public static Person createPerson(Long id, String uniqueValue, Boolean isDev, Boolean isTest, Boolean isOps) {
+        Person person = new Person();
         person.setId(id);
         person.setFirstName("NAME " + uniqueValue);
         person.setLastName("SURNAME " + uniqueValue);
@@ -51,7 +51,7 @@ public class MockDataUtil {
         person.setBandLevel(2);
         person.setIsDev(isDev);
         person.setIsTest(isTest);
-        person.setIsWeb(isOps);
+        person.setIsOps(isOps);
         return person;
     }
 
@@ -67,25 +67,25 @@ public class MockDataUtil {
         return dateFormat.format(date);
     }
 
-    public static List<Slots> createSlotsToSlotTimes(List<SlotsTimes> slotsTimes, Persons person, Date date, AvailabilityTypes availabilityType) {
+    public static List<Slot> createSlotToSlotTime(List<SlotTime> slotTime, Person person, Date date, AvailabilityType availabilityType) {
 
-        List<Slots> slots = new ArrayList<>();
-        for (SlotsTimes slotsTime : slotsTimes) {
+        List<Slot> slots = new ArrayList<>();
+        for (SlotTime slotsTime : slotTime) {
             slots.add(MockDataUtil.createSlot(slotsTime, person, date, availabilityType));
         }
 
         return slots;
     }
 
-    public static List<SlotsTimes> createSlotsTimesList(int startIndex, int endIndex) {
-        List<SlotsTimes> slotsTimes = new ArrayList<>();
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 4, LocalTime.of(9, 30, 0), LocalTime.of(10, 0, 0)));
-        slotsTimes.add(MockDataUtil.createSlotsTimes((long) 5, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0)));
+    public static List<SlotTime> createSlotTimeList(int startIndex, int endIndex) {
+        List<SlotTime> slotTimes = new ArrayList<>();
+        slotTimes.add(MockDataUtil.createSlotTime((long) 1, LocalTime.of(8, 0, 0), LocalTime.of(8, 30, 0)));
+        slotTimes.add(MockDataUtil.createSlotTime((long) 2, LocalTime.of(8, 30, 0), LocalTime.of(9, 0, 0)));
+        slotTimes.add(MockDataUtil.createSlotTime((long) 3, LocalTime.of(9, 0, 0), LocalTime.of(9, 30, 0)));
+        slotTimes.add(MockDataUtil.createSlotTime((long) 4, LocalTime.of(9, 30, 0), LocalTime.of(10, 0, 0)));
+        slotTimes.add(MockDataUtil.createSlotTime((long) 5, LocalTime.of(10, 0, 0), LocalTime.of(10, 30, 0)));
 
-        return slotsTimes
+        return slotTimes
                 .stream()
                 .filter(slotTime -> slotTime.getId() >= startIndex && slotTime.getId() <= endIndex)
                 .collect(Collectors.toCollection(ArrayList::new));
