@@ -11,8 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.mousedown = false;
         $scope.isRecruiter = $state.params.isRecruiter;
         $scope.personName = $state.params.personName;
-        $scope.editNote = false;
-        $scope.buttonTitle = 'Edit note';
+        $scope.editNote = true;
 
         var note;
         var id = $stateParams.id;
@@ -87,24 +86,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.hasSlotChanged = true;
         };
 
-        $scope.editNoteSwitch = function() {
-            if (isEligibleToEdit()) {
-              Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
-              return;
-            }
-            if($scope.editNote) {
-                disableNoteEditing();
-            } else {
-                enableNoteEditing();
-            }
-        };
-
        $scope.showPreviousWeek = function() {
              if(!verifyNoUnsavedChanges()){
                 return;
              }
-
-            disableNoteEditing(); // set note input to disabled by default when changing weeks
 
             $scope.relativeDayNumber -= 7;
             updateDate();
@@ -113,14 +98,16 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
 
             getNote(id, startDate);
+
+           if (isEligibleToEdit()) {
+               disableNoteEditing()
+           }
         };
 
         $scope.showNextWeek = function() {
             if(!verifyNoUnsavedChanges()){
                 return;
             }
-
-            disableNoteEditing(); // set note input to disabled when changing weeks
 
             $scope.relativeDayNumber += 7;
             updateDate();
@@ -129,6 +116,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
 
             getNote(id, startDate);
+
+            if (!isEligibleToEdit()) {
+                enableNoteEditing()
+            }
         };
 
         function getDayOfTheWeek(d, i) {
@@ -168,18 +159,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
-            disableNoteEditing();
         };
 
         function enableNoteEditing() {
-            $scope.hasNoteChanged = true;
-            $scope.buttonTitle = "Discard";
             $scope.editNote = true;
         }
 
         function disableNoteEditing() {
-            $scope.hasNoteChanged = false;
-            $scope.buttonTitle = "Edit note";
             $scope.temporaryContent = $scope.noteContent.description;
             $scope.editNote = false;
         }
@@ -285,6 +271,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     return $scope.AvailabilityEnum[type].className;
                 }
             }
+        }
+
+        $scope.noteHasChanged = function (){
+            $scope.hasNoteChanged = true;
         }
     });
 });
