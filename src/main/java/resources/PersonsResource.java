@@ -72,6 +72,13 @@ public class PersonsResource {
     }
 
     @GET
+    @Path("/all/withoutSlots")
+    @UnitOfWork
+    public List fetchPersonsWithoutSlots() {
+        return personsDao.findAll();
+    }
+
+    @GET
     @Path("/{personId}/getNote")
     @UnitOfWork
     public Notes getNote(@PathParam("personId") Long personId,
