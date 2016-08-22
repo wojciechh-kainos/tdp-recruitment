@@ -11,22 +11,22 @@ define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
                 }
 
                 return _.filter(toFilter,
-                    function (report) {
-                        if (report.person === null || report.person === undefined) {
+                    function (filtering) {
+                        if (filtering.person === null || filtering.person === undefined) {
                             return report[jobProfile];
                         } else {
-                            return report.person[jobProfile];
+                            return filtering.person[jobProfile];
                         }
                     });
             }
 
             return _.filter(toFilter,
-                function (report) {
+                function (filtering) {
                     return _.find(jobProfile, function (value, key) {
-                        if (report.person === null || report.person === undefined) {
-                            return value === true && report[key] === value;
+                        if (filtering.person === null || filtering.person === undefined) {
+                            return value === true && filtering[key] === value;
                         } else {
-                            return value === true && report.person[key] === value;
+                            return value === true && filtering.person[key] === value;
                         }
                     });
                 }
