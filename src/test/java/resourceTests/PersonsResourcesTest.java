@@ -5,10 +5,7 @@ import dao.PersonsDao;
 import dao.SlotsDao;
 import domain.Notes;
 import domain.Persons;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -24,7 +21,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,6 +43,8 @@ public class PersonsResourcesTest {
     private static Persons firstPerson;
     private static Persons secondPerson;
     private static Notes note, note2, note3;
+    private static Response r;
+    private static List<Persons> mockList = new ArrayList<>();
 
     @BeforeClass
     public static void setUpBeforeClass(){
@@ -58,6 +56,8 @@ public class PersonsResourcesTest {
         firstPerson = new Persons();
         firstPerson.setEmail("TEST@TEST.PL");
         firstPerson.setId(1L);
+
+        mockList.add(firstPerson);
 
         secondPerson = new Persons();
         secondPerson.setEmail("TEST@TEST.PL");
@@ -111,35 +111,22 @@ public class PersonsResourcesTest {
     @Test
     public void testCreatePerson(){
 
-        mockPersonsDao.create(firstPerson);
-
-        //  TODO: 18/08/16.
+        resource.createPerson(firstPerson);
 
         verify(mockPersonsDao, times(1)).create(firstPerson);
-
     }
 
-    @Test
+
+    @Test(expected = WebApplicationException.class)
     public void testCreatePersonWithEmailInUse(){
 
+        when(mockPersonsDao.findByEmail(firstPerson.getEmail())).thenReturn(mockList);
+
         mockPersonsDao.create(firstPerson);
-
-        //TODO: initialize Response r object here because assertEquals is not working inside the catch block.
-
-
-        try {
-            resource.createPerson(secondPerson);
-        }
-        catch (WebApplicationException e) {
-            Response r = e.getResponse();
-
-            assertEquals(Response.Status.CONFLICT, r.getStatusInfo());
-
-        }
-
+        resource.createPerson(secondPerson);
 
         verify(mockPersonsDao, times(1)).create(firstPerson);
-        verify(mockPersonsDao, times(1)).create(secondPerson);
+        verify(mockPersonsDao, times(0)).create(secondPerson);
         verify(mockPersonsDao, times(1)).findByEmail(secondPerson.getEmail());
 
     }
