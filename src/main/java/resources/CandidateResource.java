@@ -5,11 +5,9 @@ import dao.CandidateDao;
 import domain.Candidate;
 import io.dropwizard.hibernate.UnitOfWork;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/candidate")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,5 +27,30 @@ public class CandidateResource {
     public Candidate createCandidate(Candidate candidate){
         candidateDao.create(candidate);
         return candidate;
+    }
+
+    @GET
+    @Path("/all")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public List<Candidate> getAll(){
+        return candidateDao.findAll();
+    }
+
+    @PUT
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public Candidate update(Candidate candidate){
+        candidateDao.update(candidate);
+        return candidate;
+    }
+
+    @GET
+    @Path("/{candidate_id}/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    public void delete(@PathParam("candidate_id")Long id){
+        candidateDao.deleteById(id);
     }
 }
