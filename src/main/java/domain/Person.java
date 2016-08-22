@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "person")
 @NamedQueries({
-        @NamedQuery(name = "Persons.delete", query = "delete from Persons where id = :id"),
-        @NamedQuery(name = "Persons.findAll", query = "select p from Persons p")
+        @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
+        @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
-public class Persons implements Cloneable {
+public class Person implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,8 +48,8 @@ public class Persons implements Cloneable {
     @Column(name = "is_test")
     private Boolean isTest;
 
-    @Column(name = "is_web")
-    private Boolean isWeb;
+    @Column(name = "is_ops")
+    private Boolean isOps;
 
     @NotNull
     @Column(name = "band_level")
@@ -71,23 +71,22 @@ public class Persons implements Cloneable {
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Slots> slotsList = new ArrayList<>();
+    private List<Slot> slotList = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Notes> notesList = new ArrayList<>();
+    private List<Note> noteList = new ArrayList<>();
 
-
-    @Override
-    public Persons clone(){
-        try{
-            return (Persons) super.clone();
-        } catch(final CloneNotSupportedException ex){
-            throw new RuntimeException(ex);
-        }
+    public Person() {
     }
 
-    public Persons() {
+    @Override
+    public Person clone() {
+        try {
+            return (Person) super.clone();
+        } catch (final CloneNotSupportedException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public Boolean getActive() {
@@ -162,12 +161,12 @@ public class Persons implements Cloneable {
         this.isTest = isTest;
     }
 
-    public Boolean getIsWeb() {
-        return isWeb;
+    public Boolean getIsOps() {
+        return isOps;
     }
 
-    public void setIsWeb(Boolean isWeb) {
-        this.isWeb = isWeb;
+    public void setIsOps(Boolean isOps) {
+        this.isOps = isOps;
     }
 
     public Integer getBandLevel() {
@@ -186,20 +185,20 @@ public class Persons implements Cloneable {
         this.activationCode = activationCode;
     }
 
-    public List<Slots> getSlotsList() {
-        return slotsList;
+    public List<Slot> getSlotList() {
+        return slotList;
     }
 
-    public void setSlotsList(List<Slots> slotsList) {
-        this.slotsList = slotsList;
+    public void setSlotList(List<Slot> slotList) {
+        this.slotList = slotList;
     }
 
-    public List<Notes> getNotesList() {
-        return notesList;
+    public List<Note> getNoteList() {
+        return noteList;
     }
 
-    public void setNotesList(List<Notes> notesList) {
-        this.notesList = notesList;
+    public void setNoteList(List<Note> noteList) {
+        this.noteList = noteList;
     }
 
     public Time getDefaultStartHour() {return defaultStartHour;}
@@ -212,7 +211,7 @@ public class Persons implements Cloneable {
 
     @Override
     public String toString() {
-        return "Persons{" +
+        return "Person{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
@@ -221,14 +220,14 @@ public class Persons implements Cloneable {
                 ", admin=" + admin +
                 ", isDev=" + isDev +
                 ", isTest=" + isTest +
-                ", isWeb=" + isWeb +
+                ", isOps=" + isOps +
                 ", bandLevel=" + bandLevel +
                 ", activationCode='" + activationCode + '\'' +
                 ", defaultStartHour=" + defaultStartHour +
                 ", defaultFinishHour=" + defaultFinishHour +
                 ", active=" + active +
-                ", slotsList=" + slotsList +
-                ", notesList=" + notesList +
+                ", slotList=" + slotList +
+                ", noteList=" + noteList +
                 '}';
     }
 }

@@ -23,9 +23,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             return _.map(filtered,
                 function (value) {
                     return {
-                        slotsDate: value.day,
+                        slotDate: value.day,
                         person: {id: personId},
-                        slot: {id: value.number},
+                        slotTime: {id: value.number},
                         type: {id: AvailabilityEnum[value.type].id},
                         id: value.id
                     }

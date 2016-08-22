@@ -1,9 +1,9 @@
 package resources;
 
 import com.google.inject.Inject;
-import dao.SlotsDao;
-import domain.Persons;
-import domain.Slots;
+import dao.SlotDao;
+import domain.Person;
+import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.PairFinder;
 
@@ -19,22 +19,22 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class PairResource {
 
-    private SlotsDao slotsDao;
+    private SlotDao slotDao;
 
     @Inject
-    public PairResource(SlotsDao slotsDao) {
-        this.slotsDao = slotsDao;
+    public PairResource(SlotDao slotDao) {
+        this.slotDao = slotDao;
     }
 
     @GET
     @UnitOfWork
-    public List<Persons> findPairs(@QueryParam("startDate") String startDate,
-                                   @QueryParam("endDate") String endDate,
-                                   @QueryParam("isDev") Boolean isDev,
-                                   @QueryParam("isTest") Boolean isTest,
-                                   @QueryParam("isOps") Boolean isOps) {
+    public List<Person> findPairs(@QueryParam("startDate") String startDate,
+                                  @QueryParam("endDate") String endDate,
+                                  @QueryParam("isDev") Boolean isDev,
+                                  @QueryParam("isTest") Boolean isTest,
+                                  @QueryParam("isOps") Boolean isOps) {
 
-        List<Slots> slots = slotsDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps);
+        List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps);
         PairFinder pf = new PairFinder();
 
         return pf.findPairs(slots);
