@@ -29,8 +29,12 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
+        function isPresentOrFutureWeek() {
+            return $scope.relativeDayNumber >= 0;
+        }
+
         function isEligibleToEdit() {
-            return $scope.relativeDayNumber < 0 && !$scope.isRecruiter;
+            return isPresentOrFutureWeek() || $scope.isRecruiter;
         }
 
         function replaceDashesWithDots(string) {
@@ -88,7 +92,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.changeSlotStatus = function () {
-            if (isEligibleToEdit()) {
+            if (!isEligibleToEdit()) {
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
@@ -96,7 +100,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.editNoteSwitch = function () {
-            if (isEligibleToEdit()) {
+            if (!isEligibleToEdit()) {
                 Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
                 return;
             }
@@ -146,7 +150,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.updateSlots = function () {
-            if (isEligibleToEdit()) {
+            if (!isEligibleToEdit()) {
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
@@ -254,7 +258,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.getNoteFromPreviousWeek = function () {
-            if (isEligibleToEdit()) {
+            if (!isEligibleToEdit()) {
                 Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
                 return;
             }
