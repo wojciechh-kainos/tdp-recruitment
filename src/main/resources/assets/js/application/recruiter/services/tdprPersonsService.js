@@ -31,7 +31,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             });
         };
 
-        this.deactivatePerson = function (person) {
+        this.managePerson = function (person) {
             return $http.put("/api/person/" + person.id, person);
         };
 
