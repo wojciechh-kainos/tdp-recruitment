@@ -1,9 +1,8 @@
 package dao;
 
 import com.google.inject.Inject;
-import domain.AvailabilityTypes;
-import domain.AvailabilityTypesEnum;
-import domain.Slots;
+import domain.AvailabilityTypeEnum;
+import domain.Slot;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -14,26 +13,26 @@ import org.joda.time.DateTime;
 import java.util.Date;
 import java.util.List;
 
-public class SlotsDao extends AbstractDAO<Slots> {
+public class SlotDao extends AbstractDAO<Slot> {
 
     @Inject
-    public SlotsDao(SessionFactory sessionFactory) {
+    public SlotDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
-    public Slots findById(Long id) {
+    public Slot findById(Long id) {
         return get(id);
     }
 
-    public long create(Slots slot) {
+    public long create(Slot slot) {
         return persist(slot).getId();
     }
 
     public void deleteById(Long id) {
-        namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
+        namedQuery("Slot.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slots> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
+    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
@@ -42,36 +41,36 @@ public class SlotsDao extends AbstractDAO<Slots> {
         Criteria criteriaPerson = criteria.createCriteria("person");
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
-        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isWeb", isOps), isOps);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
 
         Criteria criteriaAvail = criteria.createCriteria("type");
-        criteriaAvail.add(Restrictions.or(Restrictions.eq("type", AvailabilityTypesEnum.maybe), Restrictions.eq("type", AvailabilityTypesEnum.available)));
+        criteriaAvail.add(Restrictions.or(Restrictions.eq("name", AvailabilityTypeEnum.maybe), Restrictions.eq("name", AvailabilityTypeEnum.available)));
 
-        criteria.add(Restrictions.ge("slotsDate", start));
-        criteria.add(Restrictions.le("slotsDate", end));
+        criteria.add(Restrictions.ge("slotDate", start));
+        criteria.add(Restrictions.le("slotDate", end));
 
         return list(criteria);
     }
 
     public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
-        namedQuery("Slots.deleteForPersonBetweenDates")
+        namedQuery("Slot.deleteForPersonBetweenDates")
                 .setParameter("personId", personId)
                 .setDate("fromDate", from)
                 .setDate("toDate", to)
                 .executeUpdate();
     }
 
-    public void updateForPersonAndWeek(Slots[] slots, Long personId, Date from, Date to) {
+    public void updateForPersonAndWeek(List<Slot> slots, Long personId, Date from, Date to) {
         deleteForPersonBetweenDates(personId, from, to);
-        for (Slots slot : slots) persist(slot);
+        for (Slot slot : slots) persist(slot);
     }
 
-    public void updateForPersonAndWeekFromRecruiter(Slots[] slots) {
-        for (Slots slot : slots) persist(slot);
+    public void updateForPersonAndWeekFromRecruiter(List<Slot> slots) {
+        for (Slot slot : slots) persist(slot);
     }
 
-    public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
-        return list(namedQuery("Slots.getForPersonForWeek")
+    public List<Slot> getForPersonForWeek(Long personId, Date start, Date end) {
+        return list(namedQuery("Slot.getForPersonForWeek")
                 .setParameter("personId", personId)
                 .setDate("startDate", start)
                 .setDate("endDate", end));

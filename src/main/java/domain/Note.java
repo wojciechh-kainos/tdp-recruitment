@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
-@Table(name = "notes")
+@Table(name = "note")
 @NamedQueries({
-    @NamedQuery(name = "Notes.getNoteByPersonIdAndDate", query = "select n from Notes n where person.id = :id and date = :date"),
-    @NamedQuery(name = "Notes.deleteNoteForWeek", query = "delete from Notes where person.id = :id and date = :date")
+    @NamedQuery(name = "Note.getNoteByPersonIdAndDate", query = "select n from Note n where person.id = :id and date = :date"),
+    @NamedQuery(name = "Note.deleteNoteForWeek", query = "delete from Note where person.id = :id and date = :date")
 })
-public class Notes {
+public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Notes {
     @JoinColumn(name = "person")
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private Persons person;
+    private Person person;
 
     @NotNull
     @Column(name = "description")
@@ -32,20 +32,20 @@ public class Notes {
     @Column(name = "date")
     private Date date;
 
-    public Notes(Long id, Persons person, String description, Date date) {
+    public Note(Long id, Person person, String description, Date date) {
         this.id = id;
         this.person = person;
         this.description = description;
         this.date = date;
     }
 
-    public Notes(Persons person, String description, Date date) {
+    public Note(Person person, String description, Date date) {
         this.person = person;
         this.description = description;
         this.date = date;
     }
 
-    public Notes() {
+    public Note() {
     }
 
     public Long getId() {
@@ -56,11 +56,11 @@ public class Notes {
         this.id = id;
     }
 
-    public Persons getPerson() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setPerson(Persons person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
 

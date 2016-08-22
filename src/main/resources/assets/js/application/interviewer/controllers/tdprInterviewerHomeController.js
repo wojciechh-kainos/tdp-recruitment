@@ -147,9 +147,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
                     if ($scope.slotsForWeek[i][j].type !== AvailabilityEnum.empty.id) {
                         var slot = {
-                            slotsDate: getDayOfTheWeek(new Date(), j + $scope.relativeDayNumber),
+                            slotDate: getDayOfTheWeek(new Date(), j + $scope.relativeDayNumber),
                             person: {id:id},
-                            slot: {id: i + 1},
+                            slotTime: {id: i + 1},
                             type: {id: $scope.slotsForWeek[i][j].type}
                         };
                         slots.push(slot);

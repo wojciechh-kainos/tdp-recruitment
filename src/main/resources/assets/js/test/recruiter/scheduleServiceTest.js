@@ -51,7 +51,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
             };
 
             day = new Date(1410, 6, 15);
-            person = {id: 42, slotsList: []};
+            person = {id: 42, slotList: []};
             slot = {
                 "day": '1410-07-15',
                 "person": 42,
@@ -86,8 +86,8 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
             it('should create new slot if it does not exists', function () {
                 tdprScheduleService.changeSlotType(undefined, slot.number, day, person, AvailabilityEnum.available.name);
 
-                expect(person.slotsList.length).toEqual(1);
-                expect(person.slotsList[0]).toEqual(slot);
+                expect(person.slotList.length).toEqual(1);
+                expect(person.slotList[0]).toEqual(slot);
                 expect(person.changesPending).toEqual(true);
             });
         });

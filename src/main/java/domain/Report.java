@@ -2,12 +2,12 @@ package domain;
 
 public class Report {
 
-    private Persons person;
+    private Person person;
     private Double initHours;
     private Double fullHours;
 
 
-    public Report(Persons person, Double initHours, Double fullHours) {
+    public Report(Person person, Double initHours, Double fullHours) {
         this.initHours = initHours;
         this.person = person;
         this.fullHours = fullHours;
@@ -21,11 +21,11 @@ public class Report {
         this.initHours = initHours;
     }
 
-    public Persons getPerson() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setPerson(Persons person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
 
