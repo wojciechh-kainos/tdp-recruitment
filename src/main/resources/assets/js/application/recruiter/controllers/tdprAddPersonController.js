@@ -1,11 +1,16 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprAddInterviewerController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum) {
+    tdprRecruiterModule.controller("tdprAddPersonController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum) {
         $scope.BandLevelEnum = BandLevelEnum;
 
         $scope.create = function (person) {
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
-            $scope.createInterviewerPromise = tdprPersonsService.createPerson(person)
+            if(person.isAdmin===true){
+                person.isDev = false;
+                person.isTest = false;
+                person.isWeb = false;
+            }
+            $scope.createPersonPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
                     Notification.success({message: 'Interviewer added', delay: 2000});
                     $scope.goHome();

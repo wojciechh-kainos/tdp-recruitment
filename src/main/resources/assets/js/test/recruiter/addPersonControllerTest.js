@@ -1,5 +1,5 @@
-define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInterviewerController'], function (angular) {
-    describe('addInterviewerController', function () {
+define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddPersonController'], function (angular) {
+    describe('addPersonController', function () {
         'use strict';
 
         var person;
@@ -32,7 +32,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                 createPersonDeferred = _$q_.defer();
                 tdprPersonsService.createPerson.and.returnValue(createPersonDeferred.promise);
 
-                tdprWeekTableController = $controller('tdprAddInterviewerController', {
+                tdprWeekTableController = $controller('tdprAddPersonController', {
                     $scope: $scope,
                     tdprPersonsService: tdprPersonsService,
                     $state: $state,

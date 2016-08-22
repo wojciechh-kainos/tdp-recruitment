@@ -4,7 +4,7 @@ define(['angular'
     , 'application/recruiter/directives/tdprPersonDirective'
     , 'application/recruiter/directives/tdprSlotDirective'
     , 'application/recruiter/services/tdprSlotsTimesService'
-    , 'application/recruiter/controllers/tdprAddInterviewerController'
+    , 'application/recruiter/controllers/tdprAddPersonController'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
@@ -37,12 +37,12 @@ define(['angular'
                     controller: "tdprWeekTableController"
                 }
             }
-        }).state("tdpr.recruiter.addInterviewer", {
-            url: "/add-interviewer",
+        }).state("tdpr.recruiter.addPerson", {
+            url: "/add-person",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html",
-                    controller: "tdprAddInterviewerController"
+                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-person.html",
+                    controller: "tdprAddPersonController"
                 }
             }
         })
