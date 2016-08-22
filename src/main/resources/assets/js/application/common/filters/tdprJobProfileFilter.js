@@ -1,5 +1,5 @@
 define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
-    tdprCommonModule.filter('jobReportProfileFilter', function () {
+    tdprCommonModule.filter('jobProfileFilter', function () {
         return function (toFilter, jobProfile) {
             if (jobProfile === null || jobProfile === undefined) {
                 return toFilter;

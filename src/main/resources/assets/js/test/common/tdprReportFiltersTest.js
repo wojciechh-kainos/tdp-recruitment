@@ -49,15 +49,15 @@ define(['angular', 'angularMocks'
                     isWeb: false
                 };
 
-                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(1);
+                expect(filter('jobProfileFilter')(dataForTesting, selected).length).toEqual(1);
             });
 
             it('should return 1 person if isDev checked, string filter', function () {
-                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
+                expect(filter('jobProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
             });
 
             it('should return 1 person if isDev checked, string filter', function () {
-                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
+                expect(filter('jobProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
             });
 
             it('should return 2 person if isDev and isWeb checked, object filter', function () {
@@ -67,7 +67,7 @@ define(['angular', 'angularMocks'
                     isWeb: true
                 };
 
-                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(2);
+                expect(filter('jobProfileFilter')(dataForTesting, selected).length).toEqual(2);
             });
         })
     })

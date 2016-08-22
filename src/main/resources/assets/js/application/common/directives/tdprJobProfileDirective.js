@@ -1,5 +1,5 @@
 define(['angular', 'application/common/tdprCommonModule'], function (angular, tdprCommonModule) {
-    tdprCommonModule.directive("jobProfile", function (JobProfileEnumNames) {
+    tdprCommonModule.directive("jobProfile", function (JobProfileEnum) {
         return {
             restrict: 'AE',
             templateUrl: 'html/partials/common/tdpr-directive-job-profile.html',
@@ -9,7 +9,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                 isRadio: '='
             },
             link: function (scope, element, attributes) {
-                scope.JobProfiles = JobProfileEnumNames;
+                scope.JobProfiles = JobProfileEnum;
 
                 var mapped = _.mapKeys(scope.JobProfiles, function (value) {
                     return value.column;

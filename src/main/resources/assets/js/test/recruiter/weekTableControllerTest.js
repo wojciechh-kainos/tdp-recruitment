@@ -86,7 +86,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                     tdprDateService: tdprDateService,
                     persons: persons,
                     slotsTimes: slotsTimes,
-                    JobProfileEnum: {dev: "isDev"},
+                    JobProfileEnum: {isDev: {column: "isDev"}},
                     Notification: Notification,
                     tdprRecruiterSlotsService: tdprRecruiterSlotsService,
                     AvailabilityEnum: AvailabilityEnum,

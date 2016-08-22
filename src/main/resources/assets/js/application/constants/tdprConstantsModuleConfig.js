@@ -40,11 +40,6 @@ define(['angular'
             tooltipText: "maybe"
         }
     }).constant('JobProfileEnum', {
-        dev: "isDev",
-        ops: "isOps",
-        test: "isTest",
-        other: "isOther"
-    }).constant('JobProfileEnumNames', {
         isDev: {name: "Developer", column: "isDev"},
         isOps: {name: "WebOps", column: "isOps"},
         isTest: {name: "Tester", column: "isTest"},

@@ -3,8 +3,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
                                                                         JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
 
-        $scope.JobProfileEnum = JobProfileEnum;
-        $scope.currentJobProfile = JobProfileEnum.dev;
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
         $scope.days = tdprDateService.getCurrentWeek();
@@ -15,7 +13,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.startTime = slotsTimes[0].startTime;
 
         $scope.getPairs = function(){
-            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
+            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile.radio], $scope.displayedStartDate, $scope.displayedEndDate).then(
                 function (persons) {
                     $scope.persons = persons;
                 }
