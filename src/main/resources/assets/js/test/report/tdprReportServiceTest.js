@@ -5,10 +5,22 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
 
         var $httpBackend;
         var $service;
-        var responseData = {
-            person : 'person',
-            numberOfAvailableSlots : 5
-        };
+        var responseReports = [
+            {
+                person : 'person',
+                initHours : 5,
+                fullHours : 2
+            }
+        ];
+
+        var expectedReports = [
+            {
+                person : 'person',
+                initHours : 5,
+                fullHours : 2,
+                sumOfHours : 7
+            }
+        ];
 
         beforeEach(inject(function (_tdprReportService_, _$httpBackend_) {
             $service = _tdprReportService_;
@@ -16,13 +28,14 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportServic
         }));
 
         describe('When response code 200', function(){
-            it('should return data', function(){
-                $httpBackend.expectGET('/api/report/13-01-2016/20-01-2016/1').respond(200, responseData);
-                $service.getReport('13-01-2016', '20-01-2016', 1).then(function(response){
-                    expect(response).toEqual(responseData);
+            it('should return reports with sum of fulls and inits added', function(){
+                $httpBackend.expectGET('/api/report/13-01-2016/20-01-2016').respond(200, responseReports);
+                $service.getReports('13-01-2016', '20-01-2016', 1).then(function(response){
+                    expect(response).toEqual(expectedReports);
                 });
                 $httpBackend.flush();
             });
         })
+
     })
 });
