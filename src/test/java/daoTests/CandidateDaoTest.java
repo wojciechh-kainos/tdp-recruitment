@@ -2,7 +2,7 @@ package daoTests;
 
 import databaseHelper.BaseTest;
 import domain.Candidate;
-import domain.Persons;
+import domain.Person;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 public class CandidateDaoTest extends BaseTest {
 
     private Candidate exampleCandidate;
-    private Persons exampleRecruiter;
+    private Person exampleRecruiter;
     private Long returnedId;
 
     @Before
@@ -26,8 +26,8 @@ public class CandidateDaoTest extends BaseTest {
         exampleCandidate.setDeleted(false);
 
         getSession().beginTransaction();
-        exampleRecruiter = new Persons();
-        exampleRecruiter = personsDao.getById(new Long(1));
+        exampleRecruiter = new Person();
+        exampleRecruiter = personDao.getById(new Long(1));
         getSession().getTransaction().commit();
 
         exampleCandidate.setRecruiter(exampleRecruiter);

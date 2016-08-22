@@ -33,7 +33,7 @@
             </column>
 
             <column name="recruiter" type="bigint">
-                <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id" nullable="false"></constraints>
+                <constraints foreignKeyName="person_id" referencedTableName="person" referencedColumnNames="id" nullable="false"></constraints>
             </column>
         </createTable>
     </changeSet>

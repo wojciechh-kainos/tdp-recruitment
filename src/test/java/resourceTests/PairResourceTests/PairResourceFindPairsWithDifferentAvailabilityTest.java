@@ -1,6 +1,6 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotsDao;
+import dao.SlotDao;
 import domain.*;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,10 +31,10 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     private String endDate = MockDataUtil.convertDateToString(differentDate);
 
     private PairResource resource;
-    private List<Slots> mockSlots = new ArrayList<>();
+    private List<Slot> mockSlots = new ArrayList<>();
 
     @Mock
-    private static SlotsDao mockDao;
+    private static SlotDao mockDao;
 
     @Before
     public void setUp() {
@@ -49,29 +48,29 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     @Ignore
     public void testFindPairsShouldFindNoPairs() {
         when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        List<Persons> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        List<Person> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
 
         assertEquals("There should be no pairs found", pairs.size(), 0);
     }
 
-    private List<Slots> createFirstPerson(){
-        List<SlotsTimes> slotsTimes = MockDataUtil.createSlotsTimesList(1, 4);
-        Persons person = MockDataUtil.createPersons(1L, "First", isDev, isTest, isOps);
-        AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
-        AvailabilityTypes typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
-        List<Slots> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
+    private List<Slot> createFirstPerson(){
+        List<SlotTime> slotsTimes = MockDataUtil.createSlotTimeList(1, 4);
+        Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps);
+        AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
+        AvailabilityType typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
+        List<Slot> slots = MockDataUtil.createSlotToSlotTime(slotsTimes, person, sameDate, typeAvailable);
         slots.get(1).setType(typeFull);
 
         return slots;
     }
 
-    private List<Slots> createSecondPerson(){
-        List<SlotsTimes> slotsTimes = MockDataUtil.createSlotsTimesList(1, 4);
-        Persons person = MockDataUtil.createPersons(2L, "Second", isDev, isTest, isOps);
-        AvailabilityTypes typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
-        AvailabilityTypes typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypesEnum.available);
+    private List<Slot> createSecondPerson(){
+        List<SlotTime> slotsTimes = MockDataUtil.createSlotTimeList(1, 4);
+        Person person = MockDataUtil.createPerson(2L, "Second", isDev, isTest, isOps);
+        AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
+        AvailabilityType typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
 
-        return MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
+        return MockDataUtil.createSlotToSlotTime(slotsTimes, person, sameDate, typeAvailable);
     }
 
 }

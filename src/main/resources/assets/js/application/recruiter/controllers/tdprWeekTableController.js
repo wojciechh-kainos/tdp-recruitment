@@ -31,7 +31,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.displayedStartDate = $scope.days[0];
         $scope.displayedEndDate = $scope.days[4];
 
-        $scope.offset = 0;
+        $scope.offset = WeekNavigateEnum.current;
 
         $scope.changeWeek = function (offset) {
 
@@ -53,7 +53,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var endDate = new Date($scope.days[4]);
             endDate.setDate(endDate.getDate() + 1);
 
-            tdprRecruiterSlotsService.updateSlots(personData.slotsList, personData.id, $scope.days[0], endDate).then(
+            tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
                 function () {
                     personData.changesPending = false;
                     Notification.success({message: 'Your changes were saved successfully!', delay: 3500});

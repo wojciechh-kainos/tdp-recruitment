@@ -40,7 +40,7 @@ public class Candidate {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="recruiter")
-    private Persons recruiter;
+    private Person recruiter;
 
     public Long getId() {
         return id;
@@ -90,11 +90,11 @@ public class Candidate {
         isDeleted = deleted;
     }
 
-    public Persons getRecruiter() {
+    public Person getRecruiter() {
         return recruiter;
     }
 
-    public void setRecruiter(Persons recruiter) {
+    public void setRecruiter(Person recruiter) {
         this.recruiter = recruiter;
     }
 }

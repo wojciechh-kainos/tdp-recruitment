@@ -18,5 +18,8 @@
     <include file="changelogs/US7_pairsPopulateSlotsTable.xml"/>
     <include file="changelogs/FixNoteBug_modifyNoteTable.xml"/>
     <include file="changelogs/addDefaultWorkingHoursPersonsTable.xml"/>
+    <include file="changelogs/changeTableNames.xml"/>
+    <include file="changelogs/changeColumnName.xml"/>
+    <include file="changelogs/changeColumnNameInPerson.xml"/>
     <include file="changelogs/US-36_listOfCandidates_candidatesTable.xml"/>
 </databaseChangeLog>
