@@ -29,16 +29,16 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
-        function isPresentOrFutureWeek() {
+        function isCurrentOrFutureWeek() {
             return $scope.relativeDayNumber >= 0;
         }
 
         function isEligibleToEdit() {
-            return isPresentOrFutureWeek() || $scope.isRecruiter;
+            return isCurrentOrFutureWeek() || $scope.isRecruiter;
         }
 
         function replaceDashesWithDots(string) {
-            return string.replace(/-/g, '.');
+            return string.replace(/-/g, '.'); // ie. 15-07-1410 -> 15.07.1410
         }
 
         function removeSecondsFromTime(string) {
@@ -46,8 +46,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function updateDate() {
-            startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat);
-            endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat);
+            startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat); // monday
+            endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat); // friday
             $scope.displayedStartDate = replaceDashesWithDots(startDate);
             $scope.displayedEndDate = replaceDashesWithDots(endDate);
         }
@@ -217,7 +217,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.markSlots = function (slot) {
             if (!$scope.isRecruiter) {
-                if (isSlotTypeFullOrInit(slot) || !isPresentOrFutureWeek()) { // users can't change slots for past weeks or if they've full or init scheduled
+                if (isSlotTypeFullOrInit(slot) || !isCurrentOrFutureWeek()) { // users can't change slots for past weeks or if they've full or init scheduled
                     return;
                 }
             }
