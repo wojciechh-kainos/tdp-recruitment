@@ -22,4 +22,5 @@
     <include file="changelogs/changeColumnName.xml"/>
     <include file="changelogs/changeColumnNameInPerson.xml"/>
     <include file="changelogs/US-36_listOfCandidates_candidatesTable.xml"/>
+    <include file="changelogs/US-36_populateTable.xml"/>
 </databaseChangeLog>
