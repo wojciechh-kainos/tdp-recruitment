@@ -7,6 +7,7 @@ define(['angular', 'uiRouter', 'notification'
     , 'moment'
     , 'angular-moment'
     , 'ngTableToCsv'
+    , 'fileSaver'
 ], function (angular) {
-    return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'ui-notification', 'tdprReportModule', 'angularMoment', 'ngTableToCsv']);
+    return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'ui-notification', 'tdprReportModule', 'angularMoment', 'ngTableToCsv', 'fileSaver']);
 });

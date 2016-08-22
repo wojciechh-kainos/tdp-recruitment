@@ -62,5 +62,10 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.activate();
+
+        $scope.generateCSV = function() {
+            var blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+            saveAs(blob, "myFile.csv");
+        }
     })
 });
