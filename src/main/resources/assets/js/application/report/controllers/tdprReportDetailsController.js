@@ -14,7 +14,7 @@ define(['angular', 'application/report/tdprReportModule'
             'person.lastName': {reverse: true, columnName: "Person"},
             'initHours': {reverse: true, columnName: "Init hours"},
             'fullHours': {reverse: true, columnName: "Full hours"},
-            'availableHours': {reverse: true, columnName: "Unused hours"}
+            'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
         $scope.sortBy = function (column) {
