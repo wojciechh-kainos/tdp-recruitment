@@ -28,6 +28,10 @@
                 <constraints nullable="true"></constraints>
             </column>
 
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"></constraints>
+            </column>
+
             <column name="recruiter" type="bigint">
                 <constraints foreignKeyName="person_id" referencedTableName="persons" referencedColumnNames="id" nullable="false"></constraints>
             </column>

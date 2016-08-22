@@ -1,13 +1,7 @@
 package databaseHelper;
 
-import dao.AvailabilityTypesDao;
-import dao.PersonsDao;
-import dao.SlotsDao;
-import dao.SlotsTimesDao;
-import domain.AvailabilityTypes;
-import domain.Persons;
-import domain.Slots;
-import domain.SlotsTimes;
+import dao.*;
+import domain.*;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -24,6 +18,7 @@ public class BaseTest {
     protected static SlotsDao slotsDao;
     protected static SlotsTimesDao slotsTimesDao;
     protected static AvailabilityTypesDao availabilityTypesDao;
+    protected  static CandidateDao candidateDao;
 
     @BeforeClass
     public static void createInjector() throws Exception {
@@ -39,6 +34,8 @@ public class BaseTest {
         config.addAnnotatedClass(SlotsTimes.class);
         config.addAnnotatedClass(AvailabilityTypes.class);
         config.addAnnotatedClass(Slots.class);
+        config.addAnnotatedClass(Notes.class);
+        config.addAnnotatedClass(Candidate.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();
@@ -52,6 +49,7 @@ public class BaseTest {
         slotsDao = new SlotsDao(sessionFactory);
         slotsTimesDao = new SlotsTimesDao(sessionFactory);
         availabilityTypesDao = new AvailabilityTypesDao(sessionFactory);
+        candidateDao = new CandidateDao(sessionFactory);
     }
 
     public Session getSession()
