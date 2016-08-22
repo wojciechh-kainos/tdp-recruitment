@@ -63,9 +63,16 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.activate();
 
-        $scope.generateCSV = function() {
-            var blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
-            saveAs(blob, "myFile.csv");
+        $scope.generate = function(csv){
+            $scope.reportsElements.map(function(item){
+                item.initHours = item.initHours.toString().replace(".", ",");
+                item.fullHours = item.fullHours.toString().replace(".", ",");
+                item.availableHours = item.availableHours.toString().replace(".", ",");
+                return item;
+            });
+            csv.generate();
         }
+
+
     })
 });

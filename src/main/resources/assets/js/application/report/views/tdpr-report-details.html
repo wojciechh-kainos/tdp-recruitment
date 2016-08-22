@@ -25,7 +25,7 @@
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
         <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
         <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
-        <a class="btn" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}"
+        <a class="btn" title="Export Table" ng-click='generate(csv)' ng-href="{{ csv.link() }}"
            download="myTable.csv">
             <i class="glyphicon glyphicon-new-window"></i> &#160;Export
         </a>
