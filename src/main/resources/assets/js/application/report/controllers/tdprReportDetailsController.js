@@ -6,13 +6,15 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/common/filters/tdprJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, Notification) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification) {
+
+        $scope.DateFormat = DateFormat;
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
             'initHours': {reverse: true, columnName: "Init hours"},
             'fullHours': {reverse: true, columnName: "Full hours"},
-            'availableHours': {reverse: true, columnName: "Unused hours"}
+            'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
         $scope.sortBy = function (column) {

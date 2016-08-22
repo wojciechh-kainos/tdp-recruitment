@@ -55,7 +55,7 @@ define(['angular'
         previous: -1,
         next: 1,
         current: 0
-    });
+    }).constant('DateFormat', 'dd-MM-yyyy');
 
     return tdprConstantsModule;
 });
