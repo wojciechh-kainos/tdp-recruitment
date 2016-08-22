@@ -8,7 +8,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             $scope.createInterviewerPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
                     Notification.success({message: 'Interviewer added', delay: 2000});
-                    $state.go('tdpr.recruiter.home');
+                    $scope.goHome();
                 }, function (response) {
                     Notification.error({message: response.message, delay: 2000});
                 });
@@ -18,5 +18,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
           $state.go('tdpr.recruiter.home');
         };
 
+        $scope.showError = function () {
+          Notification.error({message: 'Cannot submit invalid form, please change incorrect fields', delay: 2200});
+        };
     });
 });

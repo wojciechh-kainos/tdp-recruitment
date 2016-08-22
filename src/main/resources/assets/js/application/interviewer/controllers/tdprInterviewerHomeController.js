@@ -29,7 +29,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
-        function updateDate(){
+        function isEligibleToEdit() {
+          return $scope.relativeDayNumber < 0 && !$scope.isRecruiter;
+        }
+
+        function updateDate() {
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "dd-MM-yyyy");
             endDate  = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), "dd-MM-yyyy");
             $scope.displayedStartDate = startDate.replace(/-/g,'.');
@@ -64,7 +68,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.goBackToRecruiterView = function(){
             $state.go('tdpr.recruiter.home');
-        }
+        };
 
         $scope.discardChanges = function() {
             $scope.clearTable();
@@ -76,7 +80,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.changeSlotStatus = function() {
-            if($scope.relativeDayNumber<0 && !$scope.isRecruiter){
+            if(isEligibleToEdit()){
                 Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
                 return;
             }
@@ -84,6 +88,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         };
 
         $scope.editNoteSwitch = function() {
+            if (isEligibleToEdit()) {
+              Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
+              return;
+            }
             if($scope.editNote) {
                 disableNoteEditing();
             } else {
@@ -130,6 +138,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         $scope.updateSlots = function () {
+            if (isEligibleToEdit()) {
+              Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
+              return;
+            }
             var slots = [];
             for (var i = 0; i < $scope.slotsForWeek.length; i++) {
                 for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
@@ -148,15 +160,15 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), "dd-MM-yyyy");
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
                 Notification.success({message: 'Changes saved!', delay: 2000});
-            }, function(response){
-                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
+            }, function (response) {
+                Notification.error({message: 'Something went wrong, changes not saved', delay: 2000});
             });
-
             var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
 
             sendNote(note);
             $scope.hasSlotChanged = false;
             $scope.hasNoteChanged = false;
+            disableNoteEditing();
         };
 
         function enableNoteEditing() {
@@ -174,7 +186,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function sendNote(note) {
             tdprPersonService.updateNote(note).then(function(response) {
-                $scope.warnMessage = "";
                 $scope.temporaryContent = response.data.description;
                 $scope.noteContent = response.data;
             }, function(failure) {
@@ -219,7 +230,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         function getNote(personId, date) {
             createNote("", personId, date);
-            $scope.warnMessage = "";
             tdprPersonService.getNote(personId, date).then(function(response) {
                 if(response.status === 200) {
                     $scope.noteContent = response.data;
@@ -232,28 +242,33 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                }
         )}
 
-       $scope.getNoteFromPreviousWeek = function() {
-            var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
-            tdprPersonService.getNote(id, previousDate).then(function(response) {
-                 if(response.status === 200) {
-                    $scope.noteContent = response.data;
-                    $scope.temporaryContent = response.data.description;
-                    $scope.warnMessage = "Please remember to submit your note.";
-                    if(response.data.description === "") $scope.warnMessage = "There was no content last week.";
-                }
-                else if (response.status === 204){
-                    $scope.warnMessage = "You didn't submit any notes last week.";
-                } else {
-                     Notification.warning({
-                        message: 'Something went wrong.',
-                        delay: 2000});
-                }
-            },function(failure) {
+        $scope.getNoteFromPreviousWeek = function() {
+          if (isEligibleToEdit()) {
+            Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
+            return;
+          }
+          var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7 ), "dd-MM-yyyy");
+          tdprPersonService.getNote(id, previousDate).then(function(response) {
+               if(response.status === 200) {
+                  $scope.noteContent = response.data;
+                  $scope.temporaryContent = response.data.description;
+                  Notification.warning("Please remember to submit your note.");
+                  if(response.data.description === "") Notification.warning("There was no content last week.");
+                  enableNoteEditing();
+              }
+              else if (response.status === 204){
+                  Notification.warning("You didn't submit any notes last week.")
+              } else {
                    Notification.warning({
-                      message: 'Something went wrong with getting your note.',
+                      message: 'Something went wrong.',
                       delay: 2000});
-             })
-        }
+              }
+          },function(failure) {
+                 Notification.warning({
+                    message: 'Something went wrong with getting your note.',
+                    delay: 2000});
+          });
+        };
 
         function verifyNoUnsavedChanges() {
             if($scope.hasNoteChanged || $scope.hasSlotChanged) {

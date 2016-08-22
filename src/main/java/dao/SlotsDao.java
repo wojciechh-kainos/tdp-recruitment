@@ -1,6 +1,8 @@
 package dao;
 
 import com.google.inject.Inject;
+import domain.AvailabilityTypes;
+import domain.AvailabilityTypesEnum;
 import domain.Slots;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Criteria;
@@ -31,21 +33,24 @@ public class SlotsDao extends AbstractDAO<Slots> {
         namedQuery("Slots.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slots> findBetween(String startDate, String endDate) {
+    public List<Slots> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        Criteria criteria = currentSession().createCriteria(Slots.class);
-        addRestrictionIfNotNull(criteria, Restrictions.ge("slotsDate", start), start);
-        addRestrictionIfNotNull(criteria, Restrictions.le("slotsDate", end), end);
+        Criteria criteria = criteria();
 
-        return criteria.list();
-    }
+        Criteria criteriaPerson = criteria.createCriteria("person");
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isWeb", isOps), isOps);
 
-    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value) {
-        if (value != null) {
-            criteria.add(expression);
-        }
+        Criteria criteriaAvail = criteria.createCriteria("type");
+        criteriaAvail.add(Restrictions.or(Restrictions.eq("type", AvailabilityTypesEnum.maybe), Restrictions.eq("type", AvailabilityTypesEnum.available)));
+
+        criteria.add(Restrictions.ge("slotsDate", start));
+        criteria.add(Restrictions.le("slotsDate", end));
+
+        return list(criteria);
     }
 
     public void deleteForPersonBetweenDates(Long personId, Date from, Date to) {
@@ -61,10 +66,20 @@ public class SlotsDao extends AbstractDAO<Slots> {
         for (Slots slot : slots) persist(slot);
     }
 
+    public void updateForPersonAndWeekFromRecruiter(Slots[] slots) {
+        for (Slots slot : slots) persist(slot);
+    }
+
     public List<Slots> getForPersonForWeek(Long personId, Date start, Date end) {
         return list(namedQuery("Slots.getForPersonForWeek")
                 .setParameter("personId", personId)
                 .setDate("startDate", start)
                 .setDate("endDate", end));
+    }
+
+    private void addRestrictionIfNotNull(Criteria criteria, Criterion expression, Object value) {
+        if (value != null) {
+            criteria.add(expression);
+        }
     }
 }
