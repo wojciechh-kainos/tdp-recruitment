@@ -63,6 +63,7 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.activate();
 
+        var dataString = "";
         $scope.generateCSV = function() {
             $scope.reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles)
             $scope.reportsForCSV.map(function(item){
@@ -73,15 +74,18 @@ define(['angular', 'application/report/tdprReportModule'
             });
 
             var csvContent = "data:text/csv;charset=utf-8,";
-            reportsForCSV.forEach(function(infoArray, index){
 
-               dataString = infoArray.join(";");
-               csvContent += index < data.length ? dataString+ "\n" : dataString;
+            $scope.reportsForCSV.forEach(function(item){
+               dataString += item.person.lastName + ";" + item.initHours + ";" + item.fullHours + ";" +item.availableHours + "\n";
+//               csvContent += index < data.length ? dataString+ "\n" : dataString;
 
             });
 
-            return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+
         };
 
+        $scope.link = function(){
+            return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(dataString);
+        }
     })
 });
