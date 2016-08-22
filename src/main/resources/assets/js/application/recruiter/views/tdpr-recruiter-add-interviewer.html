@@ -4,10 +4,7 @@
 
     <form class="form-horizontal interviewer-form" name="interviewerForm" role="form">
         <hr>
-        <div class="form-group" ng-repeat="(key,value) in JobProfileEnum">
-            <label class="control-label col-md-6">{{value.name}}:</label>
-            <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person[value.column]">
-        </div>
+        <job-check-boxes></job-check-boxes>
         <hr>
         <div class="form-group">
             <label class="col-md-4 control-label">Band level:</label>

@@ -176,8 +176,8 @@ public class Person implements Cloneable {
         return isOther;
     }
 
-    public void setIsOther(Boolean other) {
-        isOther = other;
+    public void setIsOther(Boolean isOther) {
+        this.isOther = isOther;
     }
 
     public Integer getBandLevel() {
