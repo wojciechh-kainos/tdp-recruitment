@@ -11,7 +11,6 @@ require.config({
         'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'moment' : 'lib/moment/moment',
         'angular-moment' : 'lib/angular-moment/angular-moment',
-        'ngTableToCsv' : 'lib/ng-table-to-csv/dist/ng-table-to-csv.min'
     },
     shim: {
         'angular': {
@@ -25,7 +24,6 @@ require.config({
         'notification': ['angular'],
         'moment' : ['angular'],
         'angular-moment' : ['angular', 'moment'],
-        'ngTableToCsv' : ['angular']
     },
     deps: ['application/bootstrap']
 });

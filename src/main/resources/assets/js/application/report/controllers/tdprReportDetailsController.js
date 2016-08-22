@@ -63,16 +63,14 @@ define(['angular', 'application/report/tdprReportModule'
 
         $scope.activate();
 
-        $scope.generate = function(csv){
+        $scope.generateCSV = function() {
             $scope.reportsElements.map(function(item){
                 item.initHours = item.initHours.toString().replace(".", ",");
                 item.fullHours = item.fullHours.toString().replace(".", ",");
                 item.availableHours = item.availableHours.toString().replace(".", ",");
                 return item;
             });
-            csv.generate();
-        }
-
+        };
 
     })
 });

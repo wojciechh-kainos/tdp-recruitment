@@ -6,7 +6,6 @@ define(['angular', 'uiRouter', 'notification'
     , 'application/report/tdprReportModule'
     , 'moment'
     , 'angular-moment'
-    , 'ngTableToCsv'
 ], function (angular) {
-    return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'ui-notification', 'tdprReportModule', 'angularMoment', 'ngTableToCsv']);
+    return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'ui-notification', 'tdprReportModule', 'angularMoment']);
 });

@@ -25,10 +25,7 @@
         <button class="btn btn-primary" ng-click="getReports()">Show report</button>
         <button class="btn btn-default" ng-click="getPreviousWeekReports()">Previous week</button>
         <button class="btn btn-default" ng-click="getPreviousMonthReports()">Previous month</button>
-        <a class="btn" title="Export Table" ng-click='generate(csv)' ng-href="{{ csv.link() }}"
-           download="myTable.csv">
-            <i class="glyphicon glyphicon-new-window"></i> &#160;Export
-        </a>
+        <button class="btn btn-default" ng-click="generateCSV()">Generate CSV</button>
     </div>
 </div>
 
@@ -50,7 +47,7 @@
 
 <div class="row options">
     <div class="col-md-8 col-md-offset-2">
-        <table id="report-table" export-csv="csv" separator=";">
+        <table id="report-table">
             <thead class="column-heading">
             <tr>
                 <td class="day-th" ng-repeat="(column, value) in columnMap">
