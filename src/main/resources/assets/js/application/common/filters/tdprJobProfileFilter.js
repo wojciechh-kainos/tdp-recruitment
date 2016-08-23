@@ -1,7 +1,7 @@
-define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
-    tdprCommonModule.filter('jobProfileFilter', function () {
+define(['application/common/tdprCommonModule', 'application/common/services/tdprUsefulFunctionsService'], function (tdprCommonModule) {
+    tdprCommonModule.filter('jobProfileFilter', function (tdprUsefulFunctions) {
         return function (toFilter, jobProfile) {
-            if (jobProfile === null || jobProfile === undefined) {
+            if (tdprUsefulFunctions.isUndefinedOrNull(jobProfile)) {
                 return toFilter;
             }
 
@@ -12,7 +12,7 @@ define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
 
                 return _.filter(toFilter,
                     function (filtering) {
-                        if (filtering.person === null || filtering.person === undefined) {
+                        if (tdprUsefulFunctions.isUndefinedOrNull(filtering.person)) {
                             return filtering[jobProfile];
                         } else {
                             return filtering.person[jobProfile];
@@ -23,7 +23,7 @@ define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
             return _.filter(toFilter,
                 function (filtering) {
                     return _.find(jobProfile, function (value, key) {
-                        if (filtering.person === null || filtering.person === undefined) {
+                        if (tdprUsefulFunctions.isUndefinedOrNull(filtering.person)) {
                             return value === true && filtering[key] === value;
                         } else {
                             return value === true && filtering.person[key] === value;

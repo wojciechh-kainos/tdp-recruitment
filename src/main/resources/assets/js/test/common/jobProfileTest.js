@@ -86,6 +86,18 @@ define(['angular', 'angularMocks'
 
                 expect(filter('jobProfileFilter')(dataForTesting, selected).length).toEqual(2);
             });
+
+            it('should return 3 person if nothing is checked, empty arg', function () {
+                expect(filter('jobProfileFilter')(dataForTesting).length).toEqual(3);
+            });
+
+            it('should return 3 person if nothing is checked, null arg', function () {
+                expect(filter('jobProfileFilter')(dataForTesting, null).length).toEqual(3);
+            });
+
+            it('should return 2 person if nothing is checked, null arg, second test data set', function () {
+                expect(filter('jobProfileFilter')(personDataForTesting, null).length).toEqual(2);
+            });
         });
 
         describe('By job profile filter, table', function () {
