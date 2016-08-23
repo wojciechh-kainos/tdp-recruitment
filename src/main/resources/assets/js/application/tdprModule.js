@@ -1,4 +1,6 @@
 define(['angular', 'uiRouter', 'notification'
+    , 'application/common/tdprCommonModule'
+    , 'application/constants/tdprConstantsModule'
     , 'application/interviewer/tdprInterviewerModule'
     , 'application/interviewer/tdprInterviewerModuleConfig'
     , 'application/recruiter/tdprRecruiterModule'
@@ -9,5 +11,5 @@ define(['angular', 'uiRouter', 'notification'
     , 'moment'
     , 'angular-moment'
 ], function (angular) {
-    return angular.module("tdprModule", ['ui.router', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprConstantsModule', 'tdprAuthModule', 'tdprCommonsModule', 'ui-notification', 'tdprReportModule', 'angularMoment']);
+    return angular.module("tdprModule", ['ui.router', 'ui-notification',  'angularMoment', 'tdprConstantsModule', 'tdprCommonModule', 'tdprInterviewerModule', 'tdprRecruiterModule', 'tdprReportModule', 'tdprAuthModule']);
 });

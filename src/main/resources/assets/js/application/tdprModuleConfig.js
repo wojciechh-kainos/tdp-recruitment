@@ -1,6 +1,6 @@
 define(['angular'
     , 'application/tdprModule'
-    , 'application/commons/controllers/tdprNavbarController'
+    , 'application/common/controllers/tdprNavbarController'
     , 'application/auth/services/tdprAuthService'
 ], function(angular, module) {
     module.config(function($stateProvider) {
@@ -27,6 +27,7 @@ define(['angular'
     });
 
     function _isUserLoggedIn(tdprAuthService) {
+    console.log("cacaac");
         if(tdprAuthService.getCurrentUser().token === undefined){
             tdprAuthService.checkCookies();
         }

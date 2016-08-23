@@ -1,8 +1,8 @@
 define(['angular'
-, 'application/commons/tdprCommonsModule'
+, 'application/common/tdprCommonModule'
 , 'application/auth/services/tdprAuthService'
-], function (angular, tdprCommonsModule) {
-    tdprCommonsModule.controller("tdprNavbarController", function ($scope, $state, tdprAuthService) {
+], function (angular, tdprCommonModule) {
+    tdprCommonModule.controller("tdprNavbarController", function ($scope, $state, tdprAuthService) {
         $scope.logout = function() {
             tdprAuthService.clearCredentials();
             $state.go('tdpr.login');

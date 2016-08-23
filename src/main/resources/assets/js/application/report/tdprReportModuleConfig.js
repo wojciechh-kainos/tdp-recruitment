@@ -1,6 +1,10 @@
 define(['angular'
     , 'application/report/tdprReportModule'
     , 'application/report/controllers/tdprReportDetailsController'
+    , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/directives/tdprJobProfileDirective'
+    , 'application/report/directives/tdprReportDirective'
+    , 'application/report/filters/tdprReportByPersonNameFilter'
 ], function (angular, tdprReportModule) {
 
     tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {
@@ -14,7 +18,7 @@ define(['angular'
                 },
                 views: {
                     "@": {
-                        templateUrl: "/js/application/report/views/tdpr-report-index.html"
+                        templateUrl: "/html/partials/report/tdpr-report-index.html"
                     }
                 },
                 resolve: {
@@ -27,7 +31,7 @@ define(['angular'
                 url: '/report',
                 views: {
                     "main@report": {
-                        templateUrl: '/js/application/report/views/tdpr-report-details.html',
+                        templateUrl: '/html/partials/report/tdpr-report-details.html',
                         controller: 'tdprReportDetailsController'
                     }
                 }

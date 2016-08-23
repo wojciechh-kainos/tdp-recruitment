@@ -16,6 +16,7 @@ import java.util.List;
 @Table(name = "person")
 @NamedQueries({
         @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
+        @NamedQuery(name = "Person.findAllActive", query = "select p from Person p where active = true"),
         @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
 public class Person implements Cloneable, Principal {
@@ -52,6 +53,9 @@ public class Person implements Cloneable, Principal {
     @Column(name = "is_ops")
     private Boolean isOps;
 
+    @Column(name = "is_other")
+    private Boolean isOther;
+
     @NotNull
     @Column(name = "band_level")
     private Integer bandLevel;
@@ -66,7 +70,6 @@ public class Person implements Cloneable, Principal {
     @Column(name = "default_finish_hour")
     private Time defaultFinishHour;
 
-    @JsonIgnore
     private Boolean active;
 
     @Transient
@@ -173,6 +176,14 @@ public class Person implements Cloneable, Principal {
         this.isOps = isOps;
     }
 
+    public Boolean getIsOther() {
+        return isOther;
+    }
+
+    public void setIsOther(Boolean isOther) {
+        this.isOther = isOther;
+    }
+
     public Integer getBandLevel() {
         return bandLevel;
     }
@@ -225,6 +236,7 @@ public class Person implements Cloneable, Principal {
                 ", isDev=" + isDev +
                 ", isTest=" + isTest +
                 ", isOps=" + isOps +
+                ", isOther=" + isOther +
                 ", bandLevel=" + bandLevel +
                 ", activationCode='" + activationCode + '\'' +
                 ", defaultStartHour=" + defaultStartHour +

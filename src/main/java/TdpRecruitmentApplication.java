@@ -1,7 +1,9 @@
+
 import auth.TdpRecruitmentAuthenticator;
 import auth.TdpRecruitmentPasswordStore;
 import auth.TdpRecruitmentUnauthorizedHandler;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
+
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
@@ -9,7 +11,6 @@ import dao.PersonDao;
 import domain.*;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
-import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
