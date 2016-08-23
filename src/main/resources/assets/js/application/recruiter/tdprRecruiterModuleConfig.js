@@ -17,7 +17,7 @@ define(['angular'
                 abstract: true,
                 views: {
                     "@": {
-                        templateUrl: "/js/application/recruiter/views/tdpr-recruiter-index.html"
+                        templateUrl: "/html/partials/recruiter/tdpr-recruiter-index.html"
                     }
                 }
             }).state("tdpr.recruiter.home", {
@@ -33,7 +33,7 @@ define(['angular'
             },
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-table.html",
+                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-table.html",
                     controller: "tdprWeekTableController"
                 }
             }
@@ -41,7 +41,7 @@ define(['angular'
             url: "/add-person",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-person.html",
+                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-add-person.html",
                     controller: "tdprAddPersonController"
                 }
             }
