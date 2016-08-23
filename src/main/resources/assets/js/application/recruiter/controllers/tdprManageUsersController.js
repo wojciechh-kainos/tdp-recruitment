@@ -15,7 +15,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                     Notification.success(person.firstName + " " + person.lastName + " has been disabled.");
                 }
                 else {
-                    Notification.success({message: person.firstName + " " + person.lastName  + " has been enabled." , delay: 3500});
+                    Notification.success(person.firstName + " " + person.lastName  + " has been enabled.");
                 }
             }, function () {
                 Notification.error("Something went wrong with your request.");
