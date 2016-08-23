@@ -147,10 +147,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
                 expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
                 expect(person.changesPending).toEqual(false);
-                expect(Notification.success).toHaveBeenCalledWith({
-                    message: 'Your changes were saved successfully!',
-                    delay: 3500
-                });
+                expect(Notification.success).toHaveBeenCalledWith('Your changes were saved successfully!');
             });
 
             it('should show notification on error', function () {
@@ -161,7 +158,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.$apply();
 
                 expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
-                expect(Notification.error).toHaveBeenCalledWith({message: expectedMessage, delay: 3500});
+                expect(Notification.error).toHaveBeenCalledWith(expectedMessage);
             });
         });
     })
