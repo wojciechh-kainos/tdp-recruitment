@@ -25,10 +25,10 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         this.deleteCandidate = function(candidate){
             return $http.get('/api/candidate/' + candidate.id + '/deactivate').then(function(response){
                 return response;
-            }), function(error) {
+            }, function(error) {
                 error.message = "Deleting failed.";
                 return $q.reject(error);
-            }
+            })
         }
 
     })
