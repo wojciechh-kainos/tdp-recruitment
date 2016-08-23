@@ -18,7 +18,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             $scope = _$rootScope_.$new();
             personService = tdprPersonService;
             updatePersonDeferred = $q.defer();
-            Notification = { success: function () {} };
+            Notification = { success: function () {}, error: function () {}};
 
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
@@ -78,6 +78,18 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.$apply();
 
                 expect(Notification.success).toHaveBeenCalledWith({message: 'Details updated!', delay: 2000});
+            });
+
+            it('should show notification when trying to save invalid password', function(){
+                updatePersonDeferred.resolve({});
+                spyOn(Notification, 'error');
+                $scope.changePasswordChecked = true;
+                $scope.isPasswordValid = false;
+
+                $scope.updateDetails();
+                $scope.$apply();
+
+                expect(Notification.error).toHaveBeenCalledWith("Changes not saved! Password field incorrect!");
             });
         });
     });
