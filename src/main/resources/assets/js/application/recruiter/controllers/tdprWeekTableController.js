@@ -18,11 +18,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.startTime = slotsTimes[0].startTime;
 
         $scope.createEvent = function () {
-            $scope.outlookObject.interviewers = persons.filter(function (person) {
+
+            $scope.outlookObject.interviewers = [];
+
+            _.forEach(persons, function(person) {
                 if (person.selected) {
-                    var tempPerson = angular.copy(person);
-                    tempPerson.slotsList = null;
-                    return tempPerson;
+                    var tempPerson = {};
+                    tempPerson.firstName = person.firstName;
+                    tempPerson.lastName = person.lastName;
+                    tempPerson.email = person.email;
+                    $scope.outlookObject.interviewers.push(tempPerson);
                 }
             });
 
@@ -30,6 +35,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             $scope.outlookObject.organizer = "";
             $scope.outlookObject.start = "";
             $scope.outlookObject.end = "";
+            console.log($scope.outlookObject.interviewers);
         };
 
         $scope.getPairs = function () {
