@@ -62,7 +62,7 @@ public class PairResourceTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSlotTimes, secondPerson, sameDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(differentSlotsTime, secondPerson, sameDate, availabilityType));
 
-        resource = new PairResource(mockDao, mockPairFinder);
+        resource = new PairResource(mockDao);
         when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
     }

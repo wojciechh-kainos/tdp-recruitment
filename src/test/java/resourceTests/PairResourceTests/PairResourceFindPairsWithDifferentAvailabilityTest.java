@@ -55,8 +55,8 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         mockSlots.addAll(createThirdPerson());
 
         resource = new PairResource(mockDao);
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
     }
 
     @Test

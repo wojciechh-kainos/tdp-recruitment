@@ -65,7 +65,7 @@ public class PairResourceFindPairsForWeekTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, expectedDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(threeDifferentSlotsTimes, secondPerson, differentDate, availabilityType));
 
-        resource = new PairResource(mockDao, mockPairFinder);
+        resource = new PairResource(mockDao);
 
         when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
