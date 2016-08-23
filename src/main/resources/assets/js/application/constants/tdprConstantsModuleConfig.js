@@ -40,13 +40,10 @@ define(['angular'
             tooltipText: "maybe"
         }
     }).constant('JobProfileEnum', {
-        dev: "isDev",
-        ops: "isOps",
-        test: "isTest"
-    }).constant('JobProfileEnumNames', {
-        dev: "Developer",
-        ops: "WebOps",
-        test: "Tester"
+        isDev: {name: "Developer", column: "isDev"},
+        isOps: {name: "WebOps", column: "isOps"},
+        isTest: {name: "Tester", column: "isTest"},
+        isOther: {name: "Other", column: "isOther"}
     }).constant('BandLevelEnum', {
         "1": "1 - Principal",
         "2": "2 - Manager",
