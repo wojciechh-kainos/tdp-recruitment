@@ -16,7 +16,6 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                     token: user.token,
                     isRecruiter: user.admin
                 };
-                console.log(user);
 
                 service.setCredentials(user.email, user.token);
 

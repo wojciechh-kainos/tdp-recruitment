@@ -41,7 +41,6 @@ public class Person implements Cloneable, Principal {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean admin;
 
     @Column(name = "is_dev")
