@@ -23,4 +23,5 @@
     <include file="changelogs/changeColumnNameInPerson.xml"/>
     <include file="changelogs/US-36_listOfCandidates_candidatesTable.xml"/>
     <include file="changelogs/US-36_populateTable.xml"/>
+    <include file="changelogs/addOtherJobPosition.xml"/>
 </databaseChangeLog>

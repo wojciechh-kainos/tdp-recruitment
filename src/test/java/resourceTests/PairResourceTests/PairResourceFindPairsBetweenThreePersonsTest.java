@@ -24,11 +24,13 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
+    private final Boolean isOther = false;
     private String startDate;
     private String endDate;
     private PairResource resource;
     private List<Slot> mockSlots = new ArrayList<>();
     private List<SlotTime> expectedFirstPersonSlotsTimes, expectedSecondPersonSlotsTimes;
+    private List<Person> persons;
 
     @Mock
     private static SlotDao mockDao;
@@ -46,29 +48,26 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
         expectedFirstPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 3);
         expectedSecondPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 5);
 
-        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, firstPerson, firstDate, availabilityType));
-        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, secondPerson, firstDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, secondPerson, secondDate, availabilityType));
-        Person thirdPerson = MockDataUtil.createPerson((long) 3, "THIRD", isDev, isTest, isOps);
+        Person thirdPerson = MockDataUtil.createPerson((long) 3, "THIRD", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, thirdPerson, secondDate, availabilityType));
 
         resource = new PairResource(mockDao);
-
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
     }
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnThreePersons() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
-
         assertEquals("Three people should be found", 3, persons.size());
     }
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnThreeSlotsForFirstPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person firstPair = persons.get(0);
 
         assertEquals("First person should have 3 slot elements", 3, firstPair.getSlotList().size());
@@ -76,7 +75,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInOneDayForFirstPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person firstPair = persons.get(0);
 
         assertEquals("First person should have slots with one day only",
@@ -90,7 +88,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnSlotsWithExpectedSlotsTimes() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person firstPair = persons.get(0);
 
         assertTrue("First person should have slots with expected slotsTimes",
@@ -103,7 +100,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnEightSlotsForSecondPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person secondPair = persons.get(1);
 
         assertEquals("Second person should have 8 slot elements", 8, secondPair.getSlotList().size());
@@ -111,7 +107,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInTwoDaysForSecondPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person secondPair = persons.get(1);
 
         assertEquals("Second person should have slots with two different days",
@@ -125,7 +120,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnFiveSlotsForThirdPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person thirdPair = persons.get(2);
 
         assertEquals("Third person should have 5 slot elements", 5, thirdPair.getSlotList().size());
@@ -133,7 +127,6 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
 
     @Test
     public void testFindTwoDifferentPairsForWeekShouldReturnSlotsInOneDayForThirdPerson() {
-        List<Person> persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
         Person thirdPair = persons.get(2);
 
         assertEquals("Third person should have slots with one day only",

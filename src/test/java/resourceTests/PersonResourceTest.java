@@ -54,7 +54,7 @@ public class PersonResourceTest {
 
         person = new Person();
         person.setId(1L);
-        dateString = "26-07-2016";
+        dateString = "2016-07-26";
         date = Date.valueOf("2016-07-26");
         note = new Note(1L, person, "note nr 1", date);
         note2 = new Note(2L, person, "note nr 2", date);

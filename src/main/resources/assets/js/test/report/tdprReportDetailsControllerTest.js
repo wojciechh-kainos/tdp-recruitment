@@ -7,8 +7,6 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
         var dateService;
         var $state;
         var $scope;
-        var $controller;
-        var $httpBackend;
         var Notification;
         var deferredPromise;
 
@@ -26,6 +24,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $state : $state,
                 tdprReportService : reportService,
                 tdprReportDateService : dateService,
+                DateFormat: 'dd-MM-yyyy',
                 Notification : Notification
             });
         }));
