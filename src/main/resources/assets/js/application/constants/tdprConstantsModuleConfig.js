@@ -47,18 +47,18 @@ define(['angular'
         dev: "Developer",
         ops: "WebOps",
         test: "Tester"
-    }).constant('BandLevelEnum',{
+    }).constant('BandLevelEnum', {
         "1": "1 - Principal",
         "2": "2 - Manager",
         "3": "3 - Consultant",
         "4": "4 - Senior associate",
         "5": "5 - Associate",
         "6": "6 - Trainee"
-    }).constant('WeekNavigateEnum',{
-        previous : -1,
-        next : 1,
-        current : 0
-    });
+    }).constant('WeekNavigateEnum', {
+        previous: -1,
+        next: 1,
+        current: 0
+    }).constant('DateFormat', 'yyyy-MM-dd');
 
     return tdprConstantsModule;
 });

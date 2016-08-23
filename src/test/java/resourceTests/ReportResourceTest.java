@@ -51,7 +51,7 @@ public class ReportResourceTest {
         Date endDate = formatter.parse(inputEndDate);
 
         Double hours = 200.0;
-        Report expected = new Report(p, hours, hours, hours);
+        Report expected = new Report(p, hours, hours);
 
         when(reportService.getReport(personId, startDate, endDate)).thenReturn(expected);
 

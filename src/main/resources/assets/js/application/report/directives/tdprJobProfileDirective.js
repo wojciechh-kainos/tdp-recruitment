@@ -2,7 +2,7 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
     tdprReportModule.directive("jobProfile", function (JobProfileEnum, JobProfileEnumNames) {
         return {
             restrict: 'AE',
-            templateUrl: 'js/application/report/views/tdpr-directive-job-profile.html',
+            templateUrl: '/html/partials/report/tdpr-directive-job-profile.html',
             replace: false,
             scope: {
                 selectedProfiles: '='
