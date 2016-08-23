@@ -45,15 +45,16 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
         Boolean isDev = true;
         Boolean isOps = false;
-        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
+        Boolean isOther = false;
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, firstPerson, date, typeAvailable));
-        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, secondPerson, date, typeMaybe));
 
         PairResource resource = new PairResource(mockDao);
 
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
     }
 
     @Test
