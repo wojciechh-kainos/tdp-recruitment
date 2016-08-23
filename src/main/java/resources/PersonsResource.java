@@ -30,7 +30,7 @@ public class PersonsResource {
     private SlotsDao slotsDao;
     private NotesDao notesDao;
     private MailService mailService;
-    SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+    private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
     public PersonsResource(PersonsDao personsDao, SlotsDao slotsDao, MailService mailService, NotesDao notesDao) {
@@ -46,7 +46,8 @@ public class PersonsResource {
     @UnitOfWork
     public Persons createPerson(Persons person) {
         personsDao.create(person);
-        mailService.sendEmail(person.getEmail(), person.getId());
+        //mailService.sendEmail();
+        //TODO Add activation link sending
         return person;
     }
 

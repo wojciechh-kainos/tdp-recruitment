@@ -22,23 +22,20 @@ import java.util.Properties;
 public class MailingThread extends Thread {
 
     private TdpRecruitmentApplicationConfiguration config;
-    private String recipient;
-    private Long personId;
     private Message msg;
 
-    public MailingThread(TdpRecruitmentApplicationConfiguration config, String recipient, Long id, Message msg) {
+    public MailingThread(TdpRecruitmentApplicationConfiguration config) {
         this.config = config;
-        this.recipient = recipient;
-        this.personId = id;
-        this.msg = msg;
+    }
 
+    public MailingThread sendMessage(Message message){
+        this.msg = message;
+        return this;
     }
 
     @Override
     public void run() {
-
         TdpRecruitmentEmailConfiguration config = this.config.getSmtpConfig();
-        String domain = this.config.getDomain();
 
         String host = config.getHost();
         Integer port = config.getPort();
@@ -49,23 +46,14 @@ public class MailingThread extends Thread {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", port);
-
         Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
 
         try {
-            msg.setFrom(new InternetAddress(from));
-
             Transport transport = session.getTransport("smtp");
-            transport.connect();
+            transport.connect(host, port, from, null);
             transport.sendMessage(msg, msg.getAllRecipients());
-            transport.close();
-
-
-//            Transport.send(msg);
-        } catch (AddressException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            transport.close(); // TODO: Move method invocation to 'finally' block
         } catch (Exception e) {
             e.printStackTrace();
         }

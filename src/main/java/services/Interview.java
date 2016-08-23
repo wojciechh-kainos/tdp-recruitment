@@ -3,23 +3,20 @@ package services;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import domain.Persons;
-import org.joda.time.DateTime;
 
 import javax.mail.BodyPart;
+import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.Session;
+import javax.mail.internet.*;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Interview {
 
-    private List<Persons> interviewers = new ArrayList<Persons>();
+    private List<Persons> interviewers = new ArrayList<>();
     private Persons organizer;
     private Date start;
     private Date end;
@@ -56,6 +53,7 @@ public class Interview {
 
         textContent.setContent("Text", "text/plain; charset=utf-8");
         calendarPart.setContent(createCalendarEvent(), "text/calendar;method=REQUEST");
+        calendarPart.addHeader("Content-Class", "urn:content-classes:calendarmessage");
 
         body.addBodyPart(textContent);
         body.addBodyPart(calendarPart);
@@ -63,9 +61,13 @@ public class Interview {
         return body;
     }
 
-    public String createCalendarEvent(){
+    public String createCalendarEvent() {
         String template = "";
-        final SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");  //TODO add timeZone handling
+
+        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");  //TODO add timeZone handling
+        String now = iCalDate.format(new Date());
+        iCalDate.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         URL url = Resources.getResource("email/event_template.ics");
         try {
             template = Resources.toString(url, Charsets.UTF_8);
@@ -77,7 +79,7 @@ public class Interview {
                 .replace("{{attendees}}", parseAttendees())
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
-                .replace("{{dtstamp}}", iCalDate.format(new Date()));
+                .replace("{{dtstamp}}", now);
     }
 
     private String parseOrganizer() {
@@ -98,8 +100,22 @@ public class Interview {
                     .replace("{{lname}}", interviewer.getLastName())
                     .replace("{{mail}}", interviewer.getEmail());
         }
-
         return result;
+    }
+
+    public MimeMessage createMessage() throws MessagingException {
+        Session session = Session.getDefaultInstance(new Properties());
+        MimeMessage message = new MimeMessage(session);
+
+        message.setSubject("Interview");
+        message.setSentDate(new Date());
+        message.setFrom(new InternetAddress(organizer.getEmail()));
+        for (Persons interviewer : interviewers) {
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(interviewer.getEmail()));
+        }
+        message.setContent(createInvitation());
+
+        return message;
     }
 
 }

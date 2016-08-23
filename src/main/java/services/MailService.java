@@ -3,6 +3,8 @@ package services;
 import com.google.inject.Inject;
 import configuration.TdpRecruitmentApplicationConfiguration;
 
+import javax.mail.Message;
+
 public class MailService {
 
     private final TdpRecruitmentApplicationConfiguration applicationConfiguration;
@@ -13,9 +15,9 @@ public class MailService {
     }
 
 
-    public void sendEmail(String recipient, Long id) {
-//        MailingThread mt = new MailingThread(applicationConfiguration, recipient, id);
-//        mt.start();
+    public void sendEmail(Message message) {
+        MailingThread mailingThread = new MailingThread(applicationConfiguration);
+        mailingThread.sendMessage(message).start();
     }
 
 
