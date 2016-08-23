@@ -8,6 +8,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
         var $state;
         var $scope;
         var Notification;
+        var NotificationDelay;
         var deferredPromise;
 
         beforeEach(inject(function (_$rootScope_, _$state_, $controller, _$q_) {
@@ -16,7 +17,8 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
             dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
             $scope = _$rootScope_.$new();
             $state = _$state_;
-            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+            Notification = jasmine.createSpy('Notification', ['success', 'error']);
+            NotificationDelay = jasmine.createSpyObj('NotificationDelay');
             deferredPromise = _$q_.defer();
             reportService.getReports.and.returnValue(deferredPromise.promise);
             $controller('tdprReportDetailsController', {
@@ -25,7 +27,8 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 tdprReportService : reportService,
                 tdprReportDateService : dateService,
                 DateFormat: 'dd-MM-yyyy',
-                Notification : Notification
+                Notification : Notification,
+                NotificationDelay: NotificationDelay
             });
         }));
 
@@ -55,14 +58,14 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $scope.$apply();
 
                 expect(reportService.getReports).toHaveBeenCalledTimes(1);
-                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully downloaded.', delay : 2000});
+                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully downloaded.', delay : NotificationDelay});
             });
 
             it('should return error message when server does not return data', function(){
                 deferredPromise.reject("Unable to get data from server!");
                 $scope.$apply();
 
-                expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : 3500});
+                expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : NotificationDelay});
             });
         })
     })

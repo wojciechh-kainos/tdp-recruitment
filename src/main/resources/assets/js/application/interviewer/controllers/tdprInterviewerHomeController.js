@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, DateFormat, Notification) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, DateFormat, Notification, NotificationDelay) {
         $scope.slotTimes = [];
 
         $scope.hasNoteChanged = false;
@@ -97,7 +97,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.changeSlotStatus = function () {
             if (!isEligibleToEdit()) {
-                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
+                Notification.error({message: 'You cannot edit slots from past weeks!', delay: NotificationDelay});
                 return;
             }
             $scope.hasSlotChanged = true;
@@ -105,7 +105,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.editNoteSwitch = function () {
             if (!isEligibleToEdit()) {
-                Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
+                Notification.error({message: 'You cannot edit note from past weeks!', delay: NotificationDelay});
                 return;
             }
             if ($scope.editNote) {
@@ -155,7 +155,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.updateSlots = function () {
             if (!isEligibleToEdit()) {
-                Notification.error({message: 'You cannot edit slots from past weeks!', delay: 2000});
+                Notification.error({message: 'You cannot edit slots from past weeks!', delay: NotificationDelay});
                 return;
             }
             var slots = [];
@@ -175,9 +175,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat);
             endDate = $filter('date')(getDayOfTheWeek(new Date(), 5 + $scope.relativeDayNumber), DateFormat);
             tdprSlotsService.updateSlots(slots, id, startDate, endDate).then(function () {
-                Notification.success({message: 'Changes saved!', delay: 2000});
+                Notification.success({message: 'Changes saved!', delay: NotificationDelay});
             }, function (response) {
-                Notification.error({message: 'Something went wrong, changes not saved', delay: 2000});
+                Notification.error({message: 'Something went wrong, changes not saved', delay: NotificationDelay});
             });
             var note = createNote($scope.temporaryContent, id, $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), "yyyy-MM-dd"));
 
@@ -210,7 +210,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }
                 Notification.warning({
                     message: 'Something went wrong with sending your note.',
-                    delay: 2000
+                    delay: NotificationDelay
                 });
             });
         }
@@ -256,7 +256,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 }, function (failure) {
                     Notification.warning({
                         message: 'Something went wrong with getting your note.',
-                        delay: 2000
+                        delay: NotificationDelay
                     });
                 }
             )
@@ -264,7 +264,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.getNoteFromPreviousWeek = function () {
             if (!isEligibleToEdit()) {
-                Notification.error({message: 'You cannot edit note from past weeks!', delay: 2000});
+                Notification.error({message: 'You cannot edit note from past weeks!', delay: NotificationDelay});
                 return;
             }
             var previousDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber - 7), DateFormat);
@@ -281,13 +281,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                 } else {
                     Notification.warning({
                         message: 'Something went wrong.',
-                        delay: 2000
+                        delay: NotificationDelay
                     });
                 }
             }, function (failure) {
                 Notification.warning({
                     message: 'Something went wrong with getting your note.',
-                    delay: 2000
+                    delay: NotificationDelay
                 });
             });
         };
@@ -296,7 +296,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             if ($scope.hasNoteChanged || $scope.hasSlotChanged) {
                 Notification.warning({
                     message: 'You have changed your data. Submit or discard your changes!',
-                    delay: 2000
+                    delay: NotificationDelay
                 });
                 return false;
             } else return true;

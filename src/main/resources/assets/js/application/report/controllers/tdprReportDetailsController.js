@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification, NotificationDelay) {
 
         $scope.DateFormat = DateFormat;
 
@@ -41,12 +41,12 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportStart = $scope.startDate;
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
-                    Notification.success({message: 'Report successfully downloaded.', delay: 2000});
+                    Notification.success({message: 'Report successfully downloaded.', delay: NotificationDelay});
                 }
             )
             .catch(
                 function (status) {
-                    Notification.error({message: status, delay: 3500});
+                    Notification.error({message: status, delay: NotificationDelay});
                 }
             )
         };
