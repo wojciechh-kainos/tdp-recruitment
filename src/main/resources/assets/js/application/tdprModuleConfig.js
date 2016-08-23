@@ -14,7 +14,7 @@ define(['angular'
                 }
         });
         NotificationProvider.setOptions({
-          delay: 1000,
+          delay: 2000,
         });
     });
 
