@@ -1,0 +1,8 @@
+<div class="legend">
+    <label class="mouse-pointer" ng-repeat="(key,value) in JobProfileEnum">
+        <input ng-if="!isRadio" type="checkbox" ng-model="selectedProfiles[value.column]"/>
+        <input ng-if="isRadio" type="radio" ng-model="selectedProfiles.selected" value="{{value.column}}"
+               ng-change="change(value.column)"/>
+        <span>{{value.name}}</span>
+    </label>
+</div>
