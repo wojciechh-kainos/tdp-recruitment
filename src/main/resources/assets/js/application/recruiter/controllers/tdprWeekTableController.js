@@ -55,6 +55,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
             tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
                 function () {
+                    personData.slotList.forEach(function(slot){
+                        slot.changed = false;
+                    });
                     personData.changesPending = false;
                     Notification.success({message: 'Your changes were saved successfully!', delay: 3500});
                 }
