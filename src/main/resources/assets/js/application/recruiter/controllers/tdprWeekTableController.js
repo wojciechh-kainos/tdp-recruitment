@@ -3,6 +3,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
                                                                         JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
 
+        $scope.pairingMode = false;
+        $scope.outlookObject = {};
+
         $scope.JobProfileEnum = JobProfileEnum;
         $scope.currentJobProfile = JobProfileEnum.dev;
         $scope.WeekNavigateEnum = WeekNavigateEnum;
@@ -14,7 +17,22 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
 
-        $scope.getPairs = function(){
+        $scope.createEvent = function () {
+            $scope.outlookObject.interviewers = persons.filter(function (person) {
+                if (person.selected) {
+                    var tempPerson = angular.copy(person);
+                    tempPerson.slotsList = null;
+                    return tempPerson;
+                }
+            });
+
+            $scope.outlookObject.interviewee = "";
+            $scope.outlookObject.organizer = "";
+            $scope.outlookObject.start = "";
+            $scope.outlookObject.end = "";
+        };
+
+        $scope.getPairs = function () {
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
                 function (persons) {
                     $scope.persons = persons;
@@ -35,9 +53,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.changeWeek = function (offset) {
 
-            if(offset === WeekNavigateEnum.current){
+            if (offset === WeekNavigateEnum.current) {
                 $scope.offset = WeekNavigateEnum.current;
-            }else{
+            } else {
                 $scope.offset += offset;
             }
 
