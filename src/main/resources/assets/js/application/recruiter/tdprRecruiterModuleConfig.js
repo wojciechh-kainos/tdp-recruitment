@@ -25,44 +25,47 @@ define(['angular'
                     }
                 },
                 resolve: {
-                  isAuthenticated: function(tdprAuthService) {
-                      return tdprAuthService.isAuthenticated("recruiter");
+                  isUserAuthenticated: function(tdprAuthService) {
+                      return tdprAuthService.isUserAuthenticated();
+                  },
+                  isUserAuthorized: function(tdprAuthService) {
+                      return tdprAuthService.isUserAuthorized("recruiter");
                   }
                 }
             }).state("tdpr.recruiter.home", {
-            url: "/recruiter",
-            resolve: {
-                persons: function (tdprPersonsService, tdprDateService) {
-                    var week = tdprDateService.getCurrentWeek();
-                    return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]);
+                url: "/recruiter",
+                resolve: {
+                    persons: function (tdprPersonsService, tdprDateService) {
+                        var week = tdprDateService.getCurrentWeek();
+                        return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]);
+                    },
+                    slotsTimes: function (tdprSlotsTimesService) {
+                        return tdprSlotsTimesService.fetchSlotsTimes();
+                    }
                 },
-                slotsTimes: function (tdprSlotsTimesService) {
-                    return tdprSlotsTimesService.fetchSlotsTimes();
+                views: {
+                    "main@recruiter": {
+                        templateUrl: "/html/partials/recruiter/tdpr-recruiter-table.html",
+                        controller: "tdprWeekTableController"
+                    }
                 }
-            },
-            views: {
-                "main@recruiter": {
-                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-table.html",
-                    controller: "tdprWeekTableController"
+            }).state("tdpr.recruiter.addInterviewer", {
+                url: "/add-interviewer",
+                views: {
+                    "main@recruiter": {
+                        templateUrl: "/html/partials/recruiter/tdpr-recruiter-add-interviewer.html",
+                        controller: "tdprAddInterviewerController"
+                    }
                 }
-            }
-        }).state("tdpr.recruiter.addInterviewer", {
-            url: "/add-interviewer",
-            views: {
-                "main@recruiter": {
-                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-add-interviewer.html",
-                    controller: "tdprAddInterviewerController"
+            }).state("tdpr.recruiter.manageUsers", {
+                url: "/manage-users",
+                views: {
+                    "main@recruiter": {
+                        templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
+                        controller: "tdprManageUsersController"
+                    }
                 }
-            }
-        }).state("tdpr.recruiter.manageUsers", {
-            url: "/manage-users",
-            views: {
-                "main@recruiter": {
-                    templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
-                    controller: "tdprManageUsersController"
-                }
-            }
-        })
+            });
     });
     return tdprRecruiterModule;
 

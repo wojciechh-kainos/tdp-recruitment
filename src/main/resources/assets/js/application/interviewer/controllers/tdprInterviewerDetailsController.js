@@ -5,6 +5,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         function init() {
                 $scope.person = person;
+                $scope.person.token = undefined;
                 $scope.person.bandLevel = $scope.person.bandLevel.toString();
 
                 if ($scope.person.defaultStartHour) {

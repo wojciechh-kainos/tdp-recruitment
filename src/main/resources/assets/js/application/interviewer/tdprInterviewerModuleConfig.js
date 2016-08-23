@@ -16,9 +16,9 @@ define(['angular'
                     personName : ''
                 },
                 resolve: {
-                    isAuthenticated: function(tdprAuthService) {
-                        return tdprAuthService.isAuthenticated("interviewer");
-                     }
+                    isUserAuthenticated: function(tdprAuthService) {
+                        return tdprAuthService.isUserAuthenticated();
+                    }
                 }
             }).state("tdpr.interviewer.home", {
                 url: "/{id}/home",

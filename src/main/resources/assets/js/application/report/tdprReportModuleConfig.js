@@ -21,10 +21,13 @@ define(['angular'
                         templateUrl: "/html/partials/report/tdpr-report-index.html"
                     }
                 },
-                resolve: {
-                     isAuthenticated: function(tdprAuthService) {
-                         return tdprAuthService.isAuthenticated("recruiter");
-                     }
+                 resolve: {
+                   isUserAuthenticated: function(tdprAuthService) {
+                       return tdprAuthService.isUserAuthenticated();
+                   },
+                   isUserAuthorized: function(tdprAuthService) {
+                       return tdprAuthService.isUserAuthorized("recruiter");
+                   }
                  }
             })
             .state("tdpr.report.home", {
@@ -36,7 +39,7 @@ define(['angular'
                     }
                 }
             });
-        $urlRouterProvider.otherwise("/recruiter");
+
     });
     return tdprReportModule;
 });

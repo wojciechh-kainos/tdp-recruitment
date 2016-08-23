@@ -3,7 +3,7 @@ define(['angular'
     , 'application/common/controllers/tdprNavbarController'
     , 'application/auth/services/tdprAuthService'
 ], function(angular, module) {
-    module.config(function($stateProvider, NotificationProvider) {
+    module.config(function($stateProvider, $urlRouterProvider, NotificationProvider) {
         $stateProvider
             .state("tdpr", {
                 abstract: true,
@@ -24,6 +24,8 @@ define(['angular'
                     }
                 }
         });
+
+        $urlRouterProvider.otherwise("/404");
 
         NotificationProvider.setOptions({
           delay: 2000,

@@ -10,6 +10,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 var user = res.data;
 
                 currentUser = {
+                    id: user.id,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
@@ -61,7 +62,21 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             return currentUser;
         }
 
-        service.isAuthenticated = function (role) {
+        service.isUserAuthorized = function (role) {
+            var deferred = $q.defer();
+
+            if(role === 'recruiter') {
+                if(currentUser.isRecruiter) {
+                    deferred.resolve();
+                } else {
+                    Notification.error('You do not have permissions to view this page.');
+                    deferred.reject();
+                }
+            }
+            return deferred.promise;
+        };
+
+        service.isUserAuthenticated = function () {
             var deferred = $q.defer();
 
             if (service.isUserLoggedIn()) {
