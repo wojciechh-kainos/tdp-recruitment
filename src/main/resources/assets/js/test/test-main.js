@@ -25,7 +25,8 @@ require.config({
         'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'lodash': 'lib/lodash/lodash',
         'moment' : 'lib/moment/moment',
-        'angular-moment' : 'lib/angular-moment/angular-moment'
+        'angular-moment' : 'lib/angular-moment/angular-moment',
+        'ngDialog' : 'lib/ng-dialog/js/ngDialog'
     },
     shim: {
         'angular': {

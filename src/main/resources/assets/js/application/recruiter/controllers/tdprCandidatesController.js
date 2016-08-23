@@ -75,7 +75,5 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             $scope.sortColumn = column;
             $scope.sortReverse = $scope.columnMap[column].reverse = !$scope.columnMap[column].reverse;
         };
-
-
     });
 });
