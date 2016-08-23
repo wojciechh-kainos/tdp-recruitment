@@ -1,6 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, $stateParams) {
+    tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, $stateParams, $state) {
 
     console.log($stateParams);
         var interviewData = $stateParams.data;
@@ -14,5 +14,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             tdprScheduleService.sendInvitations(interviewData);
         }
         
+        $scope.goHome = function () {
+            $state.go('tdpr.recruiter.home');
+        };
     });
 });
