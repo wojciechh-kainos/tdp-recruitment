@@ -4,7 +4,6 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         this.fetchCandidates = function(){
             return $http.get('api/candidate/all').then(
                 function (response) {
-                    console.log(response.data);
                     return response.data;
                 },
                 function (error) {
@@ -14,6 +13,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.createCandidate = function (candidate) {
+            console.log(candidate);
             return $http.put("/api/candidate/create/", candidate).then(function (response) {
                 return response;
             }, function (err) {
@@ -29,7 +29,18 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                 error.message = "Deleting failed.";
                 return $q.reject(error);
             })
-        }
+        };
+
+        this.fetchRecruiters = function(){
+            return $http.get('api/person/recruiter').then(
+                function (response) {
+                    return response.data;
+                },
+                function (error) {
+                    return error;
+                }
+            )
+        };
 
     })
 });

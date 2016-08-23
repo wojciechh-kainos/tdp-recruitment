@@ -28,7 +28,7 @@
 
     <a id="via-service" href="" ng-click="open()">Add new candidate</a>
 
-    <script type="text/ng-template" id="firstDialogId">
+    <script type="text/ng-template" id="dialog">
         <div class="ngdialog-message">
             <h3>Add new candidate:</h3>
 
@@ -61,19 +61,22 @@
                     </div>
                 </div>
 
-                <!--<div class="form-group">-->
-                    <!--<label class="col-md-4 control-label">Recruiter:</label>-->
-                    <!--<div class="col-md-8">-->
-                        <!--<input class="form-control input" name="position" type="text" ng-model="candidate.recruiter"-->
-                               <!--required/>-->
-                    <!--</div>-->
-                <!--</div>-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Recruiter:</label>
+                    <div class="col-md-8">
+                        <div class="ui-select">
+                            <select class="form-control" ng-model="candidate.recruiter" ng-options="recruiter.lastName for recruiter in recruiters" >
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label">Note:</label>
                     <div class="col-md-8">
-                        <input class="form-control input" name="note" type="text" ng-model="candidate.note"
-                               required/>
+                        <input class="form-control input" name="note" type="text" ng-model="candidate.note"/>
                     </div>
                 </div>
                 <hr>

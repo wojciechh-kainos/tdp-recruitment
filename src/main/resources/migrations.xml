@@ -24,4 +24,6 @@
     <include file="changelogs/US-36_listOfCandidates_candidatesTable.xml"/>
     <include file="changelogs/US-36_populateTable.xml"/>
     <include file="changelogs/addOtherJobPosition.xml"/>
+    <include file="changelogs/US-36_Add_test_recruiters.xml"/>
+
 </databaseChangeLog>

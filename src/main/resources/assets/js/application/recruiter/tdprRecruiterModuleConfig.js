@@ -55,8 +55,11 @@ define(['angular'
             resolve:{
                 candidates: function (tdprCandidatesService) {
                     return tdprCandidatesService.fetchCandidates();
-                    }
-            },
+                    },
+                recruiters: function (tdprCandidatesService) {
+                    return tdprCandidatesService.fetchRecruiters();
+                }
+            }, 
             views: {
                 "main@recruiter": {
                     templateUrl: "js/application/recruiter/views/tdpr-recruiter-candidates.html",
