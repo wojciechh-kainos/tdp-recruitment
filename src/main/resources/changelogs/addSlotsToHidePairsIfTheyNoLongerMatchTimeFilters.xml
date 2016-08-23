@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="populateSlotsToHidePairsFromDifferentTime" author="konradm">
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="7"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="8"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="9"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="10"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="11"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="12"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="13"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="14"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="15"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="16"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="17"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="13"/>
+            <column name="slot_time" value="18"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="1"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="2"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="3"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="4"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="5"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="6"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="7"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="8"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="9"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="10"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="11"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="12"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="13"/>
+            <column name="type" value="1"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="14"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="15"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="16"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="17"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="12"/>
+            <column name="slot_time" value="18"/>
+            <column name="type" value="5"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="2"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="3"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="4"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="5"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="6"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="6"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="7"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="8"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="9"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="10"/>
+            <column name="type" value="4"/>
+        </insert>
+        <insert tableName="slot">
+            <column name="slot_date" valueDate="2016-08-17"/>
+            <column name="person" value="11"/>
+            <column name="slot_time" value="11"/>
+            <column name="type" value="4"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
