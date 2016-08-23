@@ -41,7 +41,7 @@
         <label class="control-label">Filter by person:</label>
     </div>
     <div class="col-md-2">
-        <input class="form-control" type="text" ng-model="inputString"/>
+        <input class="form-control" type="text" ng-model="personNameFilterValue"/>
     </div>
 </div>
 
@@ -63,7 +63,7 @@
             </thead>
             <tbody>
             <tr report
-                ng-repeat="reportElement in reportsElements | jobProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse"
+                ng-repeat="reportElement in reportsElements | jobProfileFilter: checkedProfiles | personNameFilter: personNameFilterValue | orderBy:sortColumn:sortReverse"
                 report-data="reportElement" person-info="reportElement.person"></tr>
             </tbody>
         </table>

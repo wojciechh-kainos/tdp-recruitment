@@ -1,4 +1,4 @@
-define(['application/report/tdprReportModule'], function (tdprReportModule) {
+define(['angular','application/report/tdprReportModule'], function (angular, tdprReportModule) {
     tdprReportModule.service('tdprReportCsvDataService', function () {
 
         var baseLink = "data:text/csv;charset=utf-8,";
@@ -8,7 +8,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
         var emptySpace = " ";
 
         this.generateCsvData = function(viewReportData, columnMap){
-            var reportData = JSON.parse(JSON.stringify(viewReportData));
+            var reportData = angular.copy(viewReportData);
             var dataString = createHeader(columnMap);
 
             reportData.map(function(item){

@@ -73,26 +73,16 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         var getReportsInActualOrder = function(){
-                var reportsForCSV = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
-                reportsForCSV.sort(function(a,b){
+            var reportsForCSV = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+            reportsForCSV = $filter('personNameFilter')(reportsForCSV, $scope.personNameFilterValue);
 
-                    if($scope.sortColumn == 'person.lastName'){
-                        if(a.person.lastName > b.person.lastName){
-                            return 1;
-                        }else if (a.person.lastName < b.person.lastName){
-                            return -1;
-                        }
-                        return 0;
-                    }else{
-                        if(a[$scope.sortColumn] > b[$scope.sortColumn]){
-                            return 1;
-                        }else if(a[$scope.sortColumn] < b[$scope.sortColumn]){
-                            return -1;
-                        }
-                        return 0;
-                    }
-                })
-                return reportsForCSV;
+            if($scope.sortReverse){
+                reportsForCSV = _.sortBy(reportsForCSV,$scope.sortColumn).reverse();
+            }else{
+                reportsForCSV = _.sortBy(reportsForCSV,$scope.sortColumn);
+            }
+
+            return reportsForCSV;
         }
 
     })
