@@ -3,6 +3,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         $scope.BandLevelEnum = BandLevelEnum;
         $scope.arePasswordsDifferent = false;
+        $scope.changePasswordChecked = false;
+        $scope.isPasswordValid = true;
+        $scope.newPassword = '';
+        $scope.confirmPassword = '';
 
         function init() {
                 $scope.person = person;
@@ -19,10 +23,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         }
 
         $scope.updateDetails = function () {
-            if($scope.arePasswordsDifferent && $scope.changePassword){
-                return Notification.error("Changes not saved! Passwords are different!");
+            if($scope.changePasswordChecked && ($scope.arePasswordsDifferent || !$scope.isPasswordValid)){
+                return Notification.error("Changes not saved! Password field incorrect!");
             }
             var person = angular.copy($scope.person);
+            person.password = ($scope.changePasswordChecked && $scope.isPasswordValid) ? $scope.newPassword : null;
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
             person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
@@ -40,7 +45,32 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
 
         $scope.$watch('[newPassword, confirmPassword]', function(newValue, oldValue, scope){
             scope.arePasswordsDifferent = newValue[0]===newValue[1] ? false : true;
+            scope.isPasswordValid = isPasswordValid(newValue[0]);
         });
+
+        function isPasswordValid(password){
+                var errors = [];
+            if (password.length < 8) {
+                errors.push("8 characters");
+            }
+            if (password.search(/[a-z]/) < 0) {
+                errors.push("one lowercase letter.");
+            }
+            if (password.search(/[A-Z]/) < 0) {
+                errors.push("one uppercase letter.");
+            }
+            if (password.search(/[0-9]/) < 0) {
+                errors.push("one digit.");
+            }
+            if (password.search(/[!@#$%^&*]/) < 0) {
+                errors.push("one special character.");
+            }
+            if (errors.length > 0) {
+                $scope.passwordErrors = errors;
+                return false;
+            }
+            return true;
+        }
 
         init();
     });

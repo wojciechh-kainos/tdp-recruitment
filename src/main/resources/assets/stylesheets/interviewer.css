@@ -218,6 +218,13 @@ button {
   margin: auto;
 }
 
+.password-clues {
+    width: 500px;
+    position: absolute;
+    left: 100px;
+    top: 0px;
+}
+
 .form-group {
   text-align: left;
 }
