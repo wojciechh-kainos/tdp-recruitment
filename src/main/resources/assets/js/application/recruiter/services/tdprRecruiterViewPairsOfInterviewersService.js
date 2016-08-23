@@ -40,6 +40,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     case "isDev": pathParams += "&isDev=true"; break;
                     case "isTest": pathParams += "&isTest=true"; break;
                     case "isOps": pathParams += "&isOps=true"; break;
+                    case "isOther": pathParams += "&isOther=true"; break;
                 }
             }
 
