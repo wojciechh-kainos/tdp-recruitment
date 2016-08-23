@@ -69,7 +69,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 deferred.resolve();
             } else {
                 $location.path('/login');
-                Notification.error({message: 'You need to sign in to view this page.', delay: 3500});
+                Notification.error('You need to sign in to view this page.');
             }
             return deferred.promise;
         };

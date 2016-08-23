@@ -27,7 +27,6 @@ define(['angular'
     });
 
     function _isUserLoggedIn(tdprAuthService) {
-    console.log("cacaac");
         if(tdprAuthService.getCurrentUser().token === undefined){
             tdprAuthService.checkCookies();
         }
