@@ -1,7 +1,6 @@
 define(['application/report/tdprReportModule'], function (tdprReportModule) {
     tdprReportModule.service('tdprReportCsvDataService', function () {
 
-        var dataString;
         var baseLink = "data:text/csv;charset=utf-8,";
         var separator = ';';
         var endOfLine = "\n";
@@ -10,7 +9,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
 
         this.generateCsvData = function(viewReportData, columnMap){
             var reportData = JSON.parse(JSON.stringify(viewReportData));
-            dataString = createHeader(columnMap);
+            var dataString = createHeader(columnMap);
 
             reportData.map(function(item){
                 item.initHours = item.initHours.toString().replace(".", ",");
@@ -22,9 +21,11 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             reportData.forEach(function(item){
                dataString += createReportRow(item);
             });
+
+            return dataString;
         }
 
-        this.getLink = function(){
+        this.getLink = function(dataString){
             return baseLink + encodeURIComponent(dataString);
         }
 
@@ -32,8 +33,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             var header = addQuotes(columnMap["person.lastName"].columnName) + separator;
             header += addQuotes(columnMap["initHours"].columnName) + separator;
             header += addQuotes(columnMap["fullHours"].columnName) + separator;
-            header += addQuotes(columnMap["availableHours"].columnName) + separator;
-            header += endOfLine;
+            header += addQuotes(columnMap["availableHours"].columnName) + endOfLine;
             return header;
         }
 
