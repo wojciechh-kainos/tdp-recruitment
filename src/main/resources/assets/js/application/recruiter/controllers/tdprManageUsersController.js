@@ -5,23 +5,20 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         tdprPersonsService.fetchPersons().then( function (response) {
             $scope.persons = response.data;
         }, function () {
-            Notification.error({message: "Something went wrong with getting users" , delay: 3500});
+            Notification.error("Something went wrong with getting users");
         });
 
         $scope.managePerson = function( person ) {
             person.active = !person.active;
             tdprPersonsService.managePerson(person).then( function () {
                 if(!person.active) {
-                    Notification.success({
-                        message: person.firstName + " " + person.lastName + " has been disabled.",
-                        delay: 3500
-                    });
+                    Notification.success(person.firstName + " " + person.lastName + " has been disabled.");
                 }
                 else {
                     Notification.success({message: person.firstName + " " + person.lastName  + " has been enabled." , delay: 3500});
                 }
             }, function () {
-                Notification.error({message: "Something went wrong with your request." , delay: 3500});
+                Notification.error("Something went wrong with your request.");
             });
         }
 

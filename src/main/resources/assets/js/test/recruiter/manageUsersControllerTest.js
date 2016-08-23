@@ -51,10 +51,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprManage
                 $scope.$apply();
 
                 expect(tdprPersonsService.managePerson).toHaveBeenCalledWith(person);
-                expect(Notification.success).toHaveBeenCalledWith({
-                    message: person.firstName + " " + person.lastName  + " has been disabled.",
-                    delay: 3500
-                });
+                expect(Notification.success).toHaveBeenCalledWith(person.firstName + " " + person.lastName  + " has been disabled.");
             });
 
             it('should throw error notification', function(){
@@ -64,10 +61,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprManage
                 $scope.$apply();
 
                 expect(tdprPersonsService.managePerson).toHaveBeenCalledWith(person);
-                expect(Notification.error).toHaveBeenCalledWith({
-                    message: "Something went wrong with your request.",
-                    delay: 3500
-                });
+                expect(Notification.error).toHaveBeenCalledWith("Something went wrong with your request.");
             });
 
         })
