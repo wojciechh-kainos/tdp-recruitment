@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
                                                                         JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
-
+        var that = this;
         $scope.pairingMode = false;
         $scope.outlookObject = {};
 
@@ -17,19 +17,44 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
 
+        this.validateSlotList = function (slotList) {
+            if (slotList.length === 0 || slotList.length > 3) return false;
+            var min = _.minBy(slotList, 'number');
+            var max = _.maxBy(slotList, 'number');
+            return max.number - min.number == 2;
+        };
+
         $scope.createEvent = function () {
-            $scope.outlookObject.interviewers = persons.filter(function (person) {
-                if (person.selected) {
-                    var tempPerson = angular.copy(person);
-                    tempPerson.slotsList = null;
-                    return tempPerson;
-                }
+
+            var selectedPersons = _.filter(persons, function (person) {
+                return person.selected;
             });
 
-            $scope.outlookObject.interviewee = "";
-            $scope.outlookObject.organizer = "";
-            $scope.outlookObject.start = "";
-            $scope.outlookObject.end = "";
+            // This code was hard to write, it is supposed to be hard to read!
+            var sharedSlots = _.unionBy(_.flatten(_.map(selectedPersons, function (person) {
+                return _.xorBy(person.oldSlotList, person.slotsList, 'number');
+            })), 'number');
+
+            if (that.validateSlotList(sharedSlots)) {
+                $scope.outlookObject.interviewers = _.map(selectedPersons, function (obj) {
+                    return {
+                        firstName: obj.firstName,
+                        lastName: obj.lastName,
+                        email: obj.email
+                    }
+                });
+
+                var startSlot = _.find(slotsTimes, {id: _.minBy(sharedSlots, 'number').number});
+                var endSlot = _.find(slotsTimes, {id: _.maxBy(sharedSlots, 'number').number});
+                var eventStartTime = startSlot.startTime;
+                var eventEndTime = endSlot.endTime;
+
+                $scope.outlookObject.interviewee = "";
+                $scope.outlookObject.organizer = "";
+                $scope.outlookObject.start = eventStartTime;
+                $scope.outlookObject.end = eventEndTime;
+
+            }
         };
 
         $scope.getPairs = function () {
