@@ -9,6 +9,7 @@
                 <tr>
                     <td class="day-th" ng-click="sortBy(column)" ng-repeat="(column, value) in columnMap">{{value.columnName}}<span class="sort-order" ng-show="sortColumn===column"
                         ng-class="{sortReverse: value.reverse}"></span></td>
+                    <td class="day-th">Actions</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -17,6 +18,7 @@
                     <td class="slot hour-cell">{{candidate.position}}</td>
                     <td class="slot hour-cell">{{candidate.note}}</td>
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
+                    <td class="slot hour-cell"><a class="cursor-pointer" ng-click="removeCandidate($index)">delete</a></td>
                 </tr>
                 </tbody>
             </table>

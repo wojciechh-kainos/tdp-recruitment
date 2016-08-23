@@ -1,6 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, Notification) {
 
             $scope.candidates = candidates;
             $scope.sortColumn = 'lastName';
@@ -16,6 +16,15 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             $scope.sortBy = function(column){
                 $scope.sortColumn = column;
                 $scope.sortReverse = $scope.columnMap[column].reverse = !$scope.columnMap[column].reverse;
+            }
+
+            $scope.removeCandidate = function(index){
+                tdprCandidatesService.deleteCandidate($scope.candidates[index])
+                .then(function(){
+                    //Notification.success({message : "Deleting candidate succeed", delay : 2000});
+                }, function(response){
+                   // Notification.error({message : response.message, delay : 3500});
+                });
             }
     });
 });
