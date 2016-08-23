@@ -7,11 +7,13 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         var data = [2, 2];
         var weekStart;
         var weekEnd;
+        var person
 
         beforeEach(inject(function (_tdprPersonsService_, _$httpBackend_, dateFilter) {
             $httpBackend = _$httpBackend_;
             service = _tdprPersonsService_;
 
+            person = {"id": "2"};
             var format = 'yyyy-MM-dd';
             var now = new Date();
             weekStart = new Date();
@@ -58,6 +60,17 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
 
                 service.createPerson({}).then(undefined, function (response) {
                     expect(response.message).toEqual("Interviewer adding failed.");
+                });
+                $httpBackend.flush();
+            });
+        });
+
+        describe('managePerson', function () {
+            it('should return updated person on success', function () {
+                $httpBackend.expectPUT('/api/person/' + 2).respond(200, data);
+
+                service.managePerson(person).then(function (response) {
+                    expect(response.data).toEqual(data);
                 });
                 $httpBackend.flush();
             });
