@@ -48,7 +48,7 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {
-        List<Person> personList = personDao.findAll();
+        List<Person> personList = personDao.findAllActive();
 
         List<Report> reportList = new ArrayList<>();
 

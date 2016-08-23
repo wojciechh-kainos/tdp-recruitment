@@ -89,7 +89,7 @@ public class ReportServiceTest {
 
     @Test
     public void getAllReportsTest() {
-        when(personsDao.findAll()).thenReturn(mockPersons);
+        when(personsDao.findAllActive()).thenReturn(mockPersons);
         when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
         when(personsDao.getById(mockSecondPerson.getId())).thenReturn(mockSecondPerson);
         when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
