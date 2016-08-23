@@ -22,12 +22,12 @@ public class CandidateDao extends AbstractDAO<Candidate>{
         return get(id);
     }
 
-    public void deleteById(Long id){
-        namedQuery("Candidate.deleteById").setParameter("id", id).executeUpdate();
+    public void deactivateById(Long id){
+        namedQuery("Candidate.deactivateById").setParameter("id", id).executeUpdate();
     }
 
-    public void delete(Long id){
-        namedQuery("Candidate.deleteAll").setParameter("id", id).executeUpdate();
+    public void deleteById(Long id){
+        namedQuery("Candidate.deleteById").setParameter("id", id).executeUpdate();
     }
 
     public Long create(Candidate candidate){

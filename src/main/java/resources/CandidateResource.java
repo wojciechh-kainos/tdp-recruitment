@@ -47,10 +47,10 @@ public class CandidateResource {
     }
 
     @GET
-    @Path("/{candidate_id}/delete")
+    @Path("/{candidate_id}/deactivate")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public void delete(@PathParam("candidate_id")Long id){
-        candidateDao.deleteById(id);
+        candidateDao.deactivateById(id);
     }
 }

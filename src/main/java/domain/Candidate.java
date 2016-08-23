@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @Table(name="candidate")
 @NamedQueries({
         @NamedQuery(name = "Candidate.findAll", query = "SELECT c from Candidate c WHERE isDeleted=false"),
-        @NamedQuery(name = "Candidate.deleteById", query = "UPDATE Candidate SET isDeleted = true WHERE id = :id"),
-        @NamedQuery(name = "Candidate.deleteAll", query = "DELETE FROM Candidate WHERE id = :id")
+        @NamedQuery(name = "Candidate.deactivateById", query = "UPDATE Candidate SET isDeleted = true WHERE id = :id"),
+        @NamedQuery(name = "Candidate.deleteById", query = "DELETE FROM Candidate WHERE id = :id")
 })
 public class Candidate {
     @Id

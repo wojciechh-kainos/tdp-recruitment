@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 public class CandidateDaoTest extends BaseTest {
 
@@ -51,7 +52,7 @@ public class CandidateDaoTest extends BaseTest {
     }
 
     @Test
-    public void testDeleteById(){
+    public void testDeactivateById(){
         getSession().beginTransaction();
         List<Candidate> candidatesFromDbBefore = candidateDao.findAll();
         getSession().getTransaction().commit();
@@ -61,7 +62,7 @@ public class CandidateDaoTest extends BaseTest {
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        candidateDao.deleteById(returnedId);
+        candidateDao.deactivateById(returnedId);
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
@@ -69,6 +70,12 @@ public class CandidateDaoTest extends BaseTest {
         getSession().getTransaction().commit();
 
         assertEquals("In the list from DB should be only one candidate", candidatesFromDbAfter.size(), candidatesFromDbBefore.size());
+
+        getSession().beginTransaction();
+        Candidate deactivatedCandidate = candidateDao.findById(returnedId);
+        getSession().getTransaction().commit();
+
+        assertTrue("Deactivated candidate should have is_deleted flag set to true", deactivatedCandidate.getDeleted());
     }
 
     @Test
@@ -97,7 +104,7 @@ public class CandidateDaoTest extends BaseTest {
     @After
     public void tearDown() {
         getSession().beginTransaction();
-        candidateDao.delete(returnedId);
+        candidateDao.deleteById(returnedId);
         getSession().getTransaction().commit();
     }
 }
