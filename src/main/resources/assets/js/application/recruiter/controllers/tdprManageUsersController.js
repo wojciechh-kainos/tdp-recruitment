@@ -11,8 +11,15 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.managePerson = function( person ){
             person.active = !person.active;
             tdprPersonsService.managePerson(person).then( function () {
-                if(!person.active) Notification.success({message: person.firstName + " " + person.lastName  + " has been disabled." , delay: 3500});
-                else Notification.success({message: person.firstName + " " + person.lastName  + " has been enabled." , delay: 3500});
+                if(!person.active) {
+                    Notification.success({
+                        message: person.firstName + " " + person.lastName + " has been disabled.",
+                        delay: 3500
+                    });
+                }
+                else {
+                    Notification.success({message: person.firstName + " " + person.lastName  + " has been enabled." , delay: 3500});
+                }
             }, function () {
                 Notification.error({message: "Something went wrong with your request." , delay: 3500});
             });
