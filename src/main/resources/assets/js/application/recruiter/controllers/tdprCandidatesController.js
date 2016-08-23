@@ -18,12 +18,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                 $scope.sortReverse = $scope.columnMap[column].reverse = !$scope.columnMap[column].reverse;
             }
 
-            $scope.removeCandidate = function(index){
-                tdprCandidatesService.deleteCandidate($scope.candidates[index])
+            $scope.removeCandidate = function(candidate){
+                this.candidate = candidate;
+                var parent = this;
+                _.remove($scope.candidates, function(candidate){
+                    return candidate.id === parent.candidate.id;
+                });
+                tdprCandidatesService.deleteCandidate(candidate)
                 .then(function(){
-                    //Notification.success({message : "Deleting candidate succeed", delay : 2000});
+                    Notification.success({message : "Deleting candidate succeed", delay : 2000});
                 }, function(response){
-                   // Notification.error({message : response.message, delay : 3500});
+                    Notification.error({message : response.message, delay : 3500});
                 });
             }
     });
