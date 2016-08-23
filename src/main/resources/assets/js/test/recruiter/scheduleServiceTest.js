@@ -53,7 +53,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
             day = new Date(1410, 6, 15);
             person = {id: 42, slotList: []};
             slot = {
-                "day": '1410-07-15',
+                "day": '15-07-1410',
                 "person": 42,
                 "number": 7,
                 "type": AvailabilityEnum.available.name
@@ -61,6 +61,10 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
             module(function ($provide) {
                 $provide.value('AvailabilityEnum', AvailabilityEnum);
+            });
+
+            module(function ($provide) {
+                $provide.value('DateFormat', 'dd-MM-yyyy');
             });
 
             inject(function ($injector) {
@@ -98,7 +102,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
                 tdprScheduleService.changeSlotTypeCycleThrough(undefined, slot.number, day, person);
 
-                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(undefined, slot.number, '1410-07-15', person, AvailabilityEnum.full.name);
+                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(undefined, slot.number, '15-07-1410', person, AvailabilityEnum.full.name);
             });
 
             it('should call changeSlotType with availability type full if slot is available', function() {
@@ -107,7 +111,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
                 tdprScheduleService.changeSlotTypeCycleThrough(slot, slot.number, day, person);
 
-                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '1410-07-15', person, AvailabilityEnum.full.name);
+                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '15-07-1410', person, AvailabilityEnum.full.name);
             });
 
             it('should call changeSlotType with availability type full if slot is maybe', function() {
@@ -116,7 +120,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
                 tdprScheduleService.changeSlotTypeCycleThrough(slot, slot.number, day, person);
 
-                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '1410-07-15', person, AvailabilityEnum.full.name);
+                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '15-07-1410', person, AvailabilityEnum.full.name);
             });
 
             it('should call changeSlotType with availability type full if slot is init', function() {
@@ -125,7 +129,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
                 tdprScheduleService.changeSlotTypeCycleThrough(slot, slot.number, day, person);
 
-                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '1410-07-15', person, AvailabilityEnum.full.name);
+                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '15-07-1410', person, AvailabilityEnum.full.name);
             });
 
             it('should call changeSlotType with availability type init if slot is full', function() {
@@ -134,7 +138,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
 
                 tdprScheduleService.changeSlotTypeCycleThrough(slot, slot.number, day, person);
 
-                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '1410-07-15', person, AvailabilityEnum.init.name);
+                expect(tdprScheduleService.changeSlotType).toHaveBeenCalledWith(slot, slot.number, '15-07-1410', person, AvailabilityEnum.init.name);
             });
 
             it('should not call changeSlotType with different availability type', function() {
