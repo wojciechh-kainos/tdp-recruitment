@@ -37,7 +37,6 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportStart = $scope.startDate;
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
-                    Notification.success({message: 'Report successfully downloaded.', delay: 2000});
                 }
             )
             .catch(
