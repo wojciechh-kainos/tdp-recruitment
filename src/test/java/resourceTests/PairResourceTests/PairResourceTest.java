@@ -23,9 +23,6 @@ public class PairResourceTest {
     @Mock
     private static SlotDao mockDao;
 
-    @Mock
-    private static PairFinder mockPairFinder;
-
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;

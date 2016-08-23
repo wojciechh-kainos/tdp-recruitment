@@ -25,9 +25,6 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     @Mock
     private static SlotDao mockDao;
 
-    @Mock
-    private static PairFinder mockPairFinder;
-
     private final Time startTime = Time.valueOf("08:00:00");
     private final Time endTime = Time.valueOf("17:00:00");
     private final int TODAY_OFFSET = 0;

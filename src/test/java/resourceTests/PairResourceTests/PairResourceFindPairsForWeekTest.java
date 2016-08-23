@@ -26,9 +26,6 @@ public class PairResourceFindPairsForWeekTest {
     @Mock
     private static SlotDao mockDao;
 
-    @Mock
-    private static PairFinder mockPairFinder;
-
     private List<Slot> mockSlots = new ArrayList<>();
     private List<SlotTime> expectedSameSlotsTimes;
     private List<Person> persons;

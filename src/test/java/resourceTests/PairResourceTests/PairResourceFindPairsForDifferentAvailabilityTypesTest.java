@@ -26,9 +26,6 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
     @Mock
     private static SlotDao mockDao;
 
-    @Mock
-    private static PairFinder mockPairFinder;
-
     private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 

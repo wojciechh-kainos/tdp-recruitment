@@ -27,9 +27,6 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
     @Mock
     private static SlotDao mockDao;
 
-    @Mock
-    private static PairFinder mockPairFinder;
-
     private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 
