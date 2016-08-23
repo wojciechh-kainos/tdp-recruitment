@@ -48,15 +48,16 @@ public class PairResourceFindPairsForDifferentAvailabilityTypesTest {
 
         AvailabilityType typeAvailable = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
         AvailabilityType typeMaybe = MockDataUtil.createAvailableType((long) 5, AvailabilityTypeEnum.maybe);
-        List<SlotTime> expectedSameSlotsTimes = MockDataUtil.createSlotTimeList(1, 3);
+        List<SlotTime> expectedSameSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
 
         Boolean isDev = true;
         Boolean isOps = false;
         Boolean isOther = false;
+
         Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, firstPerson, date, typeAvailable));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, firstPerson, date, typeAvailable));
         Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, secondPerson, date, typeMaybe));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, date, typeMaybe));
 
         PairResource resource = new PairResource(mockDao, mockPairFinder);
 

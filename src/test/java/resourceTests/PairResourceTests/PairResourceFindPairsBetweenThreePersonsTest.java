@@ -51,16 +51,17 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
         endDate = MockDataUtil.convertDateToString(secondDate);
 
         AvailabilityType availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
-        expectedFirstPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 3);
-        expectedSecondPersonSlotsTimes = MockDataUtil.createSlotTimeList(1, 5);
+        expectedFirstPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
+        expectedSecondPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 5);
 
         Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, firstPerson, firstDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedFirstPersonSlotsTimes, firstPerson, firstDate, availabilityType));
         Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedFirstPersonSlotsTimes, secondPerson, firstDate, availabilityType));
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, secondPerson, secondDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedFirstPersonSlotsTimes, secondPerson, firstDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSecondPersonSlotsTimes, secondPerson, secondDate, availabilityType));
         Person thirdPerson = MockDataUtil.createPerson((long) 3, "THIRD", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSecondPersonSlotsTimes, thirdPerson, secondDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSecondPersonSlotsTimes, thirdPerson, secondDate, availabilityType));
+
 
         resource = new PairResource(mockDao, mockPairFinder);
 
