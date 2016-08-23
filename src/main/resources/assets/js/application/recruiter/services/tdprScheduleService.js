@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['dateFilter', 'AvailabilityEnum', function (dateFilter, AvailabilityEnum) {
+    tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', function ($http, dateFilter, AvailabilityEnum) {
         var that = this;
 
         this.changeSlotType = function (slot, slotId, day, person, changeTo) {
@@ -59,5 +59,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 }
             }
         };
+        
+        this.sendInvitations = function (interview) {
+            return $http.put("api/schedule", interview).then(
+                function (response) {
+                    return response;
+                },
+                function (error) {
+                    error.message = "Sending failed."
+                }
+            );
+        }
     }]);
 });

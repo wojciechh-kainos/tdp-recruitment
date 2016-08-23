@@ -47,7 +47,7 @@ public class MailingThread extends Thread {
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", port);
         Session session = Session.getDefaultInstance(props);
-        session.setDebug(true);
+        session.setDebug(true);// TODO: remove before merging with master
 
         try {
             Transport transport = session.getTransport("smtp");

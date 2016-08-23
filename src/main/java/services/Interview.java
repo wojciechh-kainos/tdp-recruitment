@@ -64,7 +64,7 @@ public class Interview {
     public String createCalendarEvent() {
         String template = "";
 
-        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");  //TODO add timeZone handling
+        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
         String now = iCalDate.format(new Date());
         iCalDate.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -75,7 +75,7 @@ public class Interview {
             e.printStackTrace();
         }
 
-        return template.replace("{{organizer}}", parseOrganizer())
+        return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
                 .replace("{{attendees}}", parseAttendees())
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
