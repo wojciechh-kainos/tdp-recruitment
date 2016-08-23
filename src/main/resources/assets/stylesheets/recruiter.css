@@ -151,3 +151,7 @@
 .glyphicon-remove {
     color: #b20000;
 }
+
+.changed-cell {
+    border: 3px solid #ff3d00;
+}
