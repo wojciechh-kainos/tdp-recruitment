@@ -3,7 +3,9 @@ package dao;
 import com.google.inject.Inject;
 import domain.Person;
 import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -31,4 +33,10 @@ public class PersonDao extends AbstractDAO<Person>{
     }
 
     public void update(Person person){currentSession().update(person);}
+
+    public Person getUserByEmail(String email) {
+        Criteria criteria = currentSession().createCriteria(Person.class)
+                .add(Restrictions.eq("email", email));
+        return uniqueResult(criteria);
+    }
 }

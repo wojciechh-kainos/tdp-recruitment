@@ -19,6 +19,11 @@ define(['angular'
                     "@": {
                         templateUrl: "/js/application/recruiter/views/tdpr-recruiter-index.html"
                     }
+                },
+                resolve: {
+                  isAuthenticated: function(tdprAuthService) {
+                      return tdprAuthService.isAuthenticated("recruiter");
+                  }
                 }
             }).state("tdpr.recruiter.home", {
             url: "/recruiter",
