@@ -44,7 +44,7 @@
                 <input class="form-control" type="password" ng-model="newPassword"/>
                 <ul class="password-clues">
                     <span ng-hide="isPasswordValid">Password requires at least: </span>
-                    <li ng-hide="isPasswordValid" ng-repeat="error in passwordErrors">{{error}}<br></li>
+                    <li ng-hide="isPasswordValid" ng-repeat="clue in passwordClues">{{clue}}<br></li>
                 </ul>
             </div>
         </div>

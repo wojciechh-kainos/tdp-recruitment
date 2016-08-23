@@ -49,24 +49,24 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         });
 
         function isPasswordValid(password){
-                var errors = [];
+                var clues = [];
             if (password.length < 8) {
-                errors.push("8 characters");
+                clues.push("8 characters");
             }
             if (password.search(/[a-z]/) < 0) {
-                errors.push("one lowercase letter.");
+                clues.push("one lowercase letter.");
             }
             if (password.search(/[A-Z]/) < 0) {
-                errors.push("one uppercase letter.");
+                clues.push("one uppercase letter.");
             }
             if (password.search(/[0-9]/) < 0) {
-                errors.push("one digit.");
+                clues.push("one digit.");
             }
             if (password.search(/[!@#$%^&*]/) < 0) {
-                errors.push("one special character.");
+                clues.push("one special character.");
             }
-            if (errors.length > 0) {
-                $scope.passwordErrors = errors;
+            if (clues.length > 0) {
+                $scope.passwordClues = clues;
                 return false;
             }
             return true;
