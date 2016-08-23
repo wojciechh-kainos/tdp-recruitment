@@ -57,7 +57,7 @@ public class PersonResource {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
-        List<Person> persons = personDao.findAll();
+        List<Person> persons = personDao.findAllActive();
         persons.forEach(p -> p.setSlotList(slotDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
             Note note = noteDao.getByPersonIdAndDate(p.getId(), start);
@@ -69,6 +69,13 @@ public class PersonResource {
         });
 
         return persons;
+    }
+
+    @GET
+    @Path("/all/withoutSlots")
+    @UnitOfWork
+    public List fetchPersonsWithoutSlots() {
+        return personDao.findAll();
     }
 
     @GET

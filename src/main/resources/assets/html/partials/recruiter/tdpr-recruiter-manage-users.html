@@ -1,0 +1,24 @@
+ <h3 class="center" id="manage-users-header">Manage users</h3>
+    <div class="table-wrapper">
+        <table class="table table-fixed">
+            <thead>
+                <th id="left-header" ng-click="sortUsers()" ng-class="{'sortorderRevert': order, 'sortorder': !order}">User</th>
+                <th id="right-header">Action</th>
+            </thead>
+            <tr ng-repeat="p in persons | orderBy: 'lastName':order">
+                <td>
+                    <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : p.id, personName : p.firstName + ' ' + p.lastName})">
+                        {{ p.firstName + " " + p.lastName }}
+                        </a>
+                    </td>
+                <td>
+                    <button class ="btn btn-primary" ng-click="managePerson( p )" ng-class="{'btn-danger': p.active}">
+                        <span ng-if="p.active">disable account</span>
+                        <span ng-if="!p.active">enable account</span>
+                    </button>
+                </td>
+                </a>
+            </tr>
+        </table>
+        <button ui-sref="tdpr.recruiter.home" class ="btn btn-primary uppercase">back to recruiter view</button>
+    </div>

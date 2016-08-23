@@ -10,6 +10,7 @@ define(['angular'
     , 'application/recruiter/services/tdprCandidatesService'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
+    , 'application/recruiter/controllers/tdprManageUsersController'
     , 'application/common/filters/tdprJobProfileFilter'
     , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
@@ -55,11 +56,19 @@ define(['angular'
                 candidates: function (tdprCandidatesService) {
                     return tdprCandidatesService.fetchCandidates();
                     }
-            }, 
+            },
             views: {
                 "main@recruiter": {
                     templateUrl: "js/application/recruiter/views/tdpr-recruiter-candidates.html",
                     controller: "tdprCandidatesController"
+                }
+            }
+        }).state("tdpr.recruiter.manageUsers", {
+            url: "/manage-users",
+            views: {
+                "main@recruiter": {
+                    templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
+                    controller: "tdprManageUsersController"
                 }
             }
         })
