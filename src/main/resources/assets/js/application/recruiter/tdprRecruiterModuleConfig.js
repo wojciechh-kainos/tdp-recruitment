@@ -5,7 +5,9 @@ define(['angular'
     , 'application/recruiter/directives/tdprSlotDirective'
     , 'application/recruiter/services/tdprSlotsTimesService'
     , 'application/recruiter/controllers/tdprAddInterviewerController'
+    , 'application/recruiter/controllers/tdprCandidatesController'
     , 'application/recruiter/services/tdprPersonsService'
+    , 'application/recruiter/services/tdprCandidatesService'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
     , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
@@ -43,6 +45,19 @@ define(['angular'
                 "main@recruiter": {
                     templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html",
                     controller: "tdprAddInterviewerController"
+                }
+            }
+        }).state("tdpr.recruiter.candidates", {
+            url: "/candidates",
+            resolve:{
+                candidates: function (tdprCandidatesService) {
+                    return tdprCandidatesService.fetchCandidates();
+                    }
+            }, 
+            views: {
+                "main@recruiter": {
+                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-candidates.html",
+                    controller: "tdprCandidatesController"
                 }
             }
         })

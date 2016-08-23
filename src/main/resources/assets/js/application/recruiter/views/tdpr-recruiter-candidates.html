@@ -1,0 +1,33 @@
+<br>
+<div class="well center">
+    <h1 id="interviewer-details-h1">All candidates</h1>
+
+    <div class="row options">
+        <div class="col-md-8 col-md-offset-2">
+            <table id="report-table">
+                <thead class="column-heading">
+                <tr>
+                    <td class="day-th">Name</td>
+                    <td class="day-th">Potential Position</td>
+                    <td class="day-th">Recruiter</td>
+                    <td class="day-th">Note</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="candidate in candidates">
+                    <td class="slot hour-cell">{{ candidate.firstName + ' ' + candidate.lastName }}</td>
+                    <td class="slot hour-cell">{{ candidate.position }}</td>
+                    <td class="slot hour-cell">{{ candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName }}</td>
+                    <td class="slot hour-cell">{{ candidate.note }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a id="back-btn" ui-sref="tdpr.recruiter.home">Back</a>
+
+
+
+</div>
+
