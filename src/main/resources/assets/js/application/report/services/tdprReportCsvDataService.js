@@ -14,7 +14,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             reportData.map(function(item){
                 item.initHours = item.initHours.toString().replace(".", ",");
                 item.fullHours = item.fullHours.toString().replace(".", ",");
-                item.availableHours = item.availableHours.toString().replace(".", ",");
+                item.sumOfHours = item.sumOfHours.toString().replace(".", ",");
                 return item;
             });
 
@@ -33,7 +33,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             var header = addQuotes(columnMap["person.lastName"].columnName) + separator;
             header += addQuotes(columnMap["initHours"].columnName) + separator;
             header += addQuotes(columnMap["fullHours"].columnName) + separator;
-            header += addQuotes(columnMap["availableHours"].columnName) + endOfLine;
+            header += addQuotes(columnMap["sumOfHours"].columnName) + endOfLine;
             return header;
         }
 
@@ -41,7 +41,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
             var row = addQuotes(reportElement.person.lastName + emptySpace + reportElement.person.firstName) + separator;
             row += addQuotes(reportElement.initHours) + separator;
             row += addQuotes(reportElement.fullHours) + separator;
-            row += addQuotes(reportElement.availableHours) + endOfLine;
+            row += addQuotes(reportElement.sumOfHours) + endOfLine;
             return row;
         }
 

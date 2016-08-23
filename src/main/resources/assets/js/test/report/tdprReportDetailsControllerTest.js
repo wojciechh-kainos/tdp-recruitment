@@ -8,9 +8,6 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
         var csvDataService;
         var $state;
         var $scope;
-        var $controller;
-        var $httpBackend;
-        var $window;
         var Notification;
         var deferredPromise;
 
@@ -21,7 +18,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
 
             $scope = _$rootScope_.$new();
             $state = _$state_;
-            $window = {location: {}};
+
             Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             deferredPromise = _$q_.defer();
             reportService.getReports.and.returnValue(deferredPromise.promise);
@@ -31,6 +28,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 tdprReportService : reportService,
                 tdprReportDateService : dateService,
                 tdprReportCsvDataService : csvDataService,
+                DateFormat: 'dd-MM-yyyy',
                 Notification : Notification
             });
         }));

@@ -8,7 +8,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             {
                 initHours : 20.5,
                 fullHours : 20,
-                availableHours : 20.4,
+                sumOfHours : 20.4,
                 person : {
                     lastName : "FirstLastName",
                     firstName : "FirstFirstName"
@@ -18,7 +18,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             {
                 initHours : 0,
                 fullHours : 10,
-                availableHours : 2.4,
+                sumOfHours : 2.4,
                 person : {
                     lastName : "SecondLastName",
                     firstName : "SecondFirstName"
@@ -31,14 +31,14 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             'person.lastName': {reverse: true, columnName: "Person"},
             'initHours': {reverse: true, columnName: "Init hours"},
             'fullHours': {reverse: true, columnName: "Full hours"},
-            'availableHours': {reverse: true, columnName: "Unused hours"}
+            'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
-        var expectedString = '"Person";"Init hours";"Full hours";"Unused hours"\n'
+        var expectedString = '"Person";"Init hours";"Full hours";"Sum of hours"\n'
             + '"FirstLastName FirstFirstName";"20,5";"20";"20,4"\n'
             + '"SecondLastName SecondFirstName";"0";"10";"2,4"\n';
 
-        var expectedEmptyString = '"Person";"Init hours";"Full hours";"Unused hours"\n';
+        var expectedEmptyString = '"Person";"Init hours";"Full hours";"Sum of hours"\n';
 
         var expectedLink = "data:text/csv;charset=utf-8,";
 

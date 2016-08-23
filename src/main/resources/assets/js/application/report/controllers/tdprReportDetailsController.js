@@ -2,18 +2,16 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
     , 'application/report/services/tdprReportDateService'
     , 'application/report/services/tdprReportCsvDataService'
-    , 'application/report/directives/tdprReportDirective'
-    , 'application/report/directives/tdprJobProfileDirective'
-    , 'application/report/filters/tdprReportByPersonNameFilter'
-    , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, Notification, $window) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window) {
+
+        $scope.DateFormat = DateFormat;
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
             'initHours': {reverse: true, columnName: "Init hours"},
             'fullHours': {reverse: true, columnName: "Full hours"},
-            'availableHours': {reverse: true, columnName: "Unused hours"}
+            'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
         $scope.sortBy = function (column) {
@@ -75,7 +73,7 @@ define(['angular', 'application/report/tdprReportModule'
         }
 
         var getReportsInActualOrder = function(){
-                var reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+                var reportsForCSV = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
                 reportsForCSV.sort(function(a,b){
 
                     if($scope.sortColumn == 'person.lastName'){
