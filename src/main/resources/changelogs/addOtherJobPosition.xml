@@ -7,7 +7,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
     <changeSet id="US37_addOtherJobPosition" author="marcint">
-        <addColumn tableName="persons">
+        <addColumn tableName="person">
             <column name="is_other" type="boolean" defaultValueBoolean="false" />
         </addColumn>
     </changeSet>
