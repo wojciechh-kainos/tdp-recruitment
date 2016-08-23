@@ -32,9 +32,10 @@ public class PairResource {
                                   @QueryParam("endDate") String endDate,
                                   @QueryParam("isDev") Boolean isDev,
                                   @QueryParam("isTest") Boolean isTest,
-                                  @QueryParam("isOps") Boolean isOps) {
+                                  @QueryParam("isOps") Boolean isOps,
+                                  @QueryParam("isOther") Boolean isOther) {
 
-        List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps);
+        List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther);
         PairFinder pf = new PairFinder();
 
         return pf.findPairs(slots);
