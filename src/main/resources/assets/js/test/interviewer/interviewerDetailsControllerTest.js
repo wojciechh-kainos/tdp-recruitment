@@ -18,8 +18,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             $scope = _$rootScope_.$new();
             personService = tdprPersonService;
             updatePersonDeferred = $q.defer();
-            Notification = { success: function () {}, error: function () {}};
-
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
             spyOn($state, 'go');
