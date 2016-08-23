@@ -1,6 +1,6 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, $state,
                                                                         JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
         var that = this;
         $scope.pairingMode = false;
@@ -53,6 +53,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 $scope.outlookObject.organizer = "";
                 $scope.outlookObject.start = eventStartTime;
                 $scope.outlookObject.end = eventEndTime;
+
+                $state.go("tdpr.recruiter.createEvent", {data: $scope.outlookObject})
 
             }
         };

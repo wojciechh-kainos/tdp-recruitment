@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="well center">
+        <h1>Event Summary</h1>
+        <form-group>
+            <label>Interviewers:</label>
+            <ul>
+                <li ng-repeat="interviewer in interviewers">{{interviewer.firstName}} {{interviewer.lastName}}</li>
+            </ul>
+            <br>
+            <label>Interviewee:</label> {{interviewee}}
+            <br>
+            <label>Time:</label> {{startTime}} - {{endTime}}
+            <br>
+            <label>Organizer:</label> {{organizer}}
+            <br>
+            <button ng-click="">Submit</button>
+        </form-group>
+    </div>
+</div>
