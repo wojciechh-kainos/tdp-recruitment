@@ -41,7 +41,7 @@ define(['angular', 'application/report/tdprReportModule'
             )
             .catch(
                 function (status) {
-                    Notification.error({message: status, delay: 3500});
+                    Notification.error(status);
                 }
             )
         };
