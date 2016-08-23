@@ -7,6 +7,7 @@ import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/candidate")
@@ -50,7 +51,8 @@ public class CandidateResource {
     @Path("/{candidate_id}/deactivate")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public void delete(@PathParam("candidate_id")Long id){
+    public Response deactivate(@PathParam("candidate_id")Long id){
         candidateDao.deactivateById(id);
+        return Response.status(Response.Status.ACCEPTED).build();
     }
 }
