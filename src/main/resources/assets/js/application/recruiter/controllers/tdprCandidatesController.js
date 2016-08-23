@@ -7,15 +7,23 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.sortColumn = 'lastName';
         $scope.sortReverse = true;
         $scope.candidate = {};
+        $scope.candidateForEdit = {};
         var popUp;
+        var popUpForEdit;
 
-        $scope.create = function (candidate) {
+        $scope.create = function(candidate) {
             tdprCandidatesService.createCandidate(candidate);
             popUp.close();
             $window.location.reload();
         };
 
+        $scope.update = function(candidate){
+            tdprCandidatesService.updateCandidate(candidate);
+            popUpForEdit.close();
+        };
+
         $scope.candidate.isDeleted = false;
+        $scope.candidateForEdit.isDeleted = false;
 
         $scope.columnMap = {
             'lastName': {reverse: true, columnName: "Candidate"},
@@ -41,12 +49,21 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.open = function () {
-
             popUp = ngDialog.open({
                 template: 'dialog',
                 scope: $scope
             });
         };
+
+        $scope.showPopupForEdit = function (candidate) {
+            $scope.candidateForEdit = candidate;
+
+            popUpForEdit = ngDialog.open({
+                template: 'dialogForEdit',
+                scope: $scope
+            });
+        };
+
 
         $scope.sortBy = function (column) {
             $scope.sortColumn = column;

@@ -22,6 +22,17 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             });
         };
 
+        this.updateCandidate = function (candidate) {
+            console.log(candidate);
+            return $http.put("/api/candidate/update/", candidate).then(function (response) {
+                return response;
+            }, function (err) {
+                err.message = "Candidate updating failed.";
+                return $q.reject(err);
+            });
+        };
+
+
         this.deleteCandidate = function(candidate){
             return $http.get('/api/candidate/' + candidate.id + '/deactivate').then(function(response){
                 return response;
