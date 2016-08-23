@@ -11,6 +11,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             }
 
             if (slot !== undefined) {
+                slot.changed = true;
                 if (changeTo !== undefined) { // there is still availability type to change
                     slot.type = changeTo;
                 } else { // there are no more availability types, so we need to clear slot
@@ -21,7 +22,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     day: date,
                     person: person.id,
                     number: slotId,
-                    type: changeTo
+                    type: changeTo,
+                    changed: true
                 });
             }
         };

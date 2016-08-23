@@ -1,0 +1,53 @@
+.table-wrapper {
+    height: 80%;
+    width: 60%;
+    margin: auto;
+}
+
+.table-wrapper table {
+    height: 100%;
+    width: 100%;
+}
+
+#manage-users-header {
+    font-size: 48px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    color: #375D81;
+}
+
+.table-wrapper th {
+    font-size: 24px;
+    text-align: center;
+}
+
+.table-wrapper thead {
+    background-color: #375D81;
+    color: white;
+}
+
+.table-wrapper table {
+    text-align: center;
+}
+
+#right-header {
+    border-top-right-radius: 20px;
+}
+
+#left-header {
+    border-top-left-radius: 20px;
+}
+
+#left-header:hover {
+    cursor: pointer;
+}
+
+.sortorderRevert:after {
+    margin-left: 10px;
+    content: '\25b2';
+}
+
+.sortorder:after {
+    margin-left: 10px;
+    content: '\25bc';
+}

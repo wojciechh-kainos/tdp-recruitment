@@ -70,3 +70,109 @@ h2 {
 .cursor-pointer{
     cursor : pointer;
 }
+
+/* interviewer details and adding interviewer */
+#interviewer-details-h1 {
+    font-size: 48px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    color: #375D81;
+}
+
+.interviewer-form {
+    display: inline-block;
+}
+
+.details-checkbox {
+    margin-top: 12px !important;
+}
+
+.int-err {
+    color: #C0392B;
+    margin: 0px;
+    margin-top: 40px;
+}
+
+#date-container span {
+    font-size: 25px;
+    line-height: 25px;
+    margin: 0px 25px 0px 25px;
+    vertical-align: middle;
+}
+
+.navigate1 {
+    display: inline-block;
+    color: #3498DB;
+}
+
+.legend {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #375D81;
+}
+
+.legend label {
+    margin-right: 3rem;
+    vertical-align: middle;
+}
+
+.button {
+    border-radius: 5px;
+    border: 1px solid #3498DB;
+    background-color: transparent;
+    width: 110px;
+    margin-bottom: 1px;
+}
+
+.button:hover {
+    background-color: #3498DB;
+    color: white;
+}
+
+#date-container {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.interviewer-form label {
+    font-weight: normal;
+    margin: auto;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.btn-wrapper {
+    width: 100%;
+}
+
+.slot {
+    min-width: 25px;
+    height: 29px;
+    cursor: pointer;
+    border: 1px solid #375D81;
+}
+
+.container {
+    width: 95%;
+    position: relative;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.day-th, .slot-time-th {
+    background-color: #375D81;
+    color: white;
+    font-weight: bold;
+}
+
+.day-th {
+    box-sizing: border-box;
+    padding-left: 12px;
+    padding-right: 12px;
+}
