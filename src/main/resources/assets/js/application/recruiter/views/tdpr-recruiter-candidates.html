@@ -7,18 +7,16 @@
             <table id="report-table">
                 <thead class="column-heading">
                 <tr>
-                    <td class="day-th">Name</td>
-                    <td class="day-th">Potential Position</td>
-                    <td class="day-th">Recruiter</td>
-                    <td class="day-th">Note</td>
+                    <td class="day-th" ng-click="sortBy(column)" ng-repeat="(column, value) in columnMap">{{value.columnName}}<span class="sort-order" ng-show="sortColumn===column"
+                        ng-class="{sortReverse: value.reverse}"></span></td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="candidate in candidates">
-                    <td class="slot hour-cell">{{ candidate.firstName + ' ' + candidate.lastName }}</td>
-                    <td class="slot hour-cell">{{ candidate.position }}</td>
-                    <td class="slot hour-cell">{{ candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName }}</td>
-                    <td class="slot hour-cell">{{ candidate.note }}</td>
+                <tr ng-repeat="candidate in candidates | orderBy : sortColumn : sortReverse">
+                    <td class="slot hour-cell">{{candidate.lastName + ' ' + candidate.firstName}}</td>
+                    <td class="slot hour-cell">{{candidate.position}}</td>
+                    <td class="slot hour-cell">{{candidate.note}}</td>
+                    <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -26,8 +24,5 @@
     </div>
 
     <a id="back-btn" ui-sref="tdpr.recruiter.home">Back</a>
-
-
-
 </div>
 
