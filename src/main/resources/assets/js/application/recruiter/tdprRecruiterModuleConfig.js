@@ -8,7 +8,9 @@ define(['angular'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
-    , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
+    , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/directives/tdprJobProfileCheckboxDirective'
+    , 'application/common/directives/tdprJobProfileDirective'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {

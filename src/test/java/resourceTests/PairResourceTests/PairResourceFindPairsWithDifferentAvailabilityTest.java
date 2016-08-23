@@ -25,6 +25,7 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
+    private final Boolean isOther = false;
     private final Date sameDate = MockDataUtil.createDate(TODAY_OFFSET);
     private final Date differentDate = MockDataUtil.createDate(TOMORROW_OFFSET);
     private String startDate = MockDataUtil.convertDateToString(sameDate);
@@ -47,15 +48,15 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     @Test
     @Ignore
     public void testFindPairsShouldFindNoPairs() {
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        List<Person> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        List<Person> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
 
         assertEquals("There should be no pairs found", pairs.size(), 0);
     }
 
     private List<Slot> createFirstPerson(){
         List<SlotTime> slotsTimes = MockDataUtil.createSlotTimeList(1, 4);
-        Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps);
+        Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps, isOther);
         AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
         AvailabilityType typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
         List<Slot> slots = MockDataUtil.createSlotToSlotTime(slotsTimes, person, sameDate, typeAvailable);
@@ -66,7 +67,7 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
 
     private List<Slot> createSecondPerson(){
         List<SlotTime> slotsTimes = MockDataUtil.createSlotTimeList(1, 4);
-        Person person = MockDataUtil.createPerson(2L, "Second", isDev, isTest, isOps);
+        Person person = MockDataUtil.createPerson(2L, "Second", isDev, isTest, isOps, isOther);
         AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
         AvailabilityType typeFull = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
 
