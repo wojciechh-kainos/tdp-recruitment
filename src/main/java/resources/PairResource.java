@@ -31,15 +31,16 @@ public class PairResource {
 
     @GET
     @UnitOfWork
-    public List<Person> findPairsBetweenTime(@QueryParam("startDate") String startDate,
-                                             @QueryParam("endDate") String endDate,
-                                             @QueryParam("startTime") Time startTime,
-                                             @QueryParam("endTime") Time endTime,
-                                             @QueryParam("isDev") Boolean isDev,
-                                             @QueryParam("isTest") Boolean isTest,
-                                             @QueryParam("isOps") Boolean isOps) {
+    public List<Person> findPairs(@QueryParam("startDate") String startDate,
+                                  @QueryParam("endDate") String endDate,
+                                  @QueryParam("startTime") Time startTime,
+                                  @QueryParam("endTime") Time endTime,
+                                  @QueryParam("isDev") Boolean isDev,
+                                  @QueryParam("isTest") Boolean isTest,
+                                  @QueryParam("isOps") Boolean isOps,
+                                  @QueryParam("isOther") Boolean isOther) {
 
-        List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps);
+        List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
 
         return pairFinder.findPairs(slots);
     }
