@@ -17,9 +17,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 });
         };
 
-        service.createPathParams = function(roles, startDate, endDate, startTime, endTime){
+        service.createPathParams = function(roles, startDate, endDate, startTime, endTime) {
 
-            if(!roles || !startDate || !endDate || !startTime || !endTime){
+            if (!roles || !startDate || !endDate || !startTime || !endTime) {
                 return false;
             }
 
