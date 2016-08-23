@@ -21,7 +21,6 @@ public class ReportService {
 
     public Report getReport(long personId, Date startDate, Date endDate) {
 
-        Double availableCount = 0.0;
         Double fullCount = 0.0;
         Double initCount = 0.0;
 
@@ -35,9 +34,6 @@ public class ReportService {
             Double slotDuration = slotTime.getSlotDurationInMinutes();
 
             switch (slot.getType().getName()) {
-                case available:
-                    availableCount += slotDuration;
-                    break;
                 case full:
                     fullCount += slotDuration;
                     break;
@@ -48,7 +44,7 @@ public class ReportService {
                     break;
             }
         }
-        return new Report(person, initCount, availableCount, fullCount);
+        return new Report(person, initCount, fullCount);
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {
