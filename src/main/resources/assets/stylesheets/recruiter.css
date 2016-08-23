@@ -76,6 +76,10 @@
     font-size: larger;
 }
 
+#manage-btn {
+    font-size: larger;
+}
+
 .day-th, .slot-time-th {
     background-color: #375D81;
     color: white;
