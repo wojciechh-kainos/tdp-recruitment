@@ -49,10 +49,10 @@ public class CandidateResource {
 
     @GET
     @Path("/{candidate_id}/deactivate")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Response deactivate(@PathParam("candidate_id")Long id){
         candidateDao.deactivateById(id);
-        return Response.status(Response.Status.ACCEPTED).build();
+        return Response.status(Response.Status.ACCEPTED).entity(id).build();
     }
 }

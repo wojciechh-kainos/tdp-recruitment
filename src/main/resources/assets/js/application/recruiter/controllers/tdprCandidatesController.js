@@ -19,16 +19,16 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.removeCandidate = function(candidate){
-            this.candidate = candidate;
-            var parent = this;
-
-            _.remove($scope.candidates, function(candidate){
-                return candidate.id === parent.candidate.id;
-            });
-
             tdprCandidatesService.deleteCandidate(candidate)
-            .then(function(){
+            .then(function(response){
+                this.idOfCandidate = response.data;
+                var parent = this;
                 Notification.success({message : "Deleting candidate succeed", delay : 2000});
+
+                _.remove($scope.candidates, function(candidate){
+                    return candidate.id === parent.idOfCandidate;
+                });
+
             }, function(response){
                 Notification.error({message : response.message, delay : 3500});
             });
@@ -43,7 +43,6 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                 data: { foo: 'from a service' },
                 scope: $scope
             });
-            // example on checking whether created `new_dialog` is open
             $timeout(function() {
                 console.log(ngDialog.isOpen(new_dialog.id));
             }, 2000)
