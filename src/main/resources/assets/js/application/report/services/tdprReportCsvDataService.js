@@ -11,15 +11,15 @@ define(['angular','application/report/tdprReportModule'], function (angular, tdp
             var reportData = angular.copy(viewReportData);
             var dataString = createHeader(columnMap);
 
-            reportData.map(function(item){
-                item.initHours = item.initHours.toString().replace(".", ",");
-                item.fullHours = item.fullHours.toString().replace(".", ",");
-                item.sumOfHours = item.sumOfHours.toString().replace(".", ",");
-                return item;
+            reportData.map(function(reportElement){
+                  reportElement.initHours = replaceDotWithComma(reportElement.initHours);
+                  reportElement.fullHours = replaceDotWithComma(reportElement.fullHours);
+                  reportElement.sumOfHours = replaceDotWithComma(reportElement.sumOfHours);
+                return reportElement;
             });
 
-            reportData.forEach(function(item){
-               dataString += createReportRow(item);
+            reportData.forEach(function(reportElement){
+               dataString += createReportRow(reportElement);
             });
 
             return dataString;
@@ -27,6 +27,10 @@ define(['angular','application/report/tdprReportModule'], function (angular, tdp
 
         this.getLink = function(dataString){
             return baseLink + encodeURIComponent(dataString);
+        }
+
+        var replaceDotWithComma = function(value){
+            return value.toString().replace(".", ",");
         }
 
         var createHeader = function(columnMap){
