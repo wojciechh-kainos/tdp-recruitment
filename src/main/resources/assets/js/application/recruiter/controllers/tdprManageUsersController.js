@@ -8,7 +8,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             Notification.error({message: "Something went wrong with getting users" , delay: 3500});
         });
 
-        $scope.managePerson = function( person ){
+        $scope.managePerson = function( person ) {
             person.active = !person.active;
             tdprPersonsService.managePerson(person).then( function () {
                 if(!person.active) {
@@ -23,6 +23,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             }, function () {
                 Notification.error({message: "Something went wrong with your request." , delay: 3500});
             });
+        }
+
+        $scope.sortUsers = function() {
+            $scope.order = !$scope.order;
         }
 
     });

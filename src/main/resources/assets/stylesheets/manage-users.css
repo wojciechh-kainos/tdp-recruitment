@@ -37,3 +37,17 @@
 #left-header {
     border-top-left-radius: 20px;
 }
+
+#left-header:hover {
+    cursor: pointer;
+}
+
+.sortorderRevert:after {
+    margin-left: 10px;
+    content: '\25b2';
+}
+
+.sortorder:after {
+    margin-left: 10px;
+    content: '\25bc';
+}
