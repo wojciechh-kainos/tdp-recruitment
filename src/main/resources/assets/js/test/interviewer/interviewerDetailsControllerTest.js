@@ -76,7 +76,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.updateDetails();
                 $scope.$apply();
 
-                expect(Notification.success).toHaveBeenCalledWith({message: 'Details updated!', delay: 2000});
+                expect(Notification.success).toHaveBeenCalledWith('Details updated!');
             });
         });
     });

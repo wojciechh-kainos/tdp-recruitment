@@ -58,9 +58,9 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
                 sameSlotTimesFifth, sameSlotTimesSixth, sameSlotTimesSeventh);
 
         Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(unorderedSlotsTimes, firstPerson, date, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, firstPerson, date, availabilityType));
         Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(unorderedSlotsTimes, secondPerson, date, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, secondPerson, date, availabilityType));
 
         resource = new PairResource(mockDao);
 

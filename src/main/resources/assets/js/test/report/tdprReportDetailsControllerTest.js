@@ -79,14 +79,14 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $scope.$apply();
 
                 expect(reportService.getReports).toHaveBeenCalledTimes(1);
-                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully downloaded.', delay : 2000});
+                expect(Notification.success).toHaveBeenCalledWith('Report successfully downloaded.');
             });
 
             it('should return error message when server does not return data', function(){
                 deferredPromise.reject("Unable to get data from server!");
                 $scope.$apply();
 
-                expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : 3500});
+                expect(Notification.error).toHaveBeenCalledWith("Unable to get data from server!");
             });
         })
     })
