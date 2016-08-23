@@ -20,7 +20,12 @@ define(['angular'
                     "@": {
                         templateUrl: "/html/partials/report/tdpr-report-index.html"
                     }
-                }
+                },
+                resolve: {
+                     isAuthenticated: function(tdprAuthService) {
+                         return tdprAuthService.isAuthenticated("recruiter");
+                     }
+                 }
             })
             .state("tdpr.report.home", {
                 url: '/report',

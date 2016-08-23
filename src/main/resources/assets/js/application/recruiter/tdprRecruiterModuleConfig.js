@@ -12,6 +12,7 @@ define(['angular'
     , 'application/common/filters/tdprJobProfileFilter'
     , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
+    , 'application/auth/services/tdprAuthService'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
@@ -22,6 +23,11 @@ define(['angular'
                     "@": {
                         templateUrl: "/html/partials/recruiter/tdpr-recruiter-index.html"
                     }
+                },
+                resolve: {
+                  isAuthenticated: function(tdprAuthService) {
+                      return tdprAuthService.isAuthenticated("recruiter");
+                  }
                 }
             }).state("tdpr.recruiter.home", {
             url: "/recruiter",

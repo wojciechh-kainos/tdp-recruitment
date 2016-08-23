@@ -2,10 +2,12 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,7 @@ import java.util.List;
         @NamedQuery(name = "Person.findAllActive", query = "select p from Person p where active = true"),
         @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
-public class Person implements Cloneable {
-
+public class Person implements Cloneable, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,10 +38,10 @@ public class Person implements Cloneable {
     @Length(max = 35)
     private String lastName;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean admin;
 
     @Column(name = "is_dev")
@@ -59,7 +60,6 @@ public class Person implements Cloneable {
     @Column(name = "band_level")
     private Integer bandLevel;
 
-
     @JsonIgnore
     @Column(name = "activation_code")
     private String activationCode;
@@ -71,6 +71,10 @@ public class Person implements Cloneable {
     private Time defaultFinishHour;
 
     private Boolean active;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String token;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
@@ -241,5 +245,18 @@ public class Person implements Cloneable {
                 ", slotList=" + slotList +
                 ", noteList=" + noteList +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return this.email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

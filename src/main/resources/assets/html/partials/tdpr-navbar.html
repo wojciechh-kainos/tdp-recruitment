@@ -1,0 +1,13 @@
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <a class="navbar-brand">Recruitment helper</a>
+        <a ui-sref="tdpr.recruiter.home" class="navbar-text">Home</a>
+        <div class="login navbar-right" ng-show="userLoggedIn">
+            <p class="navbar-text">Hello, {{user.firstName}}</p>
+            <a ng-click="logout()" class="navbar-text">Sign out</a>
+        </div>
+        <div class="login navbar-right" ng-show="!userLoggedIn">
+            <a ui-sref="tdpr.login" class="navbar-text">Sign in</a>
+        </div>
+    </div>
+</nav>
