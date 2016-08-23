@@ -13,11 +13,11 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             )
         };
 
-        this.createCandidate = function (person) {
-            return $http.put("/api/candidate/create/", person).then(function (response) {
+        this.createCandidate = function (candidate) {
+            return $http.put("/api/candidate/create/", candidate).then(function (response) {
                 return response;
             }, function (err) {
-                err.message = "Interviewer adding failed.";
+                err.message = "Candidate adding failed.";
                 return $q.reject(err);
             });
         };

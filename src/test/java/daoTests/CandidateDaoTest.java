@@ -24,7 +24,7 @@ public class CandidateDaoTest extends BaseTest {
         exampleCandidate.setFirstName("Jan");
         exampleCandidate.setLastName("Kowalski");
         exampleCandidate.setPosition("Trainee Software Engineer");
-        exampleCandidate.setDeleted(false);
+        exampleCandidate.setIsDeleted(false);
 
         getSession().beginTransaction();
         exampleRecruiter = new Person();
@@ -75,7 +75,7 @@ public class CandidateDaoTest extends BaseTest {
         Candidate deactivatedCandidate = candidateDao.findById(returnedId);
         getSession().getTransaction().commit();
 
-        assertTrue("Deactivated candidate should have is_deleted flag set to true", deactivatedCandidate.getDeleted());
+        assertTrue("Deactivated candidate should have is_deleted flag set to true", deactivatedCandidate.getIsDeleted());
     }
 
     @Test
