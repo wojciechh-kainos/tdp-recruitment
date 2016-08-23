@@ -67,23 +67,31 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.generateCSV = function() {
             var reportsForCSV = getReportsInActualOrder();
             var data = tdprReportCsvDataService.generateCsvData(reportsForCSV, $scope.columnMap);
-            $window.location.href = tdprReportCsvDataService.getLink(data);
+            $scope.downloadCsvFile(tdprReportCsvDataService.getLink(data));
         };
+
+        $scope.downloadCsvFile = function(link){
+            $window.location.href = link;
+        }
 
         var getReportsInActualOrder = function(){
                 var reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
                 reportsForCSV.sort(function(a,b){
 
                     if($scope.sortColumn == 'person.lastName'){
-                        if(a.person.lastName >= b.person.lastName){
+                        if(a.person.lastName > b.person.lastName){
                             return 1;
+                        }else if (a.person.lastName < b.person.lastName){
+                            return -1;
                         }
-                        return -1;
+                        return 0;
                     }else{
-                        if(a[$scope.sortColumn] >= b[$scope.sortColumn]){
+                        if(a[$scope.sortColumn] > b[$scope.sortColumn]){
                             return 1;
+                        }else if(a[$scope.sortColumn] < b[$scope.sortColumn]){
+                            return -1;
                         }
-                        return -1;
+                        return 0;
                     }
                 })
                 return reportsForCSV;

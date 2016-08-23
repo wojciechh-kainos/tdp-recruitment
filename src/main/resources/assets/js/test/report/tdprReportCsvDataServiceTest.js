@@ -10,8 +10,18 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
                 fullHours : 20,
                 availableHours : 20.4,
                 person : {
-                    lastName : "LastName",
-                    firstName : "FirstName"
+                    lastName : "FirstLastName",
+                    firstName : "FirstFirstName"
+                }
+
+            },
+            {
+                initHours : 0,
+                fullHours : 10,
+                availableHours : 2.4,
+                person : {
+                    lastName : "SecondLastName",
+                    firstName : "SecondFirstName"
                 }
 
             }
@@ -25,10 +35,12 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
         };
 
         var expectedString = '"Person";"Init hours";"Full hours";"Unused hours"\n'
-            + '"LastName FirstName";"20,5";"20";"20,4"\n';
+            + '"FirstLastName FirstFirstName";"20,5";"20";"20,4"\n'
+            + '"SecondLastName SecondFirstName";"0";"10";"2,4"\n';
+
+        var expectedEmptyString = '"Person";"Init hours";"Full hours";"Unused hours"\n';
 
         var expectedLink = "data:text/csv;charset=utf-8,";
-
 
         beforeEach(inject(function (_tdprReportCsvDataService_) {
             $service = _tdprReportCsvDataService_;
@@ -40,10 +52,16 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
                 expect(dataString).toEqual(expectedString);
             });
 
+            it('should return expected empty string', function(){
+                var dataString = $service.generateCsvData([], columnMap);
+                expect(dataString).toEqual(expectedEmptyString);
+            });
+
             it('should return expected link', function(){
                 var link = $service.getLink(expectedString);
                 expect(link).toContain(expectedLink);
             });
+
         })
     })
 });

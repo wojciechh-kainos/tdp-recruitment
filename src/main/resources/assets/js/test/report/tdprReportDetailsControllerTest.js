@@ -5,19 +5,23 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
 
         var reportService;
         var dateService;
+        var csvDataService;
         var $state;
         var $scope;
         var $controller;
         var $httpBackend;
+        var $window;
         var Notification;
         var deferredPromise;
 
         beforeEach(inject(function (_$rootScope_, _$state_, $controller, _$q_) {
             reportService = jasmine.createSpyObj('tdprReportService', ['getReports']);
-
+            csvDataService = jasmine.createSpyObj('tdprReportCsvDataService', ['generateCsvData', 'getLink']);
             dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
+
             $scope = _$rootScope_.$new();
             $state = _$state_;
+            $window = {location: {}};
             Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             deferredPromise = _$q_.defer();
             reportService.getReports.and.returnValue(deferredPromise.promise);
@@ -26,6 +30,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $state : $state,
                 tdprReportService : reportService,
                 tdprReportDateService : dateService,
+                tdprReportCsvDataService : csvDataService,
                 Notification : Notification
             });
         }));
@@ -49,6 +54,16 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 expect($scope.endDate).toEqual(new Date($state.params.dateEnd));
             });
         });
+
+        describe('Generate csv', function(){
+            it('functions from csvDataService should be triggered', function(){
+                $scope.reportsElements = [];
+                $scope.downloadCsvFile = function(){};
+                $scope.generateCSV();
+                expect(csvDataService.generateCsvData).toHaveBeenCalled();
+                expect(csvDataService.getLink).toHaveBeenCalled();
+            });
+        })
 
         describe('Notification', function(){
             it('should return success when get data from server', function(){
