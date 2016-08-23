@@ -32,6 +32,7 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
         final Boolean isDev = true;
         final Boolean isTest = false;
         final Boolean isOps = false;
+        final Boolean isOther = false;
         String startDate;
         String endDate;
         PairResource resource;
@@ -56,15 +57,15 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
                 sameSlotTimesThird, sameSlotTimesFourth,
                 sameSlotTimesFifth, sameSlotTimesSixth, sameSlotTimesSeventh);
 
-        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, firstPerson, date, availabilityType));
-        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, secondPerson, date, availabilityType));
 
         resource = new PairResource(mockDao);
 
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
     }
 
     @Test
