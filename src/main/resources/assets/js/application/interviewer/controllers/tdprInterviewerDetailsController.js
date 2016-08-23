@@ -2,6 +2,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
     tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
 
         $scope.BandLevelEnum = BandLevelEnum;
+        $scope.arePasswordsDifferent = false;
 
         function init() {
                 $scope.person = person;
@@ -18,6 +19,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         }
 
         $scope.updateDetails = function () {
+            if($scope.arePasswordsDifferent && $scope.changePassword){
+                return Notification.error("Changes not saved! Passwords are different!");
+            }
             var person = angular.copy($scope.person);
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
             person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
@@ -33,6 +37,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         $scope.goHome = function () {
             $state.go('tdpr.interviewer.home', {'id': $stateParams.id});
         };
+
+        $scope.$watch('[newPassword, confirmPassword]', function(newValue, oldValue, scope){
+            scope.arePasswordsDifferent = newValue[0]===newValue[1] ? false : true;
+        });
 
         init();
     });

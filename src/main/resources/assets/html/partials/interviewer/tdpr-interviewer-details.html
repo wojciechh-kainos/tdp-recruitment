@@ -52,13 +52,14 @@
         <div class="form-group" ng-show="changePassword">
             <label class="control-label col-md-6">New password:</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" ng-model="newPassword"/>
+                <input class="form-control" type="password" ng-model="newPassword"/>
             </div>
         </div>
         <div class="form-group" ng-show="changePassword">
             <label class="control-label col-md-6">Confirm password:</label>
             <div class="col-md-4">
-                <input class="form-control" type="text" ng-model="confirmPassword"/>
+                <input class="form-control" type="password" ng-model="confirmPassword"/>
+                <span ng-show="arePasswordsDifferent">Passwords are different!</span>
             </div>
         </div>
         <div class="center btn-wrapper">
