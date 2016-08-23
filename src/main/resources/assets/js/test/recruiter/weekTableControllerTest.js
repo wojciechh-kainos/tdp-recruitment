@@ -153,7 +153,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 expect(person.changesPending).toEqual(false);
                 expect(Notification.success).toHaveBeenCalledWith({
                     message: 'Your changes were saved successfully!',
-                    delay: 3500
+                    delay: NotificationDelay
                 });
             });
 

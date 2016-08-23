@@ -17,8 +17,8 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
             dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
             $scope = _$rootScope_.$new();
             $state = _$state_;
-            Notification = jasmine.createSpy('Notification', ['success', 'error']);
-            NotificationDelay = jasmine.createSpyObj('NotificationDelay');
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+            NotificationDelay = jasmine.createSpy('NotificationDelay');
             deferredPromise = _$q_.defer();
             reportService.getReports.and.returnValue(deferredPromise.promise);
             $controller('tdprReportDetailsController', {

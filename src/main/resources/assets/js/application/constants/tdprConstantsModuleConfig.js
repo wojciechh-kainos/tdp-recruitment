@@ -59,7 +59,7 @@ define(['angular'
         next: 1,
         current: 0
     }).constant('DateFormat', 'yyyy-MM-dd')
-    .constant('NotificationDelay', '2000');
+    .constant('NotificationDelay', '1500');
 
     return tdprConstantsModule;
 });
