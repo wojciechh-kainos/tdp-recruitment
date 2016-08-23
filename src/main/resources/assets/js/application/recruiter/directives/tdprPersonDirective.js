@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("person", function () {
         return {
             restrict: 'AE',
-            templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
+            templateUrl: '/html/partials/recruiter/tdpr-directive-person.html',
             scope: {
                 personData: '=',
                 slotsTimes: '=',

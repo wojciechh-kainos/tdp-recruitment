@@ -3,7 +3,8 @@ define(['angular'
 , 'application/interviewer/controllers/tdprInterviewerHomeController'
 , 'application/interviewer/controllers/tdprInterviewerDetailsController'
 , 'application/interviewer/services/tdprSlotsService'
-, 'application/interviewer/services/tdprPersonService'],
+, 'application/interviewer/services/tdprPersonService'
+, 'application/common/directives/tdprJobProfileCheckboxDirective'],
  function (angular, tdprInterviewerModule) {
    tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) {
           $stateProvider
