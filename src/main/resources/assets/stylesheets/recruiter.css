@@ -11,6 +11,13 @@
     white-space: nowrap;
 }
 
+.slot {
+    min-width: 25px;
+    height: 29px;
+    cursor: pointer;
+    border: 1px solid #375D81;
+}
+
 .slot-span {
     display: block;
     width: 100%;
@@ -24,6 +31,12 @@
     margin-left: 245px;
     overflow-y: visible;
     padding-bottom: 1px;
+}
+
+.container {
+    width: 95%;
+    position: relative;
+    font-family: 'Lato', sans-serif;
 }
 
 .person-name {
@@ -58,6 +71,10 @@
 }
 
 #reports-btn {
+    font-size: larger;
+}
+
+#manage-btn {
     font-size: larger;
 }
 
