@@ -115,4 +115,15 @@ public class PersonResource {
         personDao.update(person);
         return person;
     }
+
+    @PUT
+    @Path("/{id}/switchAccountStatus")
+    @UnitOfWork
+    public Response switchAccountStatus(@PathParam("id") Long id) {
+
+        Person person = personDao.getById(id);
+        person.setActive(!person.getActive());
+
+        return Response.ok().build();
+    }
 }
