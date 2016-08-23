@@ -1,7 +1,6 @@
 define(['angular', 'angularMocks'
     , 'lodash'
     , 'application/report/filters/tdprReportByPersonNameFilter'
-    , 'application/report/filters/tdprReportByJobProfileFilter'
     , 'application/report/tdprReportModule'], function (angular) {
     describe('tdprReportFilters', function () {
         beforeEach(angular.mock.module('tdprReportModule'));
@@ -78,34 +77,5 @@ define(['angular', 'angularMocks'
             })
         });
 
-        describe('By job profile filter', function () {
-            it('should return 1 person if isDev checked, object filter', function () {
-                var selected = {
-                    isDev: true,
-                    isTest: false,
-                    isWeb: false
-                };
-
-                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(1);
-            });
-
-            it('should return 1 person if isDev checked, string filter', function () {
-                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
-            });
-
-            it('should return 1 person if isDev checked, string filter', function () {
-                expect(filter('jobReportProfileFilter')(dataForTesting, "isDev").length).toEqual(1);
-            });
-
-            it('should return 2 person if isDev and isWeb checked, object filter', function () {
-                var selected = {
-                    isDev: true,
-                    isTest: false,
-                    isWeb: true
-                };
-
-                expect(filter('jobReportProfileFilter')(dataForTesting, selected).length).toEqual(2);
-            });
-        })
     })
 });

@@ -9,20 +9,7 @@
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
     </div>
 
-    <div class="legend">
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
-            <span>Developer</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
-            <span> Tester</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.ops}}"/>
-            <span> WebOps</span>
-        </label>
-    </div>
+    <job-profile selected-profiles="currentJobProfile" is-radio="true"></job-profile>
 
     <form class="form-inline">
         <div class="form-group">

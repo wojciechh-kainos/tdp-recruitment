@@ -40,7 +40,7 @@ public class MockDataUtil {
         return slotTime;
     }
 
-    public static Person createPerson(Long id, String uniqueValue, Boolean isDev, Boolean isTest, Boolean isOps) {
+    public static Person createPerson(Long id, String uniqueValue, Boolean isDev, Boolean isTest, Boolean isOps, Boolean isOther) {
         Person person = new Person();
         person.setId(id);
         person.setFirstName("NAME " + uniqueValue);
@@ -52,6 +52,7 @@ public class MockDataUtil {
         person.setIsDev(isDev);
         person.setIsTest(isTest);
         person.setIsOps(isOps);
+        person.setIsOther(isOther);
         return person;
     }
 
