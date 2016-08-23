@@ -30,65 +30,59 @@
 
     <script type="text/ng-template" id="firstDialogId">
         <div class="ngdialog-message">
-            <h3>ngDialog template</h3>
-            <p ng-show="theme">Test content for <code>{{theme}}</code></p>
-            <p ng-show="ngDialogId">Dialog Id: <code>{{ngDialogId}}</code></p>
-            <p class="data-passed-through" ng-show="ngDialogData.foo">Data passed through:
-                <code>{{ngDialogData.foo}}</code></p>
-            <p>Close this dialog:
-                <button class="inline close-this-dialog" ng-click="closeThisDialog()">Close</button>
-            </p>
-
-            Candidates: {{ candidates }}
+            <h3>Add new candidate:</h3>
 
 
-            <form class="form-horizontal interviewer-form" name="interviewerForm" role="form">
+            <form class="form-horizontal interviewer-form" name="candidateForm" role="form">
                 <hr>
-
-                <hr>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Band level:</label>
-                    <div class="col-md-8">
-                        <div class="ui-select">
-                            <select class="form-control" ng-model="person.bandLevel"
-                                    ng-options="key as value for (key, value) in BandLevelEnum"
-                                    ng-init="person.bandLevel = '6';">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">E-mail:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="email" type="email" ng-model="person.email"
-                               ng-maxlength="100" required/>
-                    </div>
-                    <p class="int-err center" ng-show="interviewerForm.email.$error.maxlength">Email cannot have more
-                        than 100 characters.</p>
-                </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">First name:</label>
                     <div class="col-md-8">
-                        <input class="form-control input" name="firstName" type="text" ng-model="person.firstName"
+                        <input class="form-control input" name="firstName" type="text" ng-model="candidate.firstName"
                                ng-maxlength="35" required/>
                     </div>
-                    <p class="int-err center" ng-show="interviewerForm.firstName.$error.maxlength">First name cannot
+                    <p class="int-err center" ng-show="candidateForm.firstName.$error.maxlength">First name cannot
                         have more than 35 characters.</p>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Last name:</label>
                     <div class="col-md-8">
-                        <input class="form-control input" name="lastName" type="text" ng-model="person.lastName"
+                        <input class="form-control input" name="lastName" type="text" ng-model="candidate.lastName"
                                ng-maxlength="35" required/>
                     </div>
-                    <p class="int-err center" ng-show="interviewerForm.lastName.$error.maxlength">Last name cannot have
+                    <p class="int-err center" ng-show="candidateForm.lastName.$error.maxlength">Last name cannot have
                         more than 35 characters.</p>
                 </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Potential Position:</label>
+                    <div class="col-md-8">
+                        <input class="form-control input" name="position" type="text" ng-model="candidate.position"
+                               required/>
+                    </div>
+                </div>
+
+                <!--<div class="form-group">-->
+                    <!--<label class="col-md-4 control-label">Recruiter:</label>-->
+                    <!--<div class="col-md-8">-->
+                        <!--<input class="form-control input" name="position" type="text" ng-model="candidate.recruiter"-->
+                               <!--required/>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Note:</label>
+                    <div class="col-md-8">
+                        <input class="form-control input" name="note" type="text" ng-model="candidate.note"
+                               required/>
+                    </div>
+                </div>
+                <hr>
+
                 <div class="center btn-wrapper">
                     <input class="btn btn-primary" type="submit"
-                           ng-click="interviewerForm.$valid ? create(person) : showError()" value="Submit"
-                           ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
-                    <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
+                           ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Submit" ng-disabled="form.$invalid"/>
+                           <!--ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>-->
+
 
                 </div>
             </form>
