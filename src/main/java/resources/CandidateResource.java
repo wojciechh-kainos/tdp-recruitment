@@ -53,6 +53,6 @@ public class CandidateResource {
     @UnitOfWork
     public Response deactivate(@PathParam("candidate_id")Long id){
         candidateDao.deactivateById(id);
-        return Response.status(Response.Status.ACCEPTED).build();
+        return Response.status(Response.Status.ACCEPTED).entity("Candidate deactivation succeed").build();
     }
 }
