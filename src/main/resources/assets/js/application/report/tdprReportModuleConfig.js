@@ -18,7 +18,7 @@ define(['angular'
                 },
                 views: {
                     "@": {
-                        templateUrl: "/js/application/report/views/tdpr-report-index.html"
+                        templateUrl: "/html/partials/report/tdpr-report-index.html"
                     }
                 }
             })
@@ -26,7 +26,7 @@ define(['angular'
                 url: '/report',
                 views: {
                     "main@report": {
-                        templateUrl: '/js/application/report/views/tdpr-report-details.html',
+                        templateUrl: '/html/partials/report/tdpr-report-details.html',
                         controller: 'tdprReportDetailsController'
                     }
                 }
