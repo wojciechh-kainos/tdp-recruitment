@@ -6,7 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/filters/tdprReportByPersonNameFilter'
     , 'application/report/filters/tdprReportByJobProfileFilter'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, Notification) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, Notification, $window) {
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -64,28 +64,28 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.activate();
 
         var dataString = "";
+        var csvContent = "data:text/csv;charset=utf-8,";
+
         $scope.generateCSV = function() {
+            dataString = "";
             $scope.reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles)
-            $scope.reportsForCSV.map(function(item){
+            $scope.reportsForCSV = $scope.reportsForCSV.map(function(item){
                 item.initHours = item.initHours.toString().replace(".", ",");
                 item.fullHours = item.fullHours.toString().replace(".", ",");
                 item.availableHours = item.availableHours.toString().replace(".", ",");
                 return item;
             });
 
-            var csvContent = "data:text/csv;charset=utf-8,";
-
+            dataString += '"Last Name";"First Name";"Init Hours";"Full Hours";"Unused hours"\n';
             $scope.reportsForCSV.forEach(function(item){
-               dataString += item.person.lastName + ";" + item.initHours + ";" + item.fullHours + ";" +item.availableHours + "\n";
-//               csvContent += index < data.length ? dataString+ "\n" : dataString;
-
+               dataString += '"' + item.person.lastName + '";"' + item.person.firstName + '";' + item.initHours + ";" + item.fullHours + ";" +item.availableHours + "\n";
             });
 
-
+            $window.location.href = $scope.link();
         };
 
         $scope.link = function(){
-            return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(dataString);
+            return csvContent + encodeURIComponent(dataString);
         }
     })
 });
