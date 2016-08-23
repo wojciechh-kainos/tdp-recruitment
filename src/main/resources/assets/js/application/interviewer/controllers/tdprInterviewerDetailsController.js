@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person, NotificationDelay) {
+    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
 
         $scope.BandLevelEnum = BandLevelEnum;
 
@@ -24,7 +24,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
 
             tdprPersonService.updatePersonDetails(person).then(function () {
-                Notification.success({message: 'Details updated!', delay: NotificationDelay});
+                Notification.success('Details updated!');
 
                 $scope.goHome();
             });

@@ -2,7 +2,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
     , 'application/report/services/tdprReportDateService'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification, NotificationDelay) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification) {
 
         $scope.DateFormat = DateFormat;
 
@@ -37,12 +37,12 @@ define(['angular', 'application/report/tdprReportModule'
                     $scope.currentReportStart = $scope.startDate;
                     $scope.currentReportEnd = $scope.endDate;
                     $scope.reportsElements = response;
-                    Notification.success({message: 'Report successfully downloaded.', delay: NotificationDelay});
+                    Notification.success('Report successfully downloaded.');
                 }
             )
             .catch(
                 function (status) {
-                    Notification.error({message: status, delay: NotificationDelay});
+                    Notification.error(status);
                 }
             )
         };

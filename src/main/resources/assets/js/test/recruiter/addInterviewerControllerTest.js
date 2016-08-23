@@ -6,7 +6,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
         var $scope;
         var $state;
         var Notification;
-        var NotificationDelay;
         var tdprWeekTableController;
         var tdprPersonsService;
         var createPersonDeferred;
@@ -28,7 +27,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                 $scope = _$rootScope_.$new();
                 $scope.person = {"bandLevel": "5"};
                 Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
-                NotificationDelay = jasmine.createSpy('NotificationDelay');
                 tdprPersonsService = jasmine.createSpyObj('tdprPersonsService', ['createPerson']);
 
                 createPersonDeferred = _$q_.defer();
@@ -39,7 +37,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                     tdprPersonsService: tdprPersonsService,
                     $state: $state,
                     Notification: Notification,
-                    NotificationDelay: NotificationDelay,
                     BandLevelEnum: BandLevelEnum
                 });
             })
@@ -60,7 +57,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                 $scope.$apply();
 
                 expect(tdprPersonsService.createPerson).toHaveBeenCalledWith(person);
-                expect(Notification.success).toHaveBeenCalledWith({message: 'Interviewer added', delay: NotificationDelay});
+                expect(Notification.success).toHaveBeenCalledWith('Interviewer added');
                 expect($scope.goHome).toHaveBeenCalled();
             });
 
@@ -72,7 +69,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                 $scope.$apply();
 
                 expect(tdprPersonsService.createPerson).toHaveBeenCalledWith(person);
-                expect(Notification.error).toHaveBeenCalledWith({message: message, delay: NotificationDelay});
+                expect(Notification.error).toHaveBeenCalledWith(message);
             });
         });
 

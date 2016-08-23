@@ -47,7 +47,8 @@ define(['angular'
                     controller: "tdprAddInterviewerController"
                 }
             }
-        })
+        });
+
     });
     return tdprRecruiterModule;
 

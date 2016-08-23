@@ -1,7 +1,7 @@
 define(['angular'
     , 'application/tdprModule'
 ], function(angular, module) {
-    module.config(function($stateProvider) {
+    module.config(function($stateProvider, NotificationProvider) {
         $stateProvider
             .state("tdpr", {
                 abstract: true
@@ -13,7 +13,9 @@ define(['angular'
                     }
                 }
         });
-
+        NotificationProvider.setOptions({
+          delay: 1000,
+        });
     });
 
     return module;

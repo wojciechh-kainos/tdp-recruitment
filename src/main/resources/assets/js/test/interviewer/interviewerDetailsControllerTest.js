@@ -8,7 +8,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var $filter;
         var personId;
         var Notification;
-        var NotificationDelay;
         var personService;
         var updatePersonDeferred;
 
@@ -20,7 +19,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             personService = tdprPersonService;
             updatePersonDeferred = $q.defer();
             Notification = { success: function () {} };
-            NotificationDelay = jasmine.createSpy('NotificationDelay');
 
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
@@ -31,7 +29,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 BandLevelEnum: {},
                 tdprPersonService: personService,
                 Notification: Notification,
-                NotificationDelay: NotificationDelay,
                 $stateParams: {id: personId},
                 $state: $state,
                 person: {
@@ -79,7 +76,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.updateDetails();
                 $scope.$apply();
 
-                expect(Notification.success).toHaveBeenCalledWith({message: 'Details updated!', delay: NotificationDelay});
+                expect(Notification.success).toHaveBeenCalledWith('Details updated!');
             });
         });
     });

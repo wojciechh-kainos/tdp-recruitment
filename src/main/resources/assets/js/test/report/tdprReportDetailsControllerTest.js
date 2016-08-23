@@ -8,7 +8,6 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
         var $state;
         var $scope;
         var Notification;
-        var NotificationDelay;
         var deferredPromise;
 
         beforeEach(inject(function (_$rootScope_, _$state_, $controller, _$q_) {
@@ -18,7 +17,6 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
             $scope = _$rootScope_.$new();
             $state = _$state_;
             Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
-            NotificationDelay = jasmine.createSpy('NotificationDelay');
             deferredPromise = _$q_.defer();
             reportService.getReports.and.returnValue(deferredPromise.promise);
             $controller('tdprReportDetailsController', {
@@ -27,8 +25,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 tdprReportService : reportService,
                 tdprReportDateService : dateService,
                 DateFormat: 'dd-MM-yyyy',
-                Notification : Notification,
-                NotificationDelay: NotificationDelay
+                Notification : Notification
             });
         }));
 
@@ -58,14 +55,14 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 $scope.$apply();
 
                 expect(reportService.getReports).toHaveBeenCalledTimes(1);
-                expect(Notification.success).toHaveBeenCalledWith({message : 'Report successfully downloaded.', delay : NotificationDelay});
+                expect(Notification.success).toHaveBeenCalledWith('Report successfully downloaded.');
             });
 
             it('should return error message when server does not return data', function(){
                 deferredPromise.reject("Unable to get data from server!");
                 $scope.$apply();
 
-                expect(Notification.error).toHaveBeenCalledWith({message : "Unable to get data from server!", delay : NotificationDelay});
+                expect(Notification.error).toHaveBeenCalledWith("Unable to get data from server!");
             });
         })
     })

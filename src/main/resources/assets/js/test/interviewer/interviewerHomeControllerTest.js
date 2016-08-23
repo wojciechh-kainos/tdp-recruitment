@@ -65,7 +65,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             spyOn(slotsService, 'updateSlots').and.returnValue(updateSlotsDeferred.promise);
             spyOn(personService, 'getNote').and.returnValue(getNoteDeferred.promise);
             spyOn(personService, 'updateNote').and.returnValue(updateNoteDeferred.promise);
-            NotificationDelay = jasmine.createSpy('NotificationDelay');
 
             $controller('tdprInterviewerHomeController', {
                 $scope: $scope,
@@ -74,7 +73,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 AvailabilityEnum: AvailabilityEnum,
                 DateFormat: 'dd-MM-yyyy',
                 Notification: { success: function() {}},
-                NotificationDelay: NotificationDelay,
                 $stateParams: {id: personId}
             });
 

@@ -1,7 +1,7 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-              Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, NotificationDelay) {
+              Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
 
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
@@ -18,7 +18,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     $scope.persons = persons;
                 }
             ).catch(function () {
-                Notification.error({message: "Failed to get pairs", delay: NotificationDelay});
+                Notification.error("Failed to get pairs");
             });
         };
 
@@ -54,11 +54,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
                 function () {
                     personData.changesPending = false;
-                    Notification.success({message: 'Your changes were saved successfully!', delay: NotificationDelay});
+                    Notification.success('Your changes were saved successfully!');
                 }
             ).catch(
                 function (status) {
-                    Notification.error({message: status.message, delay: NotificationDelay});
+                    Notification.error(status.message);
                 }
             );
         };
@@ -73,7 +73,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     $scope.persons = persons;
                 }
             ).catch(function () {
-                Notification.error({message: "Failed to refresh persons data", delay: NotificationDelay});
+                Notification.error("Failed to refresh persons data");
             });
         };
 

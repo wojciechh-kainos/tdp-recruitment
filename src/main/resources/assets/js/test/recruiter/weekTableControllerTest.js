@@ -7,7 +7,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
         var persons;
         var $scope;
         var Notification;
-        var NotificationDelay;
         var tdprDateService;
         var tdprWeekTableController;
         var tdprRecruiterSlotsService;
@@ -69,7 +68,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
                 $q = _$q_;
                 Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
-                NotificationDelay = jasmine.createSpy('NotificationDelay');
                 tdprDateService = jasmine.createSpyObj('tdprDateService', ['getCurrentWeek', 'getWeekWithOffset']);
                 tdprPersonsService = jasmine.createSpyObj('tdprPersonsService', ['fetchPersonsWithSlotsForDates']);
                 tdprRecruiterSlotsService = jasmine.createSpyObj('tdprRecruiterSlotsService', ['updateSlots']);
@@ -89,7 +87,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                     persons: persons,
                     slotsTimes: slotsTimes,
                     Notification: Notification,
-                    NotificationDelay: NotificationDelay,
                     tdprRecruiterSlotsService: tdprRecruiterSlotsService,
                     AvailabilityEnum: AvailabilityEnum,
                     WeekNavigateEnum: WeekNavigateEnum,
@@ -150,10 +147,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
                 expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
                 expect(person.changesPending).toEqual(false);
-                expect(Notification.success).toHaveBeenCalledWith({
-                    message: 'Your changes were saved successfully!',
-                    delay: NotificationDelay
-                });
+                expect(Notification.success).toHaveBeenCalledWith('Your changes were saved successfully!');
             });
 
             it('should show notification on error', function () {
@@ -164,7 +158,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.$apply();
 
                 expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
-                expect(Notification.error).toHaveBeenCalledWith({message: expectedMessage, delay: NotificationDelay});
+                expect(Notification.error).toHaveBeenCalledWith(expectedMessage);
             });
         });
     })
