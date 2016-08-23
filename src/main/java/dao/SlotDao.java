@@ -32,7 +32,7 @@ public class SlotDao extends AbstractDAO<Slot> {
         namedQuery("Slot.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps) {
+    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps, Boolean isOther) {
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
@@ -42,6 +42,7 @@ public class SlotDao extends AbstractDAO<Slot> {
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isDev", isDev), isDev);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isTest", isTest), isTest);
         addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOps", isOps), isOps);
+        addRestrictionIfNotNull(criteriaPerson, Restrictions.eq("isOther", isOther), isOther);
 
         Criteria criteriaAvail = criteria.createCriteria("type");
         criteriaAvail.add(Restrictions.or(Restrictions.eq("name", AvailabilityTypeEnum.maybe), Restrictions.eq("name", AvailabilityTypeEnum.available)));
