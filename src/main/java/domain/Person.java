@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name = "person")
 @NamedQueries({
         @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
+        @NamedQuery(name = "Person.findAllActive", query = "select p from Person p where active = true"),
         @NamedQuery(name = "Person.findAll", query = "select p from Person p")
 })
 public class Person implements Cloneable {
@@ -70,7 +71,6 @@ public class Person implements Cloneable {
     @Column(name = "default_finish_hour")
     private Time defaultFinishHour;
 
-    @JsonIgnore
     private Boolean active;
 
     @JsonManagedReference
