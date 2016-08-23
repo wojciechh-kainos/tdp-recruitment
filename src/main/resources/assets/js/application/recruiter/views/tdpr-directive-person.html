@@ -1,6 +1,5 @@
 <th class="person-name">
     <div class="person-name-text">
-        <input type="checkbox" ng-if="pairingMode" ng-model="personData.selected">
         <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})"
            tooltip-placement="right"
            uib-tooltip="
@@ -19,6 +18,7 @@ Note for this week:
         <span class="glyphicon glyphicon-remove" aria-hidden="true"
               ng-click="discardSlotChanges({person: personData})" uib-tooltip="Discard"></span>
     </div>
+    <input type="checkbox" ng-if="pairingMode" ng-model="personData.selected">
 </th>
 <td ng-repeat="day in days">
     <slot ng-repeat="slotTime in slotsTimes" slot-data="getSlot(slotTime.id, day)" slot-time-data="slotTime"

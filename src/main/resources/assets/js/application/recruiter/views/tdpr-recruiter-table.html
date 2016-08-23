@@ -3,7 +3,9 @@
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
     <div id="date-container">
-        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
+        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)"
+                ng-show="offset">Current week
+        </button>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
         <span class="navigate1">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
@@ -40,11 +42,20 @@
 
         <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
         <button class="button navigate1" ng-click="refreshPersonsData()">Clear</button>
-        <button class="button navigate1" ng-show="!pairingMode" ng-click="pairingMode = true">Create Interview</button>
-        <button class="button navigate1" ng-show="pairingMode" ng-click="pairingMode = false">Cancel</button>
-        <button class="button navigate1" ng-show="pairingMode" ng-click="createEvent()">Submit</button>
+        <button class="button navigate1" ng-show="!pairingMode" ng-click="pairingMode = true">Interview</button>
+
     </form>
 
+    <div class="legend">
+        <div>
+            <span ng-show="pairingMode">You are now creating a new interview. Select checkboxes and time slots, then click "Submit" to proceed.</span>
+        </div>
+        <br>
+        <div>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="pairingMode = false">Cancel</button>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="createEvent()">Submit</button>
+        </div>
+    </div>
 
     <div class="availabilities-table-container">
         <table id="availabilities-table">
