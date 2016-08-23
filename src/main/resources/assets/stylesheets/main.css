@@ -67,7 +67,7 @@ h2 {
     text-align: center;
 }
 
-/* interviewer details and adding interviewer*/
+/* interviewer details and adding interviewer */
 #interviewer-details-h1 {
     font-size: 48px;
     text-align: center;
@@ -88,7 +88,6 @@ h2 {
     margin: 0px;
     margin-top: 40px;
 }
-
 
 #date-container span {
     font-size: 25px;
@@ -131,7 +130,7 @@ h2 {
     margin-bottom: 10px;
 }
 
-.mouse-pointer{
+.mouse-pointer {
     cursor: pointer;
 }
 
