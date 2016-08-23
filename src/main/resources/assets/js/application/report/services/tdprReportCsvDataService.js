@@ -6,6 +6,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
         var separator = ';';
         var endOfLine = "\n";
         var quote = '"';
+        var emptySpace = " ";
 
         this.generateCsvData = function(viewReportData, columnMap){
             var reportData = JSON.parse(JSON.stringify(viewReportData));
@@ -37,8 +38,7 @@ define(['application/report/tdprReportModule'], function (tdprReportModule) {
         }
 
         var createReportRow = function(reportElement){
-            var row = addQuotes(reportElement.person.lastName) + separator;
-            row += addQuotes(reportElement.person.firstName) + separator;
+            var row = addQuotes(reportElement.person.lastName + emptySpace + reportElement.person.firstName) + separator;
             row += addQuotes(reportElement.initHours) + separator;
             row += addQuotes(reportElement.fullHours) + separator;
             row += addQuotes(reportElement.availableHours) + endOfLine;

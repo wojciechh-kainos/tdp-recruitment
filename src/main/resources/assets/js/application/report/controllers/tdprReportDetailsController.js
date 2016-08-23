@@ -65,10 +65,29 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.activate();
 
         $scope.generateCSV = function() {
-            var reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+            var reportsForCSV = getReportsInActualOrder();
             tdprReportCsvDataService.generateCsvData(reportsForCSV, $scope.columnMap);
             $window.location.href = tdprReportCsvDataService.getLink();
         };
+
+        var getReportsInActualOrder = function(){
+                var reportsForCSV = $filter('jobReportProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+                reportsForCSV.sort(function(a,b){
+
+                    if($scope.sortColumn == 'person.lastName'){
+                        if(a.person.lastName >= b.person.lastName){
+                            return 1;
+                        }
+                        return -1;
+                    }else{
+                        if(a[$scope.sortColumn] >= b[$scope.sortColumn]){
+                            return 1;
+                        }
+                        return -1;
+                    }
+                })
+                return reportsForCSV;
+        }
 
     })
 });
