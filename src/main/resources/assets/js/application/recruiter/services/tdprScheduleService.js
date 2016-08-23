@@ -19,6 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             } else {
                 person.slotList.push({
                     day: date,
+                    person: person.id,
                     number: slotId,
                     type: changeTo
                 });
