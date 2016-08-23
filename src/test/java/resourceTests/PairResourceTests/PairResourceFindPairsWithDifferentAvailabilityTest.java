@@ -9,8 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import resources.PairResource;
+import services.PairFinder;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,14 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsWithDifferentAvailabilityTest {
+    @Mock
+    private static SlotDao mockDao;
 
+    @Mock
+    private static PairFinder mockPairFinder;
+
+    private final Time startTime = Time.valueOf("08:00:00");
+    private final Time endTime = Time.valueOf("17:00:00");
     private final int TODAY_OFFSET = 0;
     private final int TOMORROW_OFFSET = 1;
     private final Boolean isDev = true;
@@ -34,22 +43,19 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     private PairResource resource;
     private List<Slot> mockSlots = new ArrayList<>();
 
-    @Mock
-    private static SlotDao mockDao;
-
     @Before
     public void setUp() {
         mockSlots.addAll(createFirstPerson());
         mockSlots.addAll(createSecondPerson());
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, mockPairFinder);
     }
 
     @Test
     @Ignore
     public void testFindPairsShouldFindNoPairs() {
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
-        List<Person> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        List<Person> pairs = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
 
         assertEquals("There should be no pairs found", pairs.size(), 0);
     }
