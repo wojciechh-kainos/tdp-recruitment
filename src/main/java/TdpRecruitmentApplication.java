@@ -1,5 +1,6 @@
 
 import auth.TdpRecruitmentAuthenticator;
+import auth.TdpRecruitmentAuthorizer;
 import auth.TdpRecruitmentPasswordStore;
 import auth.TdpRecruitmentUnauthorizedHandler;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
@@ -66,6 +67,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
         environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<Person>()
                 .setAuthenticator(authenticator)
+                .setAuthorizer(guiceBundle.getInjector().getInstance(TdpRecruitmentAuthorizer.class))
                 .setUnauthorizedHandler(guiceBundle.getInjector().getInstance(TdpRecruitmentUnauthorizedHandler.class))
                 .buildAuthFilter()));
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Person.class));

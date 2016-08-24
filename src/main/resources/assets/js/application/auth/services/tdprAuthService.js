@@ -50,8 +50,9 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             var globals = $cookieStore.get('globals');
             if (globals) {
                 currentUser = globals.currentUser;
+                service.setCredentials(currentUser.email, currentUser.token);
             }
-            service.setCredentials(currentUser.email, currentUser.token);
+            return;
         };
 
         service.isUserLoggedIn = function() {
@@ -86,6 +87,22 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 Notification.error('You need to sign in to view this page.');
             }
             return deferred.promise;
+        };
+
+        service.validateSession = function () {
+            service.checkCookies();
+            if(!service.isUserLoggedIn()) {
+                return;
+            }
+
+            return $http.get('/api/auth/validateToken?token=' + currentUser.token).then(function(response) {
+                    return response;
+                }, function() {
+                    service.clearCredentials();
+                    $location.path('/login');
+                    Notification.error('Your session has expired. Please log in.');
+                }
+            );
         };
 
         return service;

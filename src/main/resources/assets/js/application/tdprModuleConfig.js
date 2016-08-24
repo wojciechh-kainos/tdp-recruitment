@@ -8,7 +8,9 @@ define(['angular'
             .state("tdpr", {
                 abstract: true,
                 resolve: {
-                    isUserLoggedIn: _isUserLoggedIn
+                    validateSession: function(tdprAuthService) {
+                        return tdprAuthService.validateSession();
+                    }
                 },
                 views: {
                     "navbar@": {
@@ -32,12 +34,6 @@ define(['angular'
         });
 
     });
-
-    function _isUserLoggedIn(tdprAuthService) {
-        if(tdprAuthService.getCurrentUser().token === undefined){
-            tdprAuthService.checkCookies();
-        }
-    };
 
     return module;
 });
