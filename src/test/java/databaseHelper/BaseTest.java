@@ -4,10 +4,7 @@ import dao.AvailabilityTypeDao;
 import dao.PersonDao;
 import dao.SlotDao;
 import dao.SlotTimeDao;
-import domain.AvailabilityType;
-import domain.Person;
-import domain.Slot;
-import domain.SlotTime;
+import domain.*;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -39,6 +36,7 @@ public class BaseTest {
         config.addAnnotatedClass(SlotTime.class);
         config.addAnnotatedClass(AvailabilityType.class);
         config.addAnnotatedClass(Slot.class);
+        config.addAnnotatedClass(Note.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();

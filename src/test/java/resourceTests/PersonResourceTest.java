@@ -55,7 +55,7 @@ public class PersonResourceTest {
         person = new Person();
         person.setId(1L);
         dateString = "2016-07-26";
-        date = Date.valueOf("2016-07-26");
+        date = Date.valueOf(dateString);
         note = new Note(1L, person, "note nr 1", date);
         note2 = new Note(2L, person, "note nr 2", date);
         note3 = new Note(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
@@ -78,15 +78,14 @@ public class PersonResourceTest {
         verify(mockNoteDao, times(1)).getByPersonIdAndDate(1L,date);
     }
 
-    @Ignore
     @Test
     public void testCreateNote(){
         when(mockNoteDao.createOrUpdate(note2)).thenReturn(note2);
 
         Response result = resource.createOrUpdate(note2);
 
-        assertEquals(Response.Status.NOT_ACCEPTABLE.getStatusCode(), result.getStatus());
-        verify(mockNoteDao, times(0)).createOrUpdate(note2);
+        assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
+        verify(mockNoteDao, times(1)).createOrUpdate(note2);
     }
 
     @Test
@@ -96,5 +95,6 @@ public class PersonResourceTest {
         Response result = resource.createOrUpdate(note3);
 
         assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
+        verify(mockNoteDao, times(1)).createOrUpdate(note3);
     }
 }
