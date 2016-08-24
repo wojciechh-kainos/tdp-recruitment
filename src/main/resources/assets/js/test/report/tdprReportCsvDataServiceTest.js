@@ -39,15 +39,16 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
-        var expectedString = '"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"\n'
-            + ';;;\n'
-            + '"Person";"Init hours";"Full hours";"Sum of hours"\n'
-            + '"FirstLastName FirstFirstName";"20,5";"20";"20,4"\n'
-            + '"SecondLastName SecondFirstName";"0";"10";"2,4"\n';
+        var expectedString = _.join(['"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"',
+                        ';;;',
+                        '"Person";"Init hours";"Full hours";"Sum of hours"',
+                        '"FirstLastName FirstFirstName";"20,5";"20";"20,4"',
+                        '"SecondLastName SecondFirstName";"0";"10";"2,4"', ""], "\n");
 
-        var expectedEmptyString = '"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"\n'
-            + ';;;\n'
-            + '"Person";"Init hours";"Full hours";"Sum of hours"\n'
+        var expectedEmptyString = _.join(['"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"',
+                        ';;;',
+                        '"Person";"Init hours";"Full hours";"Sum of hours"', ""], "\n")
+
 
         var expectedLink = "text/csv;charset=utf-8,";
 
