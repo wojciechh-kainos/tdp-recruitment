@@ -17,7 +17,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
         @NamedQuery(name = "Person.findAllActive", query = "select p from Person p where active = true"),
-        @NamedQuery(name = "Person.findAll", query = "select p from Person p")
+        @NamedQuery(name = "Person.findAll", query = "select p from Person p"),
+        @NamedQuery(name = "Person.findByEmail", query = "select p from Person p where email = :email")
 })
 public class Person implements Cloneable, Principal {
     @Id
