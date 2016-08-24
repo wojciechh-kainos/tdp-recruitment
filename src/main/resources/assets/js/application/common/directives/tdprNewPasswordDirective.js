@@ -13,7 +13,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                 scope.confirmPassword = '';
 
                 scope.$watch('[newPassword, confirmPassword]', function (newValue, oldValue, scope) {
-                    scope.arePasswordsDifferent = newValue[0] === newValue[1] ? false : true;
+                    scope.arePasswordsDifferent = newValue[0] !== newValue[1];
                     scope.isPasswordValid = isPasswordValid(newValue[0]) && !scope.arePasswordsDifferent;
                 });
 
