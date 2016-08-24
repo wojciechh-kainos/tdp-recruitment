@@ -7,7 +7,7 @@ define(['angular', 'application/auth/tdprAuthModule'], function (angular, tdprAu
         }
 
         this.activatePerson = function (person) {
-            return $http.put("api/auth/activate/" + person.id);
+            return $http.put("api/auth/activate", person);
         }
 
     }]);

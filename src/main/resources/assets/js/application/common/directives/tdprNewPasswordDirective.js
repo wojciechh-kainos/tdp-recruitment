@@ -4,15 +4,16 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
             restrict: 'AE',
             templateUrl: '/html/partials/common/tdpr-directive-new-password.html',
             scope: {
-                arePasswordsCorrect: '='
+                arePasswordsCorrect: '=',
+                newPersonPassword: '='
             },
             link: function (scope) {
                 scope.arePasswordsDifferent = false;
                 scope.isPasswordValid = true;
-                scope.newPassword = '';
+                scope.newPersonPassword = '';
                 scope.confirmPassword = '';
 
-                scope.$watch('[newPassword, confirmPassword]', function (newValue, oldValue, scope) {
+                scope.$watch('[newPersonPassword, confirmPassword]', function (newValue, oldValue, scope) {
                     scope.arePasswordsDifferent = newValue[0] !== newValue[1];
                     scope.isPasswordValid = isPasswordValid(newValue[0]);
                     scope.arePasswordsCorrect = scope.isPasswordValid && !scope.arePasswordsDifferent;

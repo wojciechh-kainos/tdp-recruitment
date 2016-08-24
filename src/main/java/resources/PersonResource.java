@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.google.common.base.Optional;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
@@ -110,8 +111,8 @@ public class PersonResource {
     @Path("/{id}")
     @UnitOfWork
     public Response getPersonById(@PathParam("id") Long id){
-        Person person = personDao.getById(id);
-        if (person == null) {
+        Optional<Person> person = personDao.getById(id);
+        if (!person.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(person).build();
@@ -131,9 +132,9 @@ public class PersonResource {
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
 
-        Person person = personDao.getById(id);
-        if(person != null) {
-        person.setActive(!person.getActive());
+        Optional<Person> person = personDao.getById(id);
+        if(person.isPresent()) {
+        person.get().setActive(!person.get().getActive());
 
         return Response.ok().build();
         }

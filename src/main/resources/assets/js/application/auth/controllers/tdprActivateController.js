@@ -2,7 +2,6 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
     tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprActivateService, $state) {
 
         var person;
-
          tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink)
             .then(function(response) {
                 person = response.data;
@@ -11,7 +10,11 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             });
 
         $scope.activatePerson = function() {
-            tdprActivateService.activatePerson(person)
+            var personWithPassword = {
+                id: person.id,
+                password: $scope.newPassword
+            }
+            tdprActivateService.activatePerson(personWithPassword)
                 .then(function() {
                     console.log("activation successful");
                 }, function() {

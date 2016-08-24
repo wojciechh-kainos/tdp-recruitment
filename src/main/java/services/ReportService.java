@@ -1,5 +1,6 @@
 package services;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -24,7 +25,7 @@ public class ReportService {
         Double fullCount = 0.0;
         Double initCount = 0.0;
 
-        Person person = personDao.getById(personId);
+        Optional<Person> person = personDao.getById(personId);
 
         List<Slot> slotList = slotDao.getForPersonForWeek(personId, startDate, endDate);
 
@@ -44,7 +45,7 @@ public class ReportService {
                     break;
             }
         }
-        return new Report(person, initCount, fullCount);
+        return new Report(person.get(), initCount, fullCount);
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {

@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.google.common.base.Optional;
+import auth.TdpRecruitmentPasswordStore;
 
 
 @Path("/auth")
@@ -20,11 +21,13 @@ public class AuthResource {
 
 	private TdpRecruitmentAuthenticator authenticator;
 	private PersonDao personDao;
+	private final TdpRecruitmentPasswordStore passwordStore;
 
 	@Inject
-	public AuthResource(TdpRecruitmentAuthenticator authenticator, PersonDao personDao) {
+	public AuthResource(TdpRecruitmentAuthenticator authenticator, PersonDao personDao,TdpRecruitmentPasswordStore passwordStore) {
 		this.authenticator = authenticator;
 		this.personDao = personDao;
+		this.passwordStore = passwordStore;
 	}
 
 	@POST
@@ -49,13 +52,22 @@ public class AuthResource {
 
 	@PUT
 	@UnitOfWork
-	@Path("/activate/{id}")
-	public Response activatePerson (@PathParam("id") Long id) {
+	@Path("/activate")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response activatePerson (Person person) {
+		Optional <Person> personToBeActivated = personDao.getById(person.getId());
 
-		Person person = personDao.getById(id);
-		person.setActivationCode(null);
-
-		return Response.status(Response.Status.ACCEPTED).build();
+		if(personToBeActivated.isPresent()) {
+			personToBeActivated.get().setActivationCode(null);
+			personToBeActivated.get().setActive(true);
+			try {
+				personToBeActivated.get().setPassword(passwordStore.createHash(person.getPassword()));
+			} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException e) {
+				e.printStackTrace();
+			}
+			return Response.status(Response.Status.ACCEPTED).build();
+		} else {
+		return Response.status(Response.Status.CONFLICT).build();
+		}
 	}
-
 }

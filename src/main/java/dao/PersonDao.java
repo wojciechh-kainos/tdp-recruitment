@@ -21,8 +21,8 @@ public class PersonDao extends AbstractDAO<Person>{
         return persist(person).getId();
     }
 
-    public Person getById(Long id) {
-        return get(id);
+    public Optional<Person> getById(Long id) {
+        return Optional.fromNullable(get(id));
     }
 
     public void deleteById(Long id) {
