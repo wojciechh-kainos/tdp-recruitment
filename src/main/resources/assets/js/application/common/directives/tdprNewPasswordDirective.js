@@ -33,7 +33,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                     if (password.search(/[0-9]/) < 0) {
                         clues.push("one digit.");
                     }
-                    if (password.search(/[!@#$%^&*]/) < 0) {
+                    if (password.search(/[^a-zA-Z0-9\s]/) < 0) {
                         clues.push("one special character.");
                     }
                     scope.passwordClues = clues;
