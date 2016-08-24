@@ -1,7 +1,7 @@
 <br>
 <div class="form-horizontal well center">
     <h1 id="interviewer-details-h1">Personal details</h1>
-    <form class="interviewer-form center" name="detailsForm" role="form">
+    <form class="interviewer-form center" id="details-form" name="detailsForm" role="form">
         <hr>
         <job-check-boxes></job-check-boxes>
         <hr>
@@ -38,7 +38,7 @@
             <label class="control-label col-md-6">Change password:</label>
             <input class="col-md-2 details-checkbox" type="checkbox" ng-model="changePasswordChecked">
         </div>
-        <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect"></new-password>
+        <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect" password="password"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">

@@ -12,7 +12,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
         $scope.activatePerson = function() {
             var personWithPassword = {
                 id: person.id,
-                password: $scope.newPassword
+                password: $scope.password
             }
             tdprActivateService.activatePerson(personWithPassword)
                 .then(function() {

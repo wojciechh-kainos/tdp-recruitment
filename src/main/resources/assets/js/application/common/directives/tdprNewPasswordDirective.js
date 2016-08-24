@@ -5,15 +5,15 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
             templateUrl: '/html/partials/common/tdpr-directive-new-password.html',
             scope: {
                 arePasswordsCorrect: '=',
-                newPersonPassword: '='
+                password: '='
             },
             link: function (scope) {
                 scope.arePasswordsDifferent = false;
                 scope.isPasswordValid = true;
-                scope.newPersonPassword = '';
+                scope.password = '';
                 scope.confirmPassword = '';
 
-                scope.$watch('[newPersonPassword, confirmPassword]', function (newValue, oldValue, scope) {
+                scope.$watch('[password, confirmPassword]', function (newValue, oldValue, scope) {
                     scope.arePasswordsDifferent = newValue[0] !== newValue[1];
                     scope.isPasswordValid = isPasswordValid(newValue[0]);
                     scope.arePasswordsCorrect = scope.isPasswordValid && !scope.arePasswordsDifferent;
@@ -33,7 +33,7 @@ define(['angular', 'application/common/tdprCommonModule'], function (angular, td
                     if (password.search(/[0-9]/) < 0) {
                         clues.push("one digit.");
                     }
-                    if (password.search(/[!@#$%^&*]/) < 0) {
+                    if (password.search(/[^a-zA-Z0-9\s]/) < 0) {
                         clues.push("one special character.");
                     }
                     scope.passwordClues = clues;
