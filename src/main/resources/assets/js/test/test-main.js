@@ -26,6 +26,7 @@ require.config({
         'lodash': 'lib/lodash/lodash',
         'moment' : 'lib/moment/moment',
         'angular-moment' : 'lib/angular-moment/angular-moment',
+        'ngDialog' : 'lib/ng-dialog/js/ngDialog',
         'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
         'fileSaver' : 'lib/file-saver.js/FileSaver',
         'blob' : 'lib/blob-polyfill/Blob'

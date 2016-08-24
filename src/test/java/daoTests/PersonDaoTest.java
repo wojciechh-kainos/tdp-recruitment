@@ -58,7 +58,7 @@ public class PersonDaoTest extends BaseTest {
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        personFromDb = personDao.getById(personId);
+        personFromDb = personDao.getById(personId).get();
         getSession().getTransaction().commit();
 
         assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
@@ -73,7 +73,7 @@ public class PersonDaoTest extends BaseTest {
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        personFromDb = personDao.getById(id);
+        personFromDb = personDao.getById(id).get();
         getSession().getTransaction().commit();
 
         assertEquals("New person id should be equal added", person.getId(), personFromDb.getId());
