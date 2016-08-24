@@ -49,7 +49,7 @@ public class SlotDaoTest extends BaseTest{
 
         getSession().beginTransaction();
 
-        Slot slotFromDb = slotDao.findById(id);
+        Slot slotFromDb = slotDao.findById(id).get();
 
         getSession().getTransaction().commit();
 
@@ -79,7 +79,7 @@ public class SlotDaoTest extends BaseTest{
         getSession().getTransaction().commit();
 
         getSession().beginTransaction();
-        Person personFromDb = personDao.getById(id);
+        Person personFromDb = personDao.getById(id).get();
         getSession().getTransaction().commit();
 
         return personFromDb;
