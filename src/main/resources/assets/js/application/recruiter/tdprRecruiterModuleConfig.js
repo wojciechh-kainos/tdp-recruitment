@@ -29,7 +29,6 @@ define(['angular'
             url: "/recruiter",
             params: {
                 candidateId: 0,
-                candidateName: "",
                 candidate: {}
             },
             resolve: {
