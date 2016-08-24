@@ -78,7 +78,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 expect(Notification.success).toHaveBeenCalledWith('Details updated!');
             });
 
-            it('should show notification when trying to save invalid password', function(){
+            it('should show notification when trying to save invalid password form', function(){
                 updatePersonDeferred.resolve({});
                 $scope.changePasswordChecked = true;
                 $scope.arePasswordsCorrect = false;
@@ -87,6 +87,17 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.$apply();
 
                 expect(Notification.error).toHaveBeenCalledWith("Changes not saved! Password field incorrect!");
+            });
+
+            it('should show notification after saving correct password', function(){
+                updatePersonDeferred.resolve({});
+                $scope.changePasswordChecked = true;
+                $scope.arePasswordsCorrect = true;
+
+                $scope.updateDetails();
+                $scope.$apply();
+
+                expect(Notification.success).toHaveBeenCalledWith('Details updated!');
             });
         });
     });
