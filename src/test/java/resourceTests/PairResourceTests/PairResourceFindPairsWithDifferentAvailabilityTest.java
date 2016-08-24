@@ -45,6 +45,14 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         resource = new PairResource(mockDao);
     }
 
+    @Test
+    public void testFindPairsShouldFindNoPairs() {
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        List<Person> pairs = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
+
+        assertEquals("There should be no pairs found", pairs.size(), 0);
+    }
+
     private List<Slot> createFirstPerson(){
         List<SlotTime> slotsTimes = MockDataUtil.createSlotTimeList(1, 4);
         Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps, isOther);
