@@ -11,13 +11,9 @@ public class MailingTask implements Runnable {
     private TdpRecruitmentApplicationConfiguration config;
     private Message msg;
 
-    public MailingTask(TdpRecruitmentApplicationConfiguration config) {
+    public MailingTask(TdpRecruitmentApplicationConfiguration config, Message message) {
         this.config = config;
-    }
-
-    public MailingTask sendMessage(Message message) {
         this.msg = message;
-        return this;
     }
 
     @Override

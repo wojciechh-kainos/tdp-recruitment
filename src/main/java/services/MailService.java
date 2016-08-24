@@ -18,13 +18,13 @@ public class MailService {
     @Inject
     public MailService(TdpRecruitmentApplicationConfiguration config) {
         this.applicationConfiguration = config;
-        this.pool = Executors.newFixedThreadPool(config.getSmtpConfig().getThreadPool());
+        this.pool = Executors.newFixedThreadPool(config.getSmtpConfig().getThreadPoolSize());
     }
 
 
     public void sendEmail(Message message) {
-        MailingTask mailingTask = new MailingTask(applicationConfiguration);
-        pool.execute(mailingTask.sendMessage(message));
+        MailingTask mailingTask = new MailingTask(applicationConfiguration, message);
+        pool.execute(mailingTask);
     }
 
 }
