@@ -9,17 +9,13 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import resources.SlotResource;
-import resources.SlotTimeResource;
-import resources.PersonResource;
-import resources.PairResource;
-import resources.ReportResource;
+import resources.*;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
     private GuiceBundle<TdpRecruitmentApplicationConfiguration> guiceBundle;
 
-    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class) {
+    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class, Candidate.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -57,6 +53,8 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotTimeResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(CandidateResource.class));
+
     }
 
     public static void main(final String[] args) throws Exception {
