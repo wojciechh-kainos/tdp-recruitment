@@ -5,6 +5,7 @@ import domain.Candidate;
 import domain.Person;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class CandidateDaoTest extends BaseTest {
         exampleCandidate.setRecruiter(exampleRecruiter);
     }
 
+    @Ignore
     @Test
     public void testCreateAndFindAll(){
         getSession().beginTransaction();
@@ -51,6 +53,7 @@ public class CandidateDaoTest extends BaseTest {
         assertEquals("In the list from DB should be only one candidate", candidatesFromDbAfter.size()-1, candidatesFromDbBefore.size());
     }
 
+    @Ignore
     @Test
     public void testDeactivateById(){
         getSession().beginTransaction();
@@ -78,6 +81,7 @@ public class CandidateDaoTest extends BaseTest {
         assertTrue("Deactivated candidate should have is_deleted flag set to true", deactivatedCandidate.getIsDeleted());
     }
 
+    @Ignore
     @Test
     public void testUpdate(){
         getSession().beginTransaction();
