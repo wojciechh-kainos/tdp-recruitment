@@ -10,7 +10,10 @@ require.config({
         'lodash': 'lib/lodash/lodash',
         'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'moment' : 'lib/moment/moment',
-        'angular-moment' : 'lib/angular-moment/angular-moment'
+        'angular-moment' : 'lib/angular-moment/angular-moment',
+        'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
+        'fileSaver' : 'lib/file-saver.js/FileSaver',
+        'blob' : 'lib/blob-polyfill/Blob'
     },
     shim: {
         'angular': {
@@ -23,7 +26,10 @@ require.config({
         'uiRouter': ['angular'],
         'notification': ['angular'],
         'moment' : ['angular'],
-        'angular-moment' : ['angular', 'moment']
+        'angular-moment' : ['angular', 'moment'],
+        'fileSaver' : ['angular'],
+        'blob' : ['angular', 'fileSaver'],
+        'angularFileSaver' : ['angular', 'fileSaver', 'blob']
     },
     deps: ['application/bootstrap']
 });
