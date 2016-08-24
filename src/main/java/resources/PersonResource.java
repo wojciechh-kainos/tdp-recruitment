@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import com.google.common.base.Optional;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
@@ -96,10 +95,7 @@ public class PersonResource {
         Date date = formatter.parse(startDate);
         Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
 
-        if(note.isPresent()) {
-            return note.get();
-        }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
+        return note.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
     }
 
     @PUT
@@ -116,10 +112,8 @@ public class PersonResource {
     @UnitOfWork
     public Person getPersonById(@PathParam("id") Long id){
         Optional<Person> person = personDao.getById(id);
-        if (person.isPresent()) {
-            return person.get();
-        }
-        throw new WebApplicationException(Response.Status.NOT_FOUND);
+
+        return person.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @PUT

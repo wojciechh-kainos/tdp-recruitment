@@ -1,6 +1,5 @@
 package resourceTests;
 
-import com.google.common.base.Optional;
 import dao.NoteDao;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -20,6 +19,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -83,7 +83,7 @@ public class PersonResourceTest {
 
     @Test
     public void testGetNote()throws ParseException{
-        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(Optional.fromNullable(stubNoteDB.get(0)));
+        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(Optional.ofNullable(stubNoteDB.get(0)));
 
         Note result = resource.getNote(1L, dateString);
 

@@ -1,6 +1,5 @@
 package services;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -11,6 +10,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ReportService {
 

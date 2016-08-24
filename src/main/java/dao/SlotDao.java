@@ -1,6 +1,5 @@
 package dao;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.AvailabilityTypeEnum;
 import domain.Slot;
@@ -14,6 +13,7 @@ import org.joda.time.DateTime;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class SlotDao extends AbstractDAO<Slot> {
 
@@ -23,7 +23,7 @@ public class SlotDao extends AbstractDAO<Slot> {
     }
 
     public Optional<Slot> findById(Long id) {
-        return Optional.fromNullable(get(id));
+        return Optional.ofNullable(get(id));
     }
 
     public long create(Slot slot) {

@@ -1,12 +1,12 @@
 package dao;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Note;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.Date;
+import java.util.Optional;
 
 public class NoteDao extends AbstractDAO<Note>{
 
@@ -26,7 +26,7 @@ public class NoteDao extends AbstractDAO<Note>{
     }
 
     public Optional<Note> getByPersonIdAndDate(Long personId, Date startDate) {
-        return Optional.fromNullable( uniqueResult( namedQuery("Note.getNoteByPersonIdAndDate")
+        return Optional.ofNullable( uniqueResult( namedQuery("Note.getNoteByPersonIdAndDate")
               .setParameter("id", personId)
               .setDate("date", startDate)) );
     }

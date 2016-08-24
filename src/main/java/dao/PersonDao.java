@@ -1,12 +1,12 @@
 package dao;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Person;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PersonDao extends AbstractDAO<Person>{
 
@@ -20,7 +20,7 @@ public class PersonDao extends AbstractDAO<Person>{
     }
 
     public Optional<Person> getById(Long id) {
-        return Optional.fromNullable(get(id));
+        return Optional.ofNullable(get(id));
     }
 
     public void deleteById(Long id) {

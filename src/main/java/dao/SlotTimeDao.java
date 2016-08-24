@@ -1,11 +1,11 @@
 package dao;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.SlotTime;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 import java.util.List;
+import java.util.Optional;
 
 public class SlotTimeDao extends AbstractDAO<SlotTime> {
     @Inject
@@ -13,7 +13,7 @@ public class SlotTimeDao extends AbstractDAO<SlotTime> {
         super(sessionFactory);
     }
 
-    public Optional<SlotTime> getById(long id){ return Optional.fromNullable(get(id));}
+    public Optional<SlotTime> getById(long id){ return Optional.ofNullable(get(id));}
 
     public List<SlotTime> getAll() {
         return list(namedQuery("SlotTime.getAll"));
