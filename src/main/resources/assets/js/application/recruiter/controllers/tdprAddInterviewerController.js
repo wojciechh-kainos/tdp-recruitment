@@ -7,10 +7,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
             $scope.createInterviewerPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
-                    Notification.success({message: 'Interviewer added', delay: 2000});
+                    Notification.success('Interviewer added');
                     $scope.goHome();
                 }, function (response) {
-                    Notification.error({message: response.message, delay: 2000});
+                    Notification.error(response.message);
                 });
         };
 
@@ -19,7 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.showError = function () {
-          Notification.error({message: 'Cannot submit invalid form, please change incorrect fields', delay: 2200});
+          Notification.error('Cannot submit invalid form, please change incorrect fields');
         };
     });
 });

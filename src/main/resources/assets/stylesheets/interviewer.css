@@ -23,11 +23,6 @@ h1.interviewer-header {
    color: #375D81;
 }
 
-.container {
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-}
-
 .availability-table {
     display: inline-block;
     margin-top: 30px;
@@ -37,17 +32,6 @@ h1.interviewer-header {
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -moz-user-select: none;      /* Firefox */
     user-select: none;           /* Non-prefixed version*/
-}
-
-.legend {
-    margin-top: 30px;
-    font-size: 18px;
-    color: #375D81;
-}
-
-.legend label {
-    margin-right: 3rem;
-    vertical-align: middle;
 }
 
 .legend-block {
@@ -76,7 +60,7 @@ h1.interviewer-header {
 
 .availability-table td:hover {
     cursor: pointer;
-    border: solid white;
+    border: solid black;
 }
 
 .availability-table td[ng-mousedown] {
@@ -101,11 +85,6 @@ h1.interviewer-header {
     color: #375D81;
 }
 
-.navigate1 {
-     display: inline-block;
-     color: #3498DB;
-}
-
 #submit-slots {
     width: 725px;
     margin: auto;
@@ -116,28 +95,8 @@ h1.interviewer-header {
     top:0;
 }
 
-#date-container span {
-    font-size: 25px;
-    line-height: 25px;
-    margin: 0px 25px 0px 25px;
-    vertical-align: middle;
-}
-
 #description {
     color: #3498DB;
-}
-
-.button {
-    border-radius: 5px;
-    border: 1px solid #3498DB;
-    background-color: transparent;
-    width: 110px;
-    margin-bottom: 1px;
-}
-
-.button:hover {
-    background-color: #3498DB;
-    color: white;
 }
 
 .button-note {
@@ -197,49 +156,10 @@ button {
     background: #D3D3D3;
 }
 
-.mouse-pointer{
-    cursor: pointer;
-}
-
-/* interviewer details and adding interviewer*/
-#interviewer-details-h1 {
-  font-size: 48px;
-  text-align: center;
-  font-family: 'Lato', sans-serif;
-  color: #375D81;
-}
-
-.interviewer-form {
-  display: inline-block;
-}
-
-.interviewer-form label {
-  font-weight: normal;
-  margin: auto;
-}
-
-.form-group {
-  text-align: left;
-}
-
 .error-container {
   color: red;
 }
 
-.btn-wrapper {
-  width: 100%;
-}
-
-.details-checkbox {
-  margin-top: 12px !important;
-}
-
 .input {
   width: 100%;
-}
-
-.int-err {
-  color: #C0392B;
-  margin: 0px;
-  margin-top: 40px;
 }

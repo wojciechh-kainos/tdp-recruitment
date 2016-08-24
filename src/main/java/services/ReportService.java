@@ -31,7 +31,7 @@ public class ReportService {
         for (Slot slot : slotList) {
             SlotTime slotTime = slot.getSlotTime();
 
-            Double slotDuration = slotTime.getSlotDurationInMinutes();
+            Double slotDuration = slotTime.getSlotDurationInHours();
 
             switch (slot.getType().getName()) {
                 case full:
@@ -48,7 +48,7 @@ public class ReportService {
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {
-        List<Person> personList = personDao.findAll();
+        List<Person> personList = personDao.findAllActive();
 
         List<Report> reportList = new ArrayList<>();
 
