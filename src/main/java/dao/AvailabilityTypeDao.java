@@ -5,12 +5,14 @@ import domain.AvailabilityType;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
+import java.util.Optional;
+
 public class AvailabilityTypeDao extends AbstractDAO<AvailabilityType>{
     @Inject
     public AvailabilityTypeDao(SessionFactory sessionFactory){
         super(sessionFactory);
     }
 
-    public AvailabilityType getById(long id){ return get(id);}
+    public Optional<AvailabilityType> getById(long id){ return Optional.ofNullable(get(id));}
 
 }

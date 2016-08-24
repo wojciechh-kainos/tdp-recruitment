@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="US-36_Add_test_recruiters" author="mateuszs">
+        <insert tableName="person">
+            <column name="first_name" value="Rekruter"/>
+            <column name="last_name" value="Pierwszy"/>
+            <column name="email" value="recruiter1@r.com"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="admin" value="true"/>
+        </insert>
+
+        <insert tableName="person">
+            <column name="first_name" value="Rekruter"/>
+            <column name="last_name" value="Drugi"/>
+            <column name="email" value="recruiter2@r.com"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="admin" value="true"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
