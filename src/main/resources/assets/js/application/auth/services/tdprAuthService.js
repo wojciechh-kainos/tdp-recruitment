@@ -19,7 +19,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 };
 
                 service.setCredentials(user.email, user.token);
-                console.log(user.token);
+
                 return res.data;
             }, function (err) {
                return $q.reject(err);

@@ -1,9 +1,15 @@
 <nav class="navbar navbar-default ">
     <div class="container">
-        <a class="navbar-brand">Recruitment helper</a>
+        <a class="navbar-brand">Kainos - Recruitment helper</a>
         <div class="login navbar-left" ng-show="userLoggedIn">
-            <a ui-sref="tdpr.recruiter.home" class="navbar-text" ng-show="user.isRecruiter">All availabilities</a>
-            <a ui-sref="tdpr.interviewer.home({id: user.id})" class="navbar-text" ng-hide="user.isRecruiter">Your availability</a>
+            <div ng-show="user.isRecruiter">
+                <a ui-sref="tdpr.recruiter.home" class="navbar-text">All availabilities</a>
+                <a ui-sref="tdpr.report.home" class="navbar-text">Reports</a>
+                <a ui-sref="tdpr.recruiter.manageUsers" class="navbar-text">Manage users</a>
+            </div>
+            <div ng-hide="user.isRecruiter">
+                <a ui-sref="tdpr.interviewer.home({id: user.id})" class="navbar-text">Your availability</a>
+            </div>
         </div>
         <div class="login navbar-right" ng-show="userLoggedIn">
             <p class="navbar-text">Hello, {{user.firstName}} {{user.lastName}} </p>

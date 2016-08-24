@@ -147,7 +147,7 @@ public class PersonResource {
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
 
-        Person person = personDao.getById(500L);
+        Person person = personDao.getById(id);
         if(person != null) {
         person.setActive(!person.getActive());
 
