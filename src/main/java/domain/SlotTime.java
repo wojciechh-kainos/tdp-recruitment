@@ -49,8 +49,8 @@ public class SlotTime {
         this.endTime = endTime;
     }
 
-    public double getSlotDurationInMinutes() {
+    public double getSlotDurationInHours() {
         long duration = this.endTime.getTime() - this.startTime.getTime();
-        return duration / TdpConstants.MILISECONDS_IN_HOUR;
+        return duration / (double)TdpConstants.MILISECONDS_IN_HOUR;
     }
 }
