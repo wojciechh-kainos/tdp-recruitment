@@ -12,6 +12,7 @@ define(['angular'
     , 'application/common/filters/tdprJobProfileFilter'
     , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
+    , 'application/common/directives/tdprNewPasswordDirective'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {

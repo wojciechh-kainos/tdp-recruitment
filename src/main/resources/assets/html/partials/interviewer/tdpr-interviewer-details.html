@@ -38,23 +38,7 @@
             <label class="control-label col-md-6">Change password:</label>
             <input class="col-md-2 details-checkbox" type="checkbox" ng-model="changePasswordChecked">
         </div>
-        <div class="form-group" ng-show="changePasswordChecked">
-            <label class="control-label col-md-6">New password:</label>
-            <div class="col-md-4">
-                <input class="form-control" type="password" ng-model="newPassword"/>
-                <ul class="password-clues">
-                    <span ng-hide="isPasswordValid">Password requires at least: </span>
-                    <li ng-hide="isPasswordValid" ng-repeat="clue in passwordClues">{{clue}}<br></li>
-                </ul>
-            </div>
-        </div>
-        <div class="form-group" ng-show="changePasswordChecked">
-            <label class="control-label col-md-6">Confirm password:</label>
-            <div class="col-md-4">
-                <input class="form-control" type="password" ng-model="confirmPassword"/>
-                <span ng-show="arePasswordsDifferent">Passwords are different!</span>
-            </div>
-        </div>
+        <new-password ng-show="changePasswordChecked" is-password-valid="isPasswordValid"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">

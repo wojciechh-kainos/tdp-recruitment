@@ -1,12 +1,7 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
     tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
-
         $scope.BandLevelEnum = BandLevelEnum;
-        $scope.arePasswordsDifferent = false;
         $scope.changePasswordChecked = false;
-        $scope.isPasswordValid = true;
-        $scope.newPassword = '';
-        $scope.confirmPassword = '';
 
         function init() {
                 $scope.person = person;
@@ -42,35 +37,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         $scope.goHome = function () {
             $state.go('tdpr.interviewer.home', {'id': $stateParams.id});
         };
-
-        $scope.$watch('[newPassword, confirmPassword]', function(newValue, oldValue, scope){
-            scope.arePasswordsDifferent = newValue[0]===newValue[1] ? false : true;
-            scope.isPasswordValid = isPasswordValid(newValue[0]);
-        });
-
-        function isPasswordValid(password){
-                var clues = [];
-            if (password.length < 8) {
-                clues.push("8 characters");
-            }
-            if (password.search(/[a-z]/) < 0) {
-                clues.push("one lowercase letter.");
-            }
-            if (password.search(/[A-Z]/) < 0) {
-                clues.push("one uppercase letter.");
-            }
-            if (password.search(/[0-9]/) < 0) {
-                clues.push("one digit.");
-            }
-            if (password.search(/[!@#$%^&*]/) < 0) {
-                clues.push("one special character.");
-            }
-            if (clues.length > 0) {
-                $scope.passwordClues = clues;
-                return false;
-            }
-            return true;
-        }
 
         init();
     });
