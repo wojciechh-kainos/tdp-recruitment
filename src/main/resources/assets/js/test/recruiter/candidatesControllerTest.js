@@ -8,11 +8,13 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         var recruiters;
         var candidates;
         var candidate;
+        var updateCandidate;
         var ngDialog;
         var $timeout;
         var deleteCandidateDeferred;
         var createCandidateDeferred;
         var fetchCandidatesDeferred;
+        var updateCandidatesDeferred;
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
@@ -20,7 +22,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 $scope = _$rootScope_.$new();
                 Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
 
-                tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates']);
+                tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates', 'updateCandidate']);
                 deleteCandidateDeferred = _$q_.defer();
                 tdprCandidatesService.deleteCandidate.and.returnValue(deleteCandidateDeferred.promise);
 
@@ -30,17 +32,29 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 fetchCandidatesDeferred = _$q_.defer();
                 tdprCandidatesService.fetchCandidates.and.returnValue(fetchCandidatesDeferred.promise);
 
+                updateCandidatesDeferred = _$q_.defer();
+                tdprCandidatesService.updateCandidate.and.returnValue(updateCandidatesDeferred.promise);
+
                 candidate = {
                     "id": 1,
                     "firstName": "Jan",
                     "lastName": "Gruszka"
                 };
+
+                updateCandidate = {
+                      "id": 2,
+                      "firstName": "Ania",
+                      "lastName": "Gruszka",
+                      "note" : 'Updated note'
+                };
+
                 candidates = [
                     candidate,
                     {
                         "id": 2,
                         "firstName": "Ania",
-                        "lastName": "Gruszka"
+                        "lastName": "Gruszka",
+                        "note" : 'note'
                     },
                     {
                         "id": 3,
@@ -96,6 +110,44 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 $scope.$apply();
                 expect(Notification.success).toHaveBeenCalledWith(message);
                 expect($scope.candidates.length).toEqual(3);
+            })
+
+            it('should not add candidate if data is not complete', function(){
+                var message = 'Candidate adding failed.';
+                var numberOfCandidates = $scope.candidates.length;
+                createCandidateDeferred.reject(message);
+                $scope.open();
+                $scope.create(candidate);
+                $scope.$apply();
+                expect(Notification.error).toHaveBeenCalledWith(message);
+                expect($scope.candidates.length).toEqual(numberOfCandidates);
+            })
+        })
+
+        describe('When click update button', function(){
+            it('Should update candidate credentials when data filled', function(){
+                var message = 'Successfully updated candidate.';
+                var numberOfCandidates = $scope.candidates.length;
+                expect(candidates[1].note).toEqual('note');
+                updateCandidatesDeferred.resolve(updateCandidate);
+                $scope.showPopupForEdit();
+                $scope.update(updateCandidate);
+                $scope.$apply();
+                expect(Notification.success).toHaveBeenCalledWith(message);
+                expect($scope.candidates.length).toEqual(numberOfCandidates);
+                expect(tdprCandidatesService.fetchCandidates).toHaveBeenCalledTimes(1);
+            })
+
+            it('Should not update candidate if data not filled', function(){
+                var message = 'Candidate updating failed';
+                var numberOfCandidates = $scope.candidates.length;
+                updateCandidatesDeferred.reject(message);
+                $scope.showPopupForEdit();
+                $scope.update(updateCandidate);
+                $scope.$apply();
+                expect(Notification.error).toHaveBeenCalledWith(message);
+                expect($scope.candidates.length).toEqual(numberOfCandidates);
+                expect(tdprCandidatesService.fetchCandidates).not.toHaveBeenCalled;
             })
         })
     })
