@@ -5,29 +5,44 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
 
         var reportService;
         var dateService;
+        var csvDataService;
         var $state;
         var $scope;
         var Notification;
         var deferredPromise;
 
-        beforeEach(inject(function (_$rootScope_, _$state_, $controller, _$q_) {
-            reportService = jasmine.createSpyObj('tdprReportService', ['getReports']);
+        beforeEach(function(){
 
-            dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
-            $scope = _$rootScope_.$new();
-            $state = _$state_;
-            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
-            deferredPromise = _$q_.defer();
-            reportService.getReports.and.returnValue(deferredPromise.promise);
-            $controller('tdprReportDetailsController', {
-                $scope : $scope,
-                $state : $state,
-                tdprReportService : reportService,
-                tdprReportDateService : dateService,
-                DateFormat: 'dd-MM-yyyy',
-                Notification : Notification
+            module(function ($provide) {
+                 $provide.value('jobProfileFilterFilter', function(){
+                                  return [];
+                                });
             });
-        }));
+
+            inject(function (_$rootScope_, _$state_, $controller, _$q_) {
+
+                reportService = jasmine.createSpyObj('tdprReportService', ['getReports']);
+                csvDataService = jasmine.createSpyObj('tdprReportCsvDataService', ['generateCsvData', 'getFile']);
+                dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
+
+                $scope = _$rootScope_.$new();
+                $state = _$state_;
+
+                Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+                deferredPromise = _$q_.defer();
+                reportService.getReports.and.returnValue(deferredPromise.promise);
+                $controller('tdprReportDetailsController', {
+                    $scope : $scope,
+                    $state : $state,
+                    tdprReportService : reportService,
+                    tdprReportDateService : dateService,
+                    tdprReportCsvDataService : csvDataService,
+                    DateFormat: 'dd-MM-yyyy',
+                    Notification : Notification
+                });
+
+            });
+        });
 
         describe('Function activate', function(){
             it('function from dateService should be triggered when state params empty', function(){
@@ -48,6 +63,14 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
                 expect($scope.endDate).toEqual(new Date($state.params.dateEnd));
             });
         });
+
+        describe('Generate csv', function(){
+            it('functions from csvDataService should be triggered', function(){
+                $scope.generateCSV();
+                expect(csvDataService.generateCsvData).toHaveBeenCalled();
+                expect(csvDataService.getFile).toHaveBeenCalled();
+            });
+        })
 
         describe('Notification', function(){
             it('should return success when get data from server', function(){
