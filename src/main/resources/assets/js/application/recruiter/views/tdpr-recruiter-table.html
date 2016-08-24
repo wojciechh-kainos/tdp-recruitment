@@ -42,7 +42,7 @@
 
         <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
         <button class="button navigate1" ng-click="refreshPersonsData()">Clear</button>
-        <button class="button navigate1" ng-show="!pairingMode" ng-click="pairingMode = true">Interview</button>
+        <button class="button navigate1" ng-show="!pairingMode" ng-click="interviewOn()">Interview</button>
 
     </form>
 
@@ -52,8 +52,8 @@
         </div>
         <br>
         <div>
-            <button class="button navigate1" ng-show="pairingMode" ng-click="pairingMode = false">Cancel</button>
-            <button class="button navigate1" ng-show="pairingMode" ng-click="createEvent()">Submit</button>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="interviewOff()">Cancel</button>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="createInterview()">Submit</button>
         </div>
     </div>
 
