@@ -27,6 +27,10 @@ define(['angular'
                 }
             }).state("tdpr.recruiter.home", {
             url: "/recruiter",
+            params: {
+                candidateId: 0,
+                candidate: {}
+            },
             resolve: {
                 persons: function (tdprPersonsService, tdprDateService) {
                     var week = tdprDateService.getCurrentWeek();

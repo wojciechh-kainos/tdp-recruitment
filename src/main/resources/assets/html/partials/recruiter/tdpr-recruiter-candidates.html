@@ -7,8 +7,8 @@
             <table id="report-table">
                 <thead class="column-heading">
                 <tr>
-                    <td class="day-th" ng-click="sortBy(column)" ng-repeat="(column, value) in columnMap">{{value.columnName}}<span class="sort-order" ng-show="sortColumn===column"
-                        ng-class="{sortReverse: value.reverse}"></span></td>
+                    <td class="day-th" ng-click="sortBy(column)" ng-repeat="(column, value) in columnMap"> {{value.columnName}}
+                        <span class="sort-order" ng-show="sortColumn===column" ng-class="{sortReverse: value.reverse}"></span></td>
                     <td class="day-th">Actions</td>
                 </tr>
                 </thead>
@@ -18,156 +18,19 @@
                     <td class="slot hour-cell">{{candidate.position}}</td>
                     <td class="slot hour-cell">{{candidate.note}}</td>
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
-                    <td class="slot hour-cell"><a class="cursor-pointer" ng-click="deleteCandidate(candidate)">delete</a> |
-                                               <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)">edit</a></td>
+                    <td class="slot hour-cell">
+                        <a class="cursor-pointer" ng-click="deleteCandidate(candidate)">delete</a>
+                        | <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)">edit</a>
+                        | <a class="cursor-pointer" ui-sref='tdpr.recruiter.home({candidateId: candidate.id, candidate: candidate})'>schedule</a>
+                    </td>
 
-                </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-
-    <a id="via-service" href="" ng-click="open()">Add new candidate</a>
-
-    <script type="text/ng-template" id="dialog">
-        <div class="ngdialog-message">
-            <h3>Add new candidate:</h3>
-
-
-            <form class="form-horizontal interviewer-form" name="candidateForm" role="form">
-                <hr>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">First name:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="firstName" type="text" ng-model="candidate.firstName"
-                               ng-maxlength="35" required/>
-                    </div>
-                    <p class="int-err center" ng-show="candidateForm.firstName.$error.maxlength">First name cannot
-                        have more than 35 characters.</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Last name:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="lastName" type="text" ng-model="candidate.lastName"
-                               ng-maxlength="35" required/>
-                    </div>
-                    <p class="int-err center" ng-show="candidateForm.lastName.$error.maxlength">Last name cannot have
-                        more than 35 characters.</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Potential Position:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="position" type="text" ng-model="candidate.position"
-                               required/>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Recruiter:</label>
-                    <div class="col-md-8">
-                        <div class="ui-select">
-                            <select class="form-control" ng-model="candidate.recruiter" ng-options="recruiter.lastName for recruiter in recruiters" >
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Note:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="note" type="text" ng-model="candidate.note"/>
-                    </div>
-                </div>
-                <hr>
-
-                <div class="center btn-wrapper">
-                    <input class="btn btn-primary" type="submit"
-                           ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Submit" ng-disabled="form.$invalid"/>
-                           <!--ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>-->
-
-
-                </div>
-            </form>
-
-        </div>
-
-    </script>
-
-    <!--______________________________________________________ Popup for Edit-->
-
-    <script type="text/ng-template" id="dialogForEdit">
-        <div class="ngdialog-message">
-            <h3>Edit candidate:</h3>
-
-
-            <form class="form-horizontal interviewer-form" name="candidateEditForm" role="form">
-                <hr>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">First name:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="firstName" type="text" ng-model="candidateForEdit.firstName"
-                               ng-maxlength="35" required/>
-                    </div>
-                    <p class="int-err center" ng-show="candidateEditForm.firstName.$error.maxlength">First name cannot
-                        have more than 35 characters.</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Last name:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="lastName" type="text" ng-model="candidateForEdit.lastName"
-                               ng-maxlength="35" required/>
-                    </div>
-                    <p class="int-err center" ng-show="candidateEditForm.lastName.$error.maxlength">Last name cannot have
-                        more than 35 characters.</p>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Potential Position:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="position" type="text" ng-model="candidateForEdit.position"
-                               required/>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Recruiter:</label>
-                    <div class="col-md-8">
-                        <div class="ui-select">
-                            <select class="form-control" ng-model="candidateForEdit.recruiter" ng-options="recruiter.lastName for recruiter in recruiters" >
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Note:</label>
-                    <div class="col-md-8">
-                        <input class="form-control input" name="note" type="text" ng-model="candidateForEdit.note"/>
-                    </div>
-                </div>
-                <hr>
-
-                <div class="center btn-wrapper">
-                    <input class="btn btn-primary" type="submit"
-                           ng-click="candidateEditForm.$valid ? update(candidateForEdit) : showError()" value="Submit" ng-disabled="form.$invalid"/>
-                    <!--ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>-->
-
-
-                </div>
-            </form>
-
-        </div>
-
-    </script>
-
-    <a id="back-btn" ui-sref="tdpr.recruiter.home">Back</a>
-    <a ng-click="refreshCandidates()">Refresh</a>
-
-
-
+    <a id="via-service" href="" ng-click="showPopupForAdd()">Add new candidate</a> |
+    <a ui-sref="tdpr.recruiter.home">Back</a> |
+    <a class="cursor-pointer" ng-click="refreshCandidates()">Refresh</a>
 </div>
 

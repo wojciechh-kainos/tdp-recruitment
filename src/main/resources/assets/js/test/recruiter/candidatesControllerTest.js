@@ -10,7 +10,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         var candidate;
         var updateCandidate;
         var ngDialog;
-        var $timeout;
         var deleteCandidateDeferred;
         var createCandidateDeferred;
         var fetchCandidatesDeferred;
@@ -84,10 +83,11 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
         describe('When click delete button', function () {
             it('should delete candidate.', function () {
+                var message = 'Candidate deleting succeeded.';
                 deleteCandidateDeferred.resolve({"data": 1});
                 $scope.deleteCandidate(candidate);
                 $scope.$apply();
-                expect(Notification.success).toHaveBeenCalledWith('Deleting candidate succeeded');
+                expect(Notification.success).toHaveBeenCalledWith(message);
                 expect($scope.candidates.length).toEqual(2);
             });
 
@@ -103,13 +103,13 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
         describe('When click add candidate button', function () {
             it('should add candidate if data is complete', function () {
-                var message = 'Successfully created candidate.';
+                var message = 'Candidate successfully created.';
                 createCandidateDeferred.resolve(message);
-                $scope.open();
+                $scope.showPopupForAdd();
                 $scope.create(candidate);
                 $scope.$apply();
                 expect(Notification.success).toHaveBeenCalledWith(message);
-                expect($scope.candidates.length).toEqual(3);
+                expect($scope.candidates.length).toEqual(4);
             })
 
             it('should not add candidate if data is not complete', function(){

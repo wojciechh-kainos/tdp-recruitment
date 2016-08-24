@@ -8,12 +8,15 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.sortReverse = true;
         $scope.candidate = {};
         $scope.candidateForEdit = {};
+        $scope.candidate.isDeleted = false;
+        $scope.candidateForEdit.isDeleted = false;
         var popUp;
         var popUpForEdit;
 
         $scope.create = function (candidate) {
             tdprCandidatesService.createCandidate(candidate).then(function () {
-                Notification.success("Successfully created candidate.");
+                $scope.candidates.push(candidate);
+                Notification.success("Candidate successfully created.");
                 $scope.refreshCandidates();
             }, function (response) {
                 Notification.error(response);
@@ -23,16 +26,13 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
 
         $scope.update = function (candidate) {
             tdprCandidatesService.updateCandidate(candidate).then(function () {
-                Notification.success("Successfully updated candidate.");
+                Notification.success("Candidate successfully updated.");
                 $scope.refreshCandidates();
             }, function (response) {
                 Notification.error(response);
             });
             popUpForEdit.close();
         };
-
-        $scope.candidate.isDeleted = false;
-        $scope.candidateForEdit.isDeleted = false;
 
         $scope.columnMap = {
             'lastName': {reverse: true, columnName: "Candidate"},
@@ -44,7 +44,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.deleteCandidate = function (candidate) {
             tdprCandidatesService.deleteCandidate(candidate)
                 .then(function (response) {
-                    Notification.success("Deleting candidate succeeded");
+                    Notification.success("Candidate deleting succeeded.");
                     this.idOfCandidate = response.data;
                     var parent = this;
 
@@ -60,23 +60,22 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
 
         $scope.refreshCandidates = function () {
             tdprCandidatesService.fetchCandidates().then(function (response) {
-                console.log(response);
                 $scope.candidates = response;
             });
         };
 
-        $scope.open = function () {
+        $scope.showPopupForAdd = function () {
             popUp = ngDialog.open({
-                template: 'dialog',
+                template: 'html/partials/recruiter/templates/popUpForAdd.html',
                 scope: $scope
             });
         };
 
-        $scope.showPopupForEdit = function (candidate) {
-            $scope.candidateForEdit = candidate;
+        $scope.showPopupForEdit = function (candidateForEdit) {
+            $scope.candidateForEdit = candidateForEdit;
 
             popUpForEdit = ngDialog.open({
-                template: 'dialogForEdit',
+                template: 'html/partials/recruiter/templates/popUpForEdit.html',
                 scope: $scope
             });
         };
