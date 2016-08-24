@@ -71,7 +71,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         describe('When click delete button', function () {
             it('should delete candidate.', function () {
                 deleteCandidateDeferred.resolve({"data": 1});
-                $scope.removeCandidate(candidate);
+                $scope.deleteCandidate(candidate);
                 $scope.$apply();
                 expect(Notification.success).toHaveBeenCalledWith('Deleting candidate succeeded');
                 expect($scope.candidates.length).toEqual(2);
@@ -80,7 +80,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
             it("should notificate an error and do not remove candidate when sth is wrong", function () {
                 var message = 'Deleting failed.';
                 deleteCandidateDeferred.reject(message);
-                $scope.removeCandidate(candidate);
+                $scope.deleteCandidate(candidate);
                 $scope.$apply();
                 expect(Notification.error).toHaveBeenCalledWith(message);
                 expect($scope.candidates.length).toEqual(3);

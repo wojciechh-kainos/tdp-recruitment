@@ -41,7 +41,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             'recruiter.lastName': {reverse: true, columnName: "Recruiter"}
         };
 
-        $scope.removeCandidate = function (candidate) {
+        $scope.deleteCandidate = function (candidate) {
             tdprCandidatesService.deleteCandidate(candidate)
                 .then(function (response) {
                     Notification.success("Deleting candidate succeeded");
