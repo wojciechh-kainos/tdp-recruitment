@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -124,14 +125,11 @@ public class PersonResourceTest {
 
         try {
             resource.createPerson(secondPerson);
+            fail("WebApplicationException was expected but not thrown.");
         } catch (WebApplicationException e) {
 
             Response.StatusType r = e.getResponse().getStatusInfo();
             assertEquals(r, Response.Status.CONFLICT);
         }
-
-        verify(mockPersonDao, times(1)).create(firstPerson);
-        verify(mockPersonDao, times(0)).create(secondPerson);
-        verify(mockPersonDao, times(1)).findByEmail(secondPerson.getEmail());
     }
 }
