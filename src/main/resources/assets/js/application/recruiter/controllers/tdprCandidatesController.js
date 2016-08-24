@@ -1,6 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, $window, recruiters, ngDialog, $timeout, Notification) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, ngDialog, Notification) {
 
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
@@ -11,14 +11,23 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         var popUp;
         var popUpForEdit;
 
-        $scope.create = function(candidate) {
-            tdprCandidatesService.createCandidate(candidate);
+        $scope.create = function (candidate) {
+            tdprCandidatesService.createCandidate(candidate).then(function () {
+                Notification.success("Successfully created candidate.");
+                $scope.refreshCandidates();
+            }, function (response) {
+                Notification.error(response);
+            });
             popUp.close();
-            $window.location.reload();
         };
 
-        $scope.update = function(candidate){
-            tdprCandidatesService.updateCandidate(candidate);
+        $scope.update = function (candidate) {
+            tdprCandidatesService.updateCandidate(candidate).then(function () {
+                Notification.success("Successfully updated candidate.");
+                $scope.refreshCandidates();
+            }, function (response) {
+                Notification.error(response);
+            });
             popUpForEdit.close();
         };
 
@@ -32,19 +41,27 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             'recruiter.lastName': {reverse: true, columnName: "Recruiter"}
         };
 
-        $scope.removeCandidate = function(candidate){
+        $scope.removeCandidate = function (candidate) {
             tdprCandidatesService.deleteCandidate(candidate)
-            .then(function(response){
-                this.idOfCandidate = response.data;
-                var parent = this;
-                Notification.success({message : "Deleting candidate succeeded", delay : 2000});
+                .then(function (response) {
+                    Notification.success("Deleting candidate succeeded");
+                    this.idOfCandidate = response.data;
+                    var parent = this;
 
-                _.remove($scope.candidates, function(candidate){
-                    return candidate.id === parent.idOfCandidate;
+                    _.remove($scope.candidates, function (candidate) {
+                        return candidate.id === parent.idOfCandidate;
+                    });
+
+                    $scope.refreshCandidates();
+                }, function (response) {
+                    Notification.error(response);
                 });
+        };
 
-            }, function(response){
-                Notification.error({message : response.message, delay : 3500});
+        $scope.refreshCandidates = function () {
+            tdprCandidatesService.fetchCandidates().then(function (response) {
+                console.log(response);
+                $scope.candidates = response;
             });
         };
 

@@ -16,9 +16,9 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             console.log(candidate);
             return $http.put("/api/candidate/create/", candidate).then(function (response) {
                 return response;
-            }, function (err) {
-                err.message = "Candidate adding failed.";
-                return $q.reject(err);
+            }, function (error) {
+                error.message = "Candidate adding failed.";
+                return $q.reject(error.message);
             });
         };
 
@@ -26,9 +26,9 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             console.log(candidate);
             return $http.put("/api/candidate/update/", candidate).then(function (response) {
                 return response;
-            }, function (err) {
-                err.message = "Candidate updating failed.";
-                return $q.reject(err);
+            }, function (error) {
+                error.message = "Candidate updating failed.";
+                return $q.reject(error.message);
             });
         };
 
@@ -38,7 +38,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                 return response;
             }, function(error) {
                 error.message = "Deleting failed.";
-                return $q.reject(error);
+                return $q.reject(error.message);
             })
         };
 

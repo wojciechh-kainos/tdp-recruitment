@@ -52,17 +52,17 @@ define(['angular'
             }
         }).state("tdpr.recruiter.candidates", {
             url: "/candidates",
-            resolve:{
+            resolve: {
                 candidates: function (tdprCandidatesService) {
                     return tdprCandidatesService.fetchCandidates();
-                    },
+                },
                 recruiters: function (tdprCandidatesService) {
                     return tdprCandidatesService.fetchRecruiters();
                 }
-            }, 
+            },
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-candidates.html",
+                    templateUrl: "html/partials/recruiter/tdpr-recruiter-candidates.html",
                     controller: "tdprCandidatesController"
                 }
             }
