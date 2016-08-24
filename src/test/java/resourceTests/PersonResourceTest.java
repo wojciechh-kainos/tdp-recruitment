@@ -1,5 +1,6 @@
 package resourceTests;
 
+import com.google.common.base.Optional;
 import dao.NoteDao;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -70,7 +71,7 @@ public class PersonResourceTest {
 
     @Test
     public void testGetNote()throws ParseException{
-        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
+        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(Optional.fromNullable(stubNoteDB.get(0)));
 
         Note result = resource.getNote(1L,dateString);
 

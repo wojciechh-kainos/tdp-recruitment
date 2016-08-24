@@ -1,6 +1,7 @@
 package servicesTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
 import dao.PersonDao;
 import dao.SlotDao;
 import domain.Person;
@@ -79,7 +80,7 @@ public class ReportServiceTest {
 
     @Test
     public void getReportTest() {
-        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
+        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(Optional.fromNullable(mockFirstPerson));
         when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
 
         Report report = reportService.getReport(mockFirstPerson.getId(), mockStartDate, mockEndDate);
@@ -90,8 +91,8 @@ public class ReportServiceTest {
     @Test
     public void getAllReportsTest() {
         when(personsDao.findAllActive()).thenReturn(mockPersons);
-        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
-        when(personsDao.getById(mockSecondPerson.getId())).thenReturn(mockSecondPerson);
+        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(Optional.fromNullable(mockFirstPerson));
+        when(personsDao.getById(mockSecondPerson.getId())).thenReturn(Optional.fromNullable(mockSecondPerson));
         when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
         when(slotsDao.getForPersonForWeek(mockSecondPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSecondPersonSlotList);
 

@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.google.common.base.Optional;
 
 @Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
@@ -60,10 +61,11 @@ public class PersonResource {
         List<Person> persons = personDao.findAllActive();
         persons.forEach(p -> p.setSlotList(slotDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
-            Note note = noteDao.getByPersonIdAndDate(p.getId(), start);
-            if(note != null) {
-                if(!note.getDescription().isEmpty()) {
-                    p.setNoteList(Arrays.asList(note));
+            Optional<Note> note = noteDao.getByPersonIdAndDate(p.getId(), start);
+
+            if(note.isPresent()) {
+                if(!note.get().getDescription().isEmpty()) {
+                    p.setNoteList(Arrays.asList(note.get()));
                 }
             }
         });
@@ -84,7 +86,12 @@ public class PersonResource {
     public Note getNote(@PathParam("personId") Long personId,
                         @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return noteDao.getByPersonIdAndDate(personId,date);
+        Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
+
+        if(note.isPresent()) {
+            return note.get();
+        }
+        throw new WebApplicationException(Response.Status.NO_CONTENT);
     }
 
     @PUT
@@ -99,12 +106,12 @@ public class PersonResource {
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Response getPersonById(@PathParam("id") Long id){
-        Person person = personDao.getById(id);
-        if (person == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+    public Person getPersonById(@PathParam("id") Long id){
+        Optional<Person> person = personDao.getById(id);
+        if (person.isPresent()) {
+            return person.get();
         }
-        return Response.ok(person).build();
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
     @PUT

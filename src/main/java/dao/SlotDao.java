@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.AvailabilityTypeEnum;
 import domain.Slot;
@@ -20,8 +21,8 @@ public class SlotDao extends AbstractDAO<Slot> {
         super(sessionFactory);
     }
 
-    public Slot findById(Long id) {
-        return get(id);
+    public Optional<Slot> findById(Long id) {
+        return Optional.fromNullable(get(id));
     }
 
     public long create(Slot slot) {

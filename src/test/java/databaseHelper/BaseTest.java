@@ -69,7 +69,7 @@ public class BaseTest {
     protected SlotTime getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
-        SlotTime slotsTimeFromDb = slotTimeDao.getById(id);
+        SlotTime slotsTimeFromDb = slotTimeDao.getById(id).get();
         getSession().getTransaction().commit();
 
         return slotsTimeFromDb;
@@ -78,7 +78,7 @@ public class BaseTest {
     protected AvailabilityType getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
-        AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id);
+        AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id).get();
         getSession().getTransaction().commit();
 
         return availabilityTypeFromDb;

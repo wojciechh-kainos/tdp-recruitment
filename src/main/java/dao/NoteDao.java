@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Note;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -24,9 +25,9 @@ public class NoteDao extends AbstractDAO<Note>{
         return note;
     }
 
-    public Note getByPersonIdAndDate(Long personId, Date startDate) {
-        return uniqueResult( namedQuery("Note.getNoteByPersonIdAndDate")
+    public Optional<Note> getByPersonIdAndDate(Long personId, Date startDate) {
+        return Optional.fromNullable( uniqueResult( namedQuery("Note.getNoteByPersonIdAndDate")
               .setParameter("id", personId)
-              .setDate("date", startDate));
+              .setDate("date", startDate)) );
     }
 }

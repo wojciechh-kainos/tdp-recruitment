@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.AvailabilityType;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -11,6 +12,6 @@ public class AvailabilityTypeDao extends AbstractDAO<AvailabilityType>{
         super(sessionFactory);
     }
 
-    public AvailabilityType getById(long id){ return get(id);}
+    public Optional<AvailabilityType> getById(long id){ return Optional.fromNullable(get(id));}
 
 }
