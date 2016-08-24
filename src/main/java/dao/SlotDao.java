@@ -11,6 +11,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class SlotDao extends AbstractDAO<Slot> {
         namedQuery("Slot.delete").setParameter("id", id).executeUpdate();
     }
 
-    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Boolean isDev, Boolean isTest, Boolean isOps, Boolean isOther) {
+    public List<Slot> findSlotsForPairMatching(String startDate, String endDate, Time startTime, Time endTime, Boolean isDev, Boolean isTest, Boolean isOps, Boolean isOther){
         Date start = DateTime.parse(startDate).toDate();
         Date end = DateTime.parse(endDate).toDate();
 
@@ -48,6 +49,10 @@ public class SlotDao extends AbstractDAO<Slot> {
 
         Criteria criteriaAvail = criteria.createCriteria("type");
         criteriaAvail.add(Restrictions.or(Restrictions.eq("name", AvailabilityTypeEnum.maybe), Restrictions.eq("name", AvailabilityTypeEnum.available)));
+
+        Criteria criteriaTime = criteria.createCriteria("slotTime");
+        criteriaTime.add(Restrictions.ge("startTime", startTime));
+        criteriaTime.add(Restrictions.le("endTime", endTime));
 
         criteria.add(Restrictions.ge("slotDate", start));
         criteria.add(Restrictions.le("slotDate", end));
