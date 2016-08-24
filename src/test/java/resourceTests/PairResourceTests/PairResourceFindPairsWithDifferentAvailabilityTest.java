@@ -22,11 +22,11 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     private final AvailabilityType typeUnavailable = MockDataUtil.unavailable;
     private final AvailabilityType typeMaybe = MockDataUtil.maybe;
 
-    private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 
     @Before
     public void setUp() {
+        List<Slot> mockSlots = new ArrayList<>();
         mockSlots.addAll(createFirstPerson());
         mockSlots.addAll(createSecondPerson());
         mockSlots.addAll(createThirdPerson());

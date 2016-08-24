@@ -1,6 +1,9 @@
 package resourceTests.PairResourceTests;
 
-import domain.*;
+import domain.AvailabilityType;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,20 +19,20 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsBetweenThreePersonsTest {
 
-    private final AvailabilityType availabilityType = MockDataUtil.available;
+    private final Date sameDate = MockDataUtil.today;
+    private final Date differentDate = MockDataUtil.tomorrow;
+    private final AvailabilityType typeAvailable = MockDataUtil.available;
+    private final List<SlotTime> expectedFirstPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
+    private final List<SlotTime> expectedSecondPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 5);
 
-    private List<Slot> mockSlots = new ArrayList<>();
-    private List<SlotTime> expectedFirstPersonSlotsTimes, expectedSecondPersonSlotsTimes;
     private List<Person> persons;
 
     @Before
     public void setUp() {
-        expectedFirstPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
-        expectedSecondPersonSlotsTimes = MockDataUtil.createSlotsTimesList(1, 5);
-
-        mockSlots.addAll(slotsForFirstPerson(1L, MockDataUtil.today));
+        List<Slot> mockSlots = new ArrayList<>();
+        mockSlots.addAll(slotsForFirstPerson(1L, sameDate, expectedFirstPersonSlotsTimes));
         mockSlots.addAll(slotsForSecondPerson());
-        mockSlots.addAll(slotsForFirstPerson(3L, MockDataUtil.tomorrow));
+        mockSlots.addAll(slotsForFirstPerson(3L, differentDate, expectedSecondPersonSlotsTimes));
 
         persons = MockDataUtil.findPairs(mockSlots);
     }
@@ -68,7 +71,7 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
                         .getSlotList()
                         .stream()
                         .map(Slot::getSlotTime)
-                        .allMatch(searchedSlotTime -> expectedFirstPersonSlotsTimes.contains(searchedSlotTime)));
+                        .allMatch(expectedFirstPersonSlotsTimes::contains));
     }
 
     @Test
@@ -111,17 +114,17 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
                         .count(), 1L);
     }
 
-    private List<Slot> slotsForFirstPerson(Long personId, Date date){
+    private List<Slot> slotsForFirstPerson(Long personId, Date date, List<SlotTime> slotTimes){
         Person person = MockDataUtil.createPerson(personId);
 
-        return MockDataUtil.createSlotsToSlotTimes(expectedFirstPersonSlotsTimes, person, date, availabilityType);
+        return MockDataUtil.createSlotsToSlotTimes(slotTimes, person, date, typeAvailable);
     }
 
     private List<Slot> slotsForSecondPerson(){
         List<Slot> slots = new ArrayList<>();
         Person person = MockDataUtil.createPerson(2L);
-        slots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedFirstPersonSlotsTimes, person, MockDataUtil.today, availabilityType));
-        slots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSecondPersonSlotsTimes, person, MockDataUtil.tomorrow, availabilityType));
+        slots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedFirstPersonSlotsTimes, person, sameDate, typeAvailable));
+        slots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSecondPersonSlotsTimes, person, differentDate, typeAvailable));
 
         return slots;
     }

@@ -1,22 +1,20 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotDao;
-import domain.*;
+import domain.AvailabilityType;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import resources.PairResource;
-import services.PairFinder;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceTest {
@@ -32,7 +30,6 @@ public class PairResourceTest {
     @Before
     public void setUp() {
         List<Slot> mockSlots = new ArrayList<>();
-
         mockSlots.addAll(slotsForFirstPerson());
         mockSlots.addAll(slotsForSecondPerson());
         persons = MockDataUtil.findPairs(mockSlots);

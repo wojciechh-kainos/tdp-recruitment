@@ -1,10 +1,13 @@
 package resourceTests.PairResourceTests;
 
-import domain.*;
+import domain.Person;
+import domain.Slot;
+import domain.SlotTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +19,16 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsForWeekTest {
 
-    private final Date expectedDate = MockDataUtil.today;
+    private final Date sameDate = MockDataUtil.today;
     private final List<SlotTime> expectedSameSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
     private final List<SlotTime> threeDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(3, 5);
     private final List<SlotTime> twoDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(4, 5);
 
-    private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 
     @Before
     public void setUp() {
+        List<Slot> mockSlots = new ArrayList<>();
         mockSlots.addAll(slotsForPerson(1L, twoDifferentSlotsTimes));
         mockSlots.addAll(slotsForPerson(2L, threeDifferentSlotsTimes));
         persons = MockDataUtil.findPairs(mockSlots);
@@ -64,7 +67,7 @@ public class PairResourceFindPairsForWeekTest {
                 firstPerson
                         .getSlotList()
                         .stream()
-                        .allMatch(slot -> slot.getSlotDate().equals(expectedDate)));
+                        .allMatch(slot -> slot.getSlotDate().equals(sameDate)));
     }
 
     private List<Slot> slotsForPerson(Long personId, List<SlotTime> differentSlotTimes){
