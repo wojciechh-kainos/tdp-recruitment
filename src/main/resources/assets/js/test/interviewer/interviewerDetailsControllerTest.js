@@ -81,7 +81,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             it('should show notification when trying to save invalid password', function(){
                 updatePersonDeferred.resolve({});
                 $scope.changePasswordChecked = true;
-                $scope.isPasswordValid = false;
+                $scope.arePasswordsCorrect = false;
 
                 $scope.updateDetails();
                 $scope.$apply();
