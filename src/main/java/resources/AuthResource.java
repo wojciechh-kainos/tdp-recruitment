@@ -3,7 +3,6 @@ package resources;
 import auth.TdpRecruitmentAuthenticator;
 import com.google.inject.Inject;
 import domain.Person;
-import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.basic.BasicCredentials;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -33,7 +32,7 @@ public class AuthResource {
 		if (authenticatedUser.isPresent()) {
 			return authenticatedUser.get();
 		} else {
-			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
 	}
 

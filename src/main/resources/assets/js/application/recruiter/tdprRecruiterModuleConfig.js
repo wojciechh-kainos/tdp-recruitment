@@ -25,12 +25,21 @@ define(['angular'
                     }
                 },
                 resolve: {
-                  isUserAuthenticated: function(tdprAuthService) {
-                      return tdprAuthService.isUserAuthenticated();
-                  },
-                  isUserAuthorized: function(tdprAuthService) {
-                      return tdprAuthService.isUserAuthorized("recruiter");
-                  }
+                    isUserAuthenticated: function(tdprAuthService) {
+                        return tdprAuthService.isUserAuthenticated();
+                    },
+                    isUserAuthorized: function(tdprAuthService, Notification, $q, $state, $location) {
+                        var deferred = $q.defer();
+
+                        if(tdprAuthService.isUserAuthorized("recruiter")) {
+                            deferred.resolve();
+                        } else {
+                            Notification.error('You do not have permissions to view this page.');
+                            deferred.reject();
+                        }
+
+                        return deferred.promise;
+                    }
                 }
             }).state("tdpr.recruiter.home", {
                 url: "/recruiter",

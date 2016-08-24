@@ -8,9 +8,16 @@ define(['angular'
             .state("tdpr", {
                 abstract: true,
                 resolve: {
-                    validateSession: function(tdprAuthService) {
-                        return tdprAuthService.validateSession();
-                    }
+                    validateSession: function(tdprAuthService, $location, $q, Notification) {
+                        tdprAuthService.checkCookies();
+
+                        if(tdprAuthService.isUserLoggedIn()) {
+                            tdprAuthService.validateSession().catch(function() {
+                                $location.path('/login');
+                                Notification.error('Your session has expired. Please log in.');
+                            });
+                        }
+                    },
                 },
                 views: {
                     "navbar@": {
