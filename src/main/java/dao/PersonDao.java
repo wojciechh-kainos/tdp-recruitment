@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Person;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -42,5 +43,11 @@ public class PersonDao extends AbstractDAO<Person>{
         Criteria criteria = currentSession().createCriteria(Person.class)
                 .add(Restrictions.eq("email", email));
         return uniqueResult(criteria);
+    }
+
+    public Optional<Person> getUserByActivationLink(String activationLink) {
+        Criteria criteria = currentSession().createCriteria(Person.class)
+                .add(Restrictions.eq("activationCode", activationLink));
+        return Optional.fromNullable(uniqueResult(criteria));
     }
 }

@@ -49,15 +49,9 @@ public class PersonResource {
     @UnitOfWork
     public Person createPerson(Person person) {
         String token = UUID.randomUUID().toString();
-
-        try {
-            String hashedToken = passwordStore.createHash(token).substring(21);
-            person.setActivationCode(hashedToken);
-            personDao.create(person);
-            mailService.sendEmail(person.getEmail(), token);
-        } catch (TdpRecruitmentPasswordStore.CannotPerformOperationException e) {
-            e.printStackTrace();
-        }
+        person.setActivationCode(token);
+        personDao.create(person);
+        mailService.sendEmail(person.getEmail(), token);
 
         return person;
     }

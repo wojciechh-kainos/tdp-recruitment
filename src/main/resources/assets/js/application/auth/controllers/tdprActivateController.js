@@ -1,8 +1,7 @@
-define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services/tdprAuthService'], function (angular, tdprAuthModule) {
-    tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprAuthService, $state, Notification) {
+define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services/tdprActivateService'], function (angular, tdprAuthModule) {
+    tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprActivateService) {
 
-        $scope.smth = $stateParams.activationLink;
-
+        tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink);
 
     });
 });

@@ -2,6 +2,7 @@ package resources;
 
 import auth.TdpRecruitmentAuthenticator;
 import com.google.inject.Inject;
+import dao.PersonDao;
 import domain.Person;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthenticationException;
@@ -18,10 +19,12 @@ import com.google.common.base.Optional;
 public class AuthResource {
 
 	private TdpRecruitmentAuthenticator authenticator;
+	private PersonDao personDao;
 
 	@Inject
-	public AuthResource(TdpRecruitmentAuthenticator authenticator) {
+	public AuthResource(TdpRecruitmentAuthenticator authenticator, PersonDao personDao) {
 		this.authenticator = authenticator;
+		this.personDao = personDao;
 	}
 
 	@POST
@@ -35,6 +38,13 @@ public class AuthResource {
 		} else {
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
+	}
+
+	@GET
+	@UnitOfWork
+	@Path("activate/{activationLink}")
+	public Optional<Person> checkIfPersonWithActivationLinkExists (@PathParam("activationLink")String activationLink) {
+		return personDao.getUserByActivationLink(activationLink);
 	}
 
 }
