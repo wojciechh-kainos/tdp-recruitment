@@ -34,6 +34,11 @@
                 <span class="col-md-6" ng-show="detailsForm.defaultFinishHour.$error.min || detailsForm.defaultFinishHour.$error.max">Values between 16:00 and 18:00!</span>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-6">Change password:</label>
+            <input class="col-md-2 details-checkbox" type="checkbox" ng-model="changePasswordChecked">
+        </div>
+        <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
