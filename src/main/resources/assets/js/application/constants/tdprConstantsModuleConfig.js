@@ -57,6 +57,8 @@ define(['angular'
         current: 0
     }).constant('DateFormat', 'yyyy-MM-dd')
       .constant('HttpStatusCodes', {
+        ok : 200,
+        badRequest: 400,
         conflict : 409
         });
 

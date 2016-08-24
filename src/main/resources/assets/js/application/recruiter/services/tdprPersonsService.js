@@ -1,4 +1,4 @@
-define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
+define(['application/recruiter/tdprRecruiterModule', 'application/constants/tdprConstantsModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q, HttpStatusCodes) {
 
         this.fetchPersonsWithSlotsForDates = function(start, end) {

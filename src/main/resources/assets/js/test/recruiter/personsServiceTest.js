@@ -1,5 +1,6 @@
 define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsService', 'application/recruiter/services/tdprDateService'], function (angular) {
     describe('personsService', function () {
+
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
         var $httpBackend;
@@ -7,9 +8,11 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         var data = [2, 2];
         var weekStart;
         var weekEnd;
-        var person
+        var person;
+        var HttpStatusCodes;
 
         beforeEach(inject(function (_tdprPersonsService_, _$httpBackend_, dateFilter) {
+
             $httpBackend = _$httpBackend_;
             service = _tdprPersonsService_;
 
@@ -25,9 +28,25 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
             weekEnd = dateFilter(weekEnd, format);
         }));
 
+
+        beforeEach(function () {
+
+            HttpStatusCodes = {
+                ok : 200,
+                badRequest: 400,
+                conflict : 409
+            };
+
+            module(function ($provide) {
+                $provide.value('HttpStatusCodes', HttpStatusCodes);
+            });
+
+
+        });
+
         describe('fetchPersons', function () {
             it('should fetch valid data', function () {
-                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(200, data);
+                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(HttpStatusCodes.ok, data);
 
                 service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
                     expect(response).toEqual(data);
@@ -36,10 +55,10 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
             });
 
             it('should fail when response is not 200', function () {
-                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(400);
+                $httpBackend.expectGET('api/person/all?startDate=' + weekStart + '&endDate=' + weekEnd).respond(HttpStatusCodes.badRequest);
 
                 service.fetchPersonsWithSlotsForDates(weekStart, weekEnd).then(function (response) {
-                    expect(response.status).toEqual(400);
+                    expect(response.status).toEqual(HttpStatusCodes.badRequest);
                 });
                 $httpBackend.flush();
             })
@@ -47,7 +66,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
 
         describe('createPerson', function () {
             it('should return created person on success', function () {
-                $httpBackend.expectPUT('/api/person/create/').respond(200, data);
+                $httpBackend.expectPUT('/api/person/create/').respond(HttpStatusCodes.ok, data);
 
                 service.createPerson({}).then(function (response) {
                     expect(response.data).toEqual(data);
@@ -56,7 +75,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
             });
 
             it('should return error message on error', function () {
-                $httpBackend.expectPUT('/api/person/create/').respond(400);
+                $httpBackend.expectPUT('/api/person/create/').respond(HttpStatusCodes.badRequest);
 
                 service.createPerson({}).then(undefined, function (response) {
                     expect(response.message).toEqual("Interviewer adding failed.");
@@ -67,7 +86,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
 
         describe('managePerson', function () {
             it('should return updated person on success', function () {
-                $httpBackend.expectPUT('/api/person/' + 2).respond(200, data);
+                $httpBackend.expectPUT('/api/person/' + 2).respond(HttpStatusCodes.ok, data);
 
                 service.managePerson(person).then(function (response) {
                     expect(response.data).toEqual(data);
