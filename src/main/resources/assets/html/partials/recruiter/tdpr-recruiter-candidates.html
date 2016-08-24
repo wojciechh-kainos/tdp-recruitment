@@ -18,7 +18,7 @@
                     <td class="slot hour-cell">{{candidate.position}}</td>
                     <td class="slot hour-cell">{{candidate.note}}</td>
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
-                    <td class="slot hour-cell"><a class="cursor-pointer" ng-click="removeCandidate(candidate)">delete</a> |
+                    <td class="slot hour-cell"><a class="cursor-pointer" ng-click="deleteCandidate(candidate)">delete</a> |
                                                <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)">edit</a></td>
                 </tr>
                 </tbody>
@@ -133,7 +133,7 @@
                     <label class="col-md-4 control-label">Recruiter:</label>
                     <div class="col-md-8">
                         <div class="ui-select">
-                            <select class="form-control" ng-model="candidateForEdit.recruiter" ng-options="recruiter.lastName for recruiter in recruiters" >
+                            <select class="form-control" ng-model="candidateForEdit.recruiter" ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id" >
                             </select>
                         </div>
                     </div>
