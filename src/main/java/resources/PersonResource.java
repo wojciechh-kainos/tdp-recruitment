@@ -121,9 +121,12 @@ public class PersonResource {
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
 
-        Person person = personDao.getById(id);
+        Person person = personDao.getById(500L);
+        if(person != null) {
         person.setActive(!person.getActive());
 
         return Response.ok().build();
+        }
+        else throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
 }
