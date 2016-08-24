@@ -1,4 +1,4 @@
-define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDetailsController', 'application/common/filters/tdprJobProfileFilter'], function (angular) {
+define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDetailsController'], function (angular) {
 
     describe('tdprReportService', function () {
         beforeEach(angular.mock.module('tdprReportModule'));

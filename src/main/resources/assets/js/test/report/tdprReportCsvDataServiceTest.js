@@ -23,7 +23,6 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
                     lastName : "SecondLastName",
                     firstName : "SecondFirstName"
                 }
-
             }
         ]
 
