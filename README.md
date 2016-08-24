@@ -11,7 +11,7 @@ Software you'll need installed:
 - Node.js (was developed against 6.3, but can quite probably run with an older version)
 - Gradle >= 2.0 (required for Jenkins pipeline, local project can be handled using the provided wrapper)
 
-For local development the database is required to be running on default PostgreSQL port **5432** and have a a **tdprecruitment** database owned by **tdp** user identified by password **tdp**. These are the defaults configured in [app_config.yml](../blob/master/src/main/resources/app_config.yml)
+For local development the database is required to be running on default PostgreSQL port **5432** and have a a **tdprecruitment** database owned by **tdp** user identified by password **tdp**. These are the defaults configured in [app_config.yml](../src/main/resources/app_config.yml)
 
 ## Usage and maintenance essentials
 
