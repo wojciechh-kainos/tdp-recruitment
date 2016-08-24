@@ -36,14 +36,19 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             return value.toString().replace(".", ",");
         };
 
+        var createTitle = function(startDate, endDate) {
+            var title = "Report-" + startDate + "-to-" + endDate;
+            return title;
+        };
+
         var createEmptyLine = function() {
             return separator + separator + separator + endOfLine;
-        }
+        };
 
         var createInfo = function(startDate, endDate) {
             var info = addQuotes("Start Date:") + separator + addQuotes(startDate) + separator + addQuotes("End Date:") + separator + addQuotes(endDate) + endOfLine;
             return info;
-        }
+        };
 
         var createHeader = function (columnMap) {
             var header = addQuotes(columnMap["person.lastName"].columnName) + separator;
