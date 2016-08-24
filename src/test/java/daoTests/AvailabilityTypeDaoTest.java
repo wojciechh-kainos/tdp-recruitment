@@ -3,16 +3,16 @@ package daoTests;
 import databaseHelper.BaseTest;
 import domain.AvailabilityType;
 import domain.AvailabilityTypeEnum;
+import liquibase.exception.LiquibaseException;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
 public class AvailabilityTypeDaoTest extends BaseTest{
 
     @Test
-    public void getAvailabilityTypesTest(){
+    public void getAvailabilityTypesTest() throws LiquibaseException {
         getSession().beginTransaction();
 
         AvailabilityType anotherAvailabilityType = availabilityTypeDao.getById(1);

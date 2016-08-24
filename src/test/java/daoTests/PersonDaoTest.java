@@ -5,6 +5,7 @@ import domain.AvailabilityType;
 import domain.Person;
 import domain.Slot;
 import domain.SlotTime;
+import liquibase.exception.LiquibaseException;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class PersonDaoTest extends BaseTest {
     private Person personFromDb;
 
     @Before
-    public void setUp() {
+    public void setUp() throws LiquibaseException {
         person = new Person();
         person.setFirstName("TEST_NAME");
         person.setEmail("TEST@TEST.PL");
@@ -40,7 +41,7 @@ public class PersonDaoTest extends BaseTest {
     }
 
     @Test
-    public void testCreatePersonsWithSlots() {
+    public void testCreatePersonsWithSlots() throws LiquibaseException {
 
         Slot slot = new Slot();
         slot.setSlotDate(new Date(LocalDate.now().toDate().getTime()));
@@ -66,7 +67,7 @@ public class PersonDaoTest extends BaseTest {
     }
 
     @Test
-    public void testCreatePersons() {
+    public void testCreatePersons() throws LiquibaseException {
 
         getSession().beginTransaction();
         Long id = personDao.create(person);
@@ -80,7 +81,7 @@ public class PersonDaoTest extends BaseTest {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws LiquibaseException {
         getSession().beginTransaction();
         personFromDb.getSlotList().forEach(s -> slotDao.deleteById(s.getId()));
         getSession().getTransaction().commit();

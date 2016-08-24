@@ -28,7 +28,7 @@ public class DatabaseConfigurationHelper {
     }
 
     private static TdpRecruitmentApplicationConfiguration parseConfiguration() throws Exception {
-        URI path = Resources.getResource("app_config.yml").toURI();
+        URI path = Resources.getResource("app_config_test.yml").toURI();
         return factory.build(new File(path));
 
     }

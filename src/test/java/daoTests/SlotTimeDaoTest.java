@@ -2,6 +2,7 @@ package daoTests;
 
 import databaseHelper.BaseTest;
 import domain.SlotTime;
+import liquibase.exception.LiquibaseException;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class SlotTimeDaoTest extends BaseTest{
 
     @Test
-    public void getSlotsTimeTest(){
+    public void getSlotsTimeTest() throws LiquibaseException {
         getSession().beginTransaction();
 
         SlotTime firstSlotTimeFromDb = slotTimeDao.getById(1);

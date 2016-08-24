@@ -6,13 +6,26 @@ import dao.SlotDao;
 import dao.SlotTimeDao;
 import domain.*;
 import io.dropwizard.db.DataSourceFactory;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseConnection;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.HsqlConnection;
+import liquibase.exception.DatabaseException;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.jdbc.ReturningWork;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.BeforeClass;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class BaseTest {
 
@@ -24,7 +37,6 @@ public class BaseTest {
 
     @BeforeClass
     public static void createInjector() throws Exception {
-
         Configuration config = new Configuration();
         DataSourceFactory dbConfig = DatabaseConfigurationHelper.getDatabaseConfiguration();
         config.setProperty("hibernate.connection.url",dbConfig.getUrl());
@@ -52,8 +64,7 @@ public class BaseTest {
         availabilityTypeDao = new AvailabilityTypeDao(sessionFactory);
     }
 
-    public Session getSession()
-    {
+    public Session getSession() throws LiquibaseException {
         Session session;
         try {
             session = sessionFactory.getCurrentSession();
@@ -64,7 +75,7 @@ public class BaseTest {
         return session;
     }
 
-    protected SlotTime getSlotTimeFromDb(Long id) {
+    protected SlotTime getSlotTimeFromDb(Long id) throws LiquibaseException {
 
         getSession().beginTransaction();
         SlotTime slotsTimeFromDb = slotTimeDao.getById(id);
@@ -73,7 +84,7 @@ public class BaseTest {
         return slotsTimeFromDb;
     }
 
-    protected AvailabilityType getAvailabilityTypeFromDb(Long id) {
+    protected AvailabilityType getAvailabilityTypeFromDb(Long id) throws LiquibaseException {
 
         getSession().beginTransaction();
         AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id);
