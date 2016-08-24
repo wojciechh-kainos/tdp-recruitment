@@ -5,17 +5,17 @@
     <form class="form-horizontal interviewer-form" name="interviewerForm" role="form">
         <div class="form-group">
             <label class="control-label col-md-6">Recruiter:</label>
-            <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.isAdmin" >
+            <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.admin" >
         </div>
         <hr>
-        <div ng-hide="person.isAdmin">
+        <div ng-hide="person.admin">
             <div class="form-group">
                 <label class="control-label col-md-6">Developer:</label>
                 <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.isDev">
             </div>
             <div class="form-group">
                 <label class="control-label col-md-6">WebOps:</label>
-                <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.isWeb">
+                <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.isOps">
             </div>
             <div class="form-group">
                 <label class="control-label col-md-6">Tester:</label>

@@ -5,10 +5,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.create = function (person) {
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
-            if(person.isAdmin===true){
+            if(person.admin===true){
                 person.isDev = false;
                 person.isTest = false;
-                person.isWeb = false;
+                person.isOps = false;
             }
             $scope.createPersonPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
