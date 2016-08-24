@@ -47,7 +47,7 @@ public class PersonResource {
     public Person createPerson(Person person) {
 
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
-
+            person.setActive(false);
             personDao.create(person);
             mailService.sendEmail(person.getEmail(), person.getId());
 
