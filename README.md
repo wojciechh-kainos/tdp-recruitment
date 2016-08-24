@@ -13,7 +13,7 @@ Software you'll need installed:
 
 For local development the database server is required to be running on default PostgreSQL port **5432** and have a a **tdprecruitment** database owned by **tdp** user identified by password **tdp**. These are the defaults configured in [app_config.yml](src/main/resources/app_config.yml)
 
-## Usage and maintenance essentials
+## Development and maintenance essentials
 
 ### Installing Node.js's command line utilities
 
@@ -64,4 +64,4 @@ bower update
 
 ## About
 
-Developed during first Gdańsk edition of [**Kainos**](https://www.kainos.pl/) **_Trainee Development Program_**.
+Developed during first Gdańsk edition of [**Kainos**](https://www.kainos.pl/) **_Trainee Development Programme_**. You can read more about it [here](https://www.kainos.com/training-in-kainos/)!
