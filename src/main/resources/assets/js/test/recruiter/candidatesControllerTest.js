@@ -62,7 +62,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                     }
                 ];
 
-                recruiters = {};
+                recruiters = [];
 
                 ngDialog = {
                     open: function () {

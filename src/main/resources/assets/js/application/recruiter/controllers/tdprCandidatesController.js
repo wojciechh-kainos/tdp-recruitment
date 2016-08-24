@@ -38,7 +38,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         var populateRecruiterFilters = function (recruiters) {
             var recruiterList = angular.copy(recruiters);
             $scope.currentRecruiter = {id: 0, lastName: "All"};
-            recruiterList.push($scope.currentRecruiter);
+            recruiterList.unshift($scope.currentRecruiter);
             return recruiterList;
         };
 
