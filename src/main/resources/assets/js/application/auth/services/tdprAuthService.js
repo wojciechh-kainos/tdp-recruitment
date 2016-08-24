@@ -19,11 +19,21 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 };
 
                 service.setCredentials(user.email, user.token);
-
+                console.log(user.token);
                 return res.data;
             }, function (err) {
                return $q.reject(err);
             });
+        };
+
+        service.logout = function () {
+            if(!service.isUserLoggedIn()) {
+                return;
+            }
+
+            clearCredentials();
+            $location.path('/login');
+            Notification.success('You have been successfully logged out.');
         };
 
         service.setCredentials = function (email, password) {
@@ -40,13 +50,13 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             }
         };
 
-        service.clearCredentials = function () {
+        var clearCredentials = function () {
             $cookieStore.remove('globals');
             currentUser = {};
             $http.defaults.headers.common.Authorization = '';
         };
 
-        service.checkCookies = function() {
+        var checkCookies = function() {
             var globals = $cookieStore.get('globals');
             if (globals) {
                 currentUser = globals.currentUser;
@@ -90,7 +100,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
         };
 
         service.validateSession = function () {
-            service.checkCookies();
+            checkCookies();
             if(!service.isUserLoggedIn()) {
                 return;
             }
@@ -98,7 +108,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             return $http.get('/api/auth/validateToken?token=' + currentUser.token).then(function(response) {
                     return response;
                 }, function() {
-                    service.clearCredentials();
+                    clearCredentials();
                     $location.path('/login');
                     Notification.error('Your session has expired. Please log in.');
                 }

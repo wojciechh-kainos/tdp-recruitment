@@ -4,8 +4,7 @@ define(['angular'
 ], function (angular, tdprCommonModule) {
     tdprCommonModule.controller("tdprNavbarController", function ($scope, $state, tdprAuthService) {
         $scope.logout = function() {
-            tdprAuthService.clearCredentials();
-            $state.go('tdpr.login');
+            tdprAuthService.logout();
         }
 
         $scope.$watch(tdprAuthService.isUserLoggedIn, function(newVal) {

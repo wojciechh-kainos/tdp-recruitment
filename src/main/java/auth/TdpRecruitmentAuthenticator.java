@@ -44,8 +44,8 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 				if (cache.getIfPresent(credentials.getPassword()) != null) {
 					return Optional.of(user);
 				} else if (passwordStore.verifyPassword(credentials.getPassword(), user.getPassword())) {
-					String token = UUID.randomUUID().toString() + user.getEmail();
-					String hashedToken = passwordStore.createHash(token).substring(21);
+					String token = UUID.randomUUID().toString();
+					String hashedToken = token;
 					user.setToken(hashedToken);
 					cache.put(hashedToken, user);
 					return Optional.of(user);
@@ -59,16 +59,12 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 	}
 
 	public boolean isTokenValid(String token) {
-		System.out.println("validating " + token);
-		System.out.println("tokens:" + cache.size());
 		Optional<Person> cachedPerson = Optional.fromNullable(cache.getIfPresent(token));
 		if(cachedPerson.isPresent()) {
-		System.out.println(cachedPerson.get().getEmail());
 			return true;
 		} else {
-		System.out.println("no there");
 			return false;
 		}
-
 	}
+
 }
