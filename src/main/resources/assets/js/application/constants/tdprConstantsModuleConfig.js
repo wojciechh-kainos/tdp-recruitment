@@ -40,25 +40,22 @@ define(['angular'
             tooltipText: "maybe"
         }
     }).constant('JobProfileEnum', {
-        dev: "isDev",
-        web: "isWeb",
-        test: "isTest"
-    }).constant('JobProfileEnumNames', {
-        dev: "Developer",
-        web: "WebOps",
-        test: "Tester"
-    }).constant('BandLevelEnum',{
+        isDev: {name: "Developer", column: "isDev"},
+        isOps: {name: "WebOps", column: "isOps"},
+        isTest: {name: "Tester", column: "isTest"},
+        isOther: {name: "Other", column: "isOther"}
+    }).constant('BandLevelEnum', {
         "1": "1 - Principal",
         "2": "2 - Manager",
         "3": "3 - Consultant",
         "4": "4 - Senior associate",
         "5": "5 - Associate",
         "6": "6 - Trainee"
-    }).constant('WeekNavigateEnum',{
-        previous : -1,
-        next : 1,
-        current : 0
-    });
+    }).constant('WeekNavigateEnum', {
+        previous: -1,
+        next: 1,
+        current: 0
+    }).constant('DateFormat', 'yyyy-MM-dd');
 
     return tdprConstantsModule;
 });

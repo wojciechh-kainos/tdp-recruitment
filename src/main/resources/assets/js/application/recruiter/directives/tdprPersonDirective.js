@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("person", function () {
         return {
             restrict: 'AE',
-            templateUrl: 'js/application/recruiter/views/tdpr-directive-person.html',
+            templateUrl: '/html/partials/recruiter/tdpr-directive-person.html',
             scope: {
                 pairingMode: '=',
                 personData: '=',
@@ -13,10 +13,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 discardSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
-                scope.note = scope.personData.notesList ? '"' + scope.personData.notesList[0].description + '"' : 'none';
+                scope.note = scope.personData.noteList ? '"' + scope.personData.noteList[0].description + '"' : 'none';
 
                 scope.getSlot = function (slotNumber, day) {
-                    return scope.personData.slotsList.find(function (slot) {
+                    return scope.personData.slotList.find(function (slot) {
                         return (slotNumber === slot.number) && (new Date(slot.day).getDay() === day.getDay());
                     });
                 };

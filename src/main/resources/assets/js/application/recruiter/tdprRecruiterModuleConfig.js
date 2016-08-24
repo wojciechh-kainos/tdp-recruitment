@@ -9,7 +9,10 @@ define(['angular'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprDateService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
-    , 'application/recruiter/filters/tdprRecruiterJobProfileFilter'
+    , 'application/recruiter/controllers/tdprManageUsersController'
+    , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/directives/tdprJobProfileCheckboxDirective'
+    , 'application/common/directives/tdprJobProfileDirective'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
@@ -18,7 +21,7 @@ define(['angular'
                 abstract: true,
                 views: {
                     "@": {
-                        templateUrl: "/js/application/recruiter/views/tdpr-recruiter-index.html"
+                        templateUrl: "/html/partials/recruiter/tdpr-recruiter-index.html"
                     }
                 }
             }).state("tdpr.recruiter.home", {
@@ -34,7 +37,7 @@ define(['angular'
             },
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-table.html",
+                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-table.html",
                     controller: "tdprWeekTableController"
                 }
             }
@@ -42,8 +45,16 @@ define(['angular'
             url: "/add-interviewer",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-add-interviewer.html",
+                    templateUrl: "/html/partials/recruiter/tdpr-recruiter-add-interviewer.html",
                     controller: "tdprAddInterviewerController"
+                }
+            }
+        }).state("tdpr.recruiter.manageUsers", {
+            url: "/manage-users",
+            views: {
+                "main@recruiter": {
+                    templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
+                    controller: "tdprManageUsersController"
                 }
             }
         }).state("tdpr.recruiter.createEvent", {

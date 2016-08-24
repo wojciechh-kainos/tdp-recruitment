@@ -24,7 +24,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
 
             tdprPersonService.updatePersonDetails(person).then(function () {
-                Notification.success({message: 'Details updated!', delay: 2000});
+                Notification.success('Details updated!');
 
                 $scope.goHome();
             });

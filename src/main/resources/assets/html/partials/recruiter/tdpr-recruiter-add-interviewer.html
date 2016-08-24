@@ -1,0 +1,47 @@
+<br>
+<div class="well center">
+    <h1 id="interviewer-details-h1">Add new interviewer</h1>
+
+    <form class="form-horizontal interviewer-form" name="interviewerForm" role="form">
+        <hr>
+        <job-check-boxes></job-check-boxes>
+        <hr>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Band level:</label>
+            <div class="col-md-8">
+                <div class="ui-select">
+                    <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum" ng-init="person.bandLevel = '6';">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">E-mail:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="email" type="email" ng-model="person.email" ng-maxlength="100" required/>
+            </div>
+            <p class="int-err center" ng-show="interviewerForm.email.$error.maxlength">Email cannot have more than 100 characters.</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">First name:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="firstName" type="text" ng-model="person.firstName" ng-maxlength="35" required/>
+            </div>
+            <p class="int-err center" ng-show="interviewerForm.firstName.$error.maxlength">First name cannot have more than 35 characters.</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Last name:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="lastName" type="text" ng-model="person.lastName" ng-maxlength="35" required/>
+            </div>
+            <p class="int-err center" ng-show="interviewerForm.lastName.$error.maxlength">Last name cannot have more than 35 characters.</p>
+        </div>
+        <div class="center btn-wrapper">
+            <input class="btn btn-primary" type="submit" ng-click="interviewerForm.$valid ? create(person) : showError()" value="Submit"
+               ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
+            <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
+            <img ng-if="createInterviewerPromise.resolved"
+                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+        </div>
+    </form>
+</div>

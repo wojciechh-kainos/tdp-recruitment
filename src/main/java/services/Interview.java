@@ -2,7 +2,7 @@ package services;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import domain.Persons;
+import domain.Person;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -16,8 +16,8 @@ import java.util.*;
 
 public class Interview {
 
-    private List<Persons> interviewers = new ArrayList<>();
-    private Persons organizer;
+    private List<Person> interviewers = new ArrayList<>();
+    private Person organizer;
     private Date start;
     private Date end;
     private String interviewee;
@@ -26,11 +26,11 @@ public class Interview {
 
     }
 
-    public void setInterviewers(List<Persons> interviewers) {
+    public void setInterviewers(List<Person> interviewers) {
         this.interviewers = interviewers;
     }
 
-    public void setOrganizer(Persons organizer) {
+    public void setOrganizer(Person organizer) {
         this.organizer = organizer;
     }
 
@@ -94,7 +94,7 @@ public class Interview {
     private String parseAttendees() {
         String result = "";
         String attendeeTemplate = "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN={{fname}} {{lname}}:MAILTO:{{mail}}\n";
-        for (Persons interviewer : interviewers) {
+        for (Person interviewer : interviewers) {
             result += attendeeTemplate
                     .replace("{{fname}}", interviewer.getFirstName())
                     .replace("{{lname}}", interviewer.getLastName())
@@ -110,7 +110,7 @@ public class Interview {
         message.setSubject("Interview");
         message.setSentDate(new Date());
         message.setFrom(new InternetAddress(organizer.getEmail()));
-        for (Persons interviewer : interviewers) {
+        for (Person interviewer : interviewers) {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(interviewer.getEmail()));
         }
         message.setContent(createInvitation());

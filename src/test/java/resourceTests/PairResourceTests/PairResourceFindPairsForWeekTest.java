@@ -1,6 +1,6 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotsDao;
+import dao.SlotDao;
 import domain.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import resources.PairResource;
+import services.PairFinder;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +23,26 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsForWeekTest {
 
-    private List<Slots> mockSlots = new ArrayList<>();
-    private List<SlotsTimes> expectedSameSlotsTimes;
-    private List<Persons> persons;
-    private Date expectedDate;
-
     @Mock
-    private static SlotsDao mockDao;
+    private static SlotDao mockDao;
+
+    private final PairFinder pairFinder = new PairFinder();
+
+    private List<Slot> mockSlots = new ArrayList<>();
+    private List<SlotTime> expectedSameSlotsTimes;
+    private List<Person> persons;
+    private Date expectedDate;
 
     @Before
     public void setUp() {
         String startDate;
         String endDate;
+        final Time startTime = Time.valueOf("08:00:00");
+        final Time endTime = Time.valueOf("17:00:00");
         final Boolean isDev = true;
         final Boolean isTest = false;
         final Boolean isOps = false;
+        final Boolean isOther = false;
         PairResource resource;
         int TODAY_OFFSET = 0;
         expectedDate = MockDataUtil.createDate(TODAY_OFFSET);
@@ -44,23 +51,23 @@ public class PairResourceFindPairsForWeekTest {
         startDate = MockDataUtil.convertDateToString(expectedDate);
         endDate = MockDataUtil.convertDateToString(differentDate);
 
-        AvailabilityTypes availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypesEnum.available);
+        AvailabilityType availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
         expectedSameSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
-        List<SlotsTimes> threeDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(3, 5);
-        List<SlotsTimes> twoDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(4, 5);
+        List<SlotTime> threeDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(3, 5);
+        List<SlotTime> twoDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(4, 5);
 
-        Persons firstPerson = MockDataUtil.createPersons((long) 1, "FIRST", isDev, isTest, isOps);
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, firstPerson, expectedDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(twoDifferentSlotsTimes, firstPerson, differentDate, availabilityType));
 
-        Persons secondPerson = MockDataUtil.createPersons((long) 2, "SECOND", isDev, isTest, isOps);
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, expectedDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(threeDifferentSlotsTimes, secondPerson, differentDate, availabilityType));
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, pairFinder);
 
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
     }
 
 
@@ -74,31 +81,31 @@ public class PairResourceFindPairsForWeekTest {
         assertTrue("Every person should have 3 slots in slotsList",
                 persons
                         .stream()
-                        .allMatch(person -> person.getSlotsList().size() == 3));
+                        .allMatch(person -> person.getSlotList().size() == 3));
 
     }
 
     @Test
     public void testFindPairForWeekFoundSlotsShouldBeTheSameAsExpected() {
-        Persons firstPerson = persons.get(0);
+        Person firstPerson = persons.get(0);
 
         assertTrue("When two people has the same slots in different days only these with minimum 3 slots times should be shown",
                 firstPerson
-                        .getSlotsList()
+                        .getSlotList()
                         .stream()
-                        .map(Slots::getSlot)
+                        .map(Slot::getSlotTime)
                         .allMatch(searchedSlotTime -> expectedSameSlotsTimes.contains(searchedSlotTime)));
     }
 
     @Test
     public void testFindPairForWeekFoundSlotsShouldBeAtExpectedDay() {
-        Persons firstPerson = persons.get(0);
+        Person firstPerson = persons.get(0);
 
         assertTrue("Found slots should be at expected day",
                 firstPerson
-                        .getSlotsList()
+                        .getSlotList()
                         .stream()
-                        .allMatch(slot -> slot.getSlotsDate().equals(expectedDate)));
+                        .allMatch(slot -> slot.getSlotDate().equals(expectedDate)));
 
     }
 
