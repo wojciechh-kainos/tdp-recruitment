@@ -1,4 +1,3 @@
-import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
@@ -16,7 +15,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     private GuiceBundle<TdpRecruitmentApplicationConfiguration> guiceBundle;
 
-    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class,  Candidate.class) {
+    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class, Candidate.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -34,8 +33,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void initialize(Bootstrap<TdpRecruitmentApplicationConfiguration> bootstrap) {
-//        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
-        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/assets", "/", "index.html"));
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(migrationsBundle);
 
