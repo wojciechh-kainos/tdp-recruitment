@@ -55,7 +55,12 @@ define(['angular'
         previous: -1,
         next: 1,
         current: 0
-    }).constant('DateFormat', 'yyyy-MM-dd');
+    }).constant('DateFormat', 'yyyy-MM-dd')
+      .constant('HttpStatusCodes', {
+        ok : 200,
+        badRequest: 400,
+        conflict : 409
+        });
 
     return tdprConstantsModule;
 });
