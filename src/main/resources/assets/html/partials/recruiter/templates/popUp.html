@@ -35,7 +35,7 @@
             <div class="col-md-8">
                 <div class="ui-select">
                     <select class="form-control" ng-model="candidate.recruiter"
-                            ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id">
+                            ng-options="recruiter.firstName for recruiter in recruiters track by recruiter.id">
                     </select>
                 </div>
             </div>
@@ -50,8 +50,11 @@
         <hr>
 
         <div class="center btn-wrapper">
-            <input class="btn btn-primary" type="submit"
-                   ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Submit"
+            <input ng-if="!forUpdate" class="btn btn-primary" type="submit"
+                   ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Create"
+                   ng-disabled="form.$invalid"/>
+            <input ng-if="forUpdate" class="btn btn-primary" type="submit"
+                   ng-click="candidateForm.$valid ? update(candidate) : showError()" value="Update"
                    ng-disabled="form.$invalid"/>
         </div>
     </form>

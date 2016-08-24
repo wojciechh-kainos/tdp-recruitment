@@ -7,11 +7,8 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.sortColumn = 'lastName';
         $scope.sortReverse = true;
         $scope.candidate = {};
-        $scope.candidateForEdit = {};
         $scope.candidate.isDeleted = false;
-        $scope.candidateForEdit.isDeleted = false;
         var popUp;
-        var popUpForEdit;
 
         $scope.create = function (candidate) {
             tdprCandidatesService.createCandidate(candidate).then(function () {
@@ -31,7 +28,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             }, function (response) {
                 Notification.error(response);
             });
-            popUpForEdit.close();
+            popUp.close();
         };
 
         $scope.columnMap = {
@@ -65,17 +62,22 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.showPopupForAdd = function () {
+            $scope.forUpdate = false;
+            $scope.candidate = {};
+            $scope.candidate.isDeleted = false;
+
             popUp = ngDialog.open({
-                template: 'html/partials/recruiter/templates/popUpForAdd.html',
+                template: 'html/partials/recruiter/templates/popUp.html',
                 scope: $scope
             });
         };
 
         $scope.showPopupForEdit = function (candidateForEdit) {
-            $scope.candidateForEdit = candidateForEdit;
+            $scope.forUpdate = true;
+            $scope.candidate = candidateForEdit;
 
-            popUpForEdit = ngDialog.open({
-                template: 'html/partials/recruiter/templates/popUpForEdit.html',
+            popUp = ngDialog.open({
+                template: 'html/partials/recruiter/templates/popUp.html',
                 scope: $scope
             });
         };
