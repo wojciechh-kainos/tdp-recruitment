@@ -26,7 +26,6 @@ npm install -g bower
 
 ```
 bower install
-
 ```
 If you later add new dependencies or update versions of existing ones, then you can use:
 ```
