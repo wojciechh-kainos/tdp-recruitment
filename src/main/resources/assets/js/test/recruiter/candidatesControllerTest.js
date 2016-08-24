@@ -63,7 +63,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                     candidates: candidates,
                     recruiters: recruiters,
                     ngDialog: ngDialog,
-                    $timeout: {},
                     Notification: Notification
                 });
             })
