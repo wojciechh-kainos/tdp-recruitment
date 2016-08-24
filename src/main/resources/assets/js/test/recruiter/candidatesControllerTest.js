@@ -116,7 +116,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 var message = 'Candidate adding failed.';
                 var numberOfCandidates = $scope.candidates.length;
                 createCandidateDeferred.reject(message);
-                $scope.open();
+                $scope.showPopupForAdd();
                 $scope.create(candidate);
                 $scope.$apply();
                 expect(Notification.error).toHaveBeenCalledWith(message);
@@ -126,7 +126,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
         describe('When click update button', function(){
             it('Should update candidate credentials when data filled', function(){
-                var message = 'Successfully updated candidate.';
+                var message = 'Candidate successfully updated.';
                 var numberOfCandidates = $scope.candidates.length;
                 expect(candidates[1].note).toEqual('note');
                 updateCandidatesDeferred.resolve(updateCandidate);
