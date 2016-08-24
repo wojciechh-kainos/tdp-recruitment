@@ -136,7 +136,7 @@
                     <label class="col-md-4 control-label">Recruiter:</label>
                     <div class="col-md-8">
                         <div class="ui-select">
-                            <select class="form-control" ng-model="candidateForEdit.recruiter" ng-options="recruiter.lastName for recruiter in recruiters" >
+                            <select class="form-control" ng-model="candidateForEdit.recruiter" ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id" >
                             </select>
                         </div>
                     </div>
