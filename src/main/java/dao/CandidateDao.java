@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Candidate;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -18,8 +19,8 @@ public class CandidateDao extends AbstractDAO<Candidate>{
         return namedQuery("Candidate.findAll").list();
     }
 
-    public Candidate findById(Long id){
-        return get(id);
+    public Optional<Candidate> findById(Long id){
+        return Optional.fromNullable(get(id));
     }
 
     public void deactivateById(Long id){
