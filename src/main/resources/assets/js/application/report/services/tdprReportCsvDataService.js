@@ -7,9 +7,11 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         var quote = '"';
         var emptySpace = " ";
 
-        this.generateCsvData = function (viewReportData, columnMap) {
+        this.generateCsvData = function (startDate, endDate, viewReportData, columnMap) {
             var reportData = angular.copy(viewReportData);
-            var dataString = createHeader(columnMap);
+            var dataString = createInfo(startDate, endDate);
+            dataString += createEmptyLine();
+            dataString += createHeader(columnMap);
 
             reportData.map(function (reportElement) {
                 reportElement.initHours = replaceDotWithComma(reportElement.initHours);
@@ -33,6 +35,15 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         var replaceDotWithComma = function (value) {
             return value.toString().replace(".", ",");
         };
+
+        var createEmptyLine = function() {
+            return separator + separator + separator + endOfLine;
+        }
+
+        var createInfo = function(startDate, endDate) {
+            var info = addQuotes("Start Date:") + separator + addQuotes(startDate) + separator + addQuotes("End Date:") + separator + addQuotes(endDate) + endOfLine;
+            return info;
+        }
 
         var createHeader = function (columnMap) {
             var header = addQuotes(columnMap["person.lastName"].columnName) + separator;

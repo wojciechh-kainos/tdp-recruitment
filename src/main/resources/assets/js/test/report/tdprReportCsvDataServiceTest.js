@@ -29,6 +29,9 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             }
         ]
 
+        var startDate = '2016-08-15';
+        var endDate = '2016-08-21';
+
         var columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
             'initHours': {reverse: true, columnName: "Init hours"},
@@ -36,11 +39,15 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
             'sumOfHours': {reverse: true, columnName: "Sum of hours"}
         };
 
-        var expectedString = '"Person";"Init hours";"Full hours";"Sum of hours"\n'
+        var expectedString = '"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"\n'
+            + ';;;\n'
+            + '"Person";"Init hours";"Full hours";"Sum of hours"\n'
             + '"FirstLastName FirstFirstName";"20,5";"20";"20,4"\n'
             + '"SecondLastName SecondFirstName";"0";"10";"2,4"\n';
 
-        var expectedEmptyString = '"Person";"Init hours";"Full hours";"Sum of hours"\n';
+        var expectedEmptyString = '"Start Date:";"' + startDate + '";"End Date:";"' + endDate + '"\n'
+            + ';;;\n'
+            + '"Person";"Init hours";"Full hours";"Sum of hours"\n'
 
         var expectedLink = "text/csv;charset=utf-8,";
 
@@ -50,16 +57,16 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
 
         describe('When generating csv string value', function(){
             it('should return expected string', function(){
-                var dataString = $service.generateCsvData(reports, columnMap);
+                var dataString = $service.generateCsvData(startDate, endDate, reports, columnMap);
                 expect(dataString).toEqual(expectedString);
             });
 
             it('should return expected empty string', function(){
-                var dataString = $service.generateCsvData([], columnMap);
+                var dataString = $service.generateCsvData(startDate, endDate, [], columnMap);
                 expect(dataString).toEqual(expectedEmptyString);
             });
 
-            it('should return expected blob', function(){
+            it('should return any file', function(){
                 var file = $service.getFile(expectedString);
                 expect(file).not.toBeUndefined();
             });
