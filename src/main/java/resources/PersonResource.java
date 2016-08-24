@@ -117,9 +117,9 @@ public class PersonResource {
     }
 
     @GET
-    @Path("/recruiter")
+    @Path("/all/recruiter")
     @UnitOfWork
-    public Response getRecruiter() {
+    public Response getRecruiters() {
         List<Person> recruiterList = new ArrayList<>();
 
         for (Person person : personDao.findAll()) {

@@ -42,7 +42,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.fetchRecruiters = function(){
-            return $http.get('api/person/recruiter').then(
+            return $http.get('api/person/all/recruiter').then(
                 function (response) {
                     return response.data;
                 },

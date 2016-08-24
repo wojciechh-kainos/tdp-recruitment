@@ -112,7 +112,7 @@ public class PersonResourceTest {
     public void testGetRecruiters() {
         when(mockPersonDao.findAll()).thenReturn(stubPersonDB);
 
-        Response result = resource.getRecruiter();
+        Response result = resource.getRecruiters();
 
         assertEquals(Response.Status.OK.getStatusCode(), result.getStatus());
         verify(mockPersonDao, times(1)).findAll();

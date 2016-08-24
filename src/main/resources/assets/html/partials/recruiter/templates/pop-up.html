@@ -1,5 +1,6 @@
 <div class="ngdialog-message">
-    <h3>Add new candidate:</h3>
+    <h3 ng-if="!forUpdate">Add new candidate:</h3>
+    <h3 ng-if="forUpdate">Edit candidate:</h3>
 
     <form class="form-horizontal interviewer-form" name="candidateForm" role="form">
         <hr>
@@ -35,7 +36,7 @@
             <div class="col-md-8">
                 <div class="ui-select">
                     <select class="form-control" ng-model="candidate.recruiter"
-                            ng-options="recruiter.firstName for recruiter in recruiters track by recruiter.id">
+                            ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id">
                     </select>
                 </div>
             </div>
@@ -44,7 +45,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label">Note:</label>
             <div class="col-md-8">
-                <input class="form-control input" name="note" type="text" ng-model="candidate.note"/>
+                <textarea class="form-text-area form-control" name="note" ng-model="candidate.note"></textarea>
             </div>
         </div>
         <hr>

@@ -3,7 +3,7 @@
     <h1 id="interviewer-details-h1">All candidates</h1>
 
     <div class="row options">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-9 col-md-offset-2">
             <table id="report-table">
                 <thead class="column-heading">
                 <tr>
@@ -16,7 +16,7 @@
                 <tr ng-repeat="candidate in candidates | orderBy : sortColumn : sortReverse">
                     <td class="slot hour-cell">{{candidate.lastName + ' ' + candidate.firstName}}</td>
                     <td class="slot hour-cell">{{candidate.position}}</td>
-                    <td class="slot hour-cell">{{candidate.note}}</td>
+                    <td class="slot hour-cell"><span uib-tooltip="{{candidate.note | limitTo: 1000}}">{{candidate.note | limitTo: 35}}</span></td>
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
                     <td class="slot hour-cell">
                         <a class="cursor-pointer" ng-click="deleteCandidate(candidate)">delete</a>
