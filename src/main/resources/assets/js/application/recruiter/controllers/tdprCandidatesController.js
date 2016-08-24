@@ -3,7 +3,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, ngDialog, Notification) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
-        $scope.sortColumn = 'lastName';
+        $scope.sortColumn = 'recruiter.lastName';
         $scope.sortReverse = true;
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
@@ -62,10 +62,10 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.columnMap = {
+            'recruiter.lastName': {reverse: true, columnName: "Recruiter"},
             'lastName': {reverse: true, columnName: "Candidate"},
             'position': {reverse: true, columnName: "Position"},
-            'note': {reverse: true, columnName: "Note"},
-            'recruiter.lastName': {reverse: true, columnName: "Recruiter"}
+            'note': {reverse: true, columnName: "Note"}
         };
 
         $scope.deleteCandidate = function (candidate) {
