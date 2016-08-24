@@ -1,5 +1,6 @@
 package resources;
 
+import auth.TdpRecruitmentPasswordStore;
 import com.google.inject.Inject;
 import constants.TdpConstants;
 import dao.NoteDao;
@@ -32,13 +33,15 @@ public class PersonResource {
     private NoteDao noteDao;
     private MailService mailService;
     SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+    private final TdpRecruitmentPasswordStore passwordStore;
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
         this.mailService = mailService;
+        this.passwordStore = passwordStore;
     }
 
     @PUT
@@ -113,9 +116,22 @@ public class PersonResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Person updatePerson(Person person) {
-        personDao.update(person);
-        return person;
+    public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
+        Person person = personDao.getById(newPerson.getId());
+        if (person == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        person.setIsDev(newPerson.getIsDev());
+        person.setIsOps(newPerson.getIsOps());
+        person.setIsOther(newPerson.getIsOther());
+        person.setIsTest(newPerson.getIsTest());
+        person.setBandLevel(newPerson.getBandLevel());
+        person.setDefaultStartHour(newPerson.getDefaultStartHour());
+        person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
+        if(newPerson.getPassword()!=null){
+            person.setPassword(passwordStore.createHash(person.getPassword()));
+        }
+        return Response.ok(person).build();
     }
 
     @PUT
