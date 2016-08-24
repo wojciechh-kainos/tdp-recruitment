@@ -22,4 +22,6 @@
     <include file="changelogs/changeColumnName.xml"/>
     <include file="changelogs/changeColumnNameInPerson.xml"/>
     <include file="changelogs/addOtherJobPosition.xml"/>
+    <include file="changelogs/addPersonsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
+    <include file="changelogs/addSlotsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
 </databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="addPersonsToHidePairsFromDifferentTime" author="konradm">
+        <insert tableName="person">
+            <column name="email" value="aaa@aaa.com"/>
+            <column name="first_name" value="Czeslaw"/>
+            <column name="last_name" value="Rostkowski"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+        </insert>
+        <insert tableName="person">
+            <column name="email" value="bbb@bbb.com"/>
+            <column name="first_name" value="Tadeusz"/>
+            <column name="last_name" value="Bonislawowski"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+        </insert>
+        <insert tableName="person">
+            <column name="email" value="ccc@ccc.com"/>
+            <column name="first_name" value="Agnieszka"/>
+            <column name="last_name" value="Idzik"/>
+            <column name="band_level" value="1"/>
+            <column name="active" value="true"/>
+            <column name="is_dev" value="true"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
