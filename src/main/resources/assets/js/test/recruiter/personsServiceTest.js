@@ -11,6 +11,19 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         var person;
         var HttpStatusCodes;
 
+        beforeEach(function () {
+
+            HttpStatusCodes = {
+                ok : 200,
+                badRequest: 400,
+                conflict : 409
+            };
+
+            module(function ($provide) {
+                $provide.value('HttpStatusCodes', HttpStatusCodes);
+            });
+        });
+
         beforeEach(inject(function (_tdprPersonsService_, _$httpBackend_, dateFilter) {
 
             $httpBackend = _$httpBackend_;
@@ -29,20 +42,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
         }));
 
 
-        beforeEach(function () {
 
-            HttpStatusCodes = {
-                ok : 200,
-                badRequest: 400,
-                conflict : 409
-            };
-
-            module(function ($provide) {
-                $provide.value('HttpStatusCodes', HttpStatusCodes);
-            });
-
-
-        });
 
         describe('fetchPersons', function () {
             it('should fetch valid data', function () {
