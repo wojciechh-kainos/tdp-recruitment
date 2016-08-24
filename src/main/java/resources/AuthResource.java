@@ -47,4 +47,15 @@ public class AuthResource {
 		return personDao.getUserByActivationLink(activationLink);
 	}
 
+	@PUT
+	@UnitOfWork
+	@Path("/activate/{id}")
+	public Response activatePerson (@PathParam("id") Long id) {
+
+		Person person = personDao.getById(id);
+		person.setActivationCode(null);
+
+		return Response.status(Response.Status.ACCEPTED).build();
+	}
+
 }

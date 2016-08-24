@@ -1,7 +1,22 @@
 define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services/tdprActivateService'], function (angular, tdprAuthModule) {
-    tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprActivateService) {
+    tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprActivateService, $state) {
 
-        tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink);
+        var person;
 
+         tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink)
+            .then(function(response) {
+                person = response.data;
+            }, function() {
+               console.log("fail"); // $state.go('tdpr.login')
+            });
+
+        $scope.activatePerson = function() {
+            tdprActivateService.activatePerson(person)
+                .then(function() {
+                    console.log("activation successful");
+                }, function() {
+                    console.log("fail");
+                });
+        }
     });
 });
