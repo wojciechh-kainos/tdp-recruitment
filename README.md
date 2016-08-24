@@ -6,7 +6,7 @@ A simple application to support interviews scheduling.
 ## Dependencies
 
 Software you'll need installed:
-- Java 8
+- JDK 8
 - PostgreSQL 9.4
 - Node.js (was developed against 6.3, but can quite probably run with an older version)
 - Gradle >= 2.0 (required for [Jenkins pipeline](https://jenkins.io/doc/pipeline/jenkinsfile/), local project can be handled using the provided wrapper)
