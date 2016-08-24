@@ -16,7 +16,7 @@
                 <tr ng-repeat="candidate in candidates | orderBy : sortColumn : sortReverse">
                     <td class="slot hour-cell">{{candidate.lastName + ' ' + candidate.firstName}}</td>
                     <td class="slot hour-cell">{{candidate.position}}</td>
-                    <td class="slot hour-cell"><span uib-tooltip="{{candidate.note | cut: true: 1000}}">{{candidate.note | cut: true: 35}}</span></td>
+                    <td class="slot hour-cell" ng-dblclick="swapLimitsForCandidate(candidate)"><span uib-tooltip="{{candidate.note}}">{{candidate.note | cut: true: candidateLimits[candidate.id]}}</span></td>
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
                     <td class="slot hour-cell">
                         <a class="cursor-pointer" ng-click="deleteCandidate(candidate)">delete</a>

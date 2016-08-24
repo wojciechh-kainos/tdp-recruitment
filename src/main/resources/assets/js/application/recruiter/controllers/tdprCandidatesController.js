@@ -8,6 +8,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         var popUp;
+        var defaultLimitValue = 35;
 
         var openPopUp = function () {
             var dialog = ngDialog.open({
@@ -20,6 +21,23 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             });
 
             return dialog;
+        };
+
+        var populateLimitsObject = function () {
+            var keys = _.mapKeys(angular.copy($scope.candidates), function (candidate) {
+                return candidate.id
+            });
+
+            _.forEach(keys, function (value, key) {
+                keys[key] = defaultLimitValue;
+            });
+
+            return keys;
+        };
+
+        $scope.candidateLimits = populateLimitsObject();
+        $scope.swapLimitsForCandidate = function (candidate) {
+            $scope.candidateLimits[candidate.id] = $scope.candidateLimits[candidate.id] === false ? defaultLimitValue : false;
         };
 
         $scope.create = function (candidate) {
