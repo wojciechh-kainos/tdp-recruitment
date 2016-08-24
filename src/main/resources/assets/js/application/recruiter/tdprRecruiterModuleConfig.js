@@ -12,6 +12,7 @@ define(['angular'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
     , 'application/recruiter/controllers/tdprManageUsersController'
     , 'application/common/filters/tdprJobProfileFilter'
+    , 'application/common/filters/tdprCutFilter'
     , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
 ], function (angular, tdprRecruiterModule) {
