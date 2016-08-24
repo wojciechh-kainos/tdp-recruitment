@@ -13,7 +13,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.startTime = slotsTimes[0].startTime;
 
         $scope.getPairs = function(){
-            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile.selected], $scope.displayedStartDate, $scope.displayedEndDate).then(
+            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate, $scope.startTime, $scope.endTime).then(
                 function (persons) {
                     $scope.persons = persons;
                 }
@@ -53,6 +53,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
             tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
                 function () {
+                    personData.slotList.forEach(function(slot){
+                        slot.changed = false;
+                    });
                     personData.changesPending = false;
                     Notification.success('Your changes were saved successfully!');
                 }
