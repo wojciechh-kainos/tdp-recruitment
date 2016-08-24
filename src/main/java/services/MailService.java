@@ -11,20 +11,20 @@ import java.util.concurrent.Executors;
 @Singleton
 public class MailService {
 
-    private final ExecutorService pool;
+    private final TdpExecutorService executor;
 
     private final TdpRecruitmentApplicationConfiguration applicationConfiguration;
 
     @Inject
-    public MailService(TdpRecruitmentApplicationConfiguration config) {
+    public MailService(TdpRecruitmentApplicationConfiguration config, TdpExecutorService executor) {
         this.applicationConfiguration = config;
-        this.pool = Executors.newFixedThreadPool(config.getSmtpConfig().getThreadPoolSize());
+        this.executor = executor;
     }
 
 
     public void sendEmail(Message message) {
         MailingTask mailingTask = new MailingTask(applicationConfiguration, message);
-        pool.execute(mailingTask);
+        executor.execute(mailingTask);
     }
 
 }
