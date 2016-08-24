@@ -32,7 +32,6 @@ public class TdpRecruitmentApplicationConfiguration extends Configuration {
         this.smtpConfig = smtpConfig;
     }
 
-
     @Valid
     @NotNull
     private String domain;
@@ -45,4 +44,12 @@ public class TdpRecruitmentApplicationConfiguration extends Configuration {
     public void setDomain(String domain) {
         this.domain = domain;
     }
+
+    @NotNull
+    private int threadPoolSize;
+
+    public int getThreadPoolSize() { return threadPoolSize; }
+
+    public void setThreadPoolSize(int threadPoolSize) { this.threadPoolSize = threadPoolSize; }
+
 }

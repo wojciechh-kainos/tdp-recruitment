@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprDateService', 'notification'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum) {
+    tdprRecruiterModule.service('tdprRecruiterSlotsService', ['$http', '$q', 'tdprDateService', 'dateFilter', 'AvailabilityEnum', function ($http, $q, tdprDateService, dateFilter, AvailabilityEnum, DateFormat) {
 
         this.updateSlots = function (slots, personId) {
             return $http.put("/api/slots/recruiter", this.reformatSlots(slots, personId)).then(function (response) {
@@ -11,7 +11,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         this.filterSlots = function (slots, day) {
-            var compareData = dateFilter(day, "yyyy-MM-dd");
+            var compareData = dateFilter(day, DateFormat);
             return _.filter(slots, {"day": compareData});
         };
 
@@ -23,9 +23,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             return _.map(filtered,
                 function (value) {
                     return {
-                        slotsDate: value.day,
+                        slotDate: value.day,
                         person: {id: personId},
-                        slot: {id: value.number},
+                        slotTime: {id: value.number},
                         type: {id: AvailabilityEnum[value.type].id},
                         id: value.id
                     }

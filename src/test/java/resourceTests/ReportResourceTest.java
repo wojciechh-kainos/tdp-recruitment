@@ -1,7 +1,7 @@
 package resourceTests;
 
 import constants.TdpConstants;
-import domain.Persons;
+import domain.Person;
 import domain.Report;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class ReportResourceTest {
 
     private static final long personId = 1;
-    private Persons p;
+    private Person p;
 
     private ReportResource reportResource;
 
@@ -33,7 +33,7 @@ public class ReportResourceTest {
     public void setUp() {
         reportResource = new ReportResource(reportService);
 
-        p = new Persons();
+        p = new Person();
         p.setId(personId);
         p.setFirstName("TEST_NAME");
         p.setEmail("TEST@TEST.PL");
@@ -51,7 +51,7 @@ public class ReportResourceTest {
         Date endDate = formatter.parse(inputEndDate);
 
         Double hours = 200.0;
-        Report expected = new Report(p, hours, hours, hours);
+        Report expected = new Report(p, hours, hours);
 
         when(reportService.getReport(personId, startDate, endDate)).thenReturn(expected);
 

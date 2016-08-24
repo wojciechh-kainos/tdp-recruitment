@@ -48,3 +48,5 @@ smtpConfig:
   from: no-reply@kainos.com
 
 domain: http://localhost:8888
+
+threadPoolSize: 10

@@ -46,7 +46,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
                 person = {
                     "changesPending": true,
-                    "slotsList": [
+                    "slotList": [
                         {
                             "day": '1410-07-15',
                             "person": 9,
@@ -86,7 +86,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                     tdprDateService: tdprDateService,
                     persons: persons,
                     slotsTimes: slotsTimes,
-                    JobProfileEnum: {dev: "isDev"},
                     Notification: Notification,
                     tdprRecruiterSlotsService: tdprRecruiterSlotsService,
                     AvailabilityEnum: AvailabilityEnum,
@@ -99,9 +98,9 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
         describe('changeSlotTypeCycleThrough', function () {
             it('should call tdprScheduleService with correct data', function () {
                 var slotId = 42;
-                $scope.changeSlotTypeCycleThrough(person.slotsList, slotId, jasmine.any(Date), person);
+                $scope.changeSlotTypeCycleThrough(person.slotList, slotId, jasmine.any(Date), person);
 
-                expect(tdprScheduleService.changeSlotTypeCycleThrough).toHaveBeenCalledWith(person.slotsList, slotId, jasmine.any(Date), person);
+                expect(tdprScheduleService.changeSlotTypeCycleThrough).toHaveBeenCalledWith(person.slotList, slotId, jasmine.any(Date), person);
             });
         });
 
@@ -146,12 +145,9 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.changeSlotSubmitChanges(person);
                 $scope.$apply();
 
-                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotsList, person.id, jasmine.any(Object), jasmine.any(Date));
+                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
                 expect(person.changesPending).toEqual(false);
-                expect(Notification.success).toHaveBeenCalledWith({
-                    message: 'Your changes were saved successfully!',
-                    delay: 3500
-                });
+                expect(Notification.success).toHaveBeenCalledWith('Your changes were saved successfully!');
             });
 
             it('should show notification on error', function () {
@@ -161,8 +157,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.changeSlotSubmitChanges(person);
                 $scope.$apply();
 
-                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotsList, person.id, jasmine.any(Object), jasmine.any(Date));
-                expect(Notification.error).toHaveBeenCalledWith({message: expectedMessage, delay: 3500});
+                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
+                expect(Notification.error).toHaveBeenCalledWith(expectedMessage);
             });
         });
     })

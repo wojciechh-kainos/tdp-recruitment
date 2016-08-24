@@ -22,9 +22,7 @@ public class TdpRecruitmentEmailConfiguration {
         this.host = host;
     }
 
-    public Integer getPort() {
-        return port;
-    }
+    public Integer getPort() { return port; }
 
     public void setPort(Integer port) {
         this.port = port;
@@ -38,11 +36,10 @@ public class TdpRecruitmentEmailConfiguration {
         this.from = from;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

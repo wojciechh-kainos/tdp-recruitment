@@ -3,8 +3,9 @@ define([
     , 'lodash'
     , 'application/tdprModule'
     , 'application/tdprModuleConfig'
-    , 'application/recruiter/tdprRecruiterModuleConfig'
+    , 'application/common/tdprCommonModuleConfig'
     , 'application/constants/tdprConstantsModuleConfig'
+    , 'application/recruiter/tdprRecruiterModuleConfig'
     , 'application/report/tdprReportModuleConfig'
 ], function (angular) {
     'use strict';
