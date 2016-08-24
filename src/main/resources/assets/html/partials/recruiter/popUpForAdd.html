@@ -1,0 +1,60 @@
+<div class="ngdialog-message">
+    <h3>Add new candidate:</h3>
+
+    <form class="form-horizontal interviewer-form" name="candidateForm" role="form">
+        <hr>
+        <div class="form-group">
+            <label class="col-md-4 control-label">First name:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="firstName" type="text" ng-model="candidate.firstName"
+                       ng-maxlength="35" required/>
+            </div>
+            <p class="int-err center" ng-show="candidateForm.firstName.$error.maxlength">First name cannot
+                have more than 35 characters.</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Last name:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="lastName" type="text" ng-model="candidate.lastName"
+                       ng-maxlength="35" required/>
+            </div>
+            <p class="int-err center" ng-show="candidateForm.lastName.$error.maxlength">Last name cannot have
+                more than 35 characters.</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Potential Position:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="position" type="text" ng-model="candidate.position"
+                       required/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Recruiter:</label>
+            <div class="col-md-8">
+                <div class="ui-select">
+                    <select class="form-control" ng-model="candidate.recruiter"
+                            ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id">
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Note:</label>
+            <div class="col-md-8">
+                <input class="form-control input" name="note" type="text" ng-model="candidate.note"/>
+            </div>
+        </div>
+        <hr>
+
+        <div class="center btn-wrapper">
+            <input class="btn btn-primary" type="submit"
+                   ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Submit"
+                   ng-disabled="form.$invalid"/>
+        </div>
+    </form>
+
+</div>

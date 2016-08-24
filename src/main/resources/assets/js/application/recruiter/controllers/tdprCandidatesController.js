@@ -66,7 +66,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
 
         $scope.showPopupForAdd = function () {
             popUp = ngDialog.open({
-                template: 'dialogForAdd',
+                template: 'html/partials/recruiter/popUpForAdd.html',
                 scope: $scope
             });
         };
@@ -75,7 +75,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             $scope.candidateForEdit = candidateForEdit;
 
             popUpForEdit = ngDialog.open({
-                template: 'dialogForEdit',
+                template: 'html/partials/recruiter/popUpForEdit.html',
                 scope: $scope
             });
         };
