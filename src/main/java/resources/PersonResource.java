@@ -49,9 +49,17 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-        personDao.create(person);
-        mailService.sendEmail(person.getEmail(), person.getId());
-        return person;
+
+        if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+
+            personDao.create(person);
+            mailService.sendEmail(person.getEmail(), person.getId());
+
+            return person;
+
+        } else {
+            throw new WebApplicationException(Response.Status.CONFLICT);
+        }
     }
 
     @GET
