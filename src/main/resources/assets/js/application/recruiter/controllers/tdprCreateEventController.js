@@ -3,16 +3,18 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, $stateParams, $state) {
 
     console.log($stateParams);
-        var interviewData = $stateParams.data;
-        $scope.interviewers = $stateParams.data.interviewers;
-        $scope.interviewee = $stateParams.data.interviewee;
-        $scope.organizer = $stateParams.data.organizer;
-        $scope.startTime = $stateParams.data.start;
-        $scope.endTime = $stateParams.data.end;
+        // var interviewData = $stateParams.data;
+        $scope.interview = $stateParams.data.interview;
 
         $scope.scheduleInterview = function () {
+            interviewData.organizer = { //TODO change to recruiter data
+                email: "noreply@kainos.com",
+                firstName: "Janek",
+                lastName: "Smyk"
+            };
+            
             tdprScheduleService.sendInvitations(interviewData);
-        }
+        };
         
         $scope.goHome = function () {
             $state.go('tdpr.recruiter.home');

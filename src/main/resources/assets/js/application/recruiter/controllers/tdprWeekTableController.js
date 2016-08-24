@@ -1,7 +1,8 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, $state,
-                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
+                                                                        JobProfileEnum, Notification, tdprRecruiterSlotsService, AvailabilityEnum,
+                                                                        WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
         var that = this;
         $scope.pairingMode = false;
         $scope.outlookObject = {};
@@ -44,10 +45,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                     }
                 });
 
+                var day = sharedSlots[0].day;
                 var startSlot = _.find(slotsTimes, {id: _.minBy(sharedSlots, 'number').number});
                 var endSlot = _.find(slotsTimes, {id: _.maxBy(sharedSlots, 'number').number});
-                var eventStartTime = startSlot.startTime;
-                var eventEndTime = endSlot.endTime;
+                var eventStartTime = getISODateString(day, startSlot.startTime);
+                var eventEndTime = getISODateString(day, endSlot.endTime);
 
                 $scope.outlookObject.interviewee = "";
                 $scope.outlookObject.organizer = "";
@@ -58,6 +60,15 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
             }
         };
+
+        function getISODateString(day, hour) {
+            var date = new Date(day);
+            var parts = hour.split(":");
+            date.setHours(parts[0]);
+            date.setMinutes(parts[1]);
+            date.setSeconds(parts[2]);
+            return date.toISOString();
+        }
 
         $scope.getPairs = function () {
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(

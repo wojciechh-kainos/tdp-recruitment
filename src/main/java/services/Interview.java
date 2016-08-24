@@ -21,9 +21,13 @@ public class Interview {
     private Date start;
     private Date end;
     private String interviewee;
+    private String room;
 
     public Interview() {
+    }
 
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public void setInterviewers(List<Persons> interviewers) {
@@ -63,8 +67,8 @@ public class Interview {
 
     public String createCalendarEvent() {
         String template = "";
-
-        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+        UUID eventUUID = UUID.randomUUID(); //should this be random?
+        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00Z'");
         String now = iCalDate.format(new Date());
         iCalDate.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -77,8 +81,10 @@ public class Interview {
 
         return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
                 .replace("{{attendees}}", parseAttendees())
+                .replace("{{room}}", room != null? room : "" )
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
+                .replace("{{uid}}", eventUUID.toString())
                 .replace("{{dtstamp}}", now);
     }
 

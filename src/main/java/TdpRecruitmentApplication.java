@@ -1,3 +1,4 @@
+import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentModule;
@@ -9,11 +10,7 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import resources.PairResource;
-import resources.ReportResource;
-import resources.SlotsResource;
-import resources.SlotsTimesResource;
-import resources.PersonsResource;
+import resources.*;
 
 public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplicationConfiguration> {
 
@@ -37,7 +34,8 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void initialize(Bootstrap<TdpRecruitmentApplicationConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
+        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/assets", "/", "index.html")); //don't merge with master
+//        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(migrationsBundle);
 
@@ -57,6 +55,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsTimesResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotsResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(ScheduleResource.class));
     }
 
     public static void main(final String[] args) throws Exception {
