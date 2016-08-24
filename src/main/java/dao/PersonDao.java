@@ -35,5 +35,7 @@ public class PersonDao extends AbstractDAO<Person>{
         return namedQuery("Person.findAll").list();
     }
 
+    public List<Person> findByEmail(String email) { return namedQuery("Person.findByEmail").setParameter("email", email).list(); }
+
     public void update(Person person){currentSession().update(person);}
 }
