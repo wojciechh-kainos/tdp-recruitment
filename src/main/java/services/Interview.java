@@ -2,7 +2,7 @@ package services;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import domain.Persons;
+import domain.Person;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -16,21 +16,25 @@ import java.util.*;
 
 public class Interview {
 
-    private List<Persons> interviewers = new ArrayList<>();
-    private Persons organizer;
+    private List<Person> interviewers = new ArrayList<>();
+    private Person organizer;
     private Date start;
     private Date end;
     private String interviewee;
+    private String room;
 
     public Interview() {
-
     }
 
-    public void setInterviewers(List<Persons> interviewers) {
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public void setInterviewers(List<Person> interviewers) {
         this.interviewers = interviewers;
     }
 
-    public void setOrganizer(Persons organizer) {
+    public void setOrganizer(Person organizer) {
         this.organizer = organizer;
     }
 
@@ -63,8 +67,8 @@ public class Interview {
 
     public String createCalendarEvent() {
         String template = "";
-
-        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+        UUID eventUUID = UUID.randomUUID(); //should this be random?
+        SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00Z'");
         String now = iCalDate.format(new Date());
         iCalDate.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -77,8 +81,10 @@ public class Interview {
 
         return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
                 .replace("{{attendees}}", parseAttendees())
+                .replace("{{room}}", room != null? room : "" )
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
+                .replace("{{uid}}", eventUUID.toString())
                 .replace("{{dtstamp}}", now);
     }
 
@@ -94,7 +100,7 @@ public class Interview {
     private String parseAttendees() {
         String result = "";
         String attendeeTemplate = "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN={{fname}} {{lname}}:MAILTO:{{mail}}\n";
-        for (Persons interviewer : interviewers) {
+        for (Person interviewer : interviewers) {
             result += attendeeTemplate
                     .replace("{{fname}}", interviewer.getFirstName())
                     .replace("{{lname}}", interviewer.getLastName())
@@ -110,7 +116,7 @@ public class Interview {
         message.setSubject("Interview");
         message.setSentDate(new Date());
         message.setFrom(new InternetAddress(organizer.getEmail()));
-        for (Persons interviewer : interviewers) {
+        for (Person interviewer : interviewers) {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(interviewer.getEmail()));
         }
         message.setContent(createInvitation());

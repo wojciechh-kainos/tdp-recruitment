@@ -1,8 +1,8 @@
 package services;
 
 import com.google.inject.Inject;
-import dao.PersonsDao;
-import dao.SlotsDao;
+import dao.PersonDao;
+import dao.SlotDao;
 import domain.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,34 +10,30 @@ import java.util.List;
 
 public class ReportService {
 
-    private PersonsDao personsDao;
-    private SlotsDao slotsDao;
+    private PersonDao personDao;
+    private SlotDao slotDao;
 
     @Inject
-    public ReportService(SlotsDao slotsDao, PersonsDao personsDao) {
-        this.slotsDao = slotsDao;
-        this.personsDao = personsDao;
+    public ReportService(SlotDao slotDao, PersonDao personDao) {
+        this.slotDao = slotDao;
+        this.personDao = personDao;
     }
 
     public Report getReport(long personId, Date startDate, Date endDate) {
 
-        Double availableCount = 0.0;
         Double fullCount = 0.0;
         Double initCount = 0.0;
 
-        Persons person = personsDao.getById(personId);
+        Person person = personDao.getById(personId);
 
-        List<Slots> slotsList = slotsDao.getForPersonForWeek(personId, startDate, endDate);
+        List<Slot> slotList = slotDao.getForPersonForWeek(personId, startDate, endDate);
 
-        for (Slots slot : slotsList) {
-            SlotsTimes slotTime = slot.getSlot();
+        for (Slot slot : slotList) {
+            SlotTime slotTime = slot.getSlotTime();
 
-            Double slotDuration = slotTime.getSlotDurationInMinutes();
+            Double slotDuration = slotTime.getSlotDurationInHours();
 
-            switch (slot.getType().getType()) {
-                case available:
-                    availableCount += slotDuration;
-                    break;
+            switch (slot.getType().getName()) {
                 case full:
                     fullCount += slotDuration;
                     break;
@@ -48,15 +44,15 @@ public class ReportService {
                     break;
             }
         }
-        return new Report(person, initCount, availableCount, fullCount);
+        return new Report(person, initCount, fullCount);
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {
-        List<Persons> personsList = personsDao.findAll();
+        List<Person> personList = personDao.findAllActive();
 
         List<Report> reportList = new ArrayList<>();
 
-        for (Persons person : personsList) {
+        for (Person person : personList) {
             reportList.add(getReport(person.getId(), startDate, endDate));
         }
 

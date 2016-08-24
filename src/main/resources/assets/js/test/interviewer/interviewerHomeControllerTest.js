@@ -71,6 +71,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 tdprSlotsService: slotsService,
                 tdprPersonService: personService,
                 AvailabilityEnum: AvailabilityEnum,
+                DateFormat: 'dd-MM-yyyy',
                 Notification: { success: function() {}},
                 $stateParams: {id: personId}
             });
@@ -132,9 +133,9 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 $scope.$apply();
 
                 expect(slotsService.updateSlots).toHaveBeenCalledWith([{
-                    slotsDate: jasmine.any(Date),
+                    slotDate: jasmine.any(Date),
                     person: {id: personId},
-                    slot: {id: 1},
+                    slotTime: {id: 1},
                     type: {id: {id: 42}}
                 }], personId, startDate, endDate);
             });

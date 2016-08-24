@@ -1,19 +1,17 @@
-{
-  "interviewers": [
-    {
-      "id": 1,
-      "email": "m.piotrowski@kainos.com",
-      "firstName": "Marek",
-      "lastName": "Dzik"
-    }
-  ],
-  "organizer":   {
-    "id": 2,
-    "email": "noreply@kainos.com",
-    "firstName": "Janek",
-    "lastName": "Smyk"
-  },
-  "start": "2016-08-22T10:00:00",
-  "end": "2016-08-22T12:00:00",
-  "interviewee": "Hanna Wanna"
-}
+ {
+    "interviewers": [
+      {
+        "email": "m.piotrowski@kainos.com",
+        "firstName": "Marek",
+        "lastName": "Dzik"
+      }
+    ],
+    "organizer": {
+      "email": "noreply@kainos.com",
+      "firstName": "Janek",
+      "lastName": "Smyk"
+    },
+    "start": "2016-08-22T10:00:00",
+    "end": "2016-08-22T12:00:00",
+    "interviewee": "Hanna Wanna"
+  }

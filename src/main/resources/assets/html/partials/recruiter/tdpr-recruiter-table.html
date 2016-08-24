@@ -1,0 +1,87 @@
+<div class="container">
+
+    <h1 id="recruiter-header">Availabilities for interviews</h1>
+
+    <div id="date-container">
+        <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)"
+                ng-show="offset">Current week
+        </button>
+        <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
+        <span class="navigate1">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
+        <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
+    </div>
+
+    <job-profile selected-profiles="currentJobProfile" is-radio="true"></job-profile>
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="navigate1">From: </label>
+            <select class="form-control"
+                    ng-options="slotTime.startTime as slotTime.startTime | limitTo:5 disable when (slotTime.endTime > endTime) for slotTime in selectSlotsTimes"
+                    ng-model="startTime" ng-change="filterSlots()"></select>
+        </div>
+        <div class="form-group">
+            <label class="navigate1">To: </label>
+            <select class="form-control"
+                    ng-options="slotTime.endTime as slotTime.endTime | limitTo:5 disable when (startTime > slotTime.startTime) for slotTime in selectSlotsTimes"
+                    ng-model="endTime" ng-change="filterSlots()"></select>
+        </div>
+
+        <button class="button navigate1" ng-click="getPairs()">Find pairs</button>
+        <button class="button navigate1" ng-click="refreshPersonsData()">Clear</button>
+        <button class="button navigate1" ng-show="!pairingMode" ng-click="interviewOn()">Interview</button>
+
+    </form>
+
+    <div class="legend">
+        <div>
+            <span ng-show="pairingMode">You are now creating a new interview. Select checkboxes and time slots, then click "Submit" to proceed.</span>
+        </div>
+        <br>
+        <div>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="interviewOff()">Cancel</button>
+            <button class="button navigate1" ng-show="pairingMode" ng-click="createInterview()">Submit</button>
+        </div>
+    </div>
+
+    <div class="availabilities-table-container">
+        <table id="availabilities-table">
+            <thead>
+            <tr>
+                <td></td>
+                <td class="day-th" ng-repeat="day in days">{{day | date: 'EEEE dd.MM.yyyy'}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ng-repeat="day in days">
+                    <table class="slot-times-th">
+                        <tr>
+                            <td class="slot-time-th" ng-repeat="slotTime in slotsTimes">
+                                    <span uib-tooltip="{{slotTime.startTime | limitTo:5}}-{{slotTime.endTime | limitTo:5}}"
+                                          class="rotate mouse-pointer">
+                                        {{slotTime.startTime | limitTo:5}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr person pairing-mode="pairingMode" slots-times="slotsTimes" person-data="person" days="days"
+                ng-repeat="person in persons | jobProfileFilter: currentJobProfile"
+                submit-slot-changes="changeSlotSubmitChanges(person)"
+                discard-slot-changes="changeSlotDiscardChanges(person)"
+                change-slot-type="changeSlotTypeCycleThrough(slot, slotId, day, person)">
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+
+    | <a id="reports-btn" ui-sref="tdpr.report.home">Reports</a>
+
+    | <a id="manage-btn" ui-sref="tdpr.recruiter.manageUsers">Manage users</a>
+
+</div>

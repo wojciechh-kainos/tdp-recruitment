@@ -2,7 +2,6 @@ package servicesTests;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentEmailConfiguration;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Before;
@@ -21,18 +20,16 @@ import static org.junit.Assert.assertTrue;
 public class InterviewCreatorTests {    // TODO: implement test cases
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
-    private final static TdpRecruitmentApplicationConfiguration applicationConfiguration =
-            new TdpRecruitmentApplicationConfiguration();
+    private static TdpRecruitmentEmailConfiguration emailConfiguration;
 
     private Interview mockInterview;
 
     @BeforeClass
     public static void init() {
-        TdpRecruitmentEmailConfiguration conf = new TdpRecruitmentEmailConfiguration();
-        conf.setHost("mail.kainos.com");
-        conf.setPort(25);
-        conf.setFrom("no-reply@kainos.com");
-        applicationConfiguration.setSmtpConfig(conf);
+        emailConfiguration = new TdpRecruitmentEmailConfiguration();
+        emailConfiguration.setHost("mail.kainos.com");
+        emailConfiguration.setPort(25);
+        emailConfiguration.setFrom("no-reply@kainos.com");
     }
 
     @Before
@@ -61,10 +58,10 @@ public class InterviewCreatorTests {    // TODO: implement test cases
 
     @Test
     public void sendMessageTest() throws InterruptedException, MessagingException {
-        MailingTask mailingTask = new MailingTask(applicationConfiguration);
-
         Message message = mockInterview.createMessage();
-        mailingTask.sendMessage(message).run();
+        MailingTask mailingTask = new MailingTask(emailConfiguration, message);
+
+        mailingTask.run();
         assertTrue(true);
     }
 

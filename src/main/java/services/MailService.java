@@ -1,30 +1,27 @@
 package services;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import configuration.TdpRecruitmentApplicationConfiguration;
+import configuration.TdpRecruitmentEmailConfiguration;
 
 import javax.mail.Message;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-@Singleton
 public class MailService {
 
-    private final ExecutorService pool;
+    private final ExecutorService executor;
 
-    private final TdpRecruitmentApplicationConfiguration applicationConfiguration;
+    private final TdpRecruitmentEmailConfiguration emailConfiguration;
 
     @Inject
-    public MailService(TdpRecruitmentApplicationConfiguration config) {
-        this.applicationConfiguration = config;
-        this.pool = Executors.newFixedThreadPool(config.getSmtpConfig().getThreadPool());
+    public MailService(TdpRecruitmentEmailConfiguration config, ExecutorService executor) {
+        this.emailConfiguration = config;
+        this.executor = executor;
     }
 
 
     public void sendEmail(Message message) {
-        MailingTask mailingTask = new MailingTask(applicationConfiguration);
-        pool.execute(mailingTask.sendMessage(message));
+        MailingTask mailingTask = new MailingTask(emailConfiguration, message);
+        executor.execute(mailingTask);
     }
 
 }

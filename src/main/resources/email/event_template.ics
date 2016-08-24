@@ -2,10 +2,10 @@ BEGIN:VCALENDAR
 METHOD:REQUEST
 VERSION:2.0
 BEGIN:VEVENT
-DTSTART: {{dtstart}}
-DTEND: {{dtend}}
+DTSTART:{{dtstart}}
+DTEND:{{dtend}}
 DTSTAMP:{{dtstamp}}
-SUMMARY: Interview schedule
+SUMMARY: Interview
 UID:{{uid}}
 {{attendees}}{{organizer}}LOCATION:{{room}}
 SEQUENCE:0

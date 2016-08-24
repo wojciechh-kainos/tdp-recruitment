@@ -14,9 +14,6 @@ public class TdpRecruitmentEmailConfiguration {
 
     private String password;
 
-    @NotNull
-    private int threadPool;
-
     public String getHost() {
         return host;
     }
@@ -44,9 +41,5 @@ public class TdpRecruitmentEmailConfiguration {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public int getThreadPool() { return threadPool; }
-
-    public void setThreadPool(int threadPool) { this.threadPool = threadPool; }
 
 }
