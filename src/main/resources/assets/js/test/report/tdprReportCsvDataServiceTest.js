@@ -1,7 +1,11 @@
 define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDataService'], function (angular) {
 
     describe('tdprReportCsvDataService', function () {
-        beforeEach(angular.mock.module('tdprReportModule'));
+        beforeEach(angular.mock.module('tdprReportModule', function($provide){
+            $provide.value('FileSaver', {
+                saveAs : function(){return {}}
+            });
+        }));
 
         var $service;
         var reports = [
@@ -38,7 +42,7 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
 
         var expectedEmptyString = '"Person";"Init hours";"Full hours";"Sum of hours"\n';
 
-        var expectedLink = "data:text/csv;charset=utf-8,";
+        var expectedLink = "text/csv;charset=utf-8,";
 
         beforeEach(inject(function (_tdprReportCsvDataService_) {
             $service = _tdprReportCsvDataService_;
@@ -55,9 +59,9 @@ define(['angular', 'angularMocks', 'application/report/services/tdprReportCsvDat
                 expect(dataString).toEqual(expectedEmptyString);
             });
 
-            it('should return expected link', function(){
-                var link = $service.getLink(expectedString);
-                expect(link).toContain(expectedLink);
+            it('should return expected blob', function(){
+                var file = $service.getFile(expectedString);
+                expect(file).not.toBeUndefined();
             });
 
         })

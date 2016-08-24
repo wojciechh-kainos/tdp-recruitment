@@ -1,7 +1,7 @@
 define(['angular', 'application/report/tdprReportModule'], function (angular, tdprReportModule) {
-    tdprReportModule.service('tdprReportCsvDataService', function () {
+    tdprReportModule.service('tdprReportCsvDataService', ['FileSaver', function (FileSaver) {
 
-        var baseLink = "data:text/csv;charset=utf-8,";
+        var baseLink = "text/csv;charset=utf-8,";
         var separator = ';';
         var endOfLine = "\n";
         var quote = '"';
@@ -25,8 +25,9 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             return dataString;
         };
 
-        this.getLink = function (dataString) {
-            return baseLink + encodeURIComponent(dataString);
+        this.getFile = function (dataString) {
+            var file = new Blob([dataString], { type: baseLink });
+            return FileSaver.saveAs(file, 'Report.csv');
         };
 
         var replaceDotWithComma = function (value) {
@@ -53,5 +54,5 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             return quote + element + quote;
         };
 
-    });
+    }]);
 });

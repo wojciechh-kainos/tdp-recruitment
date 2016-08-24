@@ -3,7 +3,7 @@ define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportDateService'
     , 'application/report/services/tdprReportCsvDataService'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window, FileSaver, Blob) {
 
         $scope.DateFormat = DateFormat;
 
@@ -64,12 +64,8 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.generateCSV = function() {
             var reportsForCSV = getReportsInActualOrder();
             var data = tdprReportCsvDataService.generateCsvData(reportsForCSV, $scope.columnMap);
-            $scope.downloadCsvFile(tdprReportCsvDataService.getLink(data));
+            tdprReportCsvDataService.getFile(data);
         };
-
-        $scope.downloadCsvFile = function(link){
-            $window.location.href = link;
-        }
 
         var getReportsInActualOrder = function(){
             var reportsForCSV = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);

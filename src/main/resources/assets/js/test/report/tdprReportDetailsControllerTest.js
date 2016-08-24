@@ -22,7 +22,7 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
             inject(function (_$rootScope_, _$state_, $controller, _$q_) {
 
                 reportService = jasmine.createSpyObj('tdprReportService', ['getReports']);
-                csvDataService = jasmine.createSpyObj('tdprReportCsvDataService', ['generateCsvData', 'getLink']);
+                csvDataService = jasmine.createSpyObj('tdprReportCsvDataService', ['generateCsvData', 'getFile']);
                 dateService = jasmine.createSpyObj('tdprReportDateService', ['getLastWeekStartDate', 'getLastWeekEndDate', 'getLastMonthStartDate', 'getLastMonthEndDate']);
 
                 $scope = _$rootScope_.$new();
@@ -66,10 +66,9 @@ define(['angular', 'angularMocks', 'application/report/controllers/tdprReportDet
 
         describe('Generate csv', function(){
             it('functions from csvDataService should be triggered', function(){
-                $scope.downloadCsvFile = function(){};
                 $scope.generateCSV();
                 expect(csvDataService.generateCsvData).toHaveBeenCalled();
-                expect(csvDataService.getLink).toHaveBeenCalled();
+                expect(csvDataService.getFile).toHaveBeenCalled();
             });
         })
 
