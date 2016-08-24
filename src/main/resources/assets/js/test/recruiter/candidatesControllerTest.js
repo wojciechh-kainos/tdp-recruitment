@@ -41,10 +41,10 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 };
 
                 updateCandidate = {
-                      "id": 2,
-                      "firstName": "Ania",
-                      "lastName": "Gruszka",
-                      "note" : 'Updated note'
+                    "id": 2,
+                    "firstName": "Ania",
+                    "lastName": "Gruszka",
+                    "note": 'Updated note'
                 };
 
                 candidates = [
@@ -53,7 +53,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                         "id": 2,
                         "firstName": "Ania",
                         "lastName": "Gruszka",
-                        "note" : 'note'
+                        "note": 'note'
                     },
                     {
                         "id": 3,
@@ -64,10 +64,17 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
                 recruiters = {};
 
-
                 ngDialog = {
-                    open: function () {return {close: function () {}}},
-                    close: function () {}
+                    open: function () {
+                        return {
+                            close: function () {
+
+                            },
+                            closePromise: _$q_.defer().promise
+                        }
+                    },
+                    close: function () {
+                    }
                 };
 
                 $controller("tdprCandidatesController", {
@@ -112,7 +119,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 expect($scope.candidates.length).toEqual(4);
             })
 
-            it('should not add candidate if data is not complete', function(){
+            it('should not add candidate if data is not complete', function () {
                 var message = 'Candidate adding failed.';
                 var numberOfCandidates = $scope.candidates.length;
                 createCandidateDeferred.reject(message);
@@ -124,8 +131,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
             })
         })
 
-        describe('When click update button', function(){
-            it('Should update candidate credentials when data filled', function(){
+        describe('When click update button', function () {
+            it('Should update candidate credentials when data filled', function () {
                 var message = 'Candidate successfully updated.';
                 var numberOfCandidates = $scope.candidates.length;
                 expect(candidates[1].note).toEqual('note');
@@ -138,7 +145,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 expect(tdprCandidatesService.fetchCandidates).toHaveBeenCalledTimes(1);
             })
 
-            it('Should not update candidate if data not filled', function(){
+            it('Should not update candidate if data not filled', function () {
                 var message = 'Candidate updating failed';
                 var numberOfCandidates = $scope.candidates.length;
                 updateCandidatesDeferred.reject(message);

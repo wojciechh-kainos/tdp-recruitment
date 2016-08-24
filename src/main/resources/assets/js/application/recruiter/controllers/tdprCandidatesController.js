@@ -1,7 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, ngDialog, Notification) {
-
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
         $scope.sortColumn = 'lastName';
@@ -9,6 +8,19 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         var popUp;
+
+        var openPopUp = function () {
+            var dialog = ngDialog.open({
+                template: '/html/partials/recruiter/templates/pop-up.html',
+                scope: $scope
+            });
+
+            dialog.closePromise.then(function () {
+                $scope.candidate = {};
+            });
+
+            return dialog;
+        };
 
         $scope.create = function (candidate) {
             tdprCandidatesService.createCandidate(candidate).then(function () {
@@ -66,20 +78,14 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             $scope.candidate = {};
             $scope.candidate.isDeleted = false;
 
-            popUp = ngDialog.open({
-                template: 'html/partials/recruiter/templates/popUp.html',
-                scope: $scope
-            });
+            popUp = openPopUp();
         };
 
         $scope.showPopupForEdit = function (candidateForEdit) {
             $scope.forUpdate = true;
-            $scope.candidate = candidateForEdit;
+            $scope.candidate = angular.copy(candidateForEdit);
 
-            popUp = ngDialog.open({
-                template: 'html/partials/recruiter/templates/popUp.html',
-                scope: $scope
-            });
+            popUp = openPopUp();
         };
 
 
