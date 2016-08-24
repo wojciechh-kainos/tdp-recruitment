@@ -247,6 +247,7 @@ public class Person implements Cloneable, Principal {
     }
 
     @Override
+    @JsonIgnore
     public String getName() {
         return this.email;
     }
