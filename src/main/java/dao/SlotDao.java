@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class SlotDao extends AbstractDAO<Slot> {
 
@@ -21,8 +22,8 @@ public class SlotDao extends AbstractDAO<Slot> {
         super(sessionFactory);
     }
 
-    public Slot findById(Long id) {
-        return get(id);
+    public Optional<Slot> findById(Long id) {
+        return Optional.ofNullable(get(id));
     }
 
     public long create(Slot slot) {
