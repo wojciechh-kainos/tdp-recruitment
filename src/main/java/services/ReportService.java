@@ -31,7 +31,7 @@ public class ReportService {
         for (Slot slot : slotList) {
             SlotTime slotTime = slot.getSlotTime();
 
-            Double slotDuration = slotTime.getSlotDurationInMinutes();
+            Double slotDuration = slotTime.getSlotDurationInHours();
 
             switch (slot.getType().getName()) {
                 case full:
