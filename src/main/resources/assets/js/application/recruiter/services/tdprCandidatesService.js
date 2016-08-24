@@ -23,7 +23,6 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.updateCandidate = function (candidate) {
-            console.log(candidate);
             return $http.put("/api/candidate/update/", candidate).then(function (response) {
                 return response;
             }, function (error) {

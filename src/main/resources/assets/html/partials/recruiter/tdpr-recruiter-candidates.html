@@ -20,20 +20,20 @@
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
                     <td class="slot hour-cell"><a class="cursor-pointer" ng-click="removeCandidate(candidate)">delete</a> |
                                                <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)">edit</a></td>
-
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+    <a id="via-service" href="" ng-click="showPopupForAdd()">Add new candidate</a> |
+    <a ui-sref="tdpr.recruiter.home">Back</a> |
+    <a class="cursor-pointer" ng-click="refreshCandidates()">Refresh</a>
+</div>
 
-    <a id="via-service" href="" ng-click="open()">Add new candidate</a>
-
-    <script type="text/ng-template" id="dialog">
+    <script type="text/ng-template" id="dialogForAdd">
         <div class="ngdialog-message">
             <h3>Add new candidate:</h3>
-
 
             <form class="form-horizontal interviewer-form" name="candidateForm" role="form">
                 <hr>
@@ -86,9 +86,6 @@
                 <div class="center btn-wrapper">
                     <input class="btn btn-primary" type="submit"
                            ng-click="candidateForm.$valid ? create(candidate) : showError()" value="Submit" ng-disabled="form.$invalid"/>
-                           <!--ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>-->
-
-
                 </div>
             </form>
 
@@ -140,7 +137,6 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="form-group">
@@ -154,20 +150,10 @@
                 <div class="center btn-wrapper">
                     <input class="btn btn-primary" type="submit"
                            ng-click="candidateEditForm.$valid ? update(candidateForEdit) : showError()" value="Submit" ng-disabled="form.$invalid"/>
-                    <!--ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>-->
-
-
                 </div>
             </form>
-
         </div>
-
     </script>
 
-    <a id="back-btn" ui-sref="tdpr.recruiter.home">Back</a>
-    <a ng-click="refreshCandidates()">Refresh</a>
 
-
-
-</div>
 
