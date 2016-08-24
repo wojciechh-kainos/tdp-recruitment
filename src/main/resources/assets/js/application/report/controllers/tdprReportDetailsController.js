@@ -1,8 +1,9 @@
 define(['angular', 'application/report/tdprReportModule'
     , 'application/report/services/tdprReportService'
     , 'application/report/services/tdprReportDateService'
+    , 'application/report/services/tdprReportCsvDataService'
 ], function (angular, tdprReportModule) {
-    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, tdprReportService, tdprReportDateService, DateFormat, Notification) {
+    tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window, FileSaver, Blob) {
 
         $scope.DateFormat = DateFormat;
 
@@ -59,5 +60,25 @@ define(['angular', 'application/report/tdprReportModule'
         };
 
         $scope.activate();
+
+        $scope.generateCSV = function(startDate, endDate) {
+            var reportsForCSV = getReportsInActualOrder();
+            var data = tdprReportCsvDataService.generateCsvData(startDate, endDate, reportsForCSV, $scope.columnMap);
+            tdprReportCsvDataService.getFile(startDate, endDate, data);
+        };
+
+        var getReportsInActualOrder = function(){
+            var reportsForCSV = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+            reportsForCSV = $filter('personNameFilter')(reportsForCSV, $scope.personNameFilterValue);
+
+            if($scope.sortReverse){
+                reportsForCSV = _.sortBy(reportsForCSV,$scope.sortColumn).reverse();
+            }else{
+                reportsForCSV = _.sortBy(reportsForCSV,$scope.sortColumn);
+            }
+
+            return reportsForCSV;
+        }
+
     })
 });
