@@ -4,14 +4,14 @@
         <form-group>
             <label>Interviewers:</label>
             <ul>
-                <li ng-repeat="interviewer in interviewers">{{interview.interviewer.firstName}} {{interviewer.lastName}}</li>
+                <li ng-repeat="interviewer in interview.interviewers">{{interviewer.firstName}} {{interviewer.lastName}}</li>
             </ul>
             <br>
-            <label>Interviewee:</label> {{interviewee}}
+            <label>Interviewee:</label> {{interview.interviewee}}
             <br>
-            <label>Time:</label> {{startTime}} - {{endTime}}
+            <label>Time:</label> {{interview.start | date: "HH:mm"}} - {{interview.end | date: "HH:mm"}}
             <br>
-            <label>Organizer:</label> {{organizer}}
+            <label>Organizer:</label> {{interview.organizer}}
             <br>
             <button ng-click="scheduleInterview()">Send</button>
             <button ng-click="goHome()">Cancel</button>

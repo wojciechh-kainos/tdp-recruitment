@@ -56,13 +56,13 @@ public class InterviewCreatorTests {    // TODO: implement test cases
         assertTrue(true);
     }
 
-    @Test
-    public void sendMessageTest() throws InterruptedException, MessagingException {
-        Message message = mockInterview.createMessage();
-        MailingTask mailingTask = new MailingTask(emailConfiguration, message);
-
-        mailingTask.run();
-        assertTrue(true);
-    }
+//    @Test
+//    public void sendMessageTest() throws InterruptedException, MessagingException {
+//        Message message = mockInterview.createMessage();
+//        MailingTask mailingTask = new MailingTask(emailConfiguration, message);
+//
+//        mailingTask.run();
+//        assertTrue(true);
+//    }
 
 }

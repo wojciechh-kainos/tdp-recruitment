@@ -1,8 +1,8 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, $state,
-                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum,
-                                                                        WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
+                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
+
         var that = this;
 
         var getSelectedPersons = function() {
@@ -33,7 +33,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             $scope.pairingMode = true;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
         };
-
+        
         $scope.interviewOff = function () {
             $scope.pairingMode = false;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
@@ -44,6 +44,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.createInterview = function() {
             tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $state);
         };
+        
+        function getDateTime(day, hour) {
+            var date = new Date(day);
+            var parts = hour.split(":");
+            date.setHours(parts[0]);
+            date.setMinutes(parts[1]);
+            date.setSeconds(parts[2]);
+            return date;
+        }
+
 
         $scope.getPairs = function () {
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
@@ -84,7 +94,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             var endDate = new Date($scope.days[4]);
             endDate.setDate(endDate.getDate() + 1);
 
-            tdprRecruiterSlotsService.updateSlots(personData.slotList, personData.id, $scope.days[0], endDate).then(
+            tdprRecruiterSlotsService.updateSlots(personData.slotList).then(
                 function () {
                     personData.slotList.forEach(function (slot) {
                         slot.changed = false;
