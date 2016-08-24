@@ -70,7 +70,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
             it('should show notification on success', function () {
                 updatePersonDeferred.resolve({});
-                spyOn(Notification, 'success');
                 $scope.person = {};
 
                 $scope.updateDetails();
@@ -81,7 +80,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
             it('should show notification when trying to save invalid password', function(){
                 updatePersonDeferred.resolve({});
-                spyOn(Notification, 'error');
                 $scope.changePasswordChecked = true;
                 $scope.isPasswordValid = false;
 
