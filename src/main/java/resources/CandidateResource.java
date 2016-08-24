@@ -47,7 +47,7 @@ public class CandidateResource {
         return candidate;
     }
 
-    @GET
+    @PUT
     @Path("/{candidate_id}/deactivate")
     @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork

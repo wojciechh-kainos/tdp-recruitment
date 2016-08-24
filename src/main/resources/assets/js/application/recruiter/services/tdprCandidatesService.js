@@ -33,7 +33,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
 
 
         this.deleteCandidate = function(candidate){
-            return $http.get('/api/candidate/' + candidate.id + '/deactivate').then(function(response){
+            return $http.put('/api/candidate/' + candidate.id + '/deactivate').then(function(response){
                 return response;
             }, function(error) {
                 error.message = "Candidate deleting failed.";
