@@ -41,7 +41,6 @@ public class Person implements Cloneable {
     @JsonIgnore
     private String password;
 
-    @JsonIgnore
     private Boolean admin;
 
     @Column(name = "is_dev")
