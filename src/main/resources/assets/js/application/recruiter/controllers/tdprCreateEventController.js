@@ -8,15 +8,15 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
 
         $scope.scheduleInterview = function () {
-            // interviewData.organizer = { //TODO change to recruiter data
-            //     email: "noreply@kainos.com",
-            //     firstName: "Janek",
-            //     lastName: "Smyk"
-            // };
-            //
-            // tdprScheduleService.sendInvitations(interviewData);
-
-            tdprRecruiterSlotsService.updateSlots($stateParams.data.newSlots);
+            $stateParams.data.interview.organizer = { //TODO change to recruiter data
+                email: "noreply@kainos.com",
+                firstName: "Janek",
+                lastName: "Smyk"
+            };
+            
+            tdprRecruiterSlotsService.updateSlots($stateParams.data.newSlots).then(function () {
+                tdprScheduleService.sendInvitations($stateParams.data.interview)
+            });
         };
         
         $scope.goHome = function () {

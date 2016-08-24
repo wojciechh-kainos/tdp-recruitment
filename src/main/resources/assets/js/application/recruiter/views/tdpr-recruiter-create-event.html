@@ -11,7 +11,7 @@
             <br>
             <label>Time:</label> {{interview.start | date: "HH:mm"}} - {{interview.end | date: "HH:mm"}}
             <br>
-            <label>Organizer:</label> {{interview.organizer}}
+            <label>Organizer:</label> {{interview.organizer.firstName}} {{interview.organizer.lastName}}
             <br>
             <button ng-click="scheduleInterview()">Send</button>
             <button ng-click="goHome()">Cancel</button>

@@ -18,8 +18,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.pairingMode = false;
-        $scope.outlookObject = {};
-
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
         $scope.days = tdprDateService.getCurrentWeek();
@@ -42,19 +40,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.createInterview = function() {
-            tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $state);
+            $state.go("tdpr.recruiter.createEvent",
+                {data: tdprScheduleService.createInterview(slotsTimes, getSelectedPersons)});
         };
         
-        function getDateTime(day, hour) {
-            var date = new Date(day);
-            var parts = hour.split(":");
-            date.setHours(parts[0]);
-            date.setMinutes(parts[1]);
-            date.setSeconds(parts[2]);
-            return date;
-        }
-
-
         $scope.getPairs = function () {
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
                 function (persons) {
