@@ -8,8 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import resources.PairResource;
+import services.PairFinder;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,18 +23,22 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsForWeekTest {
 
+    @Mock
+    private static SlotDao mockDao;
+
+    private final PairFinder pairFinder = new PairFinder();
+
     private List<Slot> mockSlots = new ArrayList<>();
     private List<SlotTime> expectedSameSlotsTimes;
     private List<Person> persons;
     private Date expectedDate;
 
-    @Mock
-    private static SlotDao mockDao;
-
     @Before
     public void setUp() {
         String startDate;
         String endDate;
+        final Time startTime = Time.valueOf("08:00:00");
+        final Time endTime = Time.valueOf("17:00:00");
         final Boolean isDev = true;
         final Boolean isTest = false;
         final Boolean isOps = false;
@@ -58,10 +64,10 @@ public class PairResourceFindPairsForWeekTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, expectedDate, availabilityType));
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(threeDifferentSlotsTimes, secondPerson, differentDate, availabilityType));
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, pairFinder);
 
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
     }
 
 
