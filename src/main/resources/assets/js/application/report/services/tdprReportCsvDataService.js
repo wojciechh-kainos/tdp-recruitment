@@ -9,9 +9,8 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
 
         this.generateCsvData = function (startDate, endDate, viewReportData, columnMap) {
             var reportData = angular.copy(viewReportData);
-            var dataString = createInfo(startDate, endDate);
-            dataString += createEmptyLine();
-            dataString += createHeader(columnMap);
+
+            var dataString = _.join([createInfo(startDate, endDate), createEmptyLine(), createHeader(columnMap)], "");
 
             reportData.map(function (reportElement) {
                 reportElement.initHours = replaceDotWithComma(reportElement.initHours);
@@ -37,32 +36,37 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         };
 
         var createTitle = function(startDate, endDate) {
-            var title = "Report-" + startDate + "-to-" + endDate + ".csv";
+            var title = _.join(["Report", startDate, "to", endDate], "-");
+            title += ".csv";
             return title;
         };
 
         var createEmptyLine = function() {
-            return separator + separator + separator + endOfLine;
+            return _.join(["", "", "", endOfLine], separator);
         };
 
         var createInfo = function(startDate, endDate) {
-            var info = addQuotes("Start Date:") + separator + addQuotes(startDate) + separator + addQuotes("End Date:") + separator + addQuotes(endDate) + endOfLine;
+            var info = _.join([addQuotes("Start Date:"), addQuotes(startDate), addQuotes("End Date:"), addQuotes(endDate)], separator);
+            info += endOfLine;
             return info;
         };
 
         var createHeader = function (columnMap) {
-            var header = addQuotes(columnMap["person.lastName"].columnName) + separator;
-            header += addQuotes(columnMap["initHours"].columnName) + separator;
-            header += addQuotes(columnMap["fullHours"].columnName) + separator;
-            header += addQuotes(columnMap["sumOfHours"].columnName) + endOfLine;
+            var header = _.join([addQuotes(columnMap["person.lastName"].columnName),
+                addQuotes(columnMap["initHours"].columnName),
+                addQuotes(columnMap["fullHours"].columnName),
+                addQuotes(columnMap["sumOfHours"].columnName)],
+                separator)
+            header += endOfLine;
             return header;
         };
 
         var createReportRow = function (reportElement) {
-            var row = addQuotes(reportElement.person.lastName + emptySpace + reportElement.person.firstName) + separator;
-            row += addQuotes(reportElement.initHours) + separator;
-            row += addQuotes(reportElement.fullHours) + separator;
-            row += addQuotes(reportElement.sumOfHours) + endOfLine;
+            var row = _.join([addQuotes(reportElement.person.lastName + emptySpace + reportElement.person.firstName),
+                addQuotes(reportElement.initHours),
+                addQuotes(reportElement.fullHours),
+                addQuotes(reportElement.sumOfHours)], separator);
+            row += endOfLine;
             return row;
         };
 
