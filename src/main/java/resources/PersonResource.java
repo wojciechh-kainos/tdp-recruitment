@@ -1,5 +1,6 @@
 package resources;
 
+import auth.TdpRecruitmentPasswordStore;
 import com.google.inject.Inject;
 import constants.TdpConstants;
 import dao.NoteDao;
@@ -30,14 +31,16 @@ public class PersonResource {
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
+    private final TdpRecruitmentPasswordStore passwordStore;
     SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao,TdpRecruitmentPasswordStore passwordStore) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
         this.mailService = mailService;
+        this.passwordStore = passwordStore;
     }
 
     @PUT
@@ -45,8 +48,17 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-        personDao.create(person);
-        mailService.sendEmail(person.getEmail(), person.getId());
+        String token = UUID.randomUUID().toString();
+
+        try {
+            String hashedToken = passwordStore.createHash(token).substring(21);
+            person.setActivationCode(hashedToken);
+            personDao.create(person);
+            mailService.sendEmail(person.getEmail(), token);
+        } catch (TdpRecruitmentPasswordStore.CannotPerformOperationException e) {
+            e.printStackTrace();
+        }
+
         return person;
     }
 
