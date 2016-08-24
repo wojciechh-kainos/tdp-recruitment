@@ -65,4 +65,4 @@ bower update
 
 ## About
 
-Developed during first Gdańsk edition of Kainos Trainee Development Program.
+Developed during first Gdańsk edition of [**Kainos**](https://www.kainos.pl/) **_Trainee Development Program_**.
