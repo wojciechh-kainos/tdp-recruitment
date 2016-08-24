@@ -48,12 +48,16 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-        String token = UUID.randomUUID().toString();
-        person.setActivationCode(token);
-        personDao.create(person);
-        mailService.sendEmail(person.getEmail(), token);
+        if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+            String token = UUID.randomUUID().toString();
+            person.setActivationCode(token);
+            personDao.create(person);
+            mailService.sendEmail(person.getEmail(), token);
 
-        return person;
+            return person;
+        } else {
+            throw new WebApplicationException(Response.Status.CONFLICT);
+        }
     }
 
     @GET
