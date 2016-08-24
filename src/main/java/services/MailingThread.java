@@ -1,22 +1,8 @@
 package services;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentEmailConfiguration;
-import org.simplejavamail.email.Email;
-import org.simplejavamail.mailer.Mailer;
-import org.simplejavamail.mailer.config.TransportStrategy;
-
-import javax.activation.MailcapCommandMap;
-import javax.activation.MimetypesFileTypeMap;
 import javax.mail.*;
-import javax.mail.internet.*;
-import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Properties;
 
 public class MailingThread extends Thread {
@@ -57,7 +43,6 @@ public class MailingThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
