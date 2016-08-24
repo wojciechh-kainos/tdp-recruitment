@@ -86,7 +86,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
 
         describe('managePerson', function () {
             it('should return updated person on success', function () {
-                $httpBackend.expectPUT('/api/person/' + 2 + '/switchAccountStatus').respond(200, data);
+                $httpBackend.expectPUT('/api/person/' + 2 + '/switchAccountStatus').respond(HttpStatusCodes.ok, data);
 
                 service.managePerson(person).then(function (response) {
                     expect(response.data).toEqual(data);
