@@ -18,11 +18,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         }
 
         $scope.updateDetails = function () {
-            if($scope.changePasswordChecked && ($scope.arePasswordsDifferent || !$scope.isPasswordValid)){
+            if($scope.changePasswordChecked && (!$scope.arePasswordsCorrect)){
                 return Notification.error("Changes not saved! Password field incorrect!");
             }
             var person = angular.copy($scope.person);
-            person.password = ($scope.changePasswordChecked && $scope.isPasswordValid) ? $scope.newPassword : null;
+            person.password = ($scope.changePasswordChecked && $scope.arePasswordsCorrect) ? $scope.newPassword : null;
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
             person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
