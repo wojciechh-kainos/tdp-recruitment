@@ -26,6 +26,7 @@
     "angular-ui-notification": "^0.2.0",
     "moment": "^2.14.1",
     "angular-moment": "^0.10.3",
+    "angular-file-saver": "^1.1.2",
     "angular-cookies": "^1.5.8"
   },
   "resolutions": {
