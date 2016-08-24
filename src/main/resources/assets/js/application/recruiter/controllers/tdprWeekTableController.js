@@ -5,6 +5,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
+        $scope.params = $state.params;
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
         $scope.selectSlotsTimes = slotsTimes;
