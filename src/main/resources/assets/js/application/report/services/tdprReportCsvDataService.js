@@ -1,7 +1,7 @@
 define(['angular', 'application/report/tdprReportModule'], function (angular, tdprReportModule) {
     tdprReportModule.service('tdprReportCsvDataService', ['FileSaver', function (FileSaver) {
 
-        var baseLink = "text/csv;charset=utf-8,";
+        var contentType = "text/csv;charset=utf-8,";
         var separator = ';';
         var endOfLine = "\n";
         var quote = '"';
@@ -28,7 +28,7 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         };
 
         this.getFile = function (startDate, endDate, dataString) {
-            var file = new Blob([dataString], { type: baseLink });
+            var file = new Blob([dataString], { type: contentType });
             return FileSaver.saveAs(file, createTitle(startDate, endDate));
         };
 
