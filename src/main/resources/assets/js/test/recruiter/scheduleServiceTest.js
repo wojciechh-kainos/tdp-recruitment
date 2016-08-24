@@ -56,11 +56,16 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
                 "day": '1410-07-15',
                 "person": 42,
                 "number": 7,
-                "type": AvailabilityEnum.available.name
+                "type": AvailabilityEnum.available.name,
+                "changed": true
             };
 
             module(function ($provide) {
                 $provide.value('AvailabilityEnum', AvailabilityEnum);
+            });
+
+            module(function ($provide) {
+                $provide.value('DateFormat', 'yyyy-MM-dd');
             });
 
             inject(function ($injector) {

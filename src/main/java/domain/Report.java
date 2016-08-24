@@ -5,13 +5,11 @@ public class Report {
     private Person person;
     private Double initHours;
     private Double fullHours;
-    private Double availableHours;
 
 
-    public Report(Person person, Double initHours, Double availableHours, Double fullHours) {
+    public Report(Person person, Double initHours, Double fullHours) {
         this.initHours = initHours;
         this.person = person;
-        this.availableHours = availableHours;
         this.fullHours = fullHours;
     }
 
@@ -39,14 +37,6 @@ public class Report {
         this.fullHours = fullHours;
     }
 
-    public Double getAvailableHours() {
-        return availableHours;
-    }
-
-    public void setAvailableHours(Double availableHours) {
-        this.availableHours = availableHours;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,11 +45,8 @@ public class Report {
         Report report = (Report) o;
 
         if (person != null ? !person.equals(report.person) : report.person != null) return false;
-        if (initHours != null ? !initHours.equals(report.initHours) : report.initHours != null)
-            return false;
-        if (fullHours != null ? !fullHours.equals(report.fullHours) : report.fullHours != null)
-            return false;
-        return availableHours != null ? availableHours.equals(report.availableHours) : report.availableHours == null;
+        if (initHours != null ? !initHours.equals(report.initHours) : report.initHours != null) return false;
+        return fullHours != null ? fullHours.equals(report.fullHours) : report.fullHours == null;
 
     }
 
@@ -68,7 +55,6 @@ public class Report {
         int result = person != null ? person.hashCode() : 0;
         result = 31 * result + (initHours != null ? initHours.hashCode() : 0);
         result = 31 * result + (fullHours != null ? fullHours.hashCode() : 0);
-        result = 31 * result + (availableHours != null ? availableHours.hashCode() : 0);
         return result;
     }
 
@@ -78,7 +64,6 @@ public class Report {
                 "person=" + person +
                 ", initHours=" + initHours +
                 ", fullHours=" + fullHours +
-                ", availableHours=" + availableHours +
                 '}';
     }
 }

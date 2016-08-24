@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.directive("slot", function () {
         return {
             restrict: 'AE',
-            templateUrl: 'js/application/recruiter/views/tdpr-directive-slot.html',
+            templateUrl: '/html/partials/recruiter/tdpr-directive-slot.html',
             replace: true,
             scope: {
                 slotData: '=',
@@ -10,7 +10,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             },
             link: function (scope, element, attributes) {
                 scope.getClass = function () {
-                    return scope.slotData ? 'cell-avail-' + scope.slotData.type : '';
+                    return scope.slotData ? 'cell-avail-' + scope.slotData.type + (scope.slotData.changed? " changed-cell" : "") : '';
                 };
 
                 scope.getSlotType = function () {

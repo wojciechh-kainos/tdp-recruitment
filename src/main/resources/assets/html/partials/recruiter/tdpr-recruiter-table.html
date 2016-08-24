@@ -9,20 +9,7 @@
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.next)">Next week</button>
     </div>
 
-    <div class="legend">
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.dev}}"/>
-            <span>Developer</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.test}}"/>
-            <span> Tester</span>
-        </label>
-        <label class="mouse-pointer">
-            <input type="radio" ng-model="currentJobProfile" value="{{::JobProfileEnum.ops}}"/>
-            <span> WebOps</span>
-        </label>
-    </div>
+    <job-profile selected-profiles="currentJobProfile" is-radio="true"></job-profile>
 
     <form class="form-inline">
         <div class="form-group">
@@ -80,5 +67,7 @@
     <a id="add-person-btn" ui-sref="tdpr.recruiter.addPerson">Add person</a>
 
     | <a id="reports-btn" ui-sref="tdpr.report.home">Reports</a>
+
+    | <a id="manage-btn" ui-sref="tdpr.recruiter.manageUsers">Manage users</a>
 
 </div>

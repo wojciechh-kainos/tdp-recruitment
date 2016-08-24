@@ -36,6 +36,7 @@ public class PairResourceFindPairsForWeekTest {
         final Boolean isDev = true;
         final Boolean isTest = false;
         final Boolean isOps = false;
+        final Boolean isOther = false;
         PairResource resource;
         int TODAY_OFFSET = 0;
         expectedDate = MockDataUtil.createDate(TODAY_OFFSET);
@@ -45,22 +46,22 @@ public class PairResourceFindPairsForWeekTest {
         endDate = MockDataUtil.convertDateToString(differentDate);
 
         AvailabilityType availabilityType = MockDataUtil.createAvailableType((long) 1, AvailabilityTypeEnum.available);
-        expectedSameSlotsTimes = MockDataUtil.createSlotTimeList(1, 3);
-        List<SlotTime> threeDifferentSlotsTimes = MockDataUtil.createSlotTimeList(3, 5);
-        List<SlotTime> twoDifferentSlotsTimes = MockDataUtil.createSlotTimeList(4, 5);
+        expectedSameSlotsTimes = MockDataUtil.createSlotsTimesList(1, 3);
+        List<SlotTime> threeDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(3, 5);
+        List<SlotTime> twoDifferentSlotsTimes = MockDataUtil.createSlotsTimesList(4, 5);
 
-        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, firstPerson, expectedDate, availabilityType));
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(twoDifferentSlotsTimes, firstPerson, differentDate, availabilityType));
+        Person firstPerson = MockDataUtil.createPerson((long) 1, "FIRST", isDev, isTest, isOps, isOther);
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, firstPerson, expectedDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(twoDifferentSlotsTimes, firstPerson, differentDate, availabilityType));
 
-        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps);
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(expectedSameSlotsTimes, secondPerson, expectedDate, availabilityType));
-        mockSlots.addAll(MockDataUtil.createSlotToSlotTime(threeDifferentSlotsTimes, secondPerson, differentDate, availabilityType));
+        Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSameSlotsTimes, secondPerson, expectedDate, availabilityType));
+        mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(threeDifferentSlotsTimes, secondPerson, differentDate, availabilityType));
 
         resource = new PairResource(mockDao);
 
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps);
+        when(mockDao.findSlotsForPairMatching(startDate, endDate, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
+        persons = resource.findPairs(startDate, endDate, isDev, isTest, isOps, isOther);
     }
 
 

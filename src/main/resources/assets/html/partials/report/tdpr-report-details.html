@@ -3,7 +3,7 @@
     <hr>
 </div>
 
-<job-profile selected-profiles="checkedProfiles"></job-profile>
+<job-profile selected-profiles="checkedProfiles" is-radio="false"></job-profile>
 
 <div class="row options">
     <div class="col-md-2">
@@ -31,7 +31,7 @@
 <div class="row options">
     <div class="col-md-12">
         <hr>
-        <h4>{{currentReportStart | date:'yyyy-MM-dd'}} to {{currentReportEnd | date:'yyyy-MM-dd'}}</h4>
+        <h4>{{currentReportStart | date: DateFormat}} to {{currentReportEnd | date: DateFormat}}</h4>
     </div>
 </div>
 
@@ -62,7 +62,7 @@
             </thead>
             <tbody>
             <tr report
-                ng-repeat="reportElement in reportsElements | jobReportProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse"
+                ng-repeat="reportElement in reportsElements | jobProfileFilter: checkedProfiles | personNameFilter: inputString | orderBy:sortColumn:sortReverse"
                 report-data="reportElement" person-info="reportElement.person"></tr>
             </tbody>
         </table>

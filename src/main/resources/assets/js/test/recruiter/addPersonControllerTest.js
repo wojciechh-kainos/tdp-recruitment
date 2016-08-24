@@ -57,7 +57,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddPer
                 $scope.$apply();
 
                 expect(tdprPersonsService.createPerson).toHaveBeenCalledWith(person);
-                expect(Notification.success).toHaveBeenCalledWith({message: 'Interviewer added', delay: 2000});
+                expect(Notification.success).toHaveBeenCalledWith('Interviewer added');
                 expect($scope.goHome).toHaveBeenCalled();
             });
 
@@ -69,7 +69,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddPer
                 $scope.$apply();
 
                 expect(tdprPersonsService.createPerson).toHaveBeenCalledWith(person);
-                expect(Notification.error).toHaveBeenCalledWith({message: message, delay: 2000});
+                expect(Notification.error).toHaveBeenCalledWith(message);
             });
         });
 

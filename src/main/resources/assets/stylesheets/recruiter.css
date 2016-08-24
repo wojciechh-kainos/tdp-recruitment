@@ -51,8 +51,6 @@
     font-size: medium;
 }
 
-
-
 .changes-button {
     font-size: smaller;
 }
@@ -76,10 +74,8 @@
     font-size: larger;
 }
 
-.day-th, .slot-time-th {
-    background-color: #375D81;
-    color: white;
-    font-weight: bold;
+#manage-btn {
+    font-size: larger;
 }
 
 .slot-times-th {
@@ -90,20 +86,10 @@
     border-left: 1px solid #233c54;
 }
 
-.day-th {
-    box-sizing: border-box;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
 .availabilities-table-container .day-th {
     font-size: large;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-}
-
-.availabilities-table {
-    border: 2px solid black;
 }
 
 .form-inline .navigate1 {
@@ -164,4 +150,8 @@
 
 .glyphicon-remove {
     color: #b20000;
+}
+
+.changed-cell {
+    border: 3px solid #ff3d00;
 }
