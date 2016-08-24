@@ -95,6 +95,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             $scope.forUpdate = false;
             $scope.candidate = {};
             $scope.candidate.isDeleted = false;
+            $scope.candidate.recruiter = recruiters[0];
 
             popUp = openPopUp();
         };
