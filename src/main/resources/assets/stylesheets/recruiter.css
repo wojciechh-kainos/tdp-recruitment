@@ -78,6 +78,10 @@
     font-size: larger;
 }
 
+#candidates-btn {
+    font-size: larger;
+}
+
 .slot-times-th {
     width: 100%;
     padding: 0 10px 0 10px;
