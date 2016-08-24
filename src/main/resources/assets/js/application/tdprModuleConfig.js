@@ -24,13 +24,14 @@ define(['angular'
                     }
                 }
         });
+
         NotificationProvider.setOptions({
           delay: 2000,
         });
+
     });
 
     function _isUserLoggedIn(tdprAuthService) {
-    console.log("cacaac");
         if(tdprAuthService.getCurrentUser().token === undefined){
             tdprAuthService.checkCookies();
         }

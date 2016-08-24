@@ -6,9 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by dawidkw on 22/08/16.
- */
 public class TdpRecruitmentUnauthorizedHandler implements UnauthorizedHandler  {
 	@Context
 	private HttpServletRequest request;
