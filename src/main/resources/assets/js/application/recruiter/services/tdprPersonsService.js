@@ -1,5 +1,5 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q, HttpStatusCodes) {
 
         this.fetchPersonsWithSlotsForDates = function(start, end) {
             var format = 'yyyy-MM-dd';
@@ -27,7 +27,7 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                 return response;
             }, function (err) {
 
-                if (err.status == 409) {
+                if (err.status == HttpStatusCodes.conflict) {
                     err.message = "Email address already in use.";
                 } else {
                     err.message = "Interviewer adding failed.";

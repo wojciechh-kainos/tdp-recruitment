@@ -5,10 +5,7 @@ import dao.PersonDao;
 import dao.SlotDao;
 import domain.Note;
 import domain.Person;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -50,7 +47,7 @@ public class PersonResourceTest {
     private static List<Person> mockList = new ArrayList<>();
 
     @BeforeClass
-    public static void setUpBeforeClass(){
+    public static void setUpBeforeClass() {
         java.util.Date date3 = new java.util.Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date3); // Now use today date.
@@ -69,7 +66,7 @@ public class PersonResourceTest {
         secondPerson.setId(2L);
 
         dateString = "2016-07-26";
-        date = Date.valueOf("2016-07-26");
+        date = Date.valueOf(dateString);
         note = new Note(1L, person, "note nr 1", date);
         note2 = new Note(2L, person, "note nr 2", date);
         note3 = new Note(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
@@ -78,23 +75,23 @@ public class PersonResourceTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao);
     }
 
     @Test
-    public void testGetNote()throws ParseException{
-        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(stubNoteDB.get(0));
+    public void testGetNote() throws ParseException {
+        when(mockNoteDao.getByPersonIdAndDate(1L, date)).thenReturn(stubNoteDB.get(0));
 
-        Note result = resource.getNote(1L,dateString);
+        Note result = resource.getNote(1L, dateString);
 
-        assertEquals(stubNoteDB.get(0),result);
-        verify(mockNoteDao, times(1)).getByPersonIdAndDate(1L,date);
+        assertEquals(stubNoteDB.get(0), result);
+        verify(mockNoteDao, times(1)).getByPersonIdAndDate(1L, date);
     }
 
     @Ignore
     @Test
-    public void testCreateNote(){
+    public void testCreateNote() {
         when(mockNoteDao.createOrUpdate(note2)).thenReturn(note2);
 
         Response result = resource.createOrUpdate(note2);
@@ -104,7 +101,7 @@ public class PersonResourceTest {
     }
 
     @Test
-    public void testCreateNoteWithCorrectDate(){
+    public void testCreateNoteWithCorrectDate() {
         when(mockNoteDao.createOrUpdate(note3)).thenReturn(note3);
 
         Response result = resource.createOrUpdate(note3);
@@ -113,25 +110,28 @@ public class PersonResourceTest {
     }
 
     @Test
-    public void testCreatePerson(){
+    public void testCreatePerson() {
 
         resource.createPerson(firstPerson);
 
         verify(mockPersonDao, times(1)).create(firstPerson);
     }
 
-
-    @Test(expected = WebApplicationException.class)
-    public void testCreatePersonWithEmailInUse(){
-
+    @Test
+    public void testCreatePersonWithEmailInUse() {
         when(mockPersonDao.findByEmail(firstPerson.getEmail())).thenReturn(mockList);
-
         mockPersonDao.create(firstPerson);
-        resource.createPerson(secondPerson);
+
+        try {
+            resource.createPerson(secondPerson);
+        } catch (WebApplicationException e) {
+
+            Response.StatusType r = e.getResponse().getStatusInfo();
+            assertEquals(r, Response.Status.CONFLICT);
+        }
 
         verify(mockPersonDao, times(1)).create(firstPerson);
         verify(mockPersonDao, times(0)).create(secondPerson);
         verify(mockPersonDao, times(1)).findByEmail(secondPerson.getEmail());
-
     }
 }
