@@ -78,6 +78,10 @@
     font-size: larger;
 }
 
+#candidates-btn {
+    font-size: larger;
+}
+
 .slot-times-th {
     width: 100%;
     padding: 0 10px 0 10px;
@@ -154,4 +158,8 @@
 
 .changed-cell {
     border: 3px solid #ff3d00;
+}
+
+.form-text-area {
+    height: 150px !important;
 }

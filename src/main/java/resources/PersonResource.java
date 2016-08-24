@@ -123,4 +123,20 @@ public class PersonResource {
         personDao.update(person);
         return person;
     }
+
+    @GET
+    @Path("/all/recruiter")
+    @UnitOfWork
+    public Response getRecruiters() {
+        List<Person> recruiterList = new ArrayList<>();
+
+        for (Person person : personDao.findAll()) {
+            if (person.getAdmin() != null && person.getAdmin()) {
+                recruiterList.add(person);
+            }
+        }
+
+        return Response.ok(recruiterList).build();
+    }
+
 }
