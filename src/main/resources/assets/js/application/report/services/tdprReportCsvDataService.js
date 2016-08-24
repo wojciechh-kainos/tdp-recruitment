@@ -27,9 +27,9 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
             return dataString;
         };
 
-        this.getFile = function (dataString) {
+        this.getFile = function (startDate, endDate, dataString) {
             var file = new Blob([dataString], { type: baseLink });
-            return FileSaver.saveAs(file, 'Report.csv');
+            return FileSaver.saveAs(file, createTitle(startDate, endDate));
         };
 
         var replaceDotWithComma = function (value) {
@@ -37,7 +37,7 @@ define(['angular', 'application/report/tdprReportModule'], function (angular, td
         };
 
         var createTitle = function(startDate, endDate) {
-            var title = "Report-" + startDate + "-to-" + endDate;
+            var title = "Report-" + startDate + "-to-" + endDate + ".csv";
             return title;
         };
 

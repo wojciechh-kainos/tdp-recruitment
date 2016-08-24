@@ -64,7 +64,7 @@ define(['angular', 'application/report/tdprReportModule'
         $scope.generateCSV = function(startDate, endDate) {
             var reportsForCSV = getReportsInActualOrder();
             var data = tdprReportCsvDataService.generateCsvData(startDate, endDate, reportsForCSV, $scope.columnMap);
-            tdprReportCsvDataService.getFile(data);
+            tdprReportCsvDataService.getFile(startDate, endDate, data);
         };
 
         var getReportsInActualOrder = function(){

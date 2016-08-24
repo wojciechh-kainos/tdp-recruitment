@@ -27,7 +27,7 @@ require.config({
         'moment' : 'lib/moment/moment',
         'angular-moment' : 'lib/angular-moment/angular-moment',
         'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
-        'fileSaver' : 'lib/file-saver/FileSaver',
+        'fileSaver' : 'lib/file-saver.js/FileSaver',
         'blob' : 'lib/blob-polyfill/Blob'
     },
     shim: {
