@@ -1,6 +1,5 @@
 package services;
 
-import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentEmailConfiguration;
 
 import javax.mail.*;
@@ -8,18 +7,16 @@ import java.util.Properties;
 
 public class MailingTask implements Runnable {
 
-    private TdpRecruitmentApplicationConfiguration config;
+    private TdpRecruitmentEmailConfiguration config;
     private Message msg;
 
-    public MailingTask(TdpRecruitmentApplicationConfiguration config, Message message) {
+    public MailingTask(TdpRecruitmentEmailConfiguration config, Message message) {
         this.config = config;
         this.msg = message;
     }
 
     @Override
     public void run() {
-        TdpRecruitmentEmailConfiguration config = this.config.getSmtpConfig();
-
         String host = config.getHost();
         Integer port = config.getPort();
         String from = config.getFrom();

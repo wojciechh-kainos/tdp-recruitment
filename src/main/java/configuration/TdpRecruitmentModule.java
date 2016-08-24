@@ -42,6 +42,11 @@ public class TdpRecruitmentModule extends AbstractModule {
         return executorService;
     }
 
+    @Provides
+    TdpRecruitmentEmailConfiguration providesTdpRecruitmentEmailConfiguration(TdpRecruitmentApplicationConfiguration config) {
+        return config.getSmtpConfig();
+    }
+
     @Override
     protected void configure() {
     }
