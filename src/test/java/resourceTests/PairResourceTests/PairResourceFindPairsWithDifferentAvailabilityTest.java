@@ -25,6 +25,8 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
     @Mock
     private static SlotDao mockDao;
 
+    private final PairFinder pairFinder = new PairFinder();
+
     private final Time startTime = Time.valueOf("08:00:00");
     private final Time endTime = Time.valueOf("17:00:00");
     private final int TODAY_OFFSET = 0;
@@ -51,7 +53,7 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
         mockSlots.addAll(createSecondPerson());
         mockSlots.addAll(createThirdPerson());
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, pairFinder);
         when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
     }

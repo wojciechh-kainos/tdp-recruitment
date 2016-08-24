@@ -21,10 +21,12 @@ import java.util.List;
 public class PairResource {
 
     private SlotDao slotDao;
+    private PairFinder pairFinder;
 
     @Inject
-    public PairResource(SlotDao slotDao) {
+    public PairResource(SlotDao slotDao, PairFinder pairFinder) {
         this.slotDao = slotDao;
+        this.pairFinder = pairFinder;
     }
 
     @GET
@@ -39,7 +41,6 @@ public class PairResource {
                                   @QueryParam("isOther") Boolean isOther) {
 
         List<Slot> slots = slotDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
-        PairFinder pairFinder = new PairFinder();
 
         return pairFinder.findPairs(slots);
     }

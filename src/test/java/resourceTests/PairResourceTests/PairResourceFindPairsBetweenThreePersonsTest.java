@@ -25,6 +25,8 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
     @Mock
     private static SlotDao mockDao;
 
+    private final PairFinder pairFinder = new PairFinder();
+
     private final Boolean isDev = true;
     private final Boolean isTest = false;
     private final Boolean isOps = false;
@@ -60,7 +62,7 @@ public class PairResourceFindPairsBetweenThreePersonsTest {
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(expectedSecondPersonSlotsTimes, thirdPerson, secondDate, availabilityType));
 
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, pairFinder);
 
         when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);

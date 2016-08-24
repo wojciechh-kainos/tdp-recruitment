@@ -27,6 +27,8 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
     @Mock
     private static SlotDao mockDao;
 
+    private final PairFinder pairFinder = new PairFinder();
+
     private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 
@@ -67,7 +69,7 @@ public class PairResourceFindPairsInUnorderedSlotsTest {
         Person secondPerson = MockDataUtil.createPerson((long) 2, "SECOND", isDev, isTest, isOps, isOther);
         mockSlots.addAll(MockDataUtil.createSlotsToSlotTimes(unorderedSlotsTimes, secondPerson, date, availabilityType));
 
-        resource = new PairResource(mockDao);
+        resource = new PairResource(mockDao, pairFinder);
 
         when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
         persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
