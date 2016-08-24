@@ -4,6 +4,14 @@
 
     <div class="row options">
         <div class="col-md-9 col-md-offset-2">
+            <select class="form-control" ng-model="currentRecruiter"
+                    ng-options="recruiter.lastName for recruiter in recruitersFilter track by recruiter.id">
+            </select>
+        </div>
+    </div>
+
+    <div class="row options">
+        <div class="col-md-9 col-md-offset-2">
             <table id="report-table">
                 <thead class="column-heading">
                 <tr>
@@ -13,7 +21,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="candidate in candidates | orderBy : sortColumn : sortReverse">
+                <tr ng-repeat="candidate in candidates | filterByRecruiter: currentRecruiter | orderBy : sortColumn : sortReverse ">
                     <td class="slot hour-cell">{{candidate.recruiter.firstName + ' ' + candidate.recruiter.lastName}}</td>
                     <td class="slot hour-cell">{{candidate.lastName + ' ' + candidate.firstName}}</td>
                     <td class="slot hour-cell">{{candidate.position}}</td>
@@ -21,7 +29,7 @@
                     <td class="slot hour-cell">
                         <a class="cursor-pointer" ng-click="deleteCandidate(candidate)"><span class="glyphicon glyphicon-remove" uib-tooltip="Delete candidate"></span></a>
                         | <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)"><span class="glyphicon glyphicon-edit" uib-tooltip="Edit candidate"></span></a>
-                        | <a class="cursor-pointer" ui-sref='tdpr.recruiter.home({candidateId: candidate.id, candidate: candidate})'><span class="glyphicon glyphicon-calendar" uib-tooltip="Go to shedule"></span></a>
+                        | <a class="cursor-pointer" ui-sref='tdpr.recruiter.home({candidateId: candidate.id, candidate: candidate})'><span class="glyphicon glyphicon-calendar" uib-tooltip="Go to schedule"></span></a>
                     </td>
 
                 </tbody>

@@ -35,6 +35,15 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             return keys;
         };
 
+        var populateRecruiterFilters = function (recruiters) {
+            var recruiterList = angular.copy(recruiters);
+            $scope.currentRecruiter = {id: 0, lastName: "All"};
+            recruiterList.unshift($scope.currentRecruiter);
+            return recruiterList;
+        };
+
+        $scope.recruitersFilter = populateRecruiterFilters($scope.recruiters);
+
         $scope.candidateLimits = populateLimitsObject();
         $scope.swapLimitsForCandidate = function (candidate) {
             $scope.candidateLimits[candidate.id] = $scope.candidateLimits[candidate.id] === false ? defaultLimitValue : false;
