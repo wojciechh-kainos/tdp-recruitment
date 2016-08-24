@@ -2,21 +2,19 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprAddPersonController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum) {
         $scope.BandLevelEnum = BandLevelEnum;
-
-        $scope = {
-            admin: false,
-            isDev: false,
-            isTest: false,
-            isOther: false
-        };
-
+        $scope.person = {
+            isDev : false,
+            isTest : false,
+            isOps : false
+            //TODO: isOther : false
+        }
         $scope.create = function (person) {
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
-            if (person.admin === true) {
+            if(person.admin===true){
                 person.isDev = false;
                 person.isTest = false;
                 person.isOps = false;
-                person.isOther = true;
+                //TODO: person.isOther = true;
             }
             $scope.createPersonPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
@@ -28,12 +26,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.goHome = function () {
-            $state.go('tdpr.recruiter.home');
+          $state.go('tdpr.recruiter.home');
         };
 
         $scope.showError = function () {
-            Notification.error('Cannot submit invalid form, please change incorrect fields');
+          Notification.error('Cannot submit invalid form, please change incorrect fields');
         };
-
     });
 });
