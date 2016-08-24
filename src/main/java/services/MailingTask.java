@@ -2,19 +2,20 @@ package services;
 
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentEmailConfiguration;
+
 import javax.mail.*;
 import java.util.Properties;
 
-public class MailingThread extends Thread {
+public class MailingTask implements Runnable {
 
     private TdpRecruitmentApplicationConfiguration config;
     private Message msg;
 
-    public MailingThread(TdpRecruitmentApplicationConfiguration config) {
+    public MailingTask(TdpRecruitmentApplicationConfiguration config) {
         this.config = config;
     }
 
-    public MailingThread sendMessage(Message message){
+    public MailingTask sendMessage(Message message) {
         this.msg = message;
         return this;
     }

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import services.Interview;
-import services.MailingThread;
+import services.MailingTask;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -61,11 +61,10 @@ public class InterviewCreatorTests {    // TODO: implement test cases
 
     @Test
     public void sendMessageTest() throws InterruptedException, MessagingException {
-        MailingThread mailingThread = new MailingThread(applicationConfiguration);
+        MailingTask mailingTask = new MailingTask(applicationConfiguration);
 
         Message message = mockInterview.createMessage();
-        mailingThread.sendMessage(message).start();
-        mailingThread.join();
+        mailingTask.sendMessage(message).run();
         assertTrue(true);
     }
 

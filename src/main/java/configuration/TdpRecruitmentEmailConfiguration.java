@@ -14,6 +14,9 @@ public class TdpRecruitmentEmailConfiguration {
 
     private String password;
 
+    @NotNull
+    private int threadPool;
+
     public String getHost() {
         return host;
     }
@@ -22,9 +25,7 @@ public class TdpRecruitmentEmailConfiguration {
         this.host = host;
     }
 
-    public Integer getPort() {
-        return port;
-    }
+    public Integer getPort() { return port; }
 
     public void setPort(Integer port) {
         this.port = port;
@@ -38,11 +39,14 @@ public class TdpRecruitmentEmailConfiguration {
         this.from = from;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public int getThreadPool() { return threadPool; }
+
+    public void setThreadPool(int threadPool) { this.threadPool = threadPool; }
+
 }

@@ -46,5 +46,6 @@ smtpConfig:
   host: mail.kainos.com
   port: 25
   from: no-reply@kainos.com
+  threadPool: 10
 
 domain: http://localhost:8888
