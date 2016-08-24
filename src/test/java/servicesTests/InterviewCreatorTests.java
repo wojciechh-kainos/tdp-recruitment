@@ -61,10 +61,10 @@ public class InterviewCreatorTests {    // TODO: implement test cases
 
     @Test
     public void sendMessageTest() throws InterruptedException, MessagingException {
-        MailingTask mailingTask = new MailingTask(applicationConfiguration);
-
         Message message = mockInterview.createMessage();
-        mailingTask.sendMessage(message).run();
+        MailingTask mailingTask = new MailingTask(applicationConfiguration, message);
+
+        mailingTask.run();
         assertTrue(true);
     }
 
