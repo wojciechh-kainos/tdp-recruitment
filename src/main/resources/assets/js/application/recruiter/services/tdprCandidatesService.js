@@ -1,7 +1,7 @@
 define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
     tdprRecruiterModule.service('tdprCandidatesService', function ($http, $q) {
 
-        this.fetchCandidates = function(){
+        this.fetchCandidates = function () {
             return $http.get('api/candidate/all').then(
                 function (response) {
                     return response.data;
@@ -13,7 +13,6 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
         this.createCandidate = function (candidate) {
-            console.log(candidate);
             return $http.put("/api/candidate/create/", candidate).then(function (response) {
                 return response;
             }, function (error) {
@@ -32,16 +31,16 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
         };
 
 
-        this.deleteCandidate = function(candidate){
-            return $http.put('/api/candidate/' + candidate.id + '/deactivate').then(function(response){
+        this.deleteCandidate = function (candidate) {
+            return $http.put('/api/candidate/' + candidate.id + '/deactivate').then(function (response) {
                 return response;
-            }, function(error) {
+            }, function (error) {
                 error.message = "Candidate deleting failed.";
                 return $q.reject(error.message);
             })
         };
 
-        this.fetchRecruiters = function(){
+        this.fetchRecruiters = function () {
             return $http.get('api/person/all/recruiter').then(
                 function (response) {
                     return response.data;
