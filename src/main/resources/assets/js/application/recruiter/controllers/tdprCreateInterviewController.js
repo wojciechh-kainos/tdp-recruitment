@@ -21,9 +21,5 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             });
 
         };
-        
-        $scope.goHome = function () {
-            $state.go('tdpr.recruiter.home'); //should be changed to ui-sref in view
-        };
     });
 });
