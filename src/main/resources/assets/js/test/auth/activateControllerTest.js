@@ -40,14 +40,6 @@ define(['angular', 'angularMocks', 'application/auth/controllers/tdprActivateCon
                 expect(tdprActivateService.checkIfPersonWithActivationLinkExists).toHaveBeenCalled();
             });
 
-            it('should throw success notification and redirect to login page',function() {
-                checkIfPersonWithActivationLinkExistsDeferred.resolve({status: 204});
-                $scope.$apply();
-
-                expect(Notification.error).toHaveBeenCalledWith("Something went wrong");
-                expect($state.go).toHaveBeenCalledWith('tdpr.login');
-            });
-
             it('should redirect to login page',function() {
                 checkIfPersonWithActivationLinkExistsDeferred.reject();
                 $scope.$apply();
