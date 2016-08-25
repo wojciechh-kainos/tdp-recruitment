@@ -58,53 +58,65 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.tripleSlotChange = function (maxSlot, selectedPersons) {
             return function (slot, slotId, day, person) {
-                var newSlot;
+                var newSlot, valid = true;
                 _.each(selectedPersons(), function (person) {
                     if (!person.changesPending) {
                         person.rootSlotList = angular.copy(person.slotList);
                     }
-                    else {
+                    scheduledSlots = [];
+
+                    if (person.changesPending) {
                         person.slotList = angular.copy(person.rootSlotList);
                     }
-                    scheduledSlots = [];
                     for (var i = 0; i < 3; i++) {
                         newSlot = that.findSlotById(person.slotList, slotId + i, day);
-                        if (slotId + i <= maxSlot) {
+                        if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
+                            valid = false;
+                            console.log(newSlot);
+                        }
+                        if (slotId + i <= maxSlot && valid) {
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
+                        } else {
+                            person.slotList = angular.copy(person.rootSlotList);
+                            scheduledSlots = [];
                         }
                     }
+
                 });
             };
         };
 
         this.createInterview = function (slotsTimes, selectedPersons, candidate) {
-            var outlookObject = {
-                interview: {}
-            };
-            outlookObject.interview.interviewers = _.map(selectedPersons(), function (obj) {
-                return {
-                    id: obj.id,
-                    firstName: obj.firstName,
-                    lastName: obj.lastName,
-                    email: obj.email,
-                    slots: obj.slotList
-                }
-            });
-            var startSlot = _.find(slotsTimes, {id: _.minBy(scheduledSlots, 'number').number});
-            var endSlot = _.find(slotsTimes, {id: _.maxBy(scheduledSlots, 'number').number});
-            var day = scheduledSlots[0].day;
 
-            outlookObject.interview.interviewee = candidate;
-            outlookObject.interview.organizer = "";
-            outlookObject.interview.start = getDateTime(day, startSlot.startTime);
-            outlookObject.interview.end = getDateTime(day, endSlot.endTime);
+            if (scheduledSlots.length === 3) {
+                var outlookObject = {
+                };
+                outlookObject.interviewers = _.map(selectedPersons(), function (obj) {
+                    return {
+                        id: obj.id,
+                        firstName: obj.firstName,
+                        lastName: obj.lastName,
+                        email: obj.email,
+                        slots: obj.slotList
+                    }
+                });
+                var startSlot = _.find(slotsTimes, {id: _.minBy(scheduledSlots, 'number').number});
+                var endSlot = _.find(slotsTimes, {id: _.maxBy(scheduledSlots, 'number').number});
+                var day = scheduledSlots[0].day;
 
-            outlookObject.newSlots = scheduledSlots;
+                outlookObject.interviewee = candidate;
+                outlookObject.organizer = "";
+                outlookObject.start = getDateTime(day, startSlot.startTime);
+                outlookObject.end = getDateTime(day, endSlot.endTime);
 
-            scheduledSlots = [];
+                outlookObject.newSlots = scheduledSlots;
 
-            return outlookObject;
+                scheduledSlots = [];
 
+                return outlookObject;
+            } else {
+                return false;
+            }
 
         };
 

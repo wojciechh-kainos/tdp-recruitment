@@ -3,7 +3,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, tdprRecruiterSlotsService, tdprAuthService, $stateParams, $state, $q) {
 
 
-        $scope.interview = $stateParams.data.interview;
+        $scope.interview = $stateParams.data;
         $scope.interview.message = "Hi, I scheduled an interview for you.";
         $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
         delete $scope.interview.organizer.isRecruiter; //another jackson problem

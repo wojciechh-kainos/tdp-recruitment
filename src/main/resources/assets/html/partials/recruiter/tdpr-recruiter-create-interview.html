@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Interviewee:</label>
-            <p class="form-control-static col-md-8">{{interview.interviewee.firstName}} {{interview.interviewee.lastName}} ({{interview.interviewee.position}}) </p>
+            <p class="form-control-static col-md-8">{{interview.interviewee.candidate.firstName}} {{interview.interviewee.candidate.lastName}} ({{interview.interviewee.candidate.position}}) </p>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Time:</label>
@@ -31,6 +31,6 @@
                 <textarea rows="5" class="form-control" ng-model="interview.message"></textarea></div>
         </div>
         <button ng-click="scheduleInterview()" class="btn btn-primary">Send</button>
-        <button ui-sref="tdpr.recruiter.home" class="btn btn-default">Cancel</button>
+        <button ui-sref="tdpr.recruiter.home(interview.interviewee)" class="btn btn-default">Cancel</button>
     </form>
 </div>

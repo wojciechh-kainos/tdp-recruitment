@@ -37,8 +37,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
 
         $scope.createInterview = function () {
-            $state.go("tdpr.recruiter.createInterview",
-                {data: tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params.candidate)});
+            var data = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params);
+            console.log(data);
+            if (data) {
+                $state.go("tdpr.recruiter.createInterview",
+                    {data: data});
+            }
         };
 
         $scope.getPairs = function () {
@@ -108,7 +112,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 Notification.error("Failed to refresh persons data");
             });
         };
-        // $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
