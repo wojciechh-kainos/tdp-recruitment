@@ -22,6 +22,7 @@ public class Interview {
     private Date end;
     private String interviewee;
     private String room;
+    private String message;
 
     public Interview() {
     }
@@ -50,17 +51,24 @@ public class Interview {
         this.interviewee = interviewee;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public MimeMultipart createInvitation() throws MessagingException {
         MimeMultipart body = new MimeMultipart("alternative");
         BodyPart textContent = new MimeBodyPart();
         BodyPart calendarPart = new MimeBodyPart();
 
-        textContent.setContent("Text", "text/plain; charset=utf-8");
+        if(message != null) {
+            textContent.setContent(message, "text/plain; charset=utf-8");
+            body.addBodyPart(textContent);
+        }
+
         calendarPart.setContent(createCalendarEvent(), "text/calendar;method=REQUEST");
         calendarPart.addHeader("Content-Class", "urn:content-classes:calendarmessage");
-
-        body.addBodyPart(textContent);
         body.addBodyPart(calendarPart);
+
 
         return body;
     }
