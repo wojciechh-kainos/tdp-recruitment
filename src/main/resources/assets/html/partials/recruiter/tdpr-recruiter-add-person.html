@@ -8,8 +8,10 @@
             <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.admin" >
         </div>
         <hr>
-        <job-check-boxes></job-check-boxes>
-        <hr>
+        <div ng-hide="person.admin">
+            <job-check-boxes></job-check-boxes>
+            <hr>
+        </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Band level:</label>
             <div class="col-md-8">

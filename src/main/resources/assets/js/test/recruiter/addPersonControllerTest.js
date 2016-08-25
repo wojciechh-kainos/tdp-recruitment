@@ -43,12 +43,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddPer
         );
 
         describe('create', function () {
-            it('should parse bandLevel from form to integer', function () {
-                $scope.create(person);
-
-                expect(person.bandLevel).toEqual(5);
-            });
-
             it('should show notification and call goHome method on success', function () {
                 spyOn($scope, 'goHome');
                 createPersonDeferred.resolve();
