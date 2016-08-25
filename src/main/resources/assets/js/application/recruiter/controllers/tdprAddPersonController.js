@@ -2,10 +2,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprAddPersonController", function ($scope, tdprPersonsService, $state, Notification, BandLevelEnum) {
         $scope.BandLevelEnum = BandLevelEnum;
+        $scope.person = {};
         $scope.person.isDev = false;
         $scope.person.isTest = false;
         $scope.person.isOps = false;
-        //TODO: $scope.person.isOther = false;
+        $scope.person.isOther = false;
 
         $scope.create = function (person) {
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
@@ -13,7 +14,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                 person.isDev = false;
                 person.isTest = false;
                 person.isOps = false;
-                //TODO: person.isOther = true;
+                person.isOther = true;
             }
             $scope.createPersonPromise = tdprPersonsService.createPerson(person)
                 .then(function () {
