@@ -126,10 +126,12 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
-        Person person = personDao.getById(newPerson.getId());
-        if (person == null) {
+        Optional<Person> user = personDao.getById(newPerson.getId());
+        if (!user.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        Person person = user.get();
+
         person.setIsDev(newPerson.getIsDev());
         person.setIsOps(newPerson.getIsOps());
         person.setIsOther(newPerson.getIsOther());
@@ -147,14 +149,14 @@ public class PersonResource {
     @Path("/{id}/switchAccountStatus")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
+        Optional<Person> person = personDao.getById(id);
+        if(person.isPresent()) {
+            person.get().setActive(!person.get().getActive());
 
-        Person person = personDao.getById(id);
-        if(person != null) {
-        person.setActive(!person.getActive());
-
-        return Response.ok().build();
+            return Response.ok().build();
         }
         else throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
     }
 
     @GET

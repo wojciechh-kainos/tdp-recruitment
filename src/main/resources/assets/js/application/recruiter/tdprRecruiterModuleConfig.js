@@ -29,8 +29,17 @@ define(['angular'
                     }
                 },
                 resolve: {
-                    isUserAuthenticated: function(tdprAuthService) {
-                        return tdprAuthService.isUserAuthenticated();
+                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {
+                        var deferred = $q.defer();
+
+                        if (tdprAuthService.isUserLoggedIn()) {
+                            deferred.resolve();
+                        } else {
+                            $location.path('/login');
+                            Notification.error('You need to sign in to view this page.');
+                            deferred.reject();
+                        }
+                        return deferred.promise;
                     },
                     isUserAuthorized: function(tdprAuthService, Notification, $q, $state, $location) {
                         var deferred = $q.defer();
@@ -89,16 +98,18 @@ define(['angular'
                         templateUrl: "html/partials/recruiter/tdpr-recruiter-candidates.html",
                         controller: "tdprCandidatesController"
                     }
-                }).state("tdpr.recruiter.manageUsers", {
-                    url: "/manage-users",
-                    views: {
-                        "main@recruiter": {
-                            templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
-                            controller: "tdprManageUsersController"
-                        }
+                }
+            }).state("tdpr.recruiter.manageUsers", {
+                url: "/manage-users",
+                views: {
+                    "main@recruiter": {
+                        templateUrl: "html/partials/recruiter/tdpr-recruiter-manage-users.html",
+                        controller: "tdprManageUsersController"
                     }
-                });
+                }
+            });
     });
+
     return tdprRecruiterModule;
 
 });

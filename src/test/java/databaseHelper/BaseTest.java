@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 public class BaseTest {
 
     private static SessionFactory sessionFactory;
-    protected  static CandidateDao candidateDao;
+    protected static CandidateDao candidateDao;
     protected static PersonDao personDao;
     protected static SlotDao slotDao;
     protected static SlotTimeDao slotTimeDao;
