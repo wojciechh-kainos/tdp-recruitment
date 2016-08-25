@@ -28,4 +28,6 @@
     <include file="changelogs/addPersonsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
     <include file="changelogs/addSlotsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
     <include file="changelogs/deleteInitialData.xml"/>
+    <include file="changelogs/removeNulls.xml"/>
+    <include file="changelogs/addPasswords.xml"/>
 </databaseChangeLog>
