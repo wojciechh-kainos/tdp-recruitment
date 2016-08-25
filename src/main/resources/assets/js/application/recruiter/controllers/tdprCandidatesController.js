@@ -141,7 +141,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             $scope.candidateForDelete = candidateForDelete;
 
             popUpForDelete = ngDialog.open({
-                template: '/html/partials/recruiter/templates/popUpForDelete.html',
+                template: '/html/partials/recruiter/templates/pop-up-for-delete.html',
                 scope: $scope,
                 width: 600
             });
