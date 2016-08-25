@@ -36,6 +36,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             $scope.pairingMode = false;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
             deselectPersons();
+            console.log($scope.pairingMode);
 
         };
 
@@ -112,6 +113,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
         $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
+        console.log($scope.changeSlotTypeCycleThrough);
 
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });

@@ -10,7 +10,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 day: date,
                 person: person.id,
                 number: slotId,
-                type: changeTo
+                type: changeTo,
+                changed: true
             };
 
             if (!person.changesPending || angular.isUndefined(person.changesPending)) {
@@ -49,23 +50,22 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         };
 
         this.findSlotById = function (slotList, id, day) {
+            var date = dateFilter(day, DateFormat);
             return _.find(slotList, function (slot) {
-                return slot.number === id && slot.day === day;
+                return slot.number == id && slot.day == date;
             })
         };
 
         this.tripleSlotChange = function (maxSlot, selectedPersons) {
             return function (slot, slotId, day, person) {
-
+                var newSlot;
                 _.each(selectedPersons(), function (person) {
-
                     for (var i = 0; i < 3; i++) {
-                        var newSlot = that.findSlotById(person.slotList, slotId + i);
+                        newSlot = that.findSlotById(person.slotList, slotId + i, day);
                         if (slotId + i <= maxSlot) {
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
                         }
                     }
-                    console.log(scheduledSlots);
                 });
             };
         };
@@ -112,14 +112,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person, pairing) {
             var date = dateFilter(day, DateFormat);
-
             if (slot === undefined) {
                 // Add available slot for future changes
                 that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name, pairing);
             } else {
                 // Cycle through
                 // Available/maybe - full - init - maybe
-
+                var newType = undefined;
                 switch (slot.type) {
                     case AvailabilityEnum.available.name:
                     case AvailabilityEnum.maybe.name:
@@ -130,7 +129,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         newType = AvailabilityEnum.init.name;
                         break;
                 }
-                var newType = undefined;
 
                 if (newType !== undefined) {
                     that.changeSlotType(slot, slotId, date, person, newType, pairing);
