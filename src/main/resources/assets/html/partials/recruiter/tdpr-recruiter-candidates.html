@@ -3,11 +3,31 @@
     <h1 id="interviewer-details-h1">All candidates</h1>
 
     <div class="row options">
-        <div class="col-md-9 col-md-offset-2">
-            <select class="form-control" ng-model="currentRecruiter"
-                    ng-options="recruiter.lastName for recruiter in recruitersFilter track by recruiter.id">
-            </select>
+        <div class="col-md-4 col-md-offset-4">
+            <label class="control-label">Notes:
+                <select class="form-control" ng-model="currentRecruiter"
+                        ng-options="recruiter.lastName for recruiter in recruitersFilter track by recruiter.id">
+                </select>
+            </label>
+
+            <a class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-plus"></span> Add note</a>
+            <a class="btn btn-default" role="button" ><span class="glyphicon glyphicon-refresh"></span> Refresh notes</a>
         </div>
+        <div class="col-md-9 col-md-offset-2">
+            <textarea class="form-text-area form-control" name="note" ng-model="currentNote"></textarea>
+        </div>
+    </div>
+
+    <div class="row options">
+
+            <div class="col-md-2 col-md-offset-2">
+                <label class="control-label" for="selected-recruiter">Recruiter filter:</label>
+            </div>
+            <div class="col-md-7">
+                <select id="selected-recruiter" class="form-control" ng-model="currentRecruiter"
+                        ng-options="recruiter.lastName for recruiter in recruitersFilter track by recruiter.id">
+                </select>
+            </div>
     </div>
 
     <div class="row options">

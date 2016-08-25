@@ -52,5 +52,17 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             )
         };
 
+        this.fetchNotes = function(limit) {
+            return $http.get('/api/candidate/getNote/' + limit).then(
+                function (response) {
+                    return response.data;
+                },
+                function (error) {
+                    error.message = "Fetching notes failed.";
+                    return $q.reject(error.message);
+                }
+            )
+        }
+
     })
 });
