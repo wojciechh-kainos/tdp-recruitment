@@ -20,7 +20,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-        if ($scope.params && $scope.params.candidateId) {
+        if ($scope.params && $scope.params.candidate.id !==0) {
             $scope.pairingMode = true;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
         } else {
