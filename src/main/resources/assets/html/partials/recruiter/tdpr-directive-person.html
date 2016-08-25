@@ -1,6 +1,6 @@
 <th class="person-name">
     <div class="person-name-text">
-        <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName})" tooltip-placement="right"
+        <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : personData.id, personName : personData.firstName + ' ' + personData.lastName, relativeDayNumber: relativeDayNumberData})" tooltip-placement="right"
            uib-tooltip="
 Default working hours:
 {{personData.defaultStartHour | limitTo: 5}}-{{personData.defaultFinishHour | limitTo: 5}}

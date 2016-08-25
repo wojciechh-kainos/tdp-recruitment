@@ -12,7 +12,8 @@ define(['angular'
                 abstract: true,
                 params : {
                     isRecruiter : false,
-                    personName : ''
+                    personName : '',
+                    relativeDayNumber: 0
                 },
                 url: "/interviewer"
             }).state("tdpr.interviewer.home", {
