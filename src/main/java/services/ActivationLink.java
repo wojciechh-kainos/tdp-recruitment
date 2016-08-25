@@ -18,10 +18,12 @@ import java.util.Properties;
 public class ActivationLink {
 
     private String domain;
+    private String from;
 
     @Inject
     public ActivationLink(TdpRecruitmentApplicationConfiguration configuration) {
         this.domain = configuration.getDomain();
+        this.from = configuration.getSmtpConfig().getFrom();
     }
 
     public Message createMessage(Person person) throws MessagingException, IOException {
@@ -30,11 +32,12 @@ public class ActivationLink {
         MimeMessage message = new MimeMessage(session);
 
         message.setSubject("TDP Recruitment - Activation Link");
+        message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(person.getEmail()));
         URL url = Resources.getResource("email/template.html");
         String text = Resources.toString(url, Charsets.UTF_8);
-        String tempText = text.replace("{{domain}}", domain);
-        String finalText = tempText.replace("{{id}}", person.getId().toString());
+
+        String finalText = text.replace("{{domain}}", domain).replace("{{activationLink}}", person.getActivationCode());
 
         message.setContent(finalText, "text/html; charset=ISO-8859-1");
 

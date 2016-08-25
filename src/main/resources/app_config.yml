@@ -42,18 +42,12 @@ database:
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
 
-logging:
-  level: TRACE
-  loggers:
-    io.dropwizard: INFO
-  appenders:
-    - type: console
-
 smtpConfig:
   host: mail.kainos.com
   port: 25
   from: no-reply@kainos.com
 
+# used to limit threads used by mailing service
 threadPoolSize: 10
 
 tokenCacheConfig:
@@ -62,3 +56,8 @@ tokenCacheConfig:
   expireAfterAccessTimeUnit: MINUTES
 
 domain: http://recruitment-helper.kainos.com
+
+# Logging settings.
+logging:
+
+  level: INFO

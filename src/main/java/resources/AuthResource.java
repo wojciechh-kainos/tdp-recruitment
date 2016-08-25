@@ -12,12 +12,15 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.google.common.base.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import auth.TdpRecruitmentPasswordStore;
 
 
 @Path("/auth")
 public class AuthResource {
 
+	private static final Logger logger = LoggerFactory.getLogger(AuthResource.class);
 	private TdpRecruitmentAuthenticator authenticator;
 	private PersonDao personDao;
 	private final TdpRecruitmentPasswordStore passwordStore;
@@ -38,6 +41,7 @@ public class AuthResource {
 		if (authenticatedUser.isPresent()) {
 			return authenticatedUser.get();
 		} else {
+			logger.warn("Login refused with email => {} ",person.getEmail());
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
 	}
@@ -48,6 +52,7 @@ public class AuthResource {
 		if(authenticator.isTokenValid(token)) {
 			return Response.ok().build();
 		} else {
+			logger.warn("Invalid token");
 			return Response.status(Response.Status.GONE).build();
 		}
 	}

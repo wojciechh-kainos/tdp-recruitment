@@ -11,6 +11,8 @@ import domain.Person;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.basic.BasicCredentials;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentials, Person> {
 
 	private final PersonDao personDao;
+	private static final Logger logger = LoggerFactory.getLogger(TdpRecruitmentAuthenticator.class);
 
 	private final TdpRecruitmentPasswordStore passwordStore;
 
@@ -45,6 +48,7 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 		java.util.Optional<Person> user = personDao.getUserByEmail(credentials.getUsername());
 
 		if(!user.isPresent()) {
+			logger.warn("Person with username => {} not found", credentials.getUsername());
 			return Optional.absent();
 		}
 		Person person = user.get();
@@ -59,7 +63,7 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 				return Optional.of(person);
 			}
 		} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException | TdpRecruitmentPasswordStore.InvalidHashException e) {
-			e.printStackTrace();
+			logger.warn("Authentication error  => {}", e.getMessage());
 		}
 
 		return Optional.absent();
