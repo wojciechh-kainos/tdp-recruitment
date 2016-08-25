@@ -46,6 +46,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         this.changeSlotDiscardChanges = function (personData) {
             personData.slotList = angular.copy(personData.oldSlotList);
             personData.oldSlotList = [];
+            personData.selected = false;
             personData.changesPending = false;
         };
 
@@ -112,7 +113,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person, pairing) {
             var date = dateFilter(day, DateFormat);
-            if (slot === undefined) {
+            if (slot === undefined || pairing) {
                 // Add available slot for future changes
                 that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name, pairing);
             } else {

@@ -5,17 +5,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         var that = this;
 
-        var getSelectedPersons = function() {
-            return _.filter(persons, function (person) {
-                return person.selected;
-            });
-        };
-
-        var deselectPersons = function() {
-            _.each(getSelectedPersons(), function(person) {
-                person.selected = false;
-            });
-        };
 
         $scope.pairingMode = false;
         $scope.WeekNavigateEnum = WeekNavigateEnum;
@@ -27,6 +16,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
 
+        var getSelectedPersons = function() {
+            return _.filter($scope.persons, function (person) {
+                return person.selected;
+            });
+        };
+
+        var deselectPersons = function() {
+            _.each(getSelectedPersons(), function(person) {
+                person.selected = false;
+            });
+        };
         $scope.interviewOn = function () {
             $scope.pairingMode = true;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
@@ -113,8 +113,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
         $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
-        console.log($scope.changeSlotTypeCycleThrough);
-
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
