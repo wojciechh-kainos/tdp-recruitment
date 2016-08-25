@@ -17,8 +17,7 @@ public class MailService {
         this.emailConfiguration = config;
         this.executor = executor;
     }
-
-
+    
     public void sendEmail(Message message) {
         MailingTask mailingTask = new MailingTask(emailConfiguration, message);
         executor.execute(mailingTask);
