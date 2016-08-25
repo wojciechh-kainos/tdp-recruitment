@@ -17,9 +17,7 @@ public class CandidateResource {
     private CandidateDao candidateDao;
 
     @Inject
-    public CandidateResource(CandidateDao candidateDao){
-        this.candidateDao = candidateDao;
-    }
+    public CandidateResource(CandidateDao candidateDao){ this.candidateDao = candidateDao; }
 
     @PUT
     @Path("/create")
