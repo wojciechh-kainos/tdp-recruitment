@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="US-36_populateTable" author="kuba">
+        <insert tableName="candidate">
+            <column name="first_name" value="Jan"/>
+            <column name="last_name" value="Kowalski"/>
+            <column name="position" value="Trainee Software Engineer"/>
+            <column name="note" value="Simple note"/>
+            <column name="is_deleted" value="false"/>
+            <column name="recruiter" value="1"/>
+        </insert>
+        <insert tableName="candidate">
+            <column name="first_name" value="Michał"/>
+            <column name="last_name" value="Król"/>
+            <column name="position" value="Software Engineer"/>
+            <column name="note" value=""/>
+            <column name="is_deleted" value="false"/>
+            <column name="recruiter" value="2"/>
+        </insert>
+        <insert tableName="candidate">
+            <column name="first_name" value="Anna"/>
+            <column name="last_name" value="Nowak"/>
+            <column name="position" value="Software Engineer"/>
+            <column name="note" value="Simple note"/>
+            <column name="is_deleted" value="false"/>
+            <column name="recruiter" value="1"/>
+        </insert>
+        <insert tableName="candidate">
+            <column name="first_name" value="Andrzej"/>
+            <column name="last_name" value="Rybak"/>
+            <column name="position" value="Web Ops"/>
+            <column name="note" value="Only 16:00 on monday"/>
+            <column name="is_deleted" value="false"/>
+            <column name="recruiter" value="3"/>
+        </insert>
+        <insert tableName="candidate">
+            <column name="first_name" value="Kazimierz"/>
+            <column name="last_name" value="Wielki"/>
+            <column name="position" value="Tester"/>
+            <column name="note" value=""/>
+            <column name="is_deleted" value="false"/>
+            <column name="recruiter" value="5"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

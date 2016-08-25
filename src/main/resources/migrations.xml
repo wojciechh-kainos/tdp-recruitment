@@ -21,7 +21,12 @@
     <include file="changelogs/changeTableNames.xml"/>
     <include file="changelogs/changeColumnName.xml"/>
     <include file="changelogs/changeColumnNameInPerson.xml"/>
+    <include file="changelogs/US-36_listOfCandidates_candidatesTable.xml"/>
+    <include file="changelogs/US-36_populateTable.xml"/>
     <include file="changelogs/addOtherJobPosition.xml"/>
+    <include file="changelogs/US-36_Add_test_recruiters.xml"/>
     <include file="changelogs/addPersonsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
     <include file="changelogs/addSlotsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
+    <include file="changelogs/removeNulls.xml"/>
+    <include file="changelogs/addPasswords.xml"/>
 </databaseChangeLog>
