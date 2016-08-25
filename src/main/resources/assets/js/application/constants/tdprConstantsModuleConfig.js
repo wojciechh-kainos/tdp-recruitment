@@ -60,7 +60,8 @@ define(['angular'
         ok : 200,
         badRequest: 400,
         conflict : 409
-        });
+        })
+        .constant('RecruiterNotesLimits', [10, 25, 50, 100, 1000]);
 
     return tdprConstantsModule;
 });

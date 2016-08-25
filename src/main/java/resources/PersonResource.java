@@ -16,6 +16,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -28,6 +31,7 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
+    private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
     private PersonDao personDao;
     private SlotDao slotDao;
     private NoteDao noteDao;
@@ -58,6 +62,7 @@ public class PersonResource {
 
             return person;
         } else {
+            logger.warn("Person with email: {} already exists", person.getEmail());
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
     }
@@ -100,7 +105,10 @@ public class PersonResource {
         Date date = formatter.parse(startDate);
         Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
 
-        return note.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
+        return note.orElseThrow(() -> {
+            logger.warn("Note not found with person id => {}", personId.toString());
+            return new WebApplicationException(Response.Status.NO_CONTENT);
+        });
     }
 
     @PUT
@@ -117,8 +125,10 @@ public class PersonResource {
     @UnitOfWork
     public Person getPersonById(@PathParam("id") Long id){
         Optional<Person> person = personDao.getById(id);
-
-        return person.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return person.orElseThrow(() -> {
+            logger.warn("Person with id => {} not found", id.toString());
+            return new WebApplicationException(Response.Status.NOT_FOUND);
+        });
     }
 
     @PUT
@@ -128,6 +138,7 @@ public class PersonResource {
     public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
         Optional<Person> user = personDao.getById(newPerson.getId());
         if (!user.isPresent()) {
+            logger.warn("Person with id => {} not found",newPerson.getId().toString());
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         Person person = user.get();
@@ -156,7 +167,11 @@ public class PersonResource {
 
             return Response.ok().build();
         }
-        else throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        else{
+            logger.warn("Person with id => {} not found", id.toString());
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
     }
 
     @GET
