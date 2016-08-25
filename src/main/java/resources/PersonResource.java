@@ -12,14 +12,18 @@ import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
 import javax.annotation.security.RolesAllowed;
+import javax.mail.MessagingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
+import services.ActivationLink;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -32,16 +36,18 @@ public class PersonResource {
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
+    private ActivationLink activationLink;
     private final TdpRecruitmentPasswordStore passwordStore;
     private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore, ActivationLink activationLink) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
         this.mailService = mailService;
         this.passwordStore = passwordStore;
+        this.activationLink = activationLink;
     }
 
     @PUT
@@ -53,7 +59,12 @@ public class PersonResource {
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
             person.setActive(false);
             personDao.create(person);
-            //mailService.sendEmail(person.getEmail(), person.getId());   //TODO implement message
+            try {
+                mailService.sendEmail(activationLink.createMessage(person));
+            } catch (MessagingException | IOException e) {
+                e.printStackTrace();
+                throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            }
 
             return person;
 
