@@ -8,6 +8,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         var popUp;
+        var popUpForDelete;
         var defaultLimitValue = 35;
 
         var openPopUp = function () {
@@ -87,8 +88,9 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                     _.remove($scope.candidates, function (candidate) {
                         return candidate.id === parent.idOfCandidate;
                     });
-
+                    popUpForDelete.close();
                     $scope.refreshCandidates();
+                    $scope.candidateForDelete = {};
                 }, function (response) {
                     Notification.error(response);
                 });
@@ -116,6 +118,20 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             popUp = openPopUp();
         };
 
+        $scope.showPopUpForDelete = function (candidateForDelete){
+            $scope.candidateForDelete = candidateForDelete;
+
+            popUpForDelete = ngDialog.open({
+                    template: '/html/partials/recruiter/templates/popUpForDelete.html',
+                    scope: $scope,
+                    width: 600
+                });
+        };
+
+        $scope.closePopUpForDelete = function(){
+            popUpForDelete.close();
+            $scope.candidateForDelete = {};
+        };
 
         $scope.sortBy = function (column) {
             $scope.sortColumn = column;
