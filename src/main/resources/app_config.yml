@@ -62,3 +62,8 @@ tokenCacheConfig:
   expireAfterAccessTimeUnit: MINUTES
 
 domain: http://recruitment-helper.kainos.com
+
+# Logging settings.
+logging:
+
+  level: INFO
