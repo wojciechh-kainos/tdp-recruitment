@@ -89,7 +89,7 @@ public class Interview {
 
         return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
                 .replace("{{attendees}}", parseAttendees())
-                .replace("{{room}}", room != null? room : "" )
+                .replace("{{room}}", room != null ? room : "")
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
                 .replace("{{uid}}", eventUUID.toString())
