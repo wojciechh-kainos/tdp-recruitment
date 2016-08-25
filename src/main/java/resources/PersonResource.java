@@ -36,7 +36,7 @@ public class PersonResource {
     private final TdpRecruitmentPasswordStore passwordStore;
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao,TdpRecruitmentPasswordStore passwordStore) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
@@ -49,14 +49,14 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+            String token = UUID.randomUUID().toString();
+            person.setActivationCode(token);
             person.setActive(false);
             personDao.create(person);
-            mailService.sendEmail(person.getEmail(), person.getId());
+            mailService.sendEmail(person.getEmail(), token);
 
             return person;
-
         } else {
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
@@ -139,7 +139,7 @@ public class PersonResource {
         person.setBandLevel(newPerson.getBandLevel());
         person.setDefaultStartHour(newPerson.getDefaultStartHour());
         person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
-        if(newPerson.getPassword()!=null){
+        if(newPerson.getPassword() != null) {
             person.setPassword(passwordStore.createHash(person.getPassword()));
         }
         return Response.ok(person).build();
@@ -149,14 +149,14 @@ public class PersonResource {
     @Path("/{id}/switchAccountStatus")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
+
         Optional<Person> person = personDao.getById(id);
         if(person.isPresent()) {
-            person.get().setActive(!person.get().getActive());
+        person.get().setActive(!person.get().getActive());
 
             return Response.ok().build();
         }
         else throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
     }
 
     @GET
@@ -173,5 +173,4 @@ public class PersonResource {
 
         return Response.ok(recruiterList).build();
     }
-
 }
