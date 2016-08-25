@@ -1,5 +1,6 @@
 package resourceTests;
 
+import auth.TdpRecruitmentPasswordStore;
 import dao.NoteDao;
 import dao.PersonDao;
 import dao.SlotDao;
@@ -39,6 +40,8 @@ public class PersonResourceTest {
     PersonDao mockPersonDao;
     @Mock
     MailService mockMailService;
+    @Mock
+    TdpRecruitmentPasswordStore mockPasswordStore;
 
     private static List<Note> stubNoteDB;
     private static List<Person> stubPersonDB;
@@ -89,7 +92,7 @@ public class PersonResourceTest {
 
     @Before
     public void setUp() {
-        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao);
+        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao, mockPasswordStore);
     }
 
     @Test

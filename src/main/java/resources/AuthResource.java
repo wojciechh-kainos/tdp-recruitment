@@ -68,7 +68,7 @@ public class AuthResource {
 			}
 			return Response.status(Response.Status.ACCEPTED).build();
 		} else {
-		return Response.status(Response.Status.CONFLICT).build();
+			return Response.status(Response.Status.CONFLICT).build();
 		}
 	}
 }
