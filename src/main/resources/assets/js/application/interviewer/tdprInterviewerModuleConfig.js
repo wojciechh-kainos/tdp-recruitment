@@ -4,18 +4,33 @@ define(['angular'
 , 'application/interviewer/controllers/tdprInterviewerDetailsController'
 , 'application/interviewer/services/tdprSlotsService'
 , 'application/interviewer/services/tdprPersonService'
-, 'application/common/directives/tdprJobProfileCheckboxDirective'],
+, 'application/common/directives/tdprJobProfileCheckboxDirective'
+, 'application/common/directives/tdprNewPasswordDirective'],
  function (angular, tdprInterviewerModule) {
    tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) {
           $stateProvider
             .state("tdpr.interviewer", {
+                url: "/interviewer",
                 abstract: true,
                 params : {
                     isRecruiter : false,
                     personName : '',
                     relativeDayNumber: 0
                 },
-                url: "/interviewer"
+                resolve: {
+                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {
+                        var deferred = $q.defer();
+
+                        if (tdprAuthService.isUserLoggedIn()) {
+                            deferred.resolve();
+                        } else {
+                            $location.path('/login');
+                            Notification.error('You need to sign in to view this page.');
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }
+                }
             }).state("tdpr.interviewer.home", {
                 url: "/{id}/home",
                 views: {
@@ -25,8 +40,9 @@ define(['angular'
                     }
                 },
                 resolve: {
-                    person: getPersonDetails
-              }
+                    person: getPersonDetails,
+                }
+
             }).state("tdpr.interviewer.details", {
               url: "/{id}/details",
               views: {
@@ -39,8 +55,6 @@ define(['angular'
                   person: getPersonDetails
               }
           });
-
-          $urlRouterProvider.otherwise("/404");
         });
 
 

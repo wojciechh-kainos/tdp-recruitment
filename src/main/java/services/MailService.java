@@ -13,8 +13,8 @@ public class MailService {
     }
 
 
-    public void sendEmail(String recipient, Long id) {
-        MailingThread mt = new MailingThread(applicationConfiguration, recipient, id);
+    public void sendEmail(String recipient,String activationLink) {
+        MailingThread mt = new MailingThread(applicationConfiguration, recipient, activationLink);
         mt.start();
     }
 
