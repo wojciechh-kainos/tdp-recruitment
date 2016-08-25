@@ -40,6 +40,7 @@ public class SlotResource {
         Date endDate = formatter.parse(date_to);
 
         slotDao.updateForPersonAndWeek(slots, person_id, startDate, endDate);
+
         return Response.status(Response.Status.CREATED).build();
     }
 

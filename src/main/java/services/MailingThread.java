@@ -7,12 +7,17 @@ import configuration.TdpRecruitmentEmailConfiguration;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.config.TransportStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import resources.PersonResource;
 
 import javax.mail.Message;
 import java.io.IOException;
 import java.net.URL;
 
 public class MailingThread extends Thread {
+
+    private final Logger logger = LoggerFactory.getLogger(PersonResource.class);
 
     private TdpRecruitmentApplicationConfiguration config;
     private String recipient;
@@ -44,12 +49,14 @@ public class MailingThread extends Thread {
         try {
             text = Resources.toString(url, Charsets.UTF_8);
         } catch (IOException e) {
+            logger.error("Unable to parse url");
             e.printStackTrace();
         }
         String tempText = text.replace("{{domain}}", domain);
         String finalText = tempText.replace("{{id}}", personId.toString());
         email.setTextHTML(finalText);
         new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
+        logger.info("Send email to " + email.getRecipients());
 
     }
 

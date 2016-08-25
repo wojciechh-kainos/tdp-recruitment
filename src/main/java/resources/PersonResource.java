@@ -14,6 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +29,7 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
+    private final Logger logger = LoggerFactory.getLogger(PersonResource.class);
     private PersonDao personDao;
     private SlotDao slotDao;
     private NoteDao noteDao;
@@ -110,6 +114,7 @@ public class PersonResource {
     public Response getPersonById(@PathParam("id") Long id){
         Person person = personDao.getById(id);
         if (person == null) {
+            logger.warn("Person not found with id:".concat(id.toString()));
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(person).build();
