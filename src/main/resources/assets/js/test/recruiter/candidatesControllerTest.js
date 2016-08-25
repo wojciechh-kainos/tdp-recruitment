@@ -6,6 +6,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         var Notification;
         var tdprAuthService;
         var tdprCandidatesService;
+        var tdprRecruiterNoteService;
         var recruiters;
         var candidates;
         var candidate;
@@ -16,6 +17,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         var createCandidateDeferred;
         var fetchCandidatesDeferred;
         var updateCandidatesDeferred;
+        var fetchRecruiterNotesDeferred;
+        var createRecruiterNoteDeferred;
         var RecruiterNotesLimits;
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
@@ -26,6 +29,14 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
             tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
             tdprAuthService.getCurrentUser.and.returnValue({});
+
+            tdprRecruiterNoteService = jasmine.createSpyObj('tdprRecruiterNoteService', ['fetchRecruiterNotes', 'createRecruiterNote']);
+
+            fetchRecruiterNotesDeferred = _$q_.defer();
+            tdprRecruiterNoteService.fetchRecruiterNotes.and.returnValue(fetchRecruiterNotesDeferred.promise);
+
+            createRecruiterNoteDeferred = _$q_.defer();
+            tdprRecruiterNoteService.createRecruiterNote.and.returnValue(createRecruiterNoteDeferred.promise);
 
             tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates', 'updateCandidate']);
             deleteCandidateDeferred = _$q_.defer();
@@ -90,6 +101,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
             $controller("tdprCandidatesController", {
                 $scope: $scope,
                 tdprCandidatesService: tdprCandidatesService,
+                tdprRecruiterNoteService: tdprRecruiterNoteService,
                 tdprAuthService: tdprAuthService,
                 candidates: candidates,
                 recruiters: recruiters,

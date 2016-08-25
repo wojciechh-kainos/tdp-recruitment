@@ -1,6 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
-    , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits) {
+    , 'application/recruiter/services/tdprCandidatesService', 'application/recruiter/services/tdprRecruiterNoteService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
         $scope.recruiterNotes = recruiterNotes;
@@ -166,7 +166,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                 recruiter: currentRecruiter
             };
 
-            tdprCandidatesService.createRecruiterNote(note).then(
+            tdprRecruiterNoteService.createRecruiterNote(note).then(
                 function () {
                     Notification.success("Notes updated successfully.");
                     $scope.refreshRecruiterNote();
@@ -176,7 +176,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.refreshRecruiterNote = function () {
-            tdprCandidatesService.fetchRecruiterNotes($scope.limitedAmount).then(
+            tdprRecruiterNoteService.fetchRecruiterNotes($scope.limitedAmount).then(
                 function (response) {
                     $scope.recruiterNotes = response;
                     $scope.currentNote = $scope.recruiterNotes[0];
