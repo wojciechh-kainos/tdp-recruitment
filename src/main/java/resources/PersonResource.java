@@ -49,7 +49,7 @@ public class PersonResource {
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
 
             personDao.create(person);
-            mailService.sendEmail(person.getEmail(), person.getId());   //TODO implement message
+            //mailService.sendEmail(person.getEmail(), person.getId());   //TODO implement message
 
             return person;
 
