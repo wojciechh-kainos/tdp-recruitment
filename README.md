@@ -1,7 +1,11 @@
-TDP Recruitment
+TDP Recruitment Helper
 ===============
 
-A simple application to support interviews scheduling.
+A simple application to support interviews scheduling in Kainos's Gdańsk office.
+
+## Tech overview
+
+The application uses [Dropwizard](http://www.dropwizard.io/) as its back-end server and [AngularJS 1](https://angularjs.org/) as the client-side solution. The database server used is [PostgreSQL](https://www.postgresql.org/), although the schema and data have been defined using [Liquibase](http://www.liquibase.org/), so theoretically it should support other relational databases as well. [Gradle](https://gradle.org/) is the build automation tool. [Node.js/NPM](https://nodejs.org) ecosystem provides convenient JavaScript dependencies management and eases testing of front-end logic.
 
 ## Dependencies
 
