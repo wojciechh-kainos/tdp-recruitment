@@ -2,7 +2,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', function ($http, dateFilter, AvailabilityEnum, DateFormat) {
         var that = this;
         var scheduledSlots = [];
-
         this.changeSlotType = function (slot, slotId, day, person, changeTo, pairing) {
             var date = dateFilter(day, DateFormat);
 
@@ -41,6 +40,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             if (!found) {
                 scheduledSlots.push(newSlot);
             }
+            console.log(scheduledSlots);
         };
 
         this.changeSlotDiscardChanges = function (personData) {
@@ -61,20 +61,27 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             return function (slot, slotId, day, person) {
                 var newSlot;
                 _.each(selectedPersons(), function (person) {
+                    if (!person.changesPending) {
+                        person.rootSlotList = angular.copy(person.slotList);
+                    }
+                    else {
+                        person.slotList = angular.copy(person.rootSlotList);
+                    }
+                    scheduledSlots = [];
                     for (var i = 0; i < 3; i++) {
                         newSlot = that.findSlotById(person.slotList, slotId + i, day);
                         if (slotId + i <= maxSlot) {
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
                         }
                     }
+                    console.log(person.changesPending);
                 });
             };
         };
 
         this.createInterview = function (slotsTimes, selectedPersons) {
             var outlookObject = {
-                interview: {},
-                newSlots: []
+                interview: {}
             };
 
             outlookObject.interview.interviewers = _.map(selectedPersons(), function (obj) {
@@ -99,6 +106,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             scheduledSlots = [];
 
             return outlookObject;
+
 
         };
 
