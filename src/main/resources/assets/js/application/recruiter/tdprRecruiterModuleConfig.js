@@ -6,7 +6,7 @@ define(['angular'
     , 'application/recruiter/services/tdprSlotsTimesService'
     , 'application/recruiter/controllers/tdprCandidatesController'
     , 'application/recruiter/controllers/tdprAddPersonController'
-    , 'application/recruiter/controllers/tdprCreateEventController'
+    , 'application/recruiter/controllers/tdprCreateInterviewController'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprCandidatesService'
     , 'application/recruiter/services/tdprDateService'
@@ -109,7 +109,7 @@ define(['angular'
                         controller: "tdprManageUsersController"
                     }
                 }
-            }).state("tdpr.recruiter.createEvent", {
+            }).state("tdpr.recruiter.createInterview", {
             url: "/create-event",
             views: {
                 "main@recruiter": {
