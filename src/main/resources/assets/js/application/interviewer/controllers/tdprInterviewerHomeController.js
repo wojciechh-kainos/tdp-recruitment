@@ -2,7 +2,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
     tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprAuthService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, DateFormat, Notification, $location) {
         if(tdprAuthService.getCurrentUser().id != $stateParams.id) {
             Notification.error("You don't have permissions to view this page.");
-            //$state.go('tdpr.interviewer.home', {id: $stateParams.id});
             $location.path('/interviewer/' + $stateParams.id + '/home');
         }
 
