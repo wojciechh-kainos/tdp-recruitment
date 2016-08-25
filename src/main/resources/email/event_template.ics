@@ -5,7 +5,7 @@ BEGIN:VEVENT
 DTSTART:{{dtstart}}
 DTEND:{{dtend}}
 DTSTAMP:{{dtstamp}}
-SUMMARY: Interview
+SUMMARY: {{summary}}
 UID:{{uid}}
 {{attendees}}{{organizer}}LOCATION:{{room}}
 SEQUENCE:0

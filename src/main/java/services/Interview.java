@@ -1,7 +1,9 @@
 package services;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import domain.Candidate;
 import domain.Person;
 
 import javax.mail.BodyPart;
@@ -14,13 +16,14 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Interview {
 
     private List<Person> interviewers = new ArrayList<>();
     private Person organizer;
     private Date start;
     private Date end;
-    private String interviewee;
+    private Candidate interviewee;
     private String room;
     private String message;
 
@@ -47,7 +50,7 @@ public class Interview {
         this.end = end;
     }
 
-    public void setInterviewee(String interviewee) {
+    public void setInterviewee(Candidate interviewee) {
         this.interviewee = interviewee;
     }
 
@@ -55,7 +58,7 @@ public class Interview {
         this.message = message;
     }
 
-    private MimeMultipart createInvitation() throws MessagingException {
+    public MimeMultipart createInvitation() throws MessagingException {
         MimeMultipart body = new MimeMultipart("alternative");
         BodyPart textContent = new MimeBodyPart();
         BodyPart calendarPart = new MimeBodyPart();
@@ -69,10 +72,11 @@ public class Interview {
         calendarPart.addHeader("Content-Class", "urn:content-classes:calendarmessage");
         body.addBodyPart(calendarPart);
 
+
         return body;
     }
 
-    private String createCalendarEvent() {
+    public String createCalendarEvent() {
         String template = "";
         UUID eventUUID = UUID.randomUUID(); //should this be random?
         SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00Z'");
@@ -88,11 +92,16 @@ public class Interview {
 
         return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
                 .replace("{{attendees}}", parseAttendees())
+                .replace("{{summary}}", parseSubject())
                 .replace("{{room}}", room != null ? room : "")
                 .replace("{{dtstart}}", iCalDate.format(start))
                 .replace("{{dtend}}", iCalDate.format(end))
                 .replace("{{uid}}", eventUUID.toString())
                 .replace("{{dtstamp}}", now);
+    }
+
+    private String parseSubject(){
+        return "Interview" + (interviewee.getPosition() != null? (" - " + interviewee.getPosition()) : "");
     }
 
     private String parseOrganizer() {
@@ -120,7 +129,7 @@ public class Interview {
         Session session = Session.getDefaultInstance(new Properties());
         MimeMessage message = new MimeMessage(session);
 
-        message.setSubject("Interview");
+        message.setSubject(parseSubject());
         message.setSentDate(new Date());
         message.setFrom(new InternetAddress(organizer.getEmail()));
         for (Person interviewer : interviewers) {

@@ -6,14 +6,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.interview = $stateParams.data.interview;
         $scope.interview.message = "Hi, I scheduled an interview for you.";
         $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
-        delete $scope.interview.organizer.isRecruiter; //another jackson problem
 
         $scope.scheduleInterview = function () {
 
             var updateRequests = [];
             $stateParams.data.interview.interviewers.forEach(function (interviewer) {
                 updateRequests.push(tdprRecruiterSlotsService.updateSlots(interviewer.slots));
-                delete interviewer.slots; //empty to avoid jackson parsing problems
+                delete interviewer.slots; //no need for sending slots second time
             });
 
             $q.all(updateRequests).then(function () {
@@ -22,8 +21,5 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         };
         
-        $scope.goHome = function () {
-            $state.go('tdpr.recruiter.home'); //should be changed to ui-sref in view
-        };
     });
 });
