@@ -1,6 +1,8 @@
 package auth;
 
 import com.google.common.base.Optional;
+import configuration.TdpRecruitmentApplicationConfiguration;
+import configuration.TdpRecruitmentCacheConfiguration;
 import dao.PersonDao;
 import domain.Person;
 import io.dropwizard.auth.basic.BasicCredentials;
@@ -11,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.naming.AuthenticationException;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
@@ -25,6 +29,9 @@ public class AuthenticatorTest {
   @Mock
   private static TdpRecruitmentPasswordStore mockPasswordStore;
 
+  @Mock
+  private static TdpRecruitmentCacheConfiguration mockConfig;
+
   private static TdpRecruitmentAuthenticator authenticator;
 
   private static Person stubDbUser;
@@ -32,7 +39,10 @@ public class AuthenticatorTest {
   @Before
   public void setUp() throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
     stubDbUser = new Person("a@a", "pass");
-    authenticator = new TdpRecruitmentAuthenticator(mockDAO, mockPasswordStore);
+    when(mockConfig.getExpireAfterAccess()).thenReturn(30);
+    when(mockConfig.getExpireAfterAccessTimeUnit()).thenReturn(TimeUnit.MINUTES);
+    when(mockConfig.getMaximumSize()).thenReturn(100);
+    authenticator = new TdpRecruitmentAuthenticator(mockDAO, mockPasswordStore, mockConfig);
   }
 
   @Test
