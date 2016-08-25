@@ -34,7 +34,6 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
     private PersonDao personDao;
     private SlotDao slotDao;
     private NoteDao noteDao;
