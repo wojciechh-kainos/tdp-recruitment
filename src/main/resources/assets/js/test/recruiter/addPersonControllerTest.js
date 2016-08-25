@@ -1,5 +1,5 @@
-define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInterviewerController'], function (angular) {
-    describe('addInterviewerController', function () {
+define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddPersonController'], function (angular) {
+    describe('addPersonController', function () {
         'use strict';
 
         var person;
@@ -32,7 +32,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
                 createPersonDeferred = _$q_.defer();
                 tdprPersonsService.createPerson.and.returnValue(createPersonDeferred.promise);
 
-                tdprWeekTableController = $controller('tdprAddInterviewerController', {
+                tdprWeekTableController = $controller('tdprAddPersonController', {
                     $scope: $scope,
                     tdprPersonsService: tdprPersonsService,
                     $state: $state,
@@ -43,12 +43,6 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprAddInt
         );
 
         describe('create', function () {
-            it('should parse bandLevel from form to integer', function () {
-                $scope.create(person);
-
-                expect(person.bandLevel).toEqual(5);
-            });
-
             it('should show notification and call goHome method on success', function () {
                 spyOn($scope, 'goHome');
                 createPersonDeferred.resolve();

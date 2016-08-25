@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
@@ -79,7 +80,7 @@ public class ReportServiceTest {
 
     @Test
     public void getReportTest() {
-        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
+        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(Optional.ofNullable(mockFirstPerson));
         when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
 
         Report report = reportService.getReport(mockFirstPerson.getId(), mockStartDate, mockEndDate);
@@ -90,8 +91,8 @@ public class ReportServiceTest {
     @Test
     public void getAllReportsTest() {
         when(personsDao.findAllActive()).thenReturn(mockPersons);
-        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(mockFirstPerson);
-        when(personsDao.getById(mockSecondPerson.getId())).thenReturn(mockSecondPerson);
+        when(personsDao.getById(mockFirstPerson.getId())).thenReturn(Optional.ofNullable(mockFirstPerson));
+        when(personsDao.getById(mockSecondPerson.getId())).thenReturn(Optional.ofNullable(mockSecondPerson));
         when(slotsDao.getForPersonForWeek(mockFirstPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockFirstPersonSlotList);
         when(slotsDao.getForPersonForWeek(mockSecondPerson.getId(), mockStartDate, mockEndDate)).thenReturn(mockSecondPersonSlotList);
 

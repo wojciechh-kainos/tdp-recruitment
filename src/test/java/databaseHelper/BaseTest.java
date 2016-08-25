@@ -1,13 +1,7 @@
 package databaseHelper;
 
-import dao.AvailabilityTypeDao;
-import dao.PersonDao;
-import dao.SlotDao;
-import dao.SlotTimeDao;
-import domain.AvailabilityType;
-import domain.Person;
-import domain.Slot;
-import domain.SlotTime;
+import dao.*;
+import domain.*;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
@@ -20,6 +14,7 @@ import org.junit.BeforeClass;
 public class BaseTest {
 
     private static SessionFactory sessionFactory;
+    protected  static CandidateDao candidateDao;
     protected static PersonDao personDao;
     protected static SlotDao slotDao;
     protected static SlotTimeDao slotTimeDao;
@@ -39,6 +34,8 @@ public class BaseTest {
         config.addAnnotatedClass(SlotTime.class);
         config.addAnnotatedClass(AvailabilityType.class);
         config.addAnnotatedClass(Slot.class);
+        config.addAnnotatedClass(Candidate.class);
+        config.addAnnotatedClass(Note.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 config.getProperties()).build();
@@ -52,6 +49,7 @@ public class BaseTest {
         slotDao = new SlotDao(sessionFactory);
         slotTimeDao = new SlotTimeDao(sessionFactory);
         availabilityTypeDao = new AvailabilityTypeDao(sessionFactory);
+        candidateDao = new CandidateDao(sessionFactory);
     }
 
     public Session getSession()
@@ -69,7 +67,7 @@ public class BaseTest {
     protected SlotTime getSlotTimeFromDb(Long id) {
 
         getSession().beginTransaction();
-        SlotTime slotsTimeFromDb = slotTimeDao.getById(id);
+        SlotTime slotsTimeFromDb = slotTimeDao.getById(id).get();
         getSession().getTransaction().commit();
 
         return slotsTimeFromDb;
@@ -78,7 +76,7 @@ public class BaseTest {
     protected AvailabilityType getAvailabilityTypeFromDb(Long id) {
 
         getSession().beginTransaction();
-        AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id);
+        AvailabilityType availabilityTypeFromDb = availabilityTypeDao.getById(id).get();
         getSession().getTransaction().commit();
 
         return availabilityTypeFromDb;

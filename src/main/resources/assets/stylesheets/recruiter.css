@@ -66,7 +66,7 @@
     left: 10%;
 }
 
-#add-interviewer-btn {
+#add-person-btn {
     font-size: larger;
 }
 
@@ -75,6 +75,10 @@
 }
 
 #manage-btn {
+    font-size: larger;
+}
+
+#candidates-btn {
     font-size: larger;
 }
 
@@ -154,4 +158,8 @@
 
 .changed-cell {
     border: 3px solid #ff3d00;
+}
+
+.form-text-area {
+    height: 150px !important;
 }
