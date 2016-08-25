@@ -20,7 +20,33 @@ define(['angular'
                     "@": {
                         templateUrl: "/html/partials/report/tdpr-report-index.html"
                     }
-                }
+                },
+                 resolve: {
+                     isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {
+                         var deferred = $q.defer();
+
+                         if (tdprAuthService.isUserLoggedIn()) {
+                             deferred.resolve();
+                         } else {
+                             $location.path('/login');
+                             Notification.error('You need to sign in to view this page.');
+                             deferred.reject();
+                         }
+                         return deferred.promise;
+                     },
+                     isUserAuthorized: function(tdprAuthService, Notification, $q, $state, $location) {
+                         var deferred = $q.defer();
+
+                         if(tdprAuthService.isUserAuthorized("recruiter")) {
+                             deferred.resolve();
+                         } else {
+                             Notification.error('You do not have permissions to view this page.');
+                             deferred.reject();
+                         }
+
+                         return deferred.promise;
+                     }
+                 }
             })
             .state("tdpr.report.home", {
                 url: '/report',
@@ -31,7 +57,7 @@ define(['angular'
                     }
                 }
             });
-        $urlRouterProvider.otherwise("/recruiter");
+
     });
     return tdprReportModule;
 });

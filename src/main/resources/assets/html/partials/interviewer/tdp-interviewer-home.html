@@ -5,9 +5,9 @@
 
     <hr>
     <div id="date-container">
-        <button class="button navigate1 " ng-click="showPreviousWeek()">Previous week</button>
-        <span class="navigate1">{{displayedStartDate}} - {{displayedEndDate}}</span>
-        <button class="button navigate1 " ng-click="showNextWeek()">Next week</button>
+        <button class="button navigation " ng-click="showPreviousWeek()">Previous week</button>
+        <span class="navigation">{{displayedStartDate}} - {{displayedEndDate}}</span>
+        <button class="button navigation " ng-click="showNextWeek()">Next week</button>
     </div>
 
     <div class="legend">
@@ -63,7 +63,6 @@
             </div>
             <hr>
             <div>
-                <button class="btn btn-primary uppercase" id="back-to-interview-btn" type="button" ng-show="isRecruiter" ng-click="goBackToRecruiterView()">back to recruiter view</button>
                 <button class="btn btn-primary uppercase" id="discard-btn" type="button" ng-click="discardChanges()">discard changes</button>
                 <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
                 <button class="btn btn-primary pull-right" type="button" ng-click="goDetails() ">Personal details</button>

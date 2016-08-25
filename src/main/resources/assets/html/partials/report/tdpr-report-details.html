@@ -5,18 +5,20 @@
 
 <job-profile selected-profiles="checkedProfiles" is-radio="false"></job-profile>
 
-<div class="row options">
-    <div class="col-md-2">
-        <label class="control-label" for="start_date">Start date:</label>
-    </div>
-    <div class="col-md-4">
-        <input id="start_date" class="form-control col-md-10" type="date" ng-model="startDate">
-    </div>
-    <div class="col-md-2">
-        <label class="control-label" for="end_date">End date:</label>
-    </div>
-    <div class="col-md-4">
-        <input id="end_date" class="form-control" type="date" ng-model="endDate">
+<div class="row options center">
+    <div class="options-wrapper">
+        <div class="col-md-2">
+            <label class="control-label" for="start_date">Start date:</label>
+        </div>
+        <div class="col-md-4">
+            <input id="start_date" class="form-control col-md-10" type="date" ng-model="startDate">
+        </div>
+        <div class="col-md-2">
+            <label class="control-label" for="end_date">End date:</label>
+        </div>
+        <div class="col-md-4">
+            <input id="end_date" class="form-control" type="date" ng-model="endDate">
+        </div>
     </div>
 </div>
 
@@ -31,7 +33,7 @@
 <div class="row options">
     <div class="col-md-12">
         <hr>
-        <h4>{{currentReportStart | date: DateFormat}} to {{currentReportEnd | date: DateFormat}}</h4>
+        <h4 class="navigation report-date">{{currentReportStart | date: 'dd.MM.yyyy'}} - {{currentReportEnd | date: 'dd.MM.yyyy'}}</h4>
     </div>
 </div>
 
@@ -49,7 +51,7 @@
 
 <div class="row options">
     <div class="col-md-8 col-md-offset-2">
-        <table id="report-table">
+        <table class="table " id="report-table">
             <thead class="column-heading">
             <tr>
                 <td class="day-th" ng-repeat="(column, value) in columnMap">
@@ -71,5 +73,3 @@
         </table>
     </div>
 </div>
-
-<a id="back-btn" ui-sref="tdpr.recruiter.home">Back</a>

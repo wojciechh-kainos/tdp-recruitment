@@ -2,10 +2,12 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,7 @@ import java.util.List;
         @NamedQuery(name = "Person.findAll", query = "select p from Person p"),
         @NamedQuery(name = "Person.findByEmail", query = "select p from Person p where email = :email")
 })
-public class Person implements Cloneable {
-
+public class Person implements Cloneable, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +39,7 @@ public class Person implements Cloneable {
     @Length(max = 35)
     private String lastName;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private Boolean admin;
@@ -59,7 +60,6 @@ public class Person implements Cloneable {
     @Column(name = "band_level")
     private Integer bandLevel;
 
-
     @JsonIgnore
     @Column(name = "activation_code")
     private String activationCode;
@@ -72,6 +72,10 @@ public class Person implements Cloneable {
 
     private Boolean active;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String token;
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Slot> slotList = new ArrayList<>();
@@ -81,6 +85,11 @@ public class Person implements Cloneable {
     private List<Note> noteList = new ArrayList<>();
 
     public Person() {
+    }
+
+    public Person(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     @Override
@@ -241,5 +250,19 @@ public class Person implements Cloneable {
                 ", slotList=" + slotList +
                 ", noteList=" + noteList +
                 '}';
+    }
+
+    @Override
+    @JsonIgnore
+    public String getName() {
+        return this.email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

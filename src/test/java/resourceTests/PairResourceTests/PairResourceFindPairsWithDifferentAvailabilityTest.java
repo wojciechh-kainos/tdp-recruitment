@@ -1,61 +1,37 @@
 package resourceTests.PairResourceTests;
 
-import dao.SlotDao;
 import domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import resources.PairResource;
-import services.PairFinder;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PairResourceFindPairsWithDifferentAvailabilityTest {
-    @Mock
-    private static SlotDao mockDao;
 
-    private final PairFinder pairFinder = new PairFinder();
+    private final Date sameDate = MockDataUtil.today;
+    private final AvailabilityType typeAvailable = MockDataUtil.available;
+    private final AvailabilityType typeUnavailable = MockDataUtil.unavailable;
+    private final AvailabilityType typeMaybe = MockDataUtil.maybe;
 
-    private final Time startTime = Time.valueOf("08:00:00");
-    private final Time endTime = Time.valueOf("17:00:00");
-    private final int TODAY_OFFSET = 0;
-    private final int TOMORROW_OFFSET = 1;
-    private final Boolean isDev = true;
-    private final Boolean isTest = false;
-    private final Boolean isOps = false;
-    private final Boolean isOther = false;
-    private final Date sameDate = MockDataUtil.createDate(TODAY_OFFSET);
-    private final Date differentDate = MockDataUtil.createDate(TOMORROW_OFFSET);
-    private final AvailabilityType typeAvailable = MockDataUtil.createAvailableType(1L, AvailabilityTypeEnum.available);
-    private final AvailabilityType typeUnavailable = MockDataUtil.createAvailableType(4L, AvailabilityTypeEnum.unavailable);
-    private final AvailabilityType typeMaybe = MockDataUtil.createAvailableType(5L, AvailabilityTypeEnum.maybe);
-    private String startDate = MockDataUtil.convertDateToString(sameDate);
-    private String endDate = MockDataUtil.convertDateToString(differentDate);
-
-    private PairResource resource;
-    private List<Slot> mockSlots = new ArrayList<>();
     private List<Person> persons;
 
     @Before
     public void setUp() {
+        List<Slot> mockSlots = new ArrayList<>();
         mockSlots.addAll(createFirstPerson());
         mockSlots.addAll(createSecondPerson());
         mockSlots.addAll(createThirdPerson());
 
-        resource = new PairResource(mockDao, pairFinder);
-        when(mockDao.findSlotsForPairMatching(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther)).thenReturn(mockSlots);
-        persons = resource.findPairs(startDate, endDate, startTime, endTime, isDev, isTest, isOps, isOther);
+        persons = MockDataUtil.findPairs(mockSlots);
     }
 
     @Test
@@ -90,14 +66,14 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
 
     private List<Slot> createFirstPerson() {
         List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(2, 11);
-        Person person = MockDataUtil.createPerson(1L, "First", isDev, isTest, isOps, isOther);
+        Person person = MockDataUtil.createPerson(1L);
 
         return MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeUnavailable);
     }
 
     private List<Slot> createSecondPerson(){
         List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(1, 18);
-        Person person = MockDataUtil.createPerson(2L, "Second", isDev, isTest, isOps, isOther);
+        Person person = MockDataUtil.createPerson(2L);
 
         List<Slot> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
         slots.get(1).setType(typeUnavailable);
@@ -118,7 +94,7 @@ public class PairResourceFindPairsWithDifferentAvailabilityTest {
 
     private List<Slot> createThirdPerson() {
         List<SlotTime> slotsTimes = MockDataUtil.createSlotsTimesList(7, 18);
-        Person person = MockDataUtil.createPerson(3L, "Third", isDev, isTest, isOps, isOther);
+        Person person = MockDataUtil.createPerson(3L);
 
         List<Slot> slots = MockDataUtil.createSlotsToSlotTimes(slotsTimes, person, sameDate, typeAvailable);
         slots.get(7).setType(typeMaybe);
