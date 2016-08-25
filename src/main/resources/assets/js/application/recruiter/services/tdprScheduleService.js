@@ -72,7 +72,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         newSlot = that.findSlotById(person.slotList, slotId + i, day);
                         if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                             valid = false;
-                            console.log(newSlot);
                         }
                         if (slotId + i <= maxSlot && valid) {
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
