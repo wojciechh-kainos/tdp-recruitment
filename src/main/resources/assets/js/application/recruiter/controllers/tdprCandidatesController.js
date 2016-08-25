@@ -6,7 +6,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.recruiterNotes = recruiterNotes;
         $scope.sortColumn = 'recruiter.lastName';
         $scope.sortReverse = true;
-        $scope.currentNote = {};
+        $scope.currentNote = recruiterNotes[0];
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         var popUp;
@@ -170,18 +170,17 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             tdprCandidatesService.createRecruiterNote(note).then(
                 function (response) {
                     Notification.success("Notes updated successfully.");
-
+                    $scope.refreshRecruiterNote();
                 }, function (response) {
                     Notification.error(response);
                 });
         };
 
         $scope.refreshRecruiterNote = function () {
-            console.log("refresh");
-
             tdprCandidatesService.fetchRecruiterNotes(10).then(
                 function (response) {
                     $scope.recruiterNotes = response;
+                    $scope.currentNote = $scope.recruiterNotes[0];
                     Notification.success("Notes refreshed successfully.");
 
                 }, function (response) {
