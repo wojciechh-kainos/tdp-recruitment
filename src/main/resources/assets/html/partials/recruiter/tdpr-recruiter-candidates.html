@@ -47,7 +47,7 @@
                     <td class="slot hour-cell">{{candidate.position}}</td>
                     <td class="slot hour-cell" ng-dblclick="swapLimitsForCandidate(candidate)"><span uib-tooltip="{{candidate.note}}">{{candidate.note | cut: true: candidateLimits[candidate.id]}}</span></td>
                     <td class="slot hour-cell">
-                        <a class="cursor-pointer" ng-click="deleteCandidate(candidate)"><span class="glyphicon glyphicon-remove" uib-tooltip="Delete candidate"></span></a>
+                        <a class="cursor-pointer" ng-click="showPopUpForDelete(candidate)"><span class="glyphicon glyphicon-remove" uib-tooltip="Delete candidate"></span></a>
                         | <a class="cursor-pointer" ng-click="showPopupForEdit(candidate)"><span class="glyphicon glyphicon-edit" uib-tooltip="Edit candidate"></span></a>
                         | <a class="cursor-pointer" ui-sref='tdpr.recruiter.home({candidateId: candidate.id, candidate: candidate})'><span class="glyphicon glyphicon-calendar" uib-tooltip="Go to schedule"></span></a>
                     </td>
