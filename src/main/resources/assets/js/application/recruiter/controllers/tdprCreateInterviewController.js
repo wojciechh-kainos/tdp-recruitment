@@ -16,7 +16,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             });
 
             $q.all(updateRequests).then(function () {
-                tdprScheduleService.sendInvitations($scope.interview)
+                tdprScheduleService.sendInvitations($scope.interview).then(function(){
+                    $state.go('tdpr.recruiter.home');
+                })
             });
 
         };

@@ -90,7 +90,7 @@ public class Interview {
             e.printStackTrace();
         }
 
-        return template.replace("{{organizer}}", parseOrganizer())  //TODO replace room field
+        return template.replace("{{organizer}}", parseOrganizer())
                 .replace("{{attendees}}", parseAttendees())
                 .replace("{{summary}}", parseSubject())
                 .replace("{{room}}", room != null ? room : "")

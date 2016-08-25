@@ -28,8 +28,6 @@ public class MailingTask implements Runnable {
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", port);
         Session session = Session.getDefaultInstance(props);
-        session.setDebug(true);// TODO: remove before merging with master
-
         Transport transport = null;
 
         try {
