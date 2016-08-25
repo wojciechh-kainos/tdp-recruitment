@@ -19,6 +19,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                 }
             }, function () {
                 Notification.error("Something went wrong with your request.");
+                person.active = !person.active;
             });
         }
 
