@@ -9,6 +9,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var slotsService;
         var getSlotsDeferred;
         var AvailabilityEnum;
+        var personService;
+        var tdprAuthService;
 
         beforeEach(inject(function ($controller, tdprSlotsService,tdprPersonService, _$rootScope_, _$filter_, $q) {
             personId = 42;
@@ -66,10 +68,13 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             spyOn(personService, 'getNote').and.returnValue(getNoteDeferred.promise);
             spyOn(personService, 'updateNote').and.returnValue(updateNoteDeferred.promise);
 
+            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
+            tdprAuthService.getCurrentUser.and.returnValue({id: personId});
             $controller('tdprInterviewerHomeController', {
                 $scope: $scope,
                 tdprSlotsService: slotsService,
                 tdprPersonService: personService,
+                tdprAuthService: tdprAuthService,
                 AvailabilityEnum: AvailabilityEnum,
                 DateFormat: 'dd-MM-yyyy',
                 Notification: { success: function() {}},
