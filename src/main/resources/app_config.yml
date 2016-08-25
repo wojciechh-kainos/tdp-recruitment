@@ -54,6 +54,7 @@ smtpConfig:
   port: 25
   from: no-reply@kainos.com
 
+# used to limit threads used by mailing service
 threadPoolSize: 10
 
 tokenCacheConfig:
