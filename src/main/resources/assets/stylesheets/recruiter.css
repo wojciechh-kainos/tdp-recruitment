@@ -153,5 +153,5 @@
 }
 
 .changed-cell {
-    border: 1px solid #ff3d00;
+    outline: 2px solid #ff3d00;
 }
