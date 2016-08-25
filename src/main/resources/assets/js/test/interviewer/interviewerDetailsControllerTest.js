@@ -64,6 +64,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                     bandLevel: 9001,
                     defaultStartHour: '05:15:01',
                     defaultFinishHour: '22:49:31',
+                    token: undefined,
+                    defaultFinishHour: '22:49:31',
                     password: null
                 });
             });
