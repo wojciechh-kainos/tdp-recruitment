@@ -151,7 +151,7 @@ public class PersonResource {
         person.setDefaultStartHour(newPerson.getDefaultStartHour());
         person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
         if(newPerson.getPassword() != null) {
-            person.setPassword(passwordStore.createHash(person.getPassword()));
+            person.setPassword(passwordStore.createHash(newPerson.getPassword()));
         }
         return Response.ok(person).build();
     }
