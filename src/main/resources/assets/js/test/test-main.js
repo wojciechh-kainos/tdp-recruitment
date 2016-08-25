@@ -29,7 +29,8 @@ require.config({
         'ngDialog' : 'lib/ng-dialog/js/ngDialog',
         'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
         'fileSaver' : 'lib/file-saver.js/FileSaver',
-        'blob' : 'lib/blob-polyfill/Blob'
+        'blob' : 'lib/blob-polyfill/Blob',
+        'ngCookies' : 'lib/angular-cookies/angular-cookies'
     },
     shim: {
         'angular': {
@@ -46,7 +47,8 @@ require.config({
         'angular-moment' : ['angular', 'moment'],
         'fileSaver' : ['angular'],
         'blob' : ['angular', 'fileSaver'],
-        'angularFileSaver' : ['angular', 'fileSaver', 'blob']
+        'angularFileSaver' : ['angular', 'fileSaver', 'blob'],
+        'ngCookies' : ['angular']
     },
     // dynamically load all test files
     deps: allTestFiles,
