@@ -40,7 +40,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             if (!found) {
                 scheduledSlots.push(newSlot);
             }
-            console.log(scheduledSlots);
         };
 
         this.changeSlotDiscardChanges = function (personData) {
@@ -74,16 +73,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
                         }
                     }
-                    console.log(person.changesPending);
                 });
             };
         };
 
-        this.createInterview = function (slotsTimes, selectedPersons) {
+        this.createInterview = function (slotsTimes, selectedPersons, candidate) {
             var outlookObject = {
                 interview: {}
             };
-
             outlookObject.interview.interviewers = _.map(selectedPersons(), function (obj) {
                 return {
                     id: obj.id,
@@ -97,10 +94,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             var endSlot = _.find(slotsTimes, {id: _.maxBy(scheduledSlots, 'number').number});
             var day = scheduledSlots[0].day;
 
-            outlookObject.interview.interviewee = "";
+            outlookObject.interview.interviewee = candidate;
             outlookObject.interview.organizer = "";
             outlookObject.interview.start = getDateTime(day, startSlot.startTime);
             outlookObject.interview.end = getDateTime(day, endSlot.endTime);
+
             outlookObject.newSlots = scheduledSlots;
 
             scheduledSlots = [];

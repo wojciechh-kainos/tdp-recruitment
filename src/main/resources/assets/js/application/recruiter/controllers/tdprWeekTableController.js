@@ -1,14 +1,11 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
     tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-              Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
+                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
 
         var that = this;
 
-
-        $scope.pairingMode = false;
         $scope.WeekNavigateEnum = WeekNavigateEnum;
-
         $scope.params = $state.params;
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
@@ -17,35 +14,33 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
 
-        var getSelectedPersons = function() {
+        var getSelectedPersons = function () {
             return _.filter($scope.persons, function (person) {
                 return person.selected;
             });
         };
 
-        var deselectPersons = function() {
-            _.each(getSelectedPersons(), function(person) {
-                person.selected = false;
-            });
-        };
-        $scope.interviewOn = function () {
+        if ($scope.params && $scope.params.candidateId !== 0) {
             $scope.pairingMode = true;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
-        };
-        
-        $scope.interviewOff = function () {
+
+        } else {
             $scope.pairingMode = false;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
-            deselectPersons();
-            console.log($scope.pairingMode);
+        }
 
+        $scope.interviewOff = function () {
+
+            $scope.pairingMode = false;
+            $scope.refreshPersonsData();
         };
 
-        $scope.createInterview = function() {
-            $state.go("tdpr.recruiter.createEvent",
-                {data: tdprScheduleService.createInterview(slotsTimes, getSelectedPersons)});
+
+        $scope.createInterview = function () {
+            $state.go("tdpr.recruiter.createInterview",
+                {data: tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params.candidate)});
         };
-        
+
         $scope.getPairs = function () {
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
                 function (persons) {
@@ -113,7 +108,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 Notification.error("Failed to refresh persons data");
             });
         };
-        $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
+        // $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
