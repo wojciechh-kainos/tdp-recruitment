@@ -24,7 +24,7 @@ public class ScheduleResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response scheduleInterview(Interview interview){
+    public Response scheduleInterview(Interview interview) {
         try {
             mailService.sendEmail(interview.createMessage());
         } catch (MessagingException e) {
@@ -33,6 +33,5 @@ public class ScheduleResource {
         }
         return Response.status(Response.Status.OK).build();
     }
-
 
 }

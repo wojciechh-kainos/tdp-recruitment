@@ -5,7 +5,6 @@ import constants.TdpConstants;
 import dao.SlotDao;
 import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
-import services.Interview;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -66,5 +65,4 @@ public class SlotResource {
         slotDao.updateForPersonAndWeekFromRecruiter(slots);
         return Response.status(Response.Status.CREATED).build();
     }
-
 }
