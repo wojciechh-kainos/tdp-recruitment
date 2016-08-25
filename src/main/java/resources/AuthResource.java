@@ -58,7 +58,7 @@ public class AuthResource {
 	public Person checkIfPersonWithActivationLinkExists (@PathParam("activationLink")String activationLink) {
 		java.util.Optional<Person> person = personDao.getUserByActivationLink(activationLink);
 
-		return person.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
+		return person.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
 	}
 
 	@PUT
@@ -75,8 +75,9 @@ public class AuthResource {
 				personToBeActivated.get().setPassword(passwordStore.createHash(person.getPassword()));
 			} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException e) {
 				e.printStackTrace();
+				return Response.status(Response.Status.CONFLICT).build();
 			}
-			return Response.status(Response.Status.ACCEPTED).build();
+			return Response.status(Response.Status.OK).build();
 		} else {
 			return Response.status(Response.Status.CONFLICT).build();
 		}
