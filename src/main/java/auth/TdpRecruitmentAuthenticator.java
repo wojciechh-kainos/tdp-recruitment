@@ -4,6 +4,8 @@ import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
+import configuration.TdpRecruitmentApplicationConfiguration;
+import configuration.TdpRecruitmentCacheConfiguration;
 import dao.PersonDao;
 import domain.Person;
 import io.dropwizard.auth.Authenticator;
@@ -20,16 +22,25 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 
 	private final TdpRecruitmentPasswordStore passwordStore;
 
-	private static final Cache<String, Person> cache = CacheBuilder
-			.newBuilder()
-			.maximumSize(100)
-			.expireAfterAccess(10, TimeUnit.MINUTES)
-			.build();
+	private final TdpRecruitmentApplicationConfiguration config;
+
+	private static Cache<String, Person> cache;
 
 	@Inject
-	public TdpRecruitmentAuthenticator(PersonDao personDao, TdpRecruitmentPasswordStore passwordStore) {
+	public TdpRecruitmentAuthenticator(PersonDao personDao, TdpRecruitmentPasswordStore passwordStore, TdpRecruitmentApplicationConfiguration config) {
 		this.personDao = personDao;
 		this.passwordStore = passwordStore;
+		this.config = config;
+
+		TdpRecruitmentCacheConfiguration cacheConfiguration = config.getTokenCacheConfig();
+
+		System.out.println("WOOOOOOOOOOOOOWOWOWOOWO" + cacheConfiguration.getMaximumSize());
+
+		cache = CacheBuilder
+			.newBuilder()
+			.maximumSize(cacheConfiguration.getMaximumSize())
+			.expireAfterAccess(cacheConfiguration.getExpireAfterAccess(), cacheConfiguration.getExpireAfterAccessTimeUnit())
+			.build();
 	}
 
 	@Override
