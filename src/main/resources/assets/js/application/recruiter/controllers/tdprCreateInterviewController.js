@@ -6,7 +6,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.interview = $stateParams.data;
         $scope.interview.message = "Hi, I scheduled an interview for you.";
         $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
-
+        console.log($scope.interview);
         $scope.scheduleInterview = function () {
 
             var updateRequests = [];

@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-offset-5">
             <button ng-click="scheduleInterview()" class="btn btn-primary">Send</button>
-            <button ui-sref="tdpr.recruiter.home(interview.interviewee)" class="btn btn-default">Cancel</button>
+            <button ui-sref="tdpr.recruiter.home({candidateId: interview.interviewee.id, candidate: interview.interviewee})" class="btn btn-default">Cancel</button>
         </div>
     </form>
 </div>
