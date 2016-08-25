@@ -1,5 +1,5 @@
 define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services/tdprBase64Service', 'ngCookies'], function (angular, tdprAuthModule) {
-    tdprAuthModule.service('tdprAuthService', ['$cookieStore', '$http', '$q', 'tdprBase64Service', '$state', '$q', '$location', function ($cookieStore, $http, $q, tdprBase64Service, $state, $q, $location) {
+    tdprAuthModule.service('tdprAuthService', ['$cookieStore', '$http', '$q', 'tdprBase64Service', function ($cookieStore, $http, $q, tdprBase64Service) {
 
         var currentUser = {};
 
@@ -32,7 +32,6 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             }
 
            service.clearCredentials();
-
         };
 
         service.setCredentials = function (email, password) {
@@ -75,10 +74,12 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             if(role === 'recruiter') {
                 return currentUser.isRecruiter;
             }
+            if(role === 'interviewer') {
+                return !currentUser.isRecruiter;
+            }
         };
 
         service.validateSession = function () {
-
             var deferred = $q.defer();
             $http.get('/api/auth/validateToken?token=' + currentUser.token).then(function(response) {
                     deferred.resolve();
