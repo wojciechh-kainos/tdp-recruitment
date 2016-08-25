@@ -9,6 +9,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.currentNote = recruiterNotes[0];
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
+        $scope.limitedAmount = 10;
         var popUp;
         var popUpForDelete;
         var defaultLimitValue = 35;
@@ -156,7 +157,6 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.createRecruiterNote = function () {
-            console.log("recruiter");
             var currentRecruiter = findRecruiter();
 
             var note = {
@@ -165,10 +165,8 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                 recruiter: currentRecruiter
             };
 
-            console.log(note);
-
             tdprCandidatesService.createRecruiterNote(note).then(
-                function (response) {
+                function () {
                     Notification.success("Notes updated successfully.");
                     $scope.refreshRecruiterNote();
                 }, function (response) {
@@ -177,11 +175,10 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         };
 
         $scope.refreshRecruiterNote = function () {
-            tdprCandidatesService.fetchRecruiterNotes(10).then(
+            tdprCandidatesService.fetchRecruiterNotes($scope.limitedAmount).then(
                 function (response) {
                     $scope.recruiterNotes = response;
                     $scope.currentNote = $scope.recruiterNotes[0];
-                    Notification.success("Notes refreshed successfully.");
 
                 }, function (response) {
                     Notification.error(response);

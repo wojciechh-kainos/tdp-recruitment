@@ -80,7 +80,6 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(AuthResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(CandidateResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(RecruiterNoteResource.class));
-
     }
 
     public static void main(final String[] args) throws Exception {
