@@ -12,10 +12,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.persons = persons;
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
-        $scope.relativeDayNumber = function(){
-            return $scope.offset * 7;
-        }
-        
 
         $scope.getPairs = function(){
             tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate, $scope.startTime, $scope.endTime).then(
