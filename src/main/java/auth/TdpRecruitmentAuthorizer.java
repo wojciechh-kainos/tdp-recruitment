@@ -9,9 +9,9 @@ public class TdpRecruitmentAuthorizer implements Authorizer<Person> {
 	public boolean authorize(Person principal, String role) {
 
 		if(role.equals("recruiter")) {
-			return principal.getAdmin() == true ? true : false;
+			return principal.getAdmin() == true;
 		} else if(role.equals("interviewer")) {
-			return principal.getAdmin() == false ? true : false;
+			return principal.getAdmin() == false;
 		} else {
 			return false;
 		}
