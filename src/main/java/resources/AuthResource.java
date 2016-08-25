@@ -75,7 +75,7 @@ public class AuthResource {
 				personToBeActivated.get().setPassword(passwordStore.createHash(person.getPassword()));
 			} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException e) {
 				e.printStackTrace();
-				return Response.status(Response.Status.CONFLICT).build();
+				return Response.status(Response.Status.BAD_REQUEST).build();
 			}
 			return Response.status(Response.Status.OK).build();
 		} else {
