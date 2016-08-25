@@ -11,11 +11,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.google.common.base.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Path("/auth")
 public class AuthResource {
 
+	private final Logger logger = LoggerFactory.getLogger(AuthResource.class);
 	private TdpRecruitmentAuthenticator authenticator;
 
 	@Inject
@@ -32,6 +35,7 @@ public class AuthResource {
 		if (authenticatedUser.isPresent()) {
 			return authenticatedUser.get();
 		} else {
+			logger.warn("Login refused with email: ".concat(person.getEmail()));
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
 	}
@@ -42,6 +46,7 @@ public class AuthResource {
 		if(authenticator.isTokenValid(token)) {
 			return Response.ok().build();
 		} else {
+			logger.warn("Invalid token");
 			return Response.status(Response.Status.GONE).build();
 		}
 	}
