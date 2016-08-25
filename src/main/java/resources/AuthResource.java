@@ -41,7 +41,7 @@ public class AuthResource {
 		if (authenticatedUser.isPresent()) {
 			return authenticatedUser.get();
 		} else {
-			logger.warn("Login refused with email: ".concat(person.getEmail()));
+			logger.warn("Login refused with email => {} ",person.getEmail());
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
 	}

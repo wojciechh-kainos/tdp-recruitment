@@ -56,10 +56,10 @@ public class MailingThread extends Thread {
         email.setTextHTML(finalText);
         try {
             new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
-            logger.info("Send email to " + email.getRecipients());
+            logger.info("Send email => {} ",email.getRecipients());
 
         }catch (Exception e){
-            logger.error("Send email error: ".concat(e.getLocalizedMessage()));
+            logger.error("Send email error => {} ", e.getMessage());
         }
 
     }

@@ -41,7 +41,7 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 		java.util.Optional<Person> user = personDao.getUserByEmail(credentials.getUsername());
 
 		if(!user.isPresent()) {
-			logger.warn("Person with username not found: ".concat(credentials.getUsername()));
+			logger.warn("Person with username => {} not found", credentials.getUsername());
 			return Optional.absent();
 		}
 		Person person = user.get();
@@ -56,7 +56,7 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 				return Optional.of(person);
 			}
 		} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException | TdpRecruitmentPasswordStore.InvalidHashException e) {
-			logger.warn("Authentication error".concat(e.getMessage()));
+			logger.warn("Authentication error  => {}", e.getMessage());
 		}
 
 		return Optional.absent();
