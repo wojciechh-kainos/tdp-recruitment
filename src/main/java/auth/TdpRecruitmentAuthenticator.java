@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentials, Person> {
 
 	private final PersonDao personDao;
-	private final Logger logger = LoggerFactory.getLogger(TdpRecruitmentAuthenticator.class);
+	private static final Logger logger = LoggerFactory.getLogger(TdpRecruitmentAuthenticator.class);
 
 	private final TdpRecruitmentPasswordStore passwordStore;
 

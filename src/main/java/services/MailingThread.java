@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class MailingThread extends Thread {
 
-    private final Logger logger = LoggerFactory.getLogger(MailingThread.class);
+    private static final Logger logger = LoggerFactory.getLogger(MailingThread.class);
     private TdpRecruitmentApplicationConfiguration config;
     private String recipient;
     private String activationLink;

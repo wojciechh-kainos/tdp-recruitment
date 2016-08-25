@@ -20,7 +20,7 @@ import auth.TdpRecruitmentPasswordStore;
 @Path("/auth")
 public class AuthResource {
 
-	private final Logger logger = LoggerFactory.getLogger(AuthResource.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthResource.class);
 	private TdpRecruitmentAuthenticator authenticator;
 	private PersonDao personDao;
 	private final TdpRecruitmentPasswordStore passwordStore;
