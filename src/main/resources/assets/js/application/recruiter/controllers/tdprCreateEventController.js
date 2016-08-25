@@ -1,18 +1,14 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprPersonsService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, tdprRecruiterSlotsService, $stateParams, $state, $q) {
+    tdprRecruiterModule.controller("tdprCreateEventController", function ($scope, tdprScheduleService, tdprRecruiterSlotsService, tdprAuthService, $stateParams, $state, $q) {
 
-    console.log($stateParams);
-        // var interviewData = $stateParams.data;
+
         $scope.interview = $stateParams.data.interview;
-        $scope.interview.message = "Hi, I scheduled interview for you."
+        $scope.interview.message = "Hi, I scheduled an interview for you.";
+        $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
+        delete $scope.interview.organizer.isRecruiter; //another jackson problem
 
         $scope.scheduleInterview = function () {
-            $stateParams.data.interview.organizer = { //TODO change to recruiter data
-                email: "noreply@kainos.com",
-                firstName: "Janek",
-                lastName: "Smyk"
-            };
 
             var updateRequests = [];
             $stateParams.data.interview.interviewers.forEach(function (interviewer) {
