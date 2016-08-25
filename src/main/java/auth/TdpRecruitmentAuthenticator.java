@@ -22,17 +22,15 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 
 	private final TdpRecruitmentPasswordStore passwordStore;
 
-	private final TdpRecruitmentApplicationConfiguration config;
+	private final TdpRecruitmentCacheConfiguration cacheConfiguration;
 
 	private static Cache<String, Person> cache;
 
 	@Inject
-	public TdpRecruitmentAuthenticator(PersonDao personDao, TdpRecruitmentPasswordStore passwordStore, TdpRecruitmentApplicationConfiguration config) {
+	public TdpRecruitmentAuthenticator(PersonDao personDao, TdpRecruitmentPasswordStore passwordStore, TdpRecruitmentCacheConfiguration cacheConfiguration) {
 		this.personDao = personDao;
 		this.passwordStore = passwordStore;
-		this.config = config;
-
-		TdpRecruitmentCacheConfiguration cacheConfiguration = config.getTokenCacheConfig();
+		this.cacheConfiguration = cacheConfiguration;
 
 		cache = CacheBuilder
 			.newBuilder()

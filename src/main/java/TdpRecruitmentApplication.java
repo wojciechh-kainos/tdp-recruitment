@@ -3,7 +3,6 @@ import auth.TdpRecruitmentAuthenticator;
 import auth.TdpRecruitmentAuthorizer;
 import auth.TdpRecruitmentPasswordStore;
 import auth.TdpRecruitmentUnauthorizedHandler;
-import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
@@ -62,10 +61,10 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         module.setSessionFactory(hibernateBundle.getSessionFactory());
 
         TdpRecruitmentAuthenticator authenticator = new UnitOfWorkAwareProxyFactory(hibernateBundle).create(TdpRecruitmentAuthenticator.class,
-                new Class[]{PersonDao.class, TdpRecruitmentPasswordStore.class, TdpRecruitmentApplicationConfiguration.class},
+                new Class[]{PersonDao.class, TdpRecruitmentPasswordStore.class, TdpRecruitmentCacheConfiguration.class},
                 new Object[]{guiceBundle.getInjector().getInstance(PersonDao.class),
                         guiceBundle.getInjector().getInstance(TdpRecruitmentPasswordStore.class),
-                        guiceBundle.getInjector().getInstance(TdpRecruitmentApplicationConfiguration.class)});
+                        guiceBundle.getInjector().getInstance(TdpRecruitmentCacheConfiguration.class)});
 
         environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<Person>()
                 .setAuthenticator(authenticator)
