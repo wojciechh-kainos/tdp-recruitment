@@ -4,7 +4,6 @@ import auth.TdpRecruitmentAuthenticator;
 import com.google.inject.Inject;
 import dao.PersonDao;
 import domain.Person;
-import io.dropwizard.auth.Auth;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.basic.BasicCredentials;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -46,8 +45,10 @@ public class AuthResource {
 	@GET
 	@UnitOfWork
 	@Path("activate/{activationLink}")
-	public Optional<Person> checkIfPersonWithActivationLinkExists (@PathParam("activationLink")String activationLink) {
-		return personDao.getUserByActivationLink(activationLink);
+	public Person checkIfPersonWithActivationLinkExists (@PathParam("activationLink")String activationLink) {
+		java.util.Optional<Person> person = personDao.getUserByActivationLink(activationLink);
+
+		return person.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
 	}
 
 	@PUT
@@ -55,7 +56,7 @@ public class AuthResource {
 	@Path("/activate")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response activatePerson (Person person) {
-		Optional <Person> personToBeActivated = personDao.getById(person.getId());
+		java.util.Optional<Person> personToBeActivated = personDao.getById(person.getId());
 
 		if(personToBeActivated.isPresent()) {
 			personToBeActivated.get().setActivationCode(null);

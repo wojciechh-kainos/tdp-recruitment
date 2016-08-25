@@ -2,6 +2,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
     tdprAuthModule.controller("tdprActivateController", function ($scope, $stateParams, tdprActivateService, $state, Notification) {
 
         var person;
+
          tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink)
             .then(function(response) {
                 person = response.data;
