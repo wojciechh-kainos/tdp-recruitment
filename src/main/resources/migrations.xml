@@ -27,7 +27,7 @@
     <include file="changelogs/US-36_Add_test_recruiters.xml"/>
     <include file="changelogs/addPersonsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
     <include file="changelogs/addSlotsToHidePairsIfTheyNoLongerMatchTimeFilters.xml"/>
-    <!--<include file="changelogs/deleteInitialData.xml"/>-->
+    <include file="changelogs/deleteInitialData.xml"/>
     <include file="changelogs/removeNulls.xml"/>
     <include file="changelogs/addPasswords.xml"/>
 </databaseChangeLog>

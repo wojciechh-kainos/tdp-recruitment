@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots-1">
+    <changeSet author="radoslawl" id="Issue146-deleteInitialData-slots-1">
         <sql>
             DELETE FROM slot USING person
             WHERE person=person.id
@@ -29,7 +29,7 @@
     </changeSet>
 
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots-2">
+    <changeSet author="radoslawl" id="Issue146-deleteInitialData-slots-2">
         <delete tableName="slot">
             <where>
                 person=1 OR person=9 OR person=10 OR person=11 OR person=12 OR person=13
@@ -39,7 +39,7 @@
 
 
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-notes">
+    <changeSet author="radoslawl" id="Issue146-deleteInitialData-notes">
         <sql>
             DELETE FROM note USING person
             WHERE person=person.id
@@ -61,7 +61,7 @@
         </sql>
     </changeSet>
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-candidates">
+    <changeSet author="radoslawl" id="Issue146-deleteInitialData-candidates">
         <delete tableName="candidate">
             <where>
                 (first_name='Jan' AND last_name='Kowalski') OR
@@ -73,12 +73,12 @@
         </delete>
     </changeSet>
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-persons">
+    <changeSet author="radoslawl" id="Issue146-deleteInitialData-persons">
         <preConditions>
-            <changeSetExecuted id="Issue142-deleteInitialData-slots-1" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-slots-2" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-notes" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-candidates" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue146-deleteInitialData-slots-1" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue146-deleteInitialData-slots-2" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue146-deleteInitialData-notes" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue146-deleteInitialData-candidates" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
         </preConditions>
 
         <delete tableName="person">
