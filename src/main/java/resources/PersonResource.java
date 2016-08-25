@@ -18,6 +18,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.ActivationLink;
 import services.MailService;
 import javax.ws.rs.*;
@@ -39,6 +41,7 @@ public class PersonResource {
     private ActivationLink activationLink;
     private final TdpRecruitmentPasswordStore passwordStore;
     private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+ 	private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
 
     @Inject
     public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore, ActivationLink activationLink) {
@@ -60,11 +63,11 @@ public class PersonResource {
             person.setActivationCode(token);
             person.setActive(false);
             personDao.create(person);
-            //mailService.sendEmail(person.getEmail(), token);
+
             try {
                 mailService.sendEmail(activationLink.createMessage(person));
             } catch (MessagingException | IOException e) {
-                e.printStackTrace();
+                logger.warn("Mailing error  => {}", e.getMessage());
                 throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
             }
 

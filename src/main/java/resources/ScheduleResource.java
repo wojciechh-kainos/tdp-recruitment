@@ -1,7 +1,8 @@
 package resources;
 
 import com.google.inject.Inject;
-import io.dropwizard.hibernate.UnitOfWork;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.Interview;
 import services.MailService;
 
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 public class ScheduleResource {
 
     private MailService mailService;
+ 	private static final Logger logger = LoggerFactory.getLogger(ScheduleResource.class);
 
     @Inject
     public ScheduleResource(MailService mailService) {
@@ -28,7 +30,7 @@ public class ScheduleResource {
         try {
             mailService.sendEmail(interview.createMessage());
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.warn("Mailing error  => {}", e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.OK).build();
