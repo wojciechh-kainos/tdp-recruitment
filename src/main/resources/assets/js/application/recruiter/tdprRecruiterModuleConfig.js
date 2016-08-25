@@ -93,8 +93,8 @@ define(['angular'
                     recruiters: function (tdprCandidatesService) {
                         return tdprCandidatesService.fetchRecruiters();
                     },
-                    recruiterNotes: function (tdprCandidatesService) {
-                        return tdprCandidatesService.fetchRecruiterNotes(10);
+                    recruiterNotes: function (tdprCandidatesService, RecruiterNotesLimits) {
+                        return tdprCandidatesService.fetchRecruiterNotes(RecruiterNotesLimits[1]);
                     }
                 },
                 views: {

@@ -1,6 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
         $scope.recruiterNotes = recruiterNotes;
@@ -10,7 +10,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         $scope.limitedAmount = 10;
-        $scope.limitAmounts = [10, 25, 50, 100, 1000];
+        $scope.limitAmounts = RecruiterNotesLimits;
         var popUp;
         var popUpForDelete;
         var defaultLimitValue = 35;
