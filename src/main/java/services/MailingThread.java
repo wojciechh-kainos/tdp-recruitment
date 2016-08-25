@@ -47,7 +47,7 @@ public class MailingThread extends Thread {
         try {
             text = Resources.toString(url, Charsets.UTF_8);
         } catch (IOException e) {
-            logger.error("Unable to parse url".concat(e.getMessage()));
+            logger.error("Unable to parse url => {}", e.getMessage());
         }
         String finalText = text
                 .replace("{{domain}}", domain)
