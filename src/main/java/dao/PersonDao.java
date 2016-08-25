@@ -46,4 +46,10 @@ public class PersonDao extends AbstractDAO<Person>{
                 .add(Restrictions.eq("email", email));
         return Optional.ofNullable(uniqueResult(criteria));
     }
+
+    public Optional<Person> getUserByActivationLink(String activationLink) {
+        Criteria criteria = currentSession().createCriteria(Person.class)
+                .add(Restrictions.eq("activationCode", activationLink));
+        return Optional.ofNullable(uniqueResult(criteria));
+    }
 }
