@@ -70,6 +70,12 @@ bower update
 ./gradlew fatJar
 ```
 
+## Production deployment
+
+The application has been deployed into a production server thanks to a small [Puppet project](https://github.com/michalschott/tdp-ops) developed by [**Kainos**](https://www.kainos.pl/) **_WebOps Academy_**.
+
+**Note**: Changes to [app_config.yml](src/main/resources/app_config.yml) should be reflected in the corresponding Ops project's [Puppet template](https://github.com/michalschott/tdp-ops/blob/master/puppet/environments/production/modules/tdp_app/templates/app_config.yml.erb).
+
 ## About
 
 Developed during first Gdańsk edition of [**Kainos**](https://www.kainos.pl/) **_Trainee Development Programme_**. You can read more about it [here](https://www.kainos.com/training-in-kainos/)!
