@@ -9,13 +9,6 @@
     width: 100%;
 }
 
-#manage-users-header {
-    font-size: 48px;
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-    color: #375D81;
-}
-
 .table-wrapper th {
     font-size: 24px;
     text-align: center;
