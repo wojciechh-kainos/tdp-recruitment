@@ -2,8 +2,8 @@
     <h1 class="details-h1">Event summary</h1>
     <form class="form-horizontal">
         <div class="form-group">
-            <label class="col-md-4 control-label">Interviewers:</label>
-            <div class="col-md-8">
+            <label class="col-md-2 col-md-offset-1 control-label">Interviewers:</label>
+            <div class="col-md-6">
                 <ul class="form-control-static interviewer-list">
                     <li ng-repeat="interviewer in interview.interviewers">{{interviewer.firstName}}
                         {{interviewer.lastName}}
@@ -12,25 +12,32 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label">Interviewee:</label>
+            <label class="col-md-2 col-md-offset-1 control-label">Interviewee:</label>
             <p class="form-control-static col-md-8">{{interview.interviewee.firstName}} {{interview.interviewee.lastName}} ({{interview.interviewee.position}}) </p>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label">Time:</label>
-            <p class="form-control-static col-md-8">{{interview.start | date: "yyyy-MM-dd HH:mm"}}
+            <label class="col-md-2 col-md-offset-1 control-label">Time:</label>
+            <p class="form-control-static col-md-6">{{interview.start | date: "yyyy-MM-dd HH:mm"}}
                 - {{interview.end | date: "HH:mm"}}</p>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label">Organizer:</label>
-            <p class="form-control-static col-md-8">{{interview.organizer.firstName}}
+            <label class="col-md-2 col-md-offset-1 control-label">Organizer:</label>
+            <p class="form-control-static col-md-6">{{interview.organizer.firstName}}
                 {{interview.organizer.lastName}}</p>
         </div>
+
         <div class="form-group">
-            <label class="col-md-4 control-label">Message:</label>
-            <div class="col-md-8">
+            <label class="col-md-4 control-label">Room:</label>
+            <p class="form-control-static col-md-8"><input ng-model="interview.room"></p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 col-md-offset-1 control-label">Message:</label>
+            <div class="col-md-6">
                 <textarea rows="5" class="form-control" ng-model="interview.message"></textarea></div>
         </div>
-        <button ng-click="scheduleInterview()" class="btn btn-primary">Send</button>
-        <button ui-sref="tdpr.recruiter.home(interview.interviewee)" class="btn btn-default">Cancel</button>
+        <div class="col-md-offset-5">
+            <button ng-click="scheduleInterview()" class="btn btn-primary">Send</button>
+            <button ui-sref="tdpr.recruiter.home(interview.interviewee)" class="btn btn-default">Cancel</button>
+        </div>
     </form>
 </div>
