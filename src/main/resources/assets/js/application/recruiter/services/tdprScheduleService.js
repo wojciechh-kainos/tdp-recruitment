@@ -75,13 +75,16 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         }
                         if (slotId + i <= maxSlot && valid) {
                             that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
-                        } else {
-                            person.slotList = angular.copy(person.rootSlotList);
-                            scheduledSlots = [];
                         }
                     }
 
                 });
+                if (!valid) {
+                    _.each(selectedPersons(), function(person) {
+                        person.slotList = angular.copy(person.rootSlotList);
+                        scheduledSlots = [];
+                    })
+                }
             };
         };
 
