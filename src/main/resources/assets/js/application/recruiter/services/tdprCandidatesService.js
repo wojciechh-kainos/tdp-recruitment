@@ -52,8 +52,8 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             )
         };
 
-        this.fetchNotes = function(limit) {
-            return $http.get('/api/candidate/getNote/' + limit).then(
+        this.fetchRecruiterNotes = function(limit) {
+            return $http.get('/api/recruiterNote/' + limit).then(
                 function (response) {
                     return response.data;
                 },
@@ -62,7 +62,16 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
                     return $q.reject(error.message);
                 }
             )
-        }
+        };
+
+        this.createRecruiterNote = function (note) {
+            return $http.put("/api/recruiterNote/", note).then(function (response) {
+                return response;
+            }, function (error) {
+                error.message = "Candidate adding failed.";
+                return $q.reject(error.message);
+            });
+        };
 
     })
 });
