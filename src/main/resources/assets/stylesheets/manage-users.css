@@ -10,8 +10,9 @@
 }
 
 .table-wrapper th {
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
+    font-weight: normal;
 }
 
 .table-wrapper thead {
@@ -21,14 +22,15 @@
 
 .table-wrapper table {
     text-align: center;
+    margin-top: 30px;
 }
 
 #right-header {
-    border-top-right-radius: 20px;
+    border-top-right-radius: 10px;
 }
 
 #left-header {
-    border-top-left-radius: 20px;
+    border-top-left-radius: 10px;
 }
 
 #left-header:hover {
@@ -43,4 +45,8 @@
 .sortorder:after {
     margin-left: 10px;
     content: '\25bc';
+}
+
+.table-wrapper table td{
+  border: 1px solid #375D81;
 }
