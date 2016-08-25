@@ -11,6 +11,7 @@ import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Path("/person")
+@PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
@@ -46,6 +48,7 @@ public class PersonResource {
 
     @PUT
     @Path("/create")
+    @RolesAllowed("recruiter")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
@@ -147,6 +150,7 @@ public class PersonResource {
 
     @PUT
     @Path("/{id}/switchAccountStatus")
+    @RolesAllowed("recruiter")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
         Optional<Person> person = personDao.getById(id);
@@ -161,6 +165,7 @@ public class PersonResource {
 
     @GET
     @Path("/all/recruiter")
+    @RolesAllowed("recruiter")
     @UnitOfWork
     public Response getRecruiters() {
         List<Person> recruiterList = new ArrayList<>();

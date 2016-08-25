@@ -6,6 +6,7 @@ import domain.Report;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.ReportService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
@@ -13,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
+@RolesAllowed("recruiter")
 @Path("/report")
 @Produces(MediaType.APPLICATION_JSON)
 public class ReportResource {

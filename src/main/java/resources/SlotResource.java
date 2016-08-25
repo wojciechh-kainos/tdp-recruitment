@@ -6,6 +6,8 @@ import dao.SlotDao;
 import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Path("/slots")
+@PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 public class SlotResource {
 
@@ -58,6 +61,7 @@ public class SlotResource {
         return slotDao.getForPersonForWeek(id, start, end);
     }
 
+    @RolesAllowed("recruiter")
     @PUT
     @Path("recruiter")
     @UnitOfWork
