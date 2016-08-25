@@ -30,7 +30,7 @@ require.config({
         'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
         'fileSaver' : 'lib/file-saver.js/FileSaver',
         'blob' : 'lib/blob-polyfill/Blob',
-        'ngCookies' : 'lib/angular-cookies/angular-cookies'
+        'ngCookies': 'lib/angular-cookies/angular-cookies',
     },
     shim: {
         'angular': {
@@ -48,7 +48,10 @@ require.config({
         'fileSaver' : ['angular'],
         'blob' : ['angular', 'fileSaver'],
         'angularFileSaver' : ['angular', 'fileSaver', 'blob'],
-        'ngCookies' : ['angular']
+        'ngCookies': {
+            exports: 'ngCookies',
+            deps: ['angular']
+        }
     },
     // dynamically load all test files
     deps: allTestFiles,

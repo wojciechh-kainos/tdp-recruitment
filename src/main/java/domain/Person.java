@@ -87,6 +87,11 @@ public class Person implements Cloneable, Principal {
     public Person() {
     }
 
+    public Person(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     @Override
     public Person clone() {
         try {
@@ -248,6 +253,7 @@ public class Person implements Cloneable, Principal {
     }
 
     @Override
+    @JsonIgnore
     public String getName() {
         return this.email;
     }

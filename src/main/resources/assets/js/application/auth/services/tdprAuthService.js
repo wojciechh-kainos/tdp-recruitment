@@ -1,5 +1,5 @@
 define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services/tdprBase64Service', 'ngCookies'], function (angular, tdprAuthModule) {
-    tdprAuthModule.service('tdprAuthService', ['$cookieStore', '$http', '$q', 'tdprBase64Service', '$state', 'Notification', '$q', '$location', function ($cookieStore, $http, $q, tdprBase64Service, $state, Notification, $q, $location) {
+    tdprAuthModule.service('tdprAuthService', ['$cookieStore', '$http', '$q', 'tdprBase64Service', '$state', '$q', '$location', function ($cookieStore, $http, $q, tdprBase64Service, $state, $q, $location) {
 
         var currentUser = {};
 
@@ -10,6 +10,7 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                 var user = res.data;
 
                 currentUser = {
+                    id: user.id,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
@@ -23,6 +24,15 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             }, function (err) {
                return $q.reject(err);
             });
+        };
+
+        service.logout = function () {
+            if(!service.isUserLoggedIn()) {
+                return;
+            }
+
+           service.clearCredentials();
+
         };
 
         service.setCredentials = function (email, password) {
@@ -49,8 +59,8 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             var globals = $cookieStore.get('globals');
             if (globals) {
                 currentUser = globals.currentUser;
+                service.setCredentials(currentUser.email, currentUser.token);
             }
-            service.setCredentials(currentUser.email, currentUser.token);
         };
 
         service.isUserLoggedIn = function() {
@@ -61,15 +71,22 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             return currentUser;
         }
 
-        service.isAuthenticated = function (role) {
-            var deferred = $q.defer();
-
-            if (service.isUserLoggedIn()) {
-                deferred.resolve();
-            } else {
-                $location.path('/login');
-                Notification.error('You need to sign in to view this page.');
+        service.isUserAuthorized = function (role) {
+            if(role === 'recruiter') {
+                return currentUser.isRecruiter;
             }
+        };
+
+        service.validateSession = function () {
+
+            var deferred = $q.defer();
+            $http.get('/api/auth/validateToken?token=' + currentUser.token).then(function(response) {
+                    deferred.resolve();
+                }, function() {
+                    service.clearCredentials();
+                    deferred.reject();
+                }
+            );
             return deferred.promise;
         };
 

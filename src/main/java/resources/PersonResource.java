@@ -11,6 +11,7 @@ import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -31,8 +32,8 @@ public class PersonResource {
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
-    private final TdpRecruitmentPasswordStore passwordStore;
     SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+    private final TdpRecruitmentPasswordStore passwordStore;
 
     @Inject
     public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao,TdpRecruitmentPasswordStore passwordStore) {
@@ -51,6 +52,7 @@ public class PersonResource {
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
             String token = UUID.randomUUID().toString();
             person.setActivationCode(token);
+            person.setActive(false);
             personDao.create(person);
             mailService.sendEmail(person.getEmail(), token);
 
@@ -83,6 +85,7 @@ public class PersonResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/all/withoutSlots")
     @UnitOfWork
     public List fetchPersonsWithoutSlots() {
@@ -122,9 +125,24 @@ public class PersonResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Person updatePerson(Person person) {
-        personDao.update(person);
-        return person;
+    public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
+        Optional<Person> user = personDao.getById(newPerson.getId());
+        if (!user.isPresent()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Person person = user.get();
+
+        person.setIsDev(newPerson.getIsDev());
+        person.setIsOps(newPerson.getIsOps());
+        person.setIsOther(newPerson.getIsOther());
+        person.setIsTest(newPerson.getIsTest());
+        person.setBandLevel(newPerson.getBandLevel());
+        person.setDefaultStartHour(newPerson.getDefaultStartHour());
+        person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
+        if(newPerson.getPassword() != null) {
+            person.setPassword(passwordStore.createHash(person.getPassword()));
+        }
+        return Response.ok(person).build();
     }
 
     @PUT
@@ -136,7 +154,7 @@ public class PersonResource {
         if(person.isPresent()) {
         person.get().setActive(!person.get().getActive());
 
-        return Response.ok().build();
+            return Response.ok().build();
         }
         else throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }
@@ -155,5 +173,4 @@ public class PersonResource {
 
         return Response.ok(recruiterList).build();
     }
-
 }

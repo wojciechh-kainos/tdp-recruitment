@@ -17,9 +17,18 @@ define(['angular'
                     personName : ''
                 },
                 resolve: {
-                    isAuthenticated: function(tdprAuthService) {
-                        return tdprAuthService.isAuthenticated("interviewer");
-                     }
+                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {
+                        var deferred = $q.defer();
+
+                        if (tdprAuthService.isUserLoggedIn()) {
+                            deferred.resolve();
+                        } else {
+                            $location.path('/login');
+                            Notification.error('You need to sign in to view this page.');
+                            deferred.reject();
+                        }
+                        return deferred.promise;
+                    }
                 }
             }).state("tdpr.interviewer.home", {
                 url: "/{id}/home",

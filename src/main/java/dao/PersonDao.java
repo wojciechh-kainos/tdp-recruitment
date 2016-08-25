@@ -41,10 +41,10 @@ public class PersonDao extends AbstractDAO<Person>{
 
     public void update(Person person){currentSession().update(person);}
 
-    public Person getUserByEmail(String email) {
+    public Optional<Person> getUserByEmail(String email) {
         Criteria criteria = currentSession().createCriteria(Person.class)
                 .add(Restrictions.eq("email", email));
-        return uniqueResult(criteria);
+        return Optional.ofNullable(uniqueResult(criteria));
     }
 
     public Optional<Person> getUserByActivationLink(String activationLink) {

@@ -3,16 +3,25 @@ define(['angular'
     , 'application/common/controllers/tdprNavbarController'
     , 'application/auth/services/tdprAuthService'
 ], function(angular, module) {
-    module.config(function($stateProvider, NotificationProvider) {
+    module.config(function($stateProvider, $urlRouterProvider, NotificationProvider) {
         $stateProvider
             .state("tdpr", {
                 abstract: true,
                 resolve: {
-                    isUserLoggedIn: _isUserLoggedIn
+                    validateSession: function(tdprAuthService, $location, $q, Notification) {
+                        tdprAuthService.checkCookies();
+
+                        if(tdprAuthService.isUserLoggedIn()) {
+                            tdprAuthService.validateSession().catch(function() {
+                                $location.path('/login');
+                                Notification.error('Your session has expired. Please log in.');
+                            });
+                        }
+                    },
                 },
                 views: {
                     "navbar@": {
-                       templateUrl: "/html/partials/tdpr-navbar.html",
+                       templateUrl: "/html/partials/common/tdpr-navbar.html",
                        controller: 'tdprNavbarController'
                     }
                 }
@@ -25,17 +34,13 @@ define(['angular'
                 }
         });
 
+        $urlRouterProvider.otherwise("/404");
+
         NotificationProvider.setOptions({
           delay: 2000,
         });
 
     });
-
-    function _isUserLoggedIn(tdprAuthService) {
-        if(tdprAuthService.getCurrentUser().token === undefined){
-            tdprAuthService.checkCookies();
-        }
-    };
 
     return module;
 });

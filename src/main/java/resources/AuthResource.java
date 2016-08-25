@@ -43,6 +43,16 @@ public class AuthResource {
 	}
 
 	@GET
+	@Path("/validateToken")
+	public Response validateToken(@QueryParam("token") String token) {
+		if(authenticator.isTokenValid(token)) {
+			return Response.ok().build();
+		} else {
+			return Response.status(Response.Status.GONE).build();
+		}
+	}
+
+	@GET
 	@UnitOfWork
 	@Path("activate/{activationLink}")
 	public Person checkIfPersonWithActivationLinkExists (@PathParam("activationLink")String activationLink) {
