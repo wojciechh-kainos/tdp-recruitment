@@ -4,6 +4,7 @@ import dao.SlotTimeDao;
 import domain.SlotTime;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -23,6 +24,7 @@ public class SlotTimeResource {
     }
 
     @GET
+    @PermitAll
     @Path("/all")
     @UnitOfWork
     public List<SlotTime> getAll() {
