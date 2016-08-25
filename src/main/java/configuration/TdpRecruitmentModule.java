@@ -20,12 +20,16 @@ public class TdpRecruitmentModule extends AbstractModule{
         return sessionFactory;
     }
 
+    @Provides
+    TdpRecruitmentCacheConfiguration providesCacheConfiguration(TdpRecruitmentApplicationConfiguration config) {
+        return config.getTokenCacheConfig();
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     protected void configure() {
-
     }
 }

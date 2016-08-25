@@ -1,14 +1,21 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
-    , 'application/recruiter/services/tdprCandidatesService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, candidates, recruiters, ngDialog, Notification) {
+    , 'application/recruiter/services/tdprCandidatesService', 'application/recruiter/services/tdprRecruiterNoteService'], function (angular, tdprRecruiterModule) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
+        $scope.recruiterNotes = recruiterNotes;
         $scope.sortColumn = 'recruiter.lastName';
         $scope.sortReverse = true;
+        $scope.currentNote = recruiterNotes[0];
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
+        $scope.limitedAmount = 10;
+        $scope.limitAmounts = RecruiterNotesLimits;
         var popUp;
+        var popUpForDelete;
         var defaultLimitValue = 35;
+
+        var currentUser = tdprAuthService.getCurrentUser();
 
         var openPopUp = function () {
             var dialog = ngDialog.open({
@@ -21,6 +28,18 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             });
 
             return dialog;
+        };
+
+        var findRecruiter = function () {
+            var returnRecruiter = {};
+            if (!angular.isUndefined(currentUser)) {
+                var findId = _.findIndex($scope.recruiters, {id: currentUser.id});
+                if (findId !== -1) {
+                    $scope.currentRecruiter = $scope.recruiters[findId];
+                    returnRecruiter = $scope.currentRecruiter;
+                }
+            }
+            return returnRecruiter;
         };
 
         var populateLimitsObject = function () {
@@ -39,6 +58,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             var recruiterList = angular.copy(recruiters);
             $scope.currentRecruiter = {id: 0, lastName: "All"};
             recruiterList.unshift($scope.currentRecruiter);
+            findRecruiter();
             return recruiterList;
         };
 
@@ -87,8 +107,9 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                     _.remove($scope.candidates, function (candidate) {
                         return candidate.id === parent.idOfCandidate;
                     });
-
+                    popUpForDelete.close();
                     $scope.refreshCandidates();
+                    $scope.candidateForDelete = {};
                 }, function (response) {
                     Notification.error(response);
                 });
@@ -116,10 +137,53 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             popUp = openPopUp();
         };
 
+        $scope.showPopUpForDelete = function (candidateForDelete) {
+            $scope.candidateForDelete = candidateForDelete;
+
+            popUpForDelete = ngDialog.open({
+                template: '/html/partials/recruiter/templates/pop-up-for-delete.html',
+                scope: $scope,
+                width: 600
+            });
+        };
+
+        $scope.closePopUpForDelete = function () {
+            popUpForDelete.close();
+            $scope.candidateForDelete = {};
+        };
 
         $scope.sortBy = function (column) {
             $scope.sortColumn = column;
             $scope.sortReverse = $scope.columnMap[column].reverse = !$scope.columnMap[column].reverse;
+        };
+
+        $scope.createRecruiterNote = function () {
+            var currentRecruiter = findRecruiter();
+
+            var note = {
+                date: new Date(),
+                content: $scope.currentNote.content,
+                recruiter: currentRecruiter
+            };
+
+            tdprRecruiterNoteService.createRecruiterNote(note).then(
+                function () {
+                    Notification.success("Notes updated successfully.");
+                    $scope.refreshRecruiterNote();
+                }, function (response) {
+                    Notification.error(response);
+                });
+        };
+
+        $scope.refreshRecruiterNote = function () {
+            tdprRecruiterNoteService.fetchRecruiterNotes($scope.limitedAmount).then(
+                function (response) {
+                    $scope.recruiterNotes = response;
+                    $scope.currentNote = $scope.recruiterNotes[0];
+
+                }, function (response) {
+                    Notification.error(response);
+                });
         };
     });
 });
