@@ -1,5 +1,5 @@
-define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q) {
+define(['application/recruiter/tdprRecruiterModule', 'application/constants/tdprConstantsModule'], function (tdprRecruiterModule) {
+    tdprRecruiterModule.service('tdprPersonsService', function ($http, dateFilter, $q, HttpStatusCodes) {
 
         this.fetchPersonsWithSlotsForDates = function(start, end) {
             var format = 'yyyy-MM-dd';
@@ -26,13 +26,18 @@ define(['application/recruiter/tdprRecruiterModule'], function (tdprRecruiterMod
             return $http.put("/api/person/create/", person).then(function (response) {
                 return response;
             }, function (err) {
-                err.message = "Interviewer adding failed.";
+
+                if (err.status == HttpStatusCodes.conflict) {
+                    err.message = "Email address already in use.";
+                } else {
+                    err.message = "Interviewer adding failed.";
+                }
                 return $q.reject(err);
             });
         };
 
         this.managePerson = function (person) {
-            return $http.put("/api/person/" + person.id, person);
+            return $http.put("/api/person/" + person.id + "/switchAccountStatus");
         };
 
     })

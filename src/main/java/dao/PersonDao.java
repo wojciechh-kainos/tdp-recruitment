@@ -3,9 +3,12 @@ package dao;
 import com.google.inject.Inject;
 import domain.Person;
 import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PersonDao extends AbstractDAO<Person>{
 
@@ -18,8 +21,8 @@ public class PersonDao extends AbstractDAO<Person>{
         return persist(person).getId();
     }
 
-    public Person getById(Long id) {
-        return get(id);
+    public Optional<Person> getById(Long id) {
+        return Optional.ofNullable(get(id));
     }
 
     public void deleteById(Long id) {
@@ -34,5 +37,13 @@ public class PersonDao extends AbstractDAO<Person>{
         return namedQuery("Person.findAll").list();
     }
 
+    public List<Person> findByEmail(String email) { return namedQuery("Person.findByEmail").setParameter("email", email).list(); }
+
     public void update(Person person){currentSession().update(person);}
+
+    public Optional<Person> getUserByEmail(String email) {
+        Criteria criteria = currentSession().createCriteria(Person.class)
+                .add(Restrictions.eq("email", email));
+        return Optional.ofNullable(uniqueResult(criteria));
+    }
 }

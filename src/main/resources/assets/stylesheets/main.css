@@ -67,8 +67,12 @@ h2 {
     text-align: center;
 }
 
+.cursor-pointer{
+    cursor : pointer;
+}
+
 /* interviewer details and adding interviewer */
-#interviewer-details-h1 {
+.details-h1 {
     font-size: 48px;
     text-align: center;
     font-family: 'Lato', sans-serif;
@@ -171,4 +175,9 @@ h2 {
     box-sizing: border-box;
     padding-left: 12px;
     padding-right: 12px;
+}
+
+.interviewer-list {
+    list-style-type: none;
+    padding-left: 0;
 }

@@ -1,20 +1,36 @@
-<div class="container">
-    <div class="well center">
-        <h1>Event Summary</h1>
-        <form-group>
-            <label>Interviewers:</label>
-            <ul>
-                <li ng-repeat="interviewer in interview.interviewers">{{interviewer.firstName}} {{interviewer.lastName}}</li>
-            </ul>
-            <br>
-            <label>Interviewee:</label> {{interview.interviewee}}
-            <br>
-            <label>Time:</label> {{interview.start | date: "HH:mm"}} - {{interview.end | date: "HH:mm"}}
-            <br>
-            <label>Organizer:</label> {{interview.organizer.firstName}} {{interview.organizer.lastName}}
-            <br>
-            <button ng-click="scheduleInterview()">Send</button>
-            <button ng-click="goHome()">Cancel</button>
-        </form-group>
-    </div>
+<div class="well center">
+    <h1 class="details-h1">Event summary</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-4 control-label">Interviewers:</label>
+            <div class="col-md-8">
+                <ul class="form-control-static interviewer-list">
+                    <li ng-repeat="interviewer in interview.interviewers">{{interviewer.firstName}}
+                        {{interviewer.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Interviewee:</label>
+            <p class="form-control-static col-md-8">{{interview.interviewee}}</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Time:</label>
+            <p class="form-control-static col-md-8">{{interview.start | date: "HH:mm"}}
+                - {{interview.end | date: "HH:mm"}}</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Organizer:</label>
+            <p class="form-control-static col-md-8">{{interview.organizer.firstName}}
+                {{interview.organizer.lastName}}</p>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Message:</label>
+            <div class="col-md-8">
+                <textarea rows="5" class="form-control" ng-model="interview.message"></textarea></div>
+        </div>
+        <button ng-click="scheduleInterview()" class="btn btn-primary">Send</button>
+        <button ui-sref="tdpr.recruiter.home" class="btn btn-default">Cancel</button>
+    </form>
 </div>

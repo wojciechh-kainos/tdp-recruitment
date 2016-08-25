@@ -1,5 +1,6 @@
 package resources;
 
+import auth.TdpRecruitmentPasswordStore;
 import com.google.inject.Inject;
 import constants.TdpConstants;
 import dao.NoteDao;
@@ -10,6 +11,7 @@ import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,14 +32,16 @@ public class PersonResource {
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
+    private final TdpRecruitmentPasswordStore passwordStore;
     private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
         this.mailService = mailService;
+        this.passwordStore = passwordStore;
     }
 
     @PUT
@@ -45,10 +49,17 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-        personDao.create(person);
-        // TODO: create activation message
-        // mailService.sendEmail(person.getEmail(), person.getId());
-        return person;
+
+        if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+            person.setActive(false);
+            personDao.create(person);
+            //mailService.sendEmail(person.getEmail(), person.getId());   //TODO implement message
+
+            return person;
+
+        } else {
+            throw new WebApplicationException(Response.Status.CONFLICT);
+        }
     }
 
     @GET
@@ -61,10 +72,11 @@ public class PersonResource {
         List<Person> persons = personDao.findAllActive();
         persons.forEach(p -> p.setSlotList(slotDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
-            Note note = noteDao.getByPersonIdAndDate(p.getId(), start);
-            if(note != null) {
-                if(!note.getDescription().isEmpty()) {
-                    p.setNoteList(Arrays.asList(note));
+            Optional<Note> note = noteDao.getByPersonIdAndDate(p.getId(), start);
+
+            if(note.isPresent()) {
+                if(!note.get().getDescription().isEmpty()) {
+                    p.setNoteList(Arrays.asList(note.get()));
                 }
             }
         });
@@ -73,6 +85,7 @@ public class PersonResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/all/withoutSlots")
     @UnitOfWork
     public List fetchPersonsWithoutSlots() {
@@ -85,7 +98,9 @@ public class PersonResource {
     public Note getNote(@PathParam("personId") Long personId,
                         @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return noteDao.getByPersonIdAndDate(personId,date);
+        Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
+
+        return note.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
     }
 
     @PUT
@@ -100,20 +115,63 @@ public class PersonResource {
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Response getPersonById(@PathParam("id") Long id){
-        Person person = personDao.getById(id);
-        if (person == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(person).build();
+    public Person getPersonById(@PathParam("id") Long id){
+        Optional<Person> person = personDao.getById(id);
+
+        return person.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Person updatePerson(Person person) {
-        personDao.update(person);
-        return person;
+    public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
+        Optional<Person> user = personDao.getById(newPerson.getId());
+        if (!user.isPresent()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Person person = user.get();
+
+        person.setIsDev(newPerson.getIsDev());
+        person.setIsOps(newPerson.getIsOps());
+        person.setIsOther(newPerson.getIsOther());
+        person.setIsTest(newPerson.getIsTest());
+        person.setBandLevel(newPerson.getBandLevel());
+        person.setDefaultStartHour(newPerson.getDefaultStartHour());
+        person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
+        if(newPerson.getPassword()!=null){
+            person.setPassword(passwordStore.createHash(person.getPassword()));
+        }
+        return Response.ok(person).build();
     }
+
+    @PUT
+    @Path("/{id}/switchAccountStatus")
+    @UnitOfWork
+    public Response switchAccountStatus(@PathParam("id") Long id) {
+        Optional<Person> person = personDao.getById(id);
+        if(person.isPresent()) {
+            person.get().setActive(!person.get().getActive());
+
+            return Response.ok().build();
+        }
+        else throw new WebApplicationException(Response.Status.BAD_REQUEST);
+
+    }
+
+    @GET
+    @Path("/all/recruiter")
+    @UnitOfWork
+    public Response getRecruiters() {
+        List<Person> recruiterList = new ArrayList<>();
+
+        for (Person person : personDao.findAll()) {
+            if (person.getAdmin() != null && person.getAdmin()) {
+                recruiterList.add(person);
+            }
+        }
+
+        return Response.ok(recruiterList).build();
+    }
+
 }
