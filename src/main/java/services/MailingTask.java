@@ -30,13 +30,20 @@ public class MailingTask implements Runnable {
         Session session = Session.getDefaultInstance(props);
         session.setDebug(true);// TODO: remove before merging with master
 
+        Transport transport = null;
+
         try {
-            Transport transport = session.getTransport("smtp");
+            transport = session.getTransport("smtp");
             transport.connect(host, port, from, password);
             transport.sendMessage(msg, msg.getAllRecipients());
-            transport.close(); // TODO: Move method invocation to 'finally' block
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (transport != null) transport.close();
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -55,7 +55,7 @@ public class Interview {
         this.message = message;
     }
 
-    public MimeMultipart createInvitation() throws MessagingException {
+    private MimeMultipart createInvitation() throws MessagingException {
         MimeMultipart body = new MimeMultipart("alternative");
         BodyPart textContent = new MimeBodyPart();
         BodyPart calendarPart = new MimeBodyPart();
@@ -69,11 +69,10 @@ public class Interview {
         calendarPart.addHeader("Content-Class", "urn:content-classes:calendarmessage");
         body.addBodyPart(calendarPart);
 
-
         return body;
     }
 
-    public String createCalendarEvent() {
+    private String createCalendarEvent() {
         String template = "";
         UUID eventUUID = UUID.randomUUID(); //should this be random?
         SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00Z'");

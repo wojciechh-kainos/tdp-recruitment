@@ -35,10 +35,11 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
         });
 
         describe('getPairs', function () {
-            xit("should return false when any of function arguments not set", function () {
+            it("should return false when any of function arguments not set", function () {
                 var response = service.getPairs(["isDev"], new Date('2015-12-13'));
                 expect(response).toEqual(false);
             })
         })
     })
 });
+

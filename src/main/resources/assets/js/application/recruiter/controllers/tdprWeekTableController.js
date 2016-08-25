@@ -20,21 +20,18 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             });
         };
 
-        if ($scope.params && $scope.params.candidateId !== 0) {
+        if ($scope.params && $scope.params.candidateId) {
             $scope.pairingMode = true;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
-
         } else {
             $scope.pairingMode = false;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
         }
 
         $scope.interviewOff = function () {
-
             $scope.pairingMode = false;
             $scope.refreshPersonsData();
         };
-
 
         $scope.createInterview = function () {
             var data = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params);
@@ -46,7 +43,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.getPairs = function () {
-            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
+            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate, $scope.startTime, $scope.endTime).then(
                 function (persons) {
                     $scope.persons = persons;
                 }
@@ -112,6 +109,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 Notification.error("Failed to refresh persons data");
             });
         };
+
         $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
     });
 });
