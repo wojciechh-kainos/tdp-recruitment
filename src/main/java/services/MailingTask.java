@@ -38,7 +38,7 @@ public class MailingTask implements Runnable {
             transport.sendMessage(msg, msg.getAllRecipients());
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (transport != null) transport.close();
             } catch (MessagingException e) {

@@ -4,9 +4,10 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.getPairs = function (roles, startDay, endDay, startTime, endTime) {
             var pathParams = this.createPathParams(roles, startDay, endDay, startTime, endTime);
-            // if(!pathParams){
-            //     return false;
-            // }
+
+            if (!pathParams) {
+                return false;
+            }
 
             return $http.get('api/pairs?' + pathParams).then(function (response) {
                     return response.data;
