@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="US-55_noteForRecruitersInCandidateListTable" author="kuba">
+        <createTable tableName="recruiter_note">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"></constraints>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="content" type="text" defaultValue="">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="recruiter" type="bigint">
+                <constraints foreignKeyName="person_id" referencedTableName="person" referencedColumnNames="id" nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

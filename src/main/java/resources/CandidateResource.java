@@ -5,12 +5,14 @@ import dao.CandidateDao;
 import domain.Candidate;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/candidate")
+@RolesAllowed("recruiter")
 @Produces(MediaType.APPLICATION_JSON)
 public class CandidateResource {
 

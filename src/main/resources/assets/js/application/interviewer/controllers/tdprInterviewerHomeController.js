@@ -83,14 +83,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             getNote(id, startDate);
         }
 
-        $scope.goBackToRecruiterView = function () {
-            if (!verifyNoUnsavedChanges()) {
-                return;
-            }
-
-            $state.go('tdpr.recruiter.home');
-        };
-
         $scope.discardChanges = function () {
             $scope.clearTable();
             $scope.getSlots(id);
@@ -218,10 +210,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         function isSlotTypeFullOrInit(slot) {
             return slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id;
         }
-
-        $scope.goDetails = function () {
-            $state.go('tdpr.interviewer.details', {'id': id});
-        };
 
         function createNote(description, personId, date) {
             $scope.noteContent = {

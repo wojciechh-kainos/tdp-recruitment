@@ -1,6 +1,6 @@
 <br>
 <div class="well center">
-    <h1 id="interviewer-details-h1">Add person</h1>
+    <h1 id="interviewer-details-h1">Add user</h1>
 
     <form class="form-horizontal interviewer-form" name="interviewerForm" role="form">
         <div class="form-group">
@@ -44,7 +44,7 @@
         </div>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="submit" ng-click="interviewerForm.$valid ? create(person) : showError()" value="Submit"
-                   ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
+               ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
         </div>
     </form>

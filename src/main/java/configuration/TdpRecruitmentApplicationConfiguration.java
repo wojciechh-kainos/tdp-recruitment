@@ -45,4 +45,15 @@ public class TdpRecruitmentApplicationConfiguration extends Configuration {
     public void setDomain(String domain) {
         this.domain = domain;
     }
+
+    @Valid
+    @NotNull
+    private TdpRecruitmentCacheConfiguration tokenCacheConfig;
+
+    @JsonProperty("tokenCacheConfig")
+    public TdpRecruitmentCacheConfiguration getTokenCacheConfig() { return tokenCacheConfig; }
+
+    public void setTokenCacheConfig(TdpRecruitmentCacheConfiguration tokenCacheConfig) {
+        this.tokenCacheConfig = tokenCacheConfig;
+    }
 }

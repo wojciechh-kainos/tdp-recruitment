@@ -4,94 +4,119 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
         var $scope;
         var Notification;
+        var tdprAuthService;
         var tdprCandidatesService;
+        var tdprRecruiterNoteService;
         var recruiters;
         var candidates;
         var candidate;
+        var recruiterNotes;
         var updateCandidate;
         var ngDialog;
         var deleteCandidateDeferred;
         var createCandidateDeferred;
         var fetchCandidatesDeferred;
         var updateCandidatesDeferred;
+        var fetchRecruiterNotesDeferred;
+        var createRecruiterNoteDeferred;
+        var RecruiterNotesLimits;
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
         beforeEach(inject(function ($controller, _$q_, _$rootScope_) {
-                $scope = _$rootScope_.$new();
-                Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+            $scope = _$rootScope_.$new();
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
 
-                tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates', 'updateCandidate']);
-                deleteCandidateDeferred = _$q_.defer();
-                tdprCandidatesService.deleteCandidate.and.returnValue(deleteCandidateDeferred.promise);
+            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
+            tdprAuthService.getCurrentUser.and.returnValue({});
 
-                createCandidateDeferred = _$q_.defer();
-                tdprCandidatesService.createCandidate.and.returnValue(createCandidateDeferred.promise);
+            tdprRecruiterNoteService = jasmine.createSpyObj('tdprRecruiterNoteService', ['fetchRecruiterNotes', 'createRecruiterNote']);
 
-                fetchCandidatesDeferred = _$q_.defer();
-                tdprCandidatesService.fetchCandidates.and.returnValue(fetchCandidatesDeferred.promise);
+            fetchRecruiterNotesDeferred = _$q_.defer();
+            tdprRecruiterNoteService.fetchRecruiterNotes.and.returnValue(fetchRecruiterNotesDeferred.promise);
 
-                updateCandidatesDeferred = _$q_.defer();
-                tdprCandidatesService.updateCandidate.and.returnValue(updateCandidatesDeferred.promise);
+            createRecruiterNoteDeferred = _$q_.defer();
+            tdprRecruiterNoteService.createRecruiterNote.and.returnValue(createRecruiterNoteDeferred.promise);
 
-                candidate = {
-                    "id": 1,
-                    "firstName": "Jan",
-                    "lastName": "Gruszka"
-                };
+            tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates', 'updateCandidate']);
+            deleteCandidateDeferred = _$q_.defer();
+            tdprCandidatesService.deleteCandidate.and.returnValue(deleteCandidateDeferred.promise);
 
-                updateCandidate = {
+            createCandidateDeferred = _$q_.defer();
+            tdprCandidatesService.createCandidate.and.returnValue(createCandidateDeferred.promise);
+
+            fetchCandidatesDeferred = _$q_.defer();
+            tdprCandidatesService.fetchCandidates.and.returnValue(fetchCandidatesDeferred.promise);
+
+            updateCandidatesDeferred = _$q_.defer();
+            tdprCandidatesService.updateCandidate.and.returnValue(updateCandidatesDeferred.promise);
+
+            candidate = {
+                "id": 1,
+                "firstName": "Jan",
+                "lastName": "Gruszka"
+            };
+
+            updateCandidate = {
+                "id": 2,
+                "firstName": "Ania",
+                "lastName": "Gruszka",
+                "note": 'Updated note'
+            };
+
+            candidates = [
+                candidate,
+                {
                     "id": 2,
                     "firstName": "Ania",
                     "lastName": "Gruszka",
-                    "note": 'Updated note'
-                };
+                    "note": 'note'
+                },
+                {
+                    "id": 3,
+                    "firstName": "Michał",
+                    "lastName": "Gruszka"
+                }
+            ];
 
-                candidates = [
-                    candidate,
-                    {
-                        "id": 2,
-                        "firstName": "Ania",
-                        "lastName": "Gruszka",
-                        "note": 'note'
-                    },
-                    {
-                        "id": 3,
-                        "firstName": "Michał",
-                        "lastName": "Gruszka"
+            recruiters = [];
+
+            recruiterNotes = [];
+
+            RecruiterNotesLimits = [10, 25, 50, 100, 1000];
+
+            ngDialog = {
+                open: function () {
+                    return {
+                        close: function () {
+
+                        },
+                        closePromise: _$q_.defer().promise
                     }
-                ];
+                },
+                close: function () {
+                }
+            };
 
-                recruiters = [];
-
-                ngDialog = {
-                    open: function () {
-                        return {
-                            close: function () {
-
-                            },
-                            closePromise: _$q_.defer().promise
-                        }
-                    },
-                    close: function () {
-                    }
-                };
-
-                $controller("tdprCandidatesController", {
-                    $scope: $scope,
-                    tdprCandidatesService: tdprCandidatesService,
-                    candidates: candidates,
-                    recruiters: recruiters,
-                    ngDialog: ngDialog,
-                    Notification: Notification
-                });
-            })
-        );
+            $controller("tdprCandidatesController", {
+                $scope: $scope,
+                tdprCandidatesService: tdprCandidatesService,
+                tdprRecruiterNoteService: tdprRecruiterNoteService,
+                tdprAuthService: tdprAuthService,
+                candidates: candidates,
+                recruiters: recruiters,
+                recruiterNotes: recruiterNotes,
+                ngDialog: ngDialog,
+                Notification: Notification,
+                RecruiterNotesLimits: RecruiterNotesLimits
+            });
+        }));
 
         describe('When click delete button', function () {
             it('should delete candidate.', function () {
                 var message = 'Candidate deleting succeeded.';
                 deleteCandidateDeferred.resolve({"data": 1});
+                $scope.showPopUpForDelete(candidate);
                 $scope.deleteCandidate(candidate);
                 $scope.$apply();
                 expect(Notification.success).toHaveBeenCalledWith(message);
