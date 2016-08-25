@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 @Table(name="recruiter_note")
 @NamedQueries({
-        @NamedQuery(name="RecruiterNote.findAll", query="SELECT rn FROM RecruiterNote rn")
+        @NamedQuery(name="RecruiterNote.findAll", query="SELECT rn FROM RecruiterNote rn ORDER BY rn.date DESC")
 })
 public class RecruiterNote {
     @Id

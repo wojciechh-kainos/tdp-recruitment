@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/{limit}/recruiterNote")
+@Path("/recruiterNote")
 public class RecruiterNoteResource {
 
     private RecruiterNoteDao recruiterNoteDao;

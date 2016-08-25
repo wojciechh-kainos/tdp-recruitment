@@ -4,10 +4,12 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
         var $scope;
         var Notification;
+        var tdprAuthService;
         var tdprCandidatesService;
         var recruiters;
         var candidates;
         var candidate;
+        var recruiterNotes;
         var updateCandidate;
         var ngDialog;
         var deleteCandidateDeferred;
@@ -20,6 +22,9 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         beforeEach(inject(function ($controller, _$q_, _$rootScope_) {
                 $scope = _$rootScope_.$new();
                 Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+
+                tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
+                tdprAuthService.getCurrentUser.and.returnValue({});
 
                 tdprCandidatesService = jasmine.createSpyObj('tdprCandidateService', ['deleteCandidate', 'createCandidate', 'fetchCandidates', 'updateCandidate']);
                 deleteCandidateDeferred = _$q_.defer();
@@ -64,6 +69,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
                 recruiters = [];
 
+                recruiterNotes = [];
+
                 ngDialog = {
                     open: function () {
                         return {
@@ -80,8 +87,10 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 $controller("tdprCandidatesController", {
                     $scope: $scope,
                     tdprCandidatesService: tdprCandidatesService,
+                    tdprAuthService: tdprAuthService,
                     candidates: candidates,
                     recruiters: recruiters,
+                    recruiterNotes: recruiterNotes,
                     ngDialog: ngDialog,
                     Notification: Notification
                 });
@@ -92,6 +101,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
             it('should delete candidate.', function () {
                 var message = 'Candidate deleting succeeded.';
                 deleteCandidateDeferred.resolve({"data": 1});
+                $scope.showPopUpForDelete(candidate);
                 $scope.deleteCandidate(candidate);
                 $scope.$apply();
                 expect(Notification.success).toHaveBeenCalledWith(message);
