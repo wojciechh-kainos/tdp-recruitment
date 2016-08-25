@@ -10,7 +10,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 day: date,
                 person: person.id,
                 number: slotId,
-                type: changeTo
+                type: changeTo,
+                changed: true
             };
 
             if (!person.changesPending || angular.isUndefined(person.changesPending)) {
