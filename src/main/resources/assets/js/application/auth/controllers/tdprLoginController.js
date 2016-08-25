@@ -4,10 +4,8 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
             tdprAuthService.login($scope.username, $scope.password)
                 .then(function (user) {
                    if (user.admin) {
-                   console.log('r');
                         $state.go('tdpr.recruiter.home');
                    } else {
-                   console.log('i');
                         $state.go('tdpr.interviewer.home', {id: user.id});
                    }
                 }, function (response) {

@@ -21,7 +21,7 @@ define(['angular'
                 },
                 views: {
                     "navbar@": {
-                       templateUrl: "/html/partials/tdpr-navbar.html",
+                       templateUrl: "/html/partials/common/tdpr-navbar.html",
                        controller: 'tdprNavbarController'
                     }
                 }
