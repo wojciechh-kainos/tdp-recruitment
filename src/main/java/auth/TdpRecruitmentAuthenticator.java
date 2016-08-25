@@ -34,8 +34,6 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 
 		TdpRecruitmentCacheConfiguration cacheConfiguration = config.getTokenCacheConfig();
 
-		System.out.println("WOOOOOOOOOOOOOWOWOWOOWO" + cacheConfiguration.getMaximumSize());
-
 		cache = CacheBuilder
 			.newBuilder()
 			.maximumSize(cacheConfiguration.getMaximumSize())
