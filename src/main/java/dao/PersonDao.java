@@ -1,6 +1,5 @@
 package dao;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import domain.Person;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -9,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PersonDao extends AbstractDAO<Person>{
 
@@ -22,7 +22,7 @@ public class PersonDao extends AbstractDAO<Person>{
     }
 
     public Optional<Person> getById(Long id) {
-        return Optional.fromNullable(get(id));
+        return Optional.ofNullable(get(id));
     }
 
     public void deleteById(Long id) {
@@ -50,6 +50,6 @@ public class PersonDao extends AbstractDAO<Person>{
     public Optional<Person> getUserByActivationLink(String activationLink) {
         Criteria criteria = currentSession().createCriteria(Person.class)
                 .add(Restrictions.eq("activationCode", activationLink));
-        return Optional.fromNullable(uniqueResult(criteria));
+        return Optional.ofNullable(uniqueResult(criteria));
     }
 }

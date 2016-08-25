@@ -1,13 +1,16 @@
 package services;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import dao.PersonDao;
 import dao.SlotDao;
 import domain.*;
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ReportService {
 
@@ -20,32 +23,36 @@ public class ReportService {
         this.personDao = personDao;
     }
 
-    public Report getReport(long personId, Date startDate, Date endDate) {
+    public Report getReport(long personId, Date startDate, Date endDate) throws WebApplicationException{
 
         Double fullCount = 0.0;
         Double initCount = 0.0;
 
         Optional<Person> person = personDao.getById(personId);
+        if (person.isPresent()) {
 
-        List<Slot> slotList = slotDao.getForPersonForWeek(personId, startDate, endDate);
+            List<Slot> slotList = slotDao.getForPersonForWeek(personId, startDate, endDate);
 
-        for (Slot slot : slotList) {
-            SlotTime slotTime = slot.getSlotTime();
+            for (Slot slot : slotList) {
+                SlotTime slotTime = slot.getSlotTime();
 
             Double slotDuration = slotTime.getSlotDurationInHours();
 
-            switch (slot.getType().getName()) {
-                case full:
-                    fullCount += slotDuration;
-                    break;
-                case init:
-                    initCount += slotDuration;
-                    break;
-                default:
-                    break;
+                switch (slot.getType().getName()) {
+                    case full:
+                        fullCount += slotDuration;
+                        break;
+                    case init:
+                        initCount += slotDuration;
+                        break;
+                    default:
+                        break;
+                }
             }
+            return new Report(person.get(), initCount, fullCount);
         }
-        return new Report(person.get(), initCount, fullCount);
+
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
     public List<Report> getAllReports(Date startDate, Date endDate) {

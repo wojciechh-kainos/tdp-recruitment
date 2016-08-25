@@ -19,10 +19,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
+import static org.postgresql.hostchooser.HostRequirement.master;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonResourceTest {
@@ -39,6 +41,7 @@ public class PersonResourceTest {
     MailService mockMailService;
 
     private static List<Note> stubNoteDB;
+    private static List<Person> stubPersonDB;
     private static Date date;
     private static String dateString;
     private static Person person;
@@ -54,6 +57,7 @@ public class PersonResourceTest {
         c.setTime(date3); // Now use today date.
         c.add(Calendar.DATE, 10); // Adding 10 days
 
+        stubPersonDB = new ArrayList<>();
         person = new Person();
         person.setId(1L);
         firstPerson = new Person();
@@ -73,6 +77,14 @@ public class PersonResourceTest {
         note3 = new Note(2L, person, "note nr 2", new java.sql.Date(c.getTimeInMillis()));
         stubNoteDB = new ArrayList<>();
         stubNoteDB.add(note);
+
+        stubPersonDB.add(person);
+
+        person = new Person();
+        person.setId(2L);
+        person.setAdmin(true);
+
+        stubPersonDB.add(person);
     }
 
     @Before
@@ -81,8 +93,8 @@ public class PersonResourceTest {
     }
 
     @Test
-    public void testGetNote() throws ParseException {
-        when(mockNoteDao.getByPersonIdAndDate(1L, date)).thenReturn(stubNoteDB.get(0));
+    public void testGetNote()throws ParseException{
+        when(mockNoteDao.getByPersonIdAndDate(1L,date)).thenReturn(Optional.ofNullable(stubNoteDB.get(0)));
 
         Note result = resource.getNote(1L, dateString);
 
@@ -111,8 +123,17 @@ public class PersonResourceTest {
     }
 
     @Test
-    public void testCreatePerson() {
+    public void testGetRecruiters() {
+        when(mockPersonDao.findAll()).thenReturn(stubPersonDB);
 
+        Response result = resource.getRecruiters();
+
+        assertEquals(Response.Status.OK.getStatusCode(), result.getStatus());
+        verify(mockPersonDao, times(1)).findAll();
+    }
+
+    @Test
+    public void testCreatePerson() {
         resource.createPerson(firstPerson);
 
         verify(mockPersonDao, times(1)).create(firstPerson);
