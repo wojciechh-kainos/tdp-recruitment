@@ -1,5 +1,6 @@
 package servicesTests;
 
+import domain.Candidate;
 import domain.Person;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,6 +28,7 @@ public class InterviewTest {
     private static Person organizer;
     private static Person interviewer1;
     private static Person interviewer2;
+    private static Candidate interviewee;
 
     @BeforeClass
     public static void setUp() throws MessagingException {
@@ -36,6 +38,9 @@ public class InterviewTest {
         organizer.setFirstName("Name");
         organizer.setLastName("Surename");
         organizer.setEmail("organizer@example.com");
+
+        interviewee = new Candidate();
+        interviewee.setPosition("position");
 
         interviewer1 = new Person();
         interviewer1.setFirstName("Interviewer1");
@@ -55,6 +60,7 @@ public class InterviewTest {
         Date end = new Date(1410, 15, 11);
 
         interview.setInterviewers(interviewers);
+        interview.setInterviewee(interviewee);
         interview.setOrganizer(organizer);
         interview.setStart(start);
         interview.setEnd(end);
@@ -64,7 +70,7 @@ public class InterviewTest {
 
     @Test
     public void testCreateMessageShouldSetMessageSubject() throws MessagingException {
-        assertEquals("Should set message subject to Interview", message.getSubject(), "Interview");
+        assertEquals("Should set message subject with job position", message.getSubject(), "Interview - " + interviewee.getPosition());
     }
 
     @Test
