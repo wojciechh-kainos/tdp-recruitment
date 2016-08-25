@@ -13,7 +13,7 @@ Note for this week:
             <span class="red" ng-show="note != 'none'">*</span></a>
     </div>
     <div class="person-name-buttons" ng-if="personData.changesPending">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"
+            <span ng-show="!pairingMode" class="glyphicon glyphicon-ok" aria-hidden="true"
                   ng-click="submitSlotChanges({person: personData})" uib-tooltip="Submit"></span>
         <span class="glyphicon glyphicon-remove" aria-hidden="true"
               ng-click="discardSlotChanges({person: personData})" uib-tooltip="Discard"></span>
