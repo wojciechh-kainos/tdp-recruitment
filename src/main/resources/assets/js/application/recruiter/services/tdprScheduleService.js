@@ -120,6 +120,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             } else {
                 // Cycle through
                 // Available/maybe - full - init - maybe
+                var newType = undefined;
 
                 switch (slot.type) {
                     case AvailabilityEnum.available.name:
@@ -130,12 +131,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     case AvailabilityEnum.full.name:
                         newType = AvailabilityEnum.init.name;
                         break;
+                    default:
+                        return;
                 }
-                var newType = undefined;
 
-                if (newType !== undefined) {
-                    that.changeSlotType(slot, slotId, date, person, newType, pairing);
-                }
+                that.changeSlotType(slot, slotId, date, person, newType, pairing);
             }
         };
 

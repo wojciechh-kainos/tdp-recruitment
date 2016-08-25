@@ -145,7 +145,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.changeSlotSubmitChanges(person);
                 $scope.$apply();
 
-                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
+                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList);
                 expect(person.changesPending).toEqual(false);
                 expect(Notification.success).toHaveBeenCalledWith('Your changes were saved successfully!');
             });
@@ -157,7 +157,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 $scope.changeSlotSubmitChanges(person);
                 $scope.$apply();
 
-                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList, person.id, jasmine.any(Object), jasmine.any(Date));
+                expect(tdprRecruiterSlotsService.updateSlots).toHaveBeenCalledWith(person.slotList);
                 expect(Notification.error).toHaveBeenCalledWith(expectedMessage);
             });
         });
