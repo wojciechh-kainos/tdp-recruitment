@@ -9,7 +9,7 @@ Software you'll need installed:
 - JDK 8
 - PostgreSQL 9.4
 - Node.js (was developed against 6.3, but can quite probably run with an older version)
-- Gradle >= 2.0 (required for [Jenkins pipeline](https://jenkins.io/doc/pipeline/jenkinsfile/), local project can be handled using the provided wrapper)
+- Gradle >= 2.0 (required for [Jenkins pipeline](https://jenkins.io/doc/pipeline/), local project can be handled using the provided wrapper)
 
 For local development the database server is required to be running on default PostgreSQL port **5432** and have a a **tdprecruitment** database owned by **tdp** user identified by password **tdp**. These are the defaults configured in [app_config.yml](src/main/resources/app_config.yml)
 
