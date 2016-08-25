@@ -2,31 +2,31 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprRecruiterViewPairsOfInterviewersService', ['$http', '$q', function ($http, $q) {
         var service = {};
 
-        service.getPairs = function(roles, startDay, endDay, startTime, endTime){
+        service.getPairs = function (roles, startDay, endDay, startTime, endTime) {
             var pathParams = this.createPathParams(roles, startDay, endDay, startTime, endTime);
             // if(!pathParams){
             //     return false;
             // }
 
-            return $http.get('api/pairs?' + pathParams).then(function(response){
+            return $http.get('api/pairs?' + pathParams).then(function (response) {
                     return response.data;
                 },
-                function(error){
+                function (error) {
                     error.message = "Getting data form server failed";
                     return $q.reject(error.message);
                 });
         };
 
-        service.createPathParams = function(roles, startDate, endDate, startTime, endTime) {
+        service.createPathParams = function (roles, startDate, endDate, startTime, endTime) {
 
             if (!roles || !startDate || !endDate || !startTime || !endTime) {
                 return false;
             }
 
-            var startDay =  startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
-            var endDay =  endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
+            var startDay = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+            var endDay = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
 
-            if(roles.length == 0 || !roles || !startDay || !endDay){
+            if (roles.length == 0 || !roles || !startDay || !endDay) {
                 return false;
             }
 
