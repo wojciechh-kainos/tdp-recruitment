@@ -62,7 +62,7 @@ public class PersonResource {
 
             return person;
         } else {
-            logger.warn("Person with email: {} already exists ", person.getEmail());
+            logger.warn("Person with email: {} already exists", person.getEmail());
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
     }
@@ -138,7 +138,7 @@ public class PersonResource {
     public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
         Optional<Person> user = personDao.getById(newPerson.getId());
         if (!user.isPresent()) {
-            logger.warn("Person with id => {} not found: ",newPerson.getId().toString());
+            logger.warn("Person with id => {} not found",newPerson.getId().toString());
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         Person person = user.get();
@@ -168,7 +168,7 @@ public class PersonResource {
             return Response.ok().build();
         }
         else{
-            logger.warn("Person with id => {} not found: ", id.toString());
+            logger.warn("Person with id => {} not found", id.toString());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
