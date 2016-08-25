@@ -42,13 +42,6 @@ database:
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
 
-logging:
-  level: TRACE
-  loggers:
-    io.dropwizard: INFO
-  appenders:
-    - type: console
-
 smtpConfig:
   host: mail.kainos.com
   port: 25
