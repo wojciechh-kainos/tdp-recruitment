@@ -10,6 +10,13 @@
                 </select>
             </label>
 
+            <label class="control-label">Number of notes:
+                <select class="form-control" ng-model="limitedAmount"
+                        ng-options='note for note in limitAmounts'
+                        ng-change="refreshRecruiterNote()">
+                </select>
+            </label>
+
             <a class="btn btn-primary" role="button" ng-click="createRecruiterNote()"><span
                     class="glyphicon glyphicon-plus"></span> Add note</a>
             <a class="btn btn-default" role="button" ng-click="refreshRecruiterNote()"><span

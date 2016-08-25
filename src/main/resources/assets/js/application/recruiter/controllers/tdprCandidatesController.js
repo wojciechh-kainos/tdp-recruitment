@@ -10,6 +10,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate = {};
         $scope.candidate.isDeleted = false;
         $scope.limitedAmount = 10;
+        $scope.limitAmounts = [10, 25, 50, 100, 1000];
         var popUp;
         var popUpForDelete;
         var defaultLimitValue = 35;
