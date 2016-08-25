@@ -60,7 +60,7 @@ define(['angular'
         });
 
      function isUserAuthorized(tdprAuthService, Notification, $q, $location, $stateParams) {
-        if (tdprAuthService.getCurrentUser().id != $stateParams.id) {
+        if (tdprAuthService.isUserAuthorized("interviewer") && tdprAuthService.getCurrentUser().id != $stateParams.id) {
           Notification.error('You dont have permissions to view this page.');
             $state.go('tdpr.interviewer.home', {id: tdprAuthService.getCurrentUser().id});
         }

@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@RolesAllowed("recruiter")
+
 @Path("/report")
 @Produces(MediaType.APPLICATION_JSON)
 public class ReportResource {
@@ -27,6 +27,7 @@ public class ReportResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/{date_from}/{date_to}/{id}")
     @UnitOfWork
     public Report getReport(
@@ -43,6 +44,7 @@ public class ReportResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/{date_from}/{date_to}")
     @UnitOfWork
     public List<Report> getAllReports(

@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 @Path("/slots")
-@PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 public class SlotResource {
 
@@ -29,6 +28,7 @@ public class SlotResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -47,6 +47,7 @@ public class SlotResource {
     }
 
     @GET
+    @PermitAll
     @Path("/week")
     @UnitOfWork
     public List<Slot> fetchSlotsForWeek(@QueryParam("id") Long id,
@@ -61,8 +62,8 @@ public class SlotResource {
         return slotDao.getForPersonForWeek(id, start, end);
     }
 
-    @RolesAllowed("recruiter")
     @PUT
+    @RolesAllowed("recruiter")
     @Path("recruiter")
     @UnitOfWork
     public Response updateRecruiter(List<Slot> slots) {

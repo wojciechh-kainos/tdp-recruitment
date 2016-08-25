@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/candidate")
-@RolesAllowed("recruiter")
 @Produces(MediaType.APPLICATION_JSON)
 public class CandidateResource {
 
@@ -24,6 +23,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -33,6 +33,7 @@ public class CandidateResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/all")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -41,6 +42,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -50,6 +52,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/{candidate_id}/deactivate")
     @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork

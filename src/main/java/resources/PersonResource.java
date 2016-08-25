@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Path("/person")
-@PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
@@ -51,8 +50,8 @@ public class PersonResource {
     }
 
     @PUT
-    @Path("/create")
     @RolesAllowed("recruiter")
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
@@ -71,6 +70,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/all")
     @UnitOfWork
     public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) throws ParseException {
@@ -101,6 +101,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{personId}/getNote")
     @UnitOfWork
     public Note getNote(@PathParam("personId") Long personId,
@@ -115,6 +116,7 @@ public class PersonResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -124,6 +126,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{id}")
     @UnitOfWork
     public Person getPersonById(@PathParam("id") Long id){
@@ -135,6 +138,7 @@ public class PersonResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -160,8 +164,8 @@ public class PersonResource {
     }
 
     @PUT
-    @Path("/{id}/switchAccountStatus")
     @RolesAllowed("recruiter")
+    @Path("/{id}/switchAccountStatus")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
 
@@ -179,8 +183,8 @@ public class PersonResource {
     }
 
     @GET
-    @Path("/all/recruiter")
     @RolesAllowed("recruiter")
+    @Path("/all/recruiter")
     @UnitOfWork
     public Response getRecruiters() {
         List<Person> recruiterList = new ArrayList<>();
