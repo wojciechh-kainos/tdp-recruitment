@@ -24,21 +24,31 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
             });
 
             it("should return false when roles not set", function () {
-                var pathParams = service.createPathParams(new Date('2015-12-13'), new Date('2015-12-17'));
+                var pathParams = service.createPathParams(null, new Date('2015-12-13'), new Date('2015-12-17'), '10:00:00', '12:30:00');
                 expect(pathParams).toEqual(false);
             });
 
             it("should return false when days are not set", function () {
-                var pathParams = service.createPathParams(["isDev"]);
+                var pathParams = service.createPathParams(["isDev"], null, null, '10:00:00', '12:30:00');
+                expect(pathParams).toEqual(false);
+            });
+
+            it("should return false when times are not set", function () {
+                var pathParams = service.createPathParams(["isDev"], new Date('2015-12-13'), new Date('2015-12-17'));
                 expect(pathParams).toEqual(false);
             });
         });
 
         describe('getPairs', function () {
-            it("should return false when any of function arguments not set", function () {
-                var response = service.getPairs(["isDev"], new Date('2015-12-13'));
-                expect(response).toEqual(false);
-            })
+            it("should reject promise when any of function arguments not set", function () {
+                service.getPairs(["isDev"], new Date('2015-12-13'), new Date('2015-12-17')).then(
+                    function () {
+                        done(new Error("Promise should be rejected"));
+                    },
+                    function () {
+                        done();
+                    })
+            });
         })
     })
 });

@@ -55,10 +55,12 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-
         if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+            String token = UUID.randomUUID().toString();
+            person.setActivationCode(token);
             person.setActive(false);
             personDao.create(person);
+            //mailService.sendEmail(person.getEmail(), token);
             try {
                 mailService.sendEmail(activationLink.createMessage(person));
             } catch (MessagingException | IOException e) {
@@ -67,7 +69,6 @@ public class PersonResource {
             }
 
             return person;
-
         } else {
             throw new WebApplicationException(Response.Status.CONFLICT);
         }
@@ -150,8 +151,8 @@ public class PersonResource {
         person.setBandLevel(newPerson.getBandLevel());
         person.setDefaultStartHour(newPerson.getDefaultStartHour());
         person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
-        if(newPerson.getPassword()!=null){
-            person.setPassword(passwordStore.createHash(person.getPassword()));
+        if(newPerson.getPassword() != null) {
+            person.setPassword(passwordStore.createHash(newPerson.getPassword()));
         }
         return Response.ok(person).build();
     }
@@ -160,14 +161,14 @@ public class PersonResource {
     @Path("/{id}/switchAccountStatus")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
+
         Optional<Person> person = personDao.getById(id);
         if(person.isPresent()) {
-            person.get().setActive(!person.get().getActive());
+        person.get().setActive(!person.get().getActive());
 
             return Response.ok().build();
         }
         else throw new WebApplicationException(Response.Status.BAD_REQUEST);
-
     }
 
     @GET
@@ -184,5 +185,4 @@ public class PersonResource {
 
         return Response.ok(recruiterList).build();
     }
-
 }

@@ -52,4 +52,15 @@ public class TdpRecruitmentApplicationConfiguration extends Configuration {
 
     public void setThreadPoolSize(int threadPoolSize) { this.threadPoolSize = threadPoolSize; }
 
+
+    @Valid
+    @NotNull
+    private TdpRecruitmentCacheConfiguration tokenCacheConfig;
+
+    @JsonProperty("tokenCacheConfig")
+    public TdpRecruitmentCacheConfiguration getTokenCacheConfig() { return tokenCacheConfig; }
+
+    public void setTokenCacheConfig(TdpRecruitmentCacheConfiguration tokenCacheConfig) {
+        this.tokenCacheConfig = tokenCacheConfig;
+    }
 }

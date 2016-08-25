@@ -10,6 +10,7 @@ define(['angular'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprCandidatesService'
     , 'application/recruiter/services/tdprDateService'
+    , 'application/recruiter/services/tdprRecruiterNoteService'
     , 'application/recruiter/filters/tdprSlotsByTimeFilter'
     , 'application/recruiter/filters/tdprCandidatesFilterByRecruiter'
     , 'application/recruiter/controllers/tdprManageUsersController'
@@ -93,6 +94,9 @@ define(['angular'
                     },
                     recruiters: function (tdprCandidatesService) {
                         return tdprCandidatesService.fetchRecruiters();
+                    },
+                    recruiterNotes: function (tdprRecruiterNoteService, RecruiterNotesLimits) {
+                        return tdprRecruiterNoteService.fetchRecruiterNotes(RecruiterNotesLimits[0]);
                     }
                 },
                 views: {
