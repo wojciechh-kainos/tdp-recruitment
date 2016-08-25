@@ -18,8 +18,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             $scope = _$rootScope_.$new();
             personService = tdprPersonService;
             updatePersonDeferred = $q.defer();
-            Notification = { success: function () {} };
-
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
             spyOn($state, 'go');
@@ -64,14 +63,36 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                     dummyData: 42,
                     bandLevel: 9001,
                     defaultStartHour: '05:15:01',
-                    defaultFinishHour: '22:49:31'
+                    defaultFinishHour: '22:49:31',
+                    password: null
                 });
             });
 
             it('should show notification on success', function () {
                 updatePersonDeferred.resolve({});
-                spyOn(Notification, 'success');
                 $scope.person = {};
+
+                $scope.updateDetails();
+                $scope.$apply();
+
+                expect(Notification.success).toHaveBeenCalledWith('Details updated!');
+            });
+
+            it('should show notification when trying to save invalid password form', function(){
+                updatePersonDeferred.resolve({});
+                $scope.changePasswordChecked = true;
+                $scope.arePasswordsCorrect = false;
+
+                $scope.updateDetails();
+                $scope.$apply();
+
+                expect(Notification.error).toHaveBeenCalledWith("Changes not saved! Password field incorrect!");
+            });
+
+            it('should show notification after saving correct password', function(){
+                updatePersonDeferred.resolve({});
+                $scope.changePasswordChecked = true;
+                $scope.arePasswordsCorrect = true;
 
                 $scope.updateDetails();
                 $scope.$apply();

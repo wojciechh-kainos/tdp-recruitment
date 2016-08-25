@@ -25,7 +25,11 @@ require.config({
         'notification': 'lib/angular-ui-notification/dist/angular-ui-notification',
         'lodash': 'lib/lodash/lodash',
         'moment' : 'lib/moment/moment',
-        'angular-moment' : 'lib/angular-moment/angular-moment'
+        'angular-moment' : 'lib/angular-moment/angular-moment',
+        'ngDialog' : 'lib/ng-dialog/js/ngDialog',
+        'angularFileSaver' : 'lib/angular-file-saver/dist/angular-file-saver',
+        'fileSaver' : 'lib/file-saver.js/FileSaver',
+        'blob' : 'lib/blob-polyfill/Blob'
     },
     shim: {
         'angular': {
@@ -39,7 +43,10 @@ require.config({
         'uiRouter': ['angular'],
         'notification': ['angular'],
         'moment' : ['angular'],
-        'angular-moment' : ['angular', 'moment']
+        'angular-moment' : ['angular', 'moment'],
+        'fileSaver' : ['angular'],
+        'blob' : ['angular', 'fileSaver'],
+        'angularFileSaver' : ['angular', 'fileSaver', 'blob']
     },
     // dynamically load all test files
     deps: allTestFiles,

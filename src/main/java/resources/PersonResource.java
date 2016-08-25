@@ -45,10 +45,17 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Person createPerson(Person person) {
-        personDao.create(person);
-        // TODO: create activation message
-        // mailService.sendEmail(person.getEmail(), person.getId());
-        return person;
+
+        if (personDao.findByEmail(person.getEmail()).isEmpty()) {
+
+            personDao.create(person);
+            mailService.sendEmail(person.getEmail(), person.getId());   //TODO implement message
+
+            return person;
+
+        } else {
+            throw new WebApplicationException(Response.Status.CONFLICT);
+        }
     }
 
     @GET
@@ -61,10 +68,11 @@ public class PersonResource {
         List<Person> persons = personDao.findAllActive();
         persons.forEach(p -> p.setSlotList(slotDao.getForPersonForWeek(p.getId(), start, end)));
         persons.forEach(p -> {
-            Note note = noteDao.getByPersonIdAndDate(p.getId(), start);
-            if(note != null) {
-                if(!note.getDescription().isEmpty()) {
-                    p.setNoteList(Arrays.asList(note));
+            Optional<Note> note = noteDao.getByPersonIdAndDate(p.getId(), start);
+
+            if(note.isPresent()) {
+                if(!note.get().getDescription().isEmpty()) {
+                    p.setNoteList(Arrays.asList(note.get()));
                 }
             }
         });
@@ -85,7 +93,9 @@ public class PersonResource {
     public Note getNote(@PathParam("personId") Long personId,
                         @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        return noteDao.getByPersonIdAndDate(personId,date);
+        Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
+
+        return note.orElseThrow(() -> new WebApplicationException(Response.Status.NO_CONTENT));
     }
 
     @PUT
@@ -100,12 +110,10 @@ public class PersonResource {
     @GET
     @Path("/{id}")
     @UnitOfWork
-    public Response getPersonById(@PathParam("id") Long id){
-        Person person = personDao.getById(id);
-        if (person == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(person).build();
+    public Person getPersonById(@PathParam("id") Long id){
+        Optional<Person> person = personDao.getById(id);
+
+        return person.orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @PUT
@@ -116,4 +124,20 @@ public class PersonResource {
         personDao.update(person);
         return person;
     }
+
+    @GET
+    @Path("/all/recruiter")
+    @UnitOfWork
+    public Response getRecruiters() {
+        List<Person> recruiterList = new ArrayList<>();
+
+        for (Person person : personDao.findAll()) {
+            if (person.getAdmin() != null && person.getAdmin()) {
+                recruiterList.add(person);
+            }
+        }
+
+        return Response.ok(recruiterList).build();
+    }
+
 }

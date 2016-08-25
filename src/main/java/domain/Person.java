@@ -2,6 +2,7 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Person.delete", query = "delete from Person where id = :id"),
         @NamedQuery(name = "Person.findAllActive", query = "select p from Person p where active = true"),
-        @NamedQuery(name = "Person.findAll", query = "select p from Person p")
+        @NamedQuery(name = "Person.findAll", query = "select p from Person p"),
+        @NamedQuery(name = "Person.findByEmail", query = "select p from Person p where email = :email")
 })
 public class Person implements Cloneable {
 
@@ -37,10 +39,9 @@ public class Person implements Cloneable {
     @Length(max = 35)
     private String lastName;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @JsonIgnore
     private Boolean admin;
 
     @Column(name = "is_dev")

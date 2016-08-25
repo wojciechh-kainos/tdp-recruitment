@@ -16,7 +16,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     private GuiceBundle<TdpRecruitmentApplicationConfiguration> guiceBundle;
 
-    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class) {
+    private final HibernateBundle<TdpRecruitmentApplicationConfiguration> hibernateBundle = new HibernateBundle<TdpRecruitmentApplicationConfiguration>(AvailabilityType.class, SlotTime.class, Slot.class, Person.class, Note.class, Candidate.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(TdpRecruitmentApplicationConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -56,6 +56,8 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(ScheduleResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(CandidateResource.class));
+
     }
 
     public static void main(final String[] args) throws Exception {

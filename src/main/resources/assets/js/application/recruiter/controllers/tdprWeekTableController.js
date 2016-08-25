@@ -1,7 +1,7 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes, $state,
-                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService) {
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
+              Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
 
         var that = this;
 
@@ -9,6 +9,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.pairingMode = false;
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
+        $scope.params = $state.params;
         $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
         $scope.selectSlotsTimes = slotsTimes;
