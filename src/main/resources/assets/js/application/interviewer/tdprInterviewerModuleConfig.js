@@ -4,7 +4,8 @@ define(['angular'
 , 'application/interviewer/controllers/tdprInterviewerDetailsController'
 , 'application/interviewer/services/tdprSlotsService'
 , 'application/interviewer/services/tdprPersonService'
-, 'application/common/directives/tdprJobProfileCheckboxDirective'],
+, 'application/common/directives/tdprJobProfileCheckboxDirective'
+, 'application/common/directives/tdprNewPasswordDirective'],
  function (angular, tdprInterviewerModule) {
    tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) {
           $stateProvider

@@ -16,6 +16,7 @@ define(['angular'
     , 'application/common/filters/tdprCutFilter'
     , 'application/common/directives/tdprJobProfileCheckboxDirective'
     , 'application/common/directives/tdprJobProfileDirective'
+    , 'application/common/directives/tdprNewPasswordDirective'
     , 'application/auth/services/tdprAuthService'
 ], function (angular, tdprRecruiterModule) {
 
