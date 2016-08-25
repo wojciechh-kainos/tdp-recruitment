@@ -2,6 +2,10 @@
 
     <h1 id="recruiter-header">Availabilities for interviews</h1>
 
+    <div ng-if="params.candidateId !== 0">
+        <h3>Select interviewers for <span uib-tooltip="{{params.candidate.note}}">{{params.candidate.lastName}} {{params.candidate.firstName}}</span></h3>
+    </div>
+
     <div id="date-container">
         <button id="current-week-btn" class="button navigate1" ng-click="changeWeek(WeekNavigateEnum.current)" ng-show="offset">Current week</button>
         <button class="button navigate1 " ng-click="changeWeek(WeekNavigateEnum.previous)">Previous week</button>
@@ -64,10 +68,12 @@
     </div>
 
 
-    <a id="add-interviewer-btn" ui-sref="tdpr.recruiter.addInterviewer">Add new interviewer</a>
+    <a id="add-person-btn" ui-sref="tdpr.recruiter.addPerson">Add person</a>
 
     | <a id="reports-btn" ui-sref="tdpr.report.home">Reports</a>
 
     | <a id="manage-btn" ui-sref="tdpr.recruiter.manageUsers">Manage users</a>
+
+    | <a id="candidates-btn" ui-sref="tdpr.recruiter.candidates">List of candidates</a>
 
 </div>

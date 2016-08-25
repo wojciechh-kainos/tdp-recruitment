@@ -15,7 +15,7 @@ public class AvailabilityTypeDaoTest extends BaseTest{
     public void getAvailabilityTypesTest(){
         getSession().beginTransaction();
 
-        AvailabilityType anotherAvailabilityType = availabilityTypeDao.getById(1);
+        AvailabilityType anotherAvailabilityType = availabilityTypeDao.getById(1).get();
         assertEquals("First returned availabilityType should be type available",
                 AvailabilityTypeEnum.available, anotherAvailabilityType.getName());
 
