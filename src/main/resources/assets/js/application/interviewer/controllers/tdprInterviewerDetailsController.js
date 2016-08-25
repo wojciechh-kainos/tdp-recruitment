@@ -1,10 +1,11 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
     tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
-
         $scope.BandLevelEnum = BandLevelEnum;
+        $scope.changePasswordChecked = false;
 
         function init() {
                 $scope.person = person;
+                $scope.person.token = undefined;
                 $scope.person.bandLevel = $scope.person.bandLevel.toString();
 
                 if ($scope.person.defaultStartHour) {
@@ -18,7 +19,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         }
 
         $scope.updateDetails = function () {
+            if($scope.changePasswordChecked && (!$scope.arePasswordsCorrect)){
+                return Notification.error("Changes not saved! Password field incorrect!");
+            }
             var person = angular.copy($scope.person);
+            person.password = ($scope.changePasswordChecked && $scope.arePasswordsCorrect) ? $scope.password : null;
             person.bandLevel = parseInt(angular.copy($scope.person.bandLevel));
             person.defaultStartHour = $filter('date')(person.defaultStartHour, "HH:mm:ss");
             person.defaultFinishHour = $filter('date')(person.defaultFinishHour, "HH:mm:ss");
