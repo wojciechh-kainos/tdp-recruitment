@@ -34,5 +34,4 @@ public class ScheduleResource {
         return Response.status(Response.Status.OK).build();
     }
 
-
 }
