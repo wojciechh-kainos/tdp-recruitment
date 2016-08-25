@@ -5,7 +5,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         service.getPairs = function(roles, startDay, endDay, startTime, endTime){
             var pathParams = this.createPathParams(roles, startDay, endDay, startTime, endTime);
             if(!pathParams){
-                return $q.reject("No dates were chosen");
+                return $q.reject("Wrong parameters");
             }
 
             return $http.get('api/pairs?' + pathParams).then(function(response){
@@ -18,7 +18,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         service.createPathParams = function(roles, startDate, endDate, startTime, endTime) {
 
-            if (!startDate || !endDate || !startTime || !endTime || !(startDate instanceof Date && endDate instanceof Date)) {
+            if (!roles || !startDate || !endDate || !startTime || !endTime || !(startDate instanceof Date && endDate instanceof Date)) {
                 return false;
             }
 
@@ -30,14 +30,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             pathParams += "&startTime=" + startTime;
             pathParams += "&endTime=" + endTime;
 
-            for(var i = 0; i < roles.length; i++){
-                switch(roles[i]){
+            roles.forEach(function(element){
+                switch(element){
                     case "isDev": pathParams += "&isDev=true"; break;
                     case "isTest": pathParams += "&isTest=true"; break;
                     case "isOps": pathParams += "&isOps=true"; break;
                     case "isOther": pathParams += "&isOther=true"; break;
                 }
-            }
+            })
 
             return pathParams;
         };
