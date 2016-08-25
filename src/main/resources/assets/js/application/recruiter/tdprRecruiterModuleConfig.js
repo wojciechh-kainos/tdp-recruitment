@@ -113,7 +113,7 @@ define(['angular'
             url: "/create-event",
             views: {
                 "main@recruiter": {
-                    templateUrl: "js/application/recruiter/views/tdpr-recruiter-create-event.html",
+                    templateUrl: "html/partials/recruiter/tdpr-recruiter-create-interview.html",
                     controller: "tdprCreateEventController"
                 }
             },
