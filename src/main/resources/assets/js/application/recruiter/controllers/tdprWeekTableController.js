@@ -39,7 +39,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.getPairs = function () {
-            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate).then(
+            tdprRecruiterViewPairsOfInterviewersService.getPairs([$scope.currentJobProfile], $scope.displayedStartDate, $scope.displayedEndDate, $scope.startTime, $scope.endTime).then(
                 function (persons) {
                     $scope.persons = persons;
                 }
