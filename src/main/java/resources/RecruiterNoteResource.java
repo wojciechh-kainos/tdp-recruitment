@@ -13,9 +13,9 @@ import java.util.List;
 public class RecruiterNoteResource {
 
     private RecruiterNoteDao recruiterNoteDao;
-    @Inject
 
-    public RecruiterNoteResource(RecruiterNoteDao recruiterNoteDao){
+    @Inject
+    public RecruiterNoteResource(RecruiterNoteDao recruiterNoteDao) {
         this.recruiterNoteDao = recruiterNoteDao;
     }
 
@@ -23,14 +23,14 @@ public class RecruiterNoteResource {
     @Path("/{limit}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public List<RecruiterNote> getAll(@PathParam("limit")int limit){
+    public List<RecruiterNote> getAll(@PathParam("limit") int limit) {
         return recruiterNoteDao.findAll(limit);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Long create(RecruiterNote recruiterNote){
+    public Long create(RecruiterNote recruiterNote) {
         return recruiterNoteDao.create(recruiterNote);
     }
 }
