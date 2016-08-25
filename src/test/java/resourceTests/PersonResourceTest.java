@@ -6,7 +6,9 @@ import dao.PersonDao;
 import dao.SlotDao;
 import domain.Note;
 import domain.Person;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -25,7 +27,6 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
-import static org.postgresql.hostchooser.HostRequirement.master;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonResourceTest {
@@ -105,15 +106,14 @@ public class PersonResourceTest {
         verify(mockNoteDao, times(1)).getByPersonIdAndDate(1L, date);
     }
 
-    @Ignore
     @Test
     public void testCreateNote() {
         when(mockNoteDao.createOrUpdate(note2)).thenReturn(note2);
 
         Response result = resource.createOrUpdate(note2);
 
-        assertEquals(Response.Status.NOT_ACCEPTABLE.getStatusCode(), result.getStatus());
-        verify(mockNoteDao, times(0)).createOrUpdate(note2);
+        assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
+        verify(mockNoteDao, times(1)).createOrUpdate(note2);
     }
 
     @Test
@@ -123,6 +123,7 @@ public class PersonResourceTest {
         Response result = resource.createOrUpdate(note3);
 
         assertEquals(Response.Status.ACCEPTED.getStatusCode(), result.getStatus());
+        verify(mockNoteDao, times(1)).createOrUpdate(note3);
     }
 
     @Test
