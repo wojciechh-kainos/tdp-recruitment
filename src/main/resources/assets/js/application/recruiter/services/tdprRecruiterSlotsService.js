@@ -17,7 +17,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         this.reformatSlots = function (slots) {
             var filtered = _.filter(slots, function (value) {
-                return value.type !== "";
+                return (value.type !== "") && angular.isDefined(value.person);
             });
 
             return _.map(filtered,
