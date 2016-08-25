@@ -44,7 +44,7 @@
         </div>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="submit" ng-click="interviewerForm.$valid ? create(person) : showError()" value="Submit"
-               ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
+                   ng-disabled="form.$invalid || createInterviewerPromise.resolved"/>
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
         </div>
     </form>
