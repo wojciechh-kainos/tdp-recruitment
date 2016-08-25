@@ -6,6 +6,10 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
          tdprActivateService.checkIfPersonWithActivationLinkExists($stateParams.activationLink)
             .then(function(response) {
                 person = response.data;
+                if(response.status == 204) {
+                    Notification.error("Something went wrong");
+                    $state.go('tdpr.login');
+                }
             }, function() {
                 $state.go('tdpr.login');
             });
