@@ -46,8 +46,10 @@ public class MailingThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String tempText = text.replace("{{domain}}", domain);
-        String finalText = tempText.replace("{{activationLink}}", activationLink);
+        String finalText = text
+                .replace("{{domain}}", domain)
+                .replace("{{activationLink}}", activationLink);
+
         email.setTextHTML(finalText);
         new Mailer(host, port, from, pass, TransportStrategy.SMTP_TLS).sendMail(email);
 
