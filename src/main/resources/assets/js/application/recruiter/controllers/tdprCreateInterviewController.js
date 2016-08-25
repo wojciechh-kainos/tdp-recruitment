@@ -11,7 +11,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
         $scope.scheduleInterview = function () {
 
             var updateRequests = [];
-            $stateParams.data.interview.interviewers.forEach(function (interviewer) {
+            $stateParams.data.interviewers.forEach(function (interviewer) {
                 updateRequests.push(tdprRecruiterSlotsService.updateSlots(interviewer.slots));
                 delete interviewer.slots; //empty to avoid jackson parsing problems
             });
