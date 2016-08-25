@@ -36,8 +36,8 @@ public class ActivationLink {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(person.getEmail()));
         URL url = Resources.getResource("email/template.html");
         String text = Resources.toString(url, Charsets.UTF_8);
-        String tempText = text.replace("{{domain}}", domain);
-        String finalText = tempText.replace("{{activationLink}}", person.getActivationCode());
+
+        String finalText = text.replace("{{domain}}", domain).replace("{{activationLink}}", person.getActivationCode());
 
         message.setContent(finalText, "text/html; charset=ISO-8859-1");
 

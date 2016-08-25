@@ -1,6 +1,8 @@
 package services;
 
 import configuration.TdpRecruitmentEmailConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.mail.*;
 import java.util.Properties;
@@ -9,6 +11,7 @@ public class MailingTask implements Runnable {
 
     private TdpRecruitmentEmailConfiguration config;
     private Message msg;
+    private static final Logger logger = LoggerFactory.getLogger(MailingTask.class);
 
     public MailingTask(TdpRecruitmentEmailConfiguration config, Message message) {
         this.config = config;
@@ -35,12 +38,12 @@ public class MailingTask implements Runnable {
             transport.connect(host, port, from, password);
             transport.sendMessage(msg, msg.getAllRecipients());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn("Mailing error  => {}", e.getMessage());
         } finally {
             try {
                 if (transport != null) transport.close();
             } catch (MessagingException e) {
-                e.printStackTrace();
+                logger.warn("Mailing error  => {}", e.getMessage());
             }
         }
     }

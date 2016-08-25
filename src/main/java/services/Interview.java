@@ -5,6 +5,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import domain.Candidate;
 import domain.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -26,6 +28,7 @@ public class Interview {
     private Candidate interviewee;
     private String room;
     private String message;
+    private static final Logger logger = LoggerFactory.getLogger(Interview.class);
 
     public Interview() {
     }
@@ -87,7 +90,7 @@ public class Interview {
         try {
             template = Resources.toString(url, Charsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("Error creating calendar event => {}", e.getMessage());
         }
 
         return template.replace("{{organizer}}", parseOrganizer())
