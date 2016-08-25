@@ -42,7 +42,7 @@ public class PersonResourceTest {
     @Mock
     MailService mockMailService;
     @Mock
-    TdpRecruitmentPasswordStore passwordStore;
+    TdpRecruitmentPasswordStore mockPasswordStore;
 
     private static List<Note> stubNoteDB;
     private static List<Person> stubPersonDB;
@@ -93,7 +93,7 @@ public class PersonResourceTest {
 
     @Before
     public void setUp() {
-        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao, passwordStore);
+        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao, mockPasswordStore);
     }
 
     @Test
