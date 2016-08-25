@@ -35,19 +35,22 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 	@Override
 	@UnitOfWork
 	public Optional<Person> authenticate(BasicCredentials credentials) {
-		Person user = personDao.getUserByEmail(credentials.getUsername());
+		java.util.Optional<Person> user = personDao.getUserByEmail(credentials.getUsername());
+
+		if(!user.isPresent()) {
+			return Optional.absent();
+		}
+		Person person = user.get();
 
 		try {
-			if (user != null) {
-				if (cache.getIfPresent(credentials.getPassword()) != null) {
-					return Optional.of(user);
-				} else if (passwordStore.verifyPassword(credentials.getPassword(), user.getPassword())) {
-					String token = UUID.randomUUID().toString();
-					String hashedToken = token;
-					user.setToken(hashedToken);
-					cache.put(hashedToken, user);
-					return Optional.of(user);
-				}
+			if (cache.getIfPresent(credentials.getPassword()) != null) {
+				return Optional.of(person);
+			} else if (passwordStore.verifyPassword(credentials.getPassword(), person.getPassword())) {
+				String token = UUID.randomUUID().toString();
+				String hashedToken = token;
+				person.setToken(hashedToken);
+				cache.put(hashedToken, person);
+				return Optional.of(person);
 			}
 		} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException | TdpRecruitmentPasswordStore.InvalidHashException e) {
 			e.printStackTrace();
