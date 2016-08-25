@@ -46,8 +46,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
 
     @Override
     public void initialize(Bootstrap<TdpRecruitmentApplicationConfiguration> bootstrap) {
-        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/assets", "/", "index.html")); //don't merge with master
-//        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html")); //TODO uncomment
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(migrationsBundle);
 
