@@ -205,10 +205,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             return slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id;
         }
 
-        $scope.goDetails = function () {
-            $state.go('tdpr.interviewer.details', {'id': id});
-        };
-
         function createNote(description, personId, date) {
             $scope.noteContent = {
                 description: description,
