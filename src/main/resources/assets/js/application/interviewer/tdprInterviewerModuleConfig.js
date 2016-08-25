@@ -17,16 +17,17 @@ define(['angular'
                     personName : ''
                 },
                 resolve: {
-                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {
+                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $state, $timeout) {
                         var deferred = $q.defer();
-
-                        if (tdprAuthService.isUserLoggedIn()) {
-                            deferred.resolve();
-                        } else {
-                            $location.path('/login');
-                            Notification.error('You need to sign in to view this page.');
-                            deferred.reject();
-                        }
+                        $timeout(function() {
+                            if (!tdprAuthService.isUserLoggedIn()) {
+                                Notification.error('You need to sign in to view this page.');
+                                $state.go('tdpr.login');
+                                deferred.reject();
+                            } else {
+                                deferred.resolve();
+                            }
+                        });
                         return deferred.promise;
                     }
                 }
@@ -40,6 +41,7 @@ define(['angular'
                 },
                 resolve: {
                     person: getPersonDetails,
+                    isUserAuthorized: isUserAuthorized
                 }
 
             }).state("tdpr.interviewer.details", {
@@ -51,11 +53,18 @@ define(['angular'
                   }
               },
               resolve:{
-                  person: getPersonDetails
+                  person: getPersonDetails,
+                  isUserAuthorized: isUserAuthorized
               }
           });
         });
 
+     function isUserAuthorized(tdprAuthService, Notification, $q, $location, $stateParams) {
+        if (tdprAuthService.isUserAuthorized("interviewer") && tdprAuthService.getCurrentUser().id != $stateParams.id) {
+            Notification.error('You dont have permissions to view this page.');
+            $state.go('tdpr.interviewer.home', {id: tdprAuthService.getCurrentUser().id});
+        }
+     }
 
      function getPersonDetails(tdprPersonService, $stateParams, $state){
          return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {

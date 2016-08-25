@@ -7,6 +7,7 @@ import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.PairFinder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,6 +31,7 @@ public class PairResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @UnitOfWork
     public List<Person> findPairs(@QueryParam("startDate") String startDate,
                                   @QueryParam("endDate") String endDate,
