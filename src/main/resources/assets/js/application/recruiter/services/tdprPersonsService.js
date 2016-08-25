@@ -37,7 +37,7 @@ define(['application/recruiter/tdprRecruiterModule', 'application/constants/tdpr
         };
 
         this.managePerson = function (person) {
-            return $http.put("/api/person/" + person.id, person);
+            return $http.put("/api/person/" + person.id + "/switchAccountStatus");
         };
 
     })

@@ -77,14 +77,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             getNote(id, startDate);
         }
 
-        $scope.goBackToRecruiterView = function () {
-            if (!verifyNoUnsavedChanges()) {
-                return;
-            }
-
-            $state.go('tdpr.recruiter.home');
-        };
-
         $scope.discardChanges = function () {
             $scope.clearTable();
             $scope.getSlots(id);

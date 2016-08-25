@@ -156,6 +156,13 @@ button {
     background: #D3D3D3;
 }
 
+#details-form .password-clues {
+    width: 500px;
+    position: absolute;
+    left: 100px;
+    top: 0px;
+}
+
 .error-container {
   color: red;
 }
