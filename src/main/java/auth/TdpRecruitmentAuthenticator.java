@@ -47,9 +47,8 @@ public class TdpRecruitmentAuthenticator implements Authenticator<BasicCredentia
 				return Optional.of(person);
 			} else if (passwordStore.verifyPassword(credentials.getPassword(), person.getPassword())) {
 				String token = UUID.randomUUID().toString();
-				String hashedToken = token;
-				person.setToken(hashedToken);
-				cache.put(hashedToken, person);
+				cache.put(token, person);
+				person.setToken(token);
 				return Optional.of(person);
 			}
 		} catch (TdpRecruitmentPasswordStore.CannotPerformOperationException | TdpRecruitmentPasswordStore.InvalidHashException e) {
