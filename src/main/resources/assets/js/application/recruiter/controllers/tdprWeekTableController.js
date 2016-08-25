@@ -34,7 +34,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         };
 
         $scope.createInterview = function () {
-            var data = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params);
+            var data = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params.candidate);
             console.log(data);
             if (data) {
                 $state.go("tdpr.recruiter.createInterview",
