@@ -71,7 +71,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 tdprDateService = jasmine.createSpyObj('tdprDateService', ['getCurrentWeek', 'getWeekWithOffset']);
                 tdprPersonsService = jasmine.createSpyObj('tdprPersonsService', ['fetchPersonsWithSlotsForDates']);
                 tdprRecruiterSlotsService = jasmine.createSpyObj('tdprRecruiterSlotsService', ['updateSlots']);
-                tdprScheduleService = jasmine.createSpyObj('tdprScheduleService', ['changeSlotTypeCycleThrough', 'changeSlotDiscardChanges']);
+                tdprScheduleService = jasmine.createSpyObj('tdprScheduleService', ['tripleSlotChange', 'changeSlotTypeCycleThrough', 'changeSlotDiscardChanges']);
 
                 updateSlotsDeferred = $q.defer();
                 fetchPersonsDeferred = $q.defer();
@@ -96,7 +96,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
         );
 
         describe('changeSlotTypeCycleThrough', function () {
-            it('should call tdprScheduleService with correct data', function () {
+            it('should call tdprScheduleService with correct data if not in pairing mode', function () {
                 var slotId = 42;
                 $scope.changeSlotTypeCycleThrough(person.slotList, slotId, jasmine.any(Date), person);
 
