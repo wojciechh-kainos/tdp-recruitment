@@ -9,7 +9,6 @@ import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.config.TransportStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import resources.PersonResource;
 
 import javax.mail.Message;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.net.URL;
 public class MailingThread extends Thread {
 
     private final Logger logger = LoggerFactory.getLogger(MailingThread.class);
-
     private TdpRecruitmentApplicationConfiguration config;
     private String recipient;
     private String activationLink;
