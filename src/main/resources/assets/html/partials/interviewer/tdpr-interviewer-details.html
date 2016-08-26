@@ -43,7 +43,7 @@
         <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect" password="password"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
-            <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
+            <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()" ng-hide="isRecruiter">
         </div>
     </form>
 </div>

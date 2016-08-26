@@ -4,8 +4,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         $scope.changePasswordChecked = false;
         $scope.isRecruiter = $stateParams.isRecruiter;
         $scope.personName = $stateParams.personName;
-        console.log($scope.isRecruiter);
-        console.log($scope.personName);
+
         function init() {
                 $scope.person = person;
                 $scope.person.token = undefined;
