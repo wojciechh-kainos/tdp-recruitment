@@ -87,7 +87,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                                 valid = false;
                             }
-                            if (slotId + i <= maxSlot && valid) {
+                            if (slotId + 2 <= maxSlot && valid) {
                                 that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
                             }
                         }
@@ -98,6 +98,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         _.each(selectedPersons(), function (person) {
                             person.slotList = angular.copy(person.rootSlotList);
                             scheduledSlots = [];
+                            person.changesPending = false;
                         });
                         Notification.error("Invalid slots selected.")
                     }
