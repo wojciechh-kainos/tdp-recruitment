@@ -1,6 +1,7 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +21,7 @@ import java.util.List;
         @NamedQuery(name = "Person.findAll", query = "select p from Person p"),
         @NamedQuery(name = "Person.findByEmail", query = "select p from Person p where email = :email")
 })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Person implements Cloneable, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

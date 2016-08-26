@@ -33,6 +33,20 @@
         <button class="button navigation" ng-click="refreshPersonsData()">Clear</button>
     </form>
 
+    <div class="legend">
+        <div>
+            <span ng-show="pairingMode">You are now creating a new interview. Select checkboxes and time slots, then click "Submit" to proceed.</span>
+        </div>
+        <br>
+        <div>
+            <label ng-show="pairingMode"><input type="radio" ng-model="interviewMode" value="full"> Full</label>
+            <label ng-show="pairingMode"><input type="radio" ng-model="interviewMode" value="init"> Init</label>
+        </div>
+        <div>
+            <button class="button navigation" ng-show="pairingMode" ng-click="interviewOff()">Cancel</button>
+            <button class="button navigation" ng-show="pairingMode" ng-click="createInterview()">Submit</button>
+        </div>
+    </div>
 
     <div class="availabilities-table-container">
         <table id="availabilities-table">
@@ -57,7 +71,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr person slots-times="slotsTimes" person-data="person"
+            <tr person pairing-mode="pairingMode" slots-times="slotsTimes" person-data="person" days="days"
                 days="days" relative-day-number="relativeDayNumber()"
                 ng-repeat="person in persons | jobProfileFilter: currentJobProfile"
                 submit-slot-changes="changeSlotSubmitChanges(person)"

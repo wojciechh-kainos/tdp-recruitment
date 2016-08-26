@@ -71,14 +71,6 @@ h2 {
     cursor : pointer;
 }
 
-/* interviewer details and adding interviewer */
-#interviewer-details-h1 {
-    font-size: 48px;
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-    color: #375D81;
-}
-
 .interviewer-form {
     display: inline-block;
 }
@@ -177,6 +169,10 @@ h2 {
     padding-right: 12px;
 }
 
+.interviewer-list {
+    list-style-type: none;
+    padding-left: 0;
+}
 .navbar-link {
   color: white !important;
   cursor: pointer;

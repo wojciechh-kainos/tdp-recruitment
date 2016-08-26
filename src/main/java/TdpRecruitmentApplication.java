@@ -3,7 +3,6 @@ import auth.TdpRecruitmentAuthenticator;
 import auth.TdpRecruitmentAuthorizer;
 import auth.TdpRecruitmentPasswordStore;
 import auth.TdpRecruitmentUnauthorizedHandler;
-
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentCacheConfiguration;
@@ -78,6 +77,7 @@ public class TdpRecruitmentApplication extends Application<TdpRecruitmentApplica
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotTimeResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(SlotResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(ReportResource.class));
+        environment.jersey().register(guiceBundle.getInjector().getInstance(ScheduleResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(AuthResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(CandidateResource.class));
         environment.jersey().register(guiceBundle.getInjector().getInstance(RecruiterNoteResource.class));
