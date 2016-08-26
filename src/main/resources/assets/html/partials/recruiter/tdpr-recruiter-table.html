@@ -1,6 +1,6 @@
 <div class="container">
 
-    <h1 id="recruiter-header">Availabilities</h1>
+    <h1 class="h1-header">Availabilities</h1>
 
     <div ng-if="params.candidateId !== 0">
         <h3>Select interviewers for <span uib-tooltip="{{params.candidate.note}}">{{params.candidate.lastName}} {{params.candidate.firstName}}</span></h3>
@@ -76,7 +76,4 @@
             </tbody>
         </table>
     </div>
-
-
-    <a id="add-person-btn" ui-sref="tdpr.recruiter.addPerson">Add person</a>
 </div>

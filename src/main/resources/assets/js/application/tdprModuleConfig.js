@@ -12,7 +12,13 @@ define(['angular'
                         tdprAuthService.checkCookies();
 
                         if(tdprAuthService.isUserLoggedIn()) {
-                            tdprAuthService.validateSession().catch(function() {
+                            tdprAuthService.validateSession().then(function() {
+                                if(tdprAuthService.getCurrentUser().isRecruiter) {
+                                    $location.path('/candidates');
+                                } else {
+                                    $location.path('/interviewer/' + tdprAuthService.getCurrentUser().id + '/home');
+                                }
+                            }, function() {
                                 $location.path('/login');
                                 Notification.error('Your session has expired. Please log in.');
                             });
@@ -34,7 +40,7 @@ define(['angular'
                 }
         });
 
-        $urlRouterProvider.otherwise("/404");
+        $urlRouterProvider.otherwise("/login");
 
         NotificationProvider.setOptions({
           delay: 2000,

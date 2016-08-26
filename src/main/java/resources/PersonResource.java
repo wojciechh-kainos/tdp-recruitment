@@ -11,6 +11,7 @@ import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.mail.MessagingException;
 import javax.ws.rs.GET;
@@ -54,6 +55,7 @@ public class PersonResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -79,6 +81,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/all")
     @UnitOfWork
     public List fetchPersonsWithSlots(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) throws ParseException {
@@ -109,6 +112,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{personId}/getNote")
     @UnitOfWork
     public Note getNote(@PathParam("personId") Long personId,
@@ -123,6 +127,7 @@ public class PersonResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -132,6 +137,7 @@ public class PersonResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{id}")
     @UnitOfWork
     public Person getPersonById(@PathParam("id") Long id){
@@ -143,6 +149,7 @@ public class PersonResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -168,6 +175,7 @@ public class PersonResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/{id}/switchAccountStatus")
     @UnitOfWork
     public Response switchAccountStatus(@PathParam("id") Long id) {
@@ -186,6 +194,7 @@ public class PersonResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/all/recruiter")
     @UnitOfWork
     public Response getRecruiters() {

@@ -6,6 +6,8 @@ import dao.SlotDao;
 import domain.Slot;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,6 +28,7 @@ public class SlotResource {
     }
 
     @PUT
+    @PermitAll
     @Path("/{date_from}/{date_to}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -44,6 +47,7 @@ public class SlotResource {
     }
 
     @GET
+    @PermitAll
     @Path("/week")
     @UnitOfWork
     public List<Slot> fetchSlotsForWeek(@QueryParam("id") Long id,
@@ -59,6 +63,7 @@ public class SlotResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("recruiter")
     @UnitOfWork
     public Response updateRecruiter(List<Slot> slots) {
