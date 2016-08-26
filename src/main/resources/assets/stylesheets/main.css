@@ -178,6 +178,7 @@ h2 {
 }
 
 .navbar-link {
+  color: white !important;
   cursor: pointer;
 }
 .navbar-text, .navbar-brand {
@@ -193,4 +194,8 @@ h2 {
    color: #375D81;
    text-align: center;
    font-family: 'Lato', sans-serif;
+}
+
+.m-t-3 {
+    margin-top: 10px;
 }
