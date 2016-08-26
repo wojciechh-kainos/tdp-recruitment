@@ -6,6 +6,7 @@ import domain.Report;
 import io.dropwizard.hibernate.UnitOfWork;
 import services.ReportService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
@@ -26,6 +27,7 @@ public class ReportResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/{date_from}/{date_to}/{id}")
     @UnitOfWork
     public Report getReport(
@@ -42,6 +44,7 @@ public class ReportResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/{date_from}/{date_to}")
     @UnitOfWork
     public List<Report> getAllReports(

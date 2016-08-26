@@ -18,11 +18,6 @@ body {
 	background-size: cover;
 }
 
-h1.interviewer-header {
-   font-size: 48px;
-   color: #375D81;
-}
-
 .availability-table {
     display: inline-block;
     margin-top: 30px;

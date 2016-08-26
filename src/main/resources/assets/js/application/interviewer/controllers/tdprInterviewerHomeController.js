@@ -1,5 +1,5 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule', 'application/constants/tdprConstantsModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, DateFormat, Notification) {
+    tdprInterviewerModule.controller("tdprInterviewerHomeController", function ($scope, tdprSlotsService, tdprAuthService, tdprPersonService, $filter, $stateParams, $timeout, AvailabilityEnum, $log, $state, DateFormat, Notification) {
         $scope.slotTimes = [];
 
         $scope.hasNoteChanged = false;
@@ -204,10 +204,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         function isSlotTypeFullOrInit(slot) {
             return slot.type === AvailabilityEnum.full.id || slot.type === AvailabilityEnum.init.id;
         }
-
-        $scope.goDetails = function () {
-            $state.go('tdpr.interviewer.details', {'id': id});
-        };
 
         function createNote(description, personId, date) {
             $scope.noteContent = {
