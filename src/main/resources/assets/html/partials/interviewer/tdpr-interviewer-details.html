@@ -1,6 +1,8 @@
 <br>
 <div class="form-horizontal well center">
-    <h1 class="h1-header">Personal details</h1>
+    <h1 class="h1-header" ng-show="viewingMyDetails">Personal details</h1>
+    <h1 class="h1-header" ng-show="!viewingMyDetails">Personal details of {{personName}}</h1>
+
     <form class="interviewer-form center" id="details-form" name="detailsForm" role="form">
         <hr>
         <job-check-boxes></job-check-boxes>
@@ -68,7 +70,7 @@
                       password="password"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
-            <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()">
+            <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()" ng-hide="isRecruiter">
         </div>
     </form>
 </div>
