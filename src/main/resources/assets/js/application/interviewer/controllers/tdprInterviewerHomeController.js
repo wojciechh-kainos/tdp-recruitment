@@ -45,6 +45,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function updateDate() {
+            if($stateParams.relativeDayNumber && $stateParams.relativeDayNumber != 0){
+                $scope.relativeDayNumber = $stateParams.relativeDayNumber;
+                $stateParams.relativeDayNumber = 0;
+            }
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat); // monday
             endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat); // friday
             $scope.displayedStartDate = replaceDashesWithDots(startDate);
@@ -76,6 +80,18 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.getSlots(id);
             getNote(id, startDate);
         }
+        
+        var relativeDayNumberToOffset = function(){
+            return $scope.relativeDayNumber / 7;
+        };
+
+        $scope.goBackToRecruiterView = function () {
+            if (!verifyNoUnsavedChanges()) {
+                return;
+            }
+
+            $state.go('tdpr.recruiter.home', {offset: relativeDayNumberToOffset()});
+        };
 
         $scope.discardChanges = function () {
             $scope.clearTable();
