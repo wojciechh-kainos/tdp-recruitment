@@ -1,7 +1,7 @@
 <br>
 <div class="form-horizontal well center">
-    <h1 class="h1-header" ng-show="!isRecruiter">Personal details</h1>
-    <h1 class="h1-header" ng-show="isRecruiter">Personal details of {{personName}}</h1>
+    <h1 class="h1-header" ng-show="viewingMyDetails">Personal details</h1>
+    <h1 class="h1-header" ng-show="!viewingMyDetails">Personal details of {{personName}}</h1>
 
     <form class="interviewer-form center" id="details-form" name="detailsForm" role="form">
         <hr>

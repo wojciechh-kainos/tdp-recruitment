@@ -1,9 +1,10 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
+    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, tdprAuthService, $filter, $state, Notification, BandLevelEnum, person) {
         $scope.BandLevelEnum = BandLevelEnum;
         $scope.changePasswordChecked = false;
         $scope.isRecruiter = $stateParams.isRecruiter;
         $scope.personName = $stateParams.personName;
+        $scope.viewingMyDetails = tdprAuthService.getCurrentUser().id == $stateParams.id;
 
         function init() {
                 $scope.person = person;
