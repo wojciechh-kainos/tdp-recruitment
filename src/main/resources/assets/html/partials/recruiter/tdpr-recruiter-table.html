@@ -39,6 +39,10 @@
         </div>
         <br>
         <div>
+            <label ng-show="pairingMode"><input type="radio" ng-model="interviewMode" value="full"> Full</label>
+            <label ng-show="pairingMode"><input type="radio" ng-model="interviewMode" value="init"> Init</label>
+        </div>
+        <div>
             <button class="button navigation" ng-show="pairingMode" ng-click="interviewOff()">Cancel</button>
             <button class="button navigation" ng-show="pairingMode" ng-click="createInterview()">Submit</button>
         </div>

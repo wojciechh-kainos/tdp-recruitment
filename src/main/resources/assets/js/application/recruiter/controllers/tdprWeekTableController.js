@@ -13,6 +13,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.persons = persons;
         $scope.endTime = slotsTimes[slotsTimes.length - 1].endTime;
         $scope.startTime = slotsTimes[0].startTime;
+        $scope.interviewMode = "full";
+
+        var getInterviewMode = function () {
+            return $scope.interviewMode;
+        };
 
         var getSelectedPersons = function () {
             return _.filter($scope.persons, function (person) {
@@ -22,7 +27,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         if ($scope.params.candidateId && $scope.params.candidateId !== 0) {
             $scope.pairingMode = true;
-            $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons);
+            $scope.changeSlotTypeCycleThrough = tdprScheduleService.tripleSlotChange(_.maxBy(slotsTimes, 'id').id, getSelectedPersons, getInterviewMode);
         } else {
             $scope.pairingMode = false;
             $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
@@ -30,6 +35,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.interviewOff = function () {
             $scope.pairingMode = false;
+            $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
             $scope.refreshPersonsData();
         };
 
