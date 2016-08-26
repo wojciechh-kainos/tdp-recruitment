@@ -11,6 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.mousedown = false;
         $scope.isRecruiter = $state.params.isRecruiter;
         $scope.personName = $state.params.personName;
+        $scope.viewingMyDetails = tdprAuthService.getCurrentUser().id == $stateParams.id;
         $scope.editNote = true;
 
         var note;

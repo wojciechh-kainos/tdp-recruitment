@@ -22,7 +22,8 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
-            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['isUserAuthorized']);
+            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['isUserAuthorized', 'getCurrentUser']);
+            tdprAuthService.getCurrentUser.and.returnValue({});
             tdprAuthService.isUserAuthorized.and.returnValue(true);
 
             spyOn($state, 'go');
@@ -35,6 +36,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 Notification: Notification,
                 $stateParams: {id: personId},
                 $state: $state,
+                tdprAuthService: tdprAuthService,
                 person: {
                     dummyData: 42,
                     bandLevel: "9001",
