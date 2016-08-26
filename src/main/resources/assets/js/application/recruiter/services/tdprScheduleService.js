@@ -56,9 +56,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             })
         };
 
-        this.tripleSlotChange = function (maxSlot, selectedPersons) {
+        this.tripleSlotChange = function (maxSlot, selectedPersons, mode) {
             return function (slot, slotId, day, person) {
-                var newSlot, mode, max, valid = true;
+                var newSlot, max, valid = true;
                 _.each(selectedPersons(), function (person) {
                     if (!person.changesPending) {
                         person.rootSlotList = angular.copy(person.slotList);
@@ -68,12 +68,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     if (person.changesPending) {
                         person.slotList = angular.copy(person.rootSlotList);
                     }
-
-                    if (selectedPersons().length === 1) {
-                        mode = "init";
+                    console.log(mode());
+                    if (mode() === "init") {
                         max = 1;
                     } else {
-                        mode = "full";
+
                         max = 3;
                     }
 
@@ -83,7 +82,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             valid = false;
                         }
                         if (slotId + i <= maxSlot && valid) {
-                            that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode);
+                            that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
                         }
                     }
 
