@@ -2,7 +2,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
     tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', function ($http, dateFilter, AvailabilityEnum, DateFormat) {
         var that = this;
         var scheduledSlots = [];
-        this.changeSlotType = function (slot, slotId, day, person, changeTo, pairing) {
+        this.changeSlotType = function (slot, slotId, day, person, changeTo, mode) {
             var date = dateFilter(day, DateFormat);
 
             var modifiedSlot = {
@@ -28,7 +28,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             } else {
                 person.slotList.push(modifiedSlot);
             }
-            if (pairing) {
+            if (mode) {
                 that.updatePairingSlots(modifiedSlot);
             }
         };
@@ -68,19 +68,31 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     if (person.changesPending) {
                         person.slotList = angular.copy(person.rootSlotList);
                     }
-                    for (var i = 0; i < 3; i++) {
-                        newSlot = that.findSlotById(person.slotList, slotId + i, day);
+
+                    if (selectedPersons().length === 1) {
+                        newSlot = that.findSlotById(person.slotList, slotId, day);
                         if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                             valid = false;
                         }
-                        if (slotId + i <= maxSlot && valid) {
-                            that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, true);
+                        if (slotId <= maxSlot && valid) {
+                            that.changeSlotTypeCycleThrough(newSlot, slotId, day, person, "init");
+                        }
+                    } else {
+
+                        for (var i = 0; i < 3; i++) {
+                            newSlot = that.findSlotById(person.slotList, slotId + i, day);
+                            if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
+                                valid = false;
+                            }
+                            if (slotId + i <= maxSlot && valid) {
+                                that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, "full");
+                            }
                         }
                     }
 
                 });
                 if (!valid) {
-                    _.each(selectedPersons(), function(person) {
+                    _.each(selectedPersons(), function (person) {
                         person.slotList = angular.copy(person.rootSlotList);
                         scheduledSlots = [];
                     })
@@ -90,9 +102,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.createInterview = function (slotsTimes, selectedPersons, candidate) {
 
-            if (scheduledSlots.length === 3) {
-                var outlookObject = {
-                };
+            if (scheduledSlots.length <= 3) {
+                var outlookObject = {};
                 outlookObject.interviewers = _.map(selectedPersons(), function (obj) {
                     return {
                         id: obj.id,
@@ -131,11 +142,14 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             return date;
         }
 
-        this.changeSlotTypeCycleThrough = function (slot, slotId, day, person, pairing) {
+        this.changeSlotTypeCycleThrough = function (slot, slotId, day, person, mode) {
             var date = dateFilter(day, DateFormat);
-            if (slot === undefined || pairing) {
+            if (mode === "init") {
+                that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.init.name, mode);
+
+            } else if (slot === undefined || mode === "full") {
                 // Add available slot for future changes
-                that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name, pairing);
+                that.changeSlotType(slot, slotId, date, person, AvailabilityEnum.full.name, mode);
             } else {
                 // Cycle through
                 // Available/maybe - full - init - maybe
@@ -154,7 +168,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         return;
                 }
 
-                that.changeSlotType(slot, slotId, date, person, newType, pairing);
+                that.changeSlotType(slot, slotId, date, person, newType, mode);
             }
         };
 
