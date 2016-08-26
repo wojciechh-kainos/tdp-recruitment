@@ -38,7 +38,9 @@ public class PersonDao extends AbstractDAO<Person>{
     }
 
     public List<Person> findAllRecruiters(){
-        Criteria criteria = criteria().add(Restrictions.eq("admin", true));
+        Criteria criteria = criteria()
+                .add(Restrictions.eq("admin", true))
+                .add(Restrictions.eq("active", true));
         return list(criteria);
     }
 
