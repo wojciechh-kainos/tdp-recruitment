@@ -10,6 +10,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         var Notification;
         var personService;
         var updatePersonDeferred;
+        var tdprAuthService;
 
         beforeEach(inject(function ($controller, tdprPersonService, _$rootScope_, _$state_, _$filter_, $q) {
             personId = 42;
@@ -23,6 +24,9 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
 
             spyOn($state, 'go');
 
+            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
+            tdprAuthService.getCurrentUser.and.returnValue({});
+
             $controller('tdprInterviewerDetailsController', {
                 $scope: $scope,
                 BandLevelEnum: {},
@@ -30,6 +34,7 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
                 Notification: Notification,
                 $stateParams: {id: personId},
                 $state: $state,
+                tdprAuthService: tdprAuthService,
                 person: {
                     dummyData: 42,
                     bandLevel: "9001",
