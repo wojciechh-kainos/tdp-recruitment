@@ -160,7 +160,9 @@ public class PersonResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         Person person = user.get();
-
+        person.setFirstName(newPerson.getFirstName());
+        person.setLastName(newPerson.getLastName());
+        person.setEmail(newPerson.getEmail());
         person.setIsDev(newPerson.getIsDev());
         person.setIsOps(newPerson.getIsOps());
         person.setIsOther(newPerson.getIsOther());

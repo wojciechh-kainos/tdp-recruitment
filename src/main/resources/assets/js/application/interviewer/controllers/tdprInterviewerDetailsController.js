@@ -1,8 +1,8 @@
 define(['angular', 'application/interviewer/tdprInterviewerModule'], function (angular, tdprInterviewerModule) {
-    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person) {
+    tdprInterviewerModule.controller("tdprInterviewerDetailsController", function ($scope, $stateParams, tdprPersonService, $filter, $state, Notification, BandLevelEnum, person, tdprAuthService) {
         $scope.BandLevelEnum = BandLevelEnum;
         $scope.changePasswordChecked = false;
-
+        $scope.isRecruiter = tdprAuthService.isUserAuthorized('recruiter');
         function init() {
                 $scope.person = person;
                 $scope.person.token = undefined;
