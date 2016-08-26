@@ -45,7 +45,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function updateDate() {
-            if($stateParams.relativeDayNumber != 0){
+            if($stateParams.relativeDayNumber && $stateParams.relativeDayNumber != 0){
                 $scope.relativeDayNumber = $stateParams.relativeDayNumber;
                 $stateParams.relativeDayNumber = 0;
             }
