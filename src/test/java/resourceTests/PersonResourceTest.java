@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import resources.PersonResource;
+import services.ActivationLink;
 import services.MailService;
 
 import javax.ws.rs.WebApplicationException;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class PersonResourceTest {
 
-    PersonResource resource;
+    private PersonResource resource;
 
     @Mock
     NoteDao mockNoteDao;
@@ -43,6 +44,8 @@ public class PersonResourceTest {
     MailService mockMailService;
     @Mock
     TdpRecruitmentPasswordStore mockPasswordStore;
+    @Mock
+    ActivationLink activationlink;
 
     private static List<Note> stubNoteDB;
     private static List<Person> stubPersonDB;
@@ -93,7 +96,7 @@ public class PersonResourceTest {
 
     @Before
     public void setUp() {
-        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao, mockPasswordStore);
+        resource = new PersonResource(mockPersonDao, mockSlotDao, mockMailService, mockNoteDao, mockPasswordStore, activationlink);
     }
 
     @Test
@@ -128,12 +131,12 @@ public class PersonResourceTest {
 
     @Test
     public void testGetRecruiters() {
-        when(mockPersonDao.findAll()).thenReturn(stubPersonDB);
+        when(mockPersonDao.findAllRecruiters()).thenReturn(stubPersonDB);
 
         Response result = resource.getRecruiters();
 
         assertEquals(Response.Status.OK.getStatusCode(), result.getStatus());
-        verify(mockPersonDao, times(1)).findAll();
+        verify(mockPersonDao, times(1)).findAllRecruiters();
     }
 
     @Test

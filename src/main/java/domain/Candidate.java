@@ -1,5 +1,6 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.eclipse.jetty.util.annotation.Name;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
         @NamedQuery(name = "Candidate.deactivateById", query = "UPDATE Candidate SET isDeleted = true WHERE id = :id"),
         @NamedQuery(name = "Candidate.deleteById", query = "DELETE FROM Candidate WHERE id = :id")
 })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Candidate {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -23,8 +25,12 @@ public class Candidate {
     @Length(max=100)
     private String firstName;
 
+    public Candidate() {
+    }
+
     @NotNull
     @Column(name="last_name")
+
     @Length(max=100)
     private String lastName;
 
