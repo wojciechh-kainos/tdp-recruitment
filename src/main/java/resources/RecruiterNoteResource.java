@@ -5,6 +5,7 @@ import dao.RecruiterNoteDao;
 import domain.RecruiterNote;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -20,6 +21,7 @@ public class RecruiterNoteResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{limit}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -28,6 +30,7 @@ public class RecruiterNoteResource {
     }
 
     @PUT
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork
     public Long create(RecruiterNote recruiterNote) {
