@@ -190,7 +190,6 @@ public class PersonResource {
             logger.warn("Person with id => {} not found", id.toString());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
     }
 
     @GET
@@ -200,4 +199,27 @@ public class PersonResource {
     public Response getRecruiters() {
         return Response.ok(personDao.findAllRecruiters()).build();
     }
+
+    @PUT
+    @RolesAllowed("recruiter")
+    @Path("/{id}/resendActivationLink")
+    @UnitOfWork
+    public Response resendActivationLink(@PathParam("id") Long id) {
+
+        Optional<Person> person = personDao.getById(id);
+        if(person.isPresent()) {
+            String token = UUID.randomUUID().toString();
+            person.get().setActivationCode(token);
+            try {
+                mailService.sendEmail(activationLink.createMessage(person.get()));
+            } catch (MessagingException | IOException e) {
+                logger.warn("Mailing error  => {}", e.getMessage());
+                throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            }
+            return Response.status(Response.Status.OK).build();
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 }
