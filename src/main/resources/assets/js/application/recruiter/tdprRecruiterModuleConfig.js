@@ -62,11 +62,12 @@ define(['angular'
                 url: "/recruiter",
                 params: {
                     candidateId: 0,
-                    candidate: {}
+                    candidate: {},
+                    offset: 0
                 },
                 resolve: {
-                    persons: function (tdprPersonsService, tdprDateService) {
-                        var week = tdprDateService.getCurrentWeek();
+                    persons: function (tdprPersonsService, tdprDateService, $stateParams) {
+                        var week = tdprDateService.getWeekWithOffset($stateParams.offset);
                         return tdprPersonsService.fetchPersonsWithSlotsForDates(week[0], week[4]);
                     },
                     slotsTimes: function (tdprSlotsTimesService) {
@@ -118,5 +119,4 @@ define(['angular'
     });
 
     return tdprRecruiterModule;
-
 });

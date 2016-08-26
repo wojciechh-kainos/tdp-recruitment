@@ -7,6 +7,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 personData: '=',
                 slotsTimes: '=',
                 days: '=',
+                relativeDayNumber: "=",
                 changeSlotType: '&',
                 submitSlotChanges: '&',
                 discardSlotChanges: '&'
