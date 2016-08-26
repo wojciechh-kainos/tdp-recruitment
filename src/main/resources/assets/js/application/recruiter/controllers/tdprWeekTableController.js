@@ -35,6 +35,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.interviewOff = function () {
             $scope.pairingMode = false;
+            $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
             $scope.refreshPersonsData();
         };
 
