@@ -153,7 +153,7 @@
 }
 
 .changed-cell {
-    border: 3px solid #ff3d00;
+    outline: 2px solid #ff3d00;
 }
 
 .form-text-area {

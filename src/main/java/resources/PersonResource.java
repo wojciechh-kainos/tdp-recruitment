@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.mail.MessagingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,10 +21,12 @@ import javax.ws.rs.QueryParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.ActivationLink;
 import services.MailService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -32,21 +35,23 @@ import java.util.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
     private PersonDao personDao;
     private SlotDao slotDao;
     private NoteDao noteDao;
     private MailService mailService;
-    SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+    private ActivationLink activationLink;
     private final TdpRecruitmentPasswordStore passwordStore;
+    private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
+ 	private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
 
     @Inject
-    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao,TdpRecruitmentPasswordStore passwordStore) {
+    public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore, ActivationLink activationLink) {
         this.personDao = personDao;
         this.slotDao = slotDao;
         this.noteDao = noteDao;
         this.mailService = mailService;
         this.passwordStore = passwordStore;
+        this.activationLink = activationLink;
     }
 
     @PUT
@@ -60,7 +65,13 @@ public class PersonResource {
             person.setActivationCode(token);
             person.setActive(false);
             personDao.create(person);
-            mailService.sendEmail(person.getEmail(), token);
+
+            try {
+                mailService.sendEmail(activationLink.createMessage(person));
+            } catch (MessagingException | IOException e) {
+                logger.warn("Mailing error  => {}", e.getMessage());
+                throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            }
 
             return person;
         } else {
@@ -179,7 +190,6 @@ public class PersonResource {
             logger.warn("Person with id => {} not found", id.toString());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-
     }
 
     @GET
@@ -187,14 +197,29 @@ public class PersonResource {
     @Path("/all/recruiter")
     @UnitOfWork
     public Response getRecruiters() {
-        List<Person> recruiterList = new ArrayList<>();
-
-        for (Person person : personDao.findAll()) {
-            if (person.getAdmin() != null && person.getAdmin()) {
-                recruiterList.add(person);
-            }
-        }
-
-        return Response.ok(recruiterList).build();
+        return Response.ok(personDao.findAllRecruiters()).build();
     }
+
+    @PUT
+    @RolesAllowed("recruiter")
+    @Path("/{id}/resendActivationLink")
+    @UnitOfWork
+    public Response resendActivationLink(@PathParam("id") Long id) {
+
+        Optional<Person> person = personDao.getById(id);
+        if(person.isPresent()) {
+            String token = UUID.randomUUID().toString();
+            person.get().setActivationCode(token);
+            try {
+                mailService.sendEmail(activationLink.createMessage(person.get()));
+            } catch (MessagingException | IOException e) {
+                logger.warn("Mailing error  => {}", e.getMessage());
+                throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+            }
+            return Response.status(Response.Status.OK).build();
+        }else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 }
