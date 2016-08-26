@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', function ($http, dateFilter, AvailabilityEnum, DateFormat) {
+    tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', 'Notification', function ($http, dateFilter, AvailabilityEnum, DateFormat, Notification) {
         var that = this;
         var scheduledSlots = [];
         this.changeSlotType = function (slot, slotId, day, person, changeTo, mode) {
@@ -47,6 +47,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             personData.oldSlotList = [];
             personData.selected = false;
             personData.changesPending = false;
+            scheduledSlots = [];
         };
 
         this.findSlotById = function (slotList, id, day) {
@@ -59,47 +60,55 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
         this.tripleSlotChange = function (maxSlot, selectedPersons, mode) {
             return function (slot, slotId, day, person) {
                 var newSlot, max, valid = true;
-                _.each(selectedPersons(), function (person) {
-                    if (!person.changesPending) {
-                        person.rootSlotList = angular.copy(person.slotList);
-                    }
-                    scheduledSlots = [];
 
-                    if (person.changesPending) {
-                        person.slotList = angular.copy(person.rootSlotList);
-                    }
-                    console.log(mode());
-                    if (mode() === "init") {
-                        max = 1;
-                    } else {
-
-                        max = 3;
-                    }
-
-                    for (var i = 0; i < max; i++) {
-                        newSlot = that.findSlotById(person.slotList, slotId + i, day);
-                        if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
-                            valid = false;
-                        }
-                        if (slotId + i <= maxSlot && valid) {
-                            that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
-                        }
-                    }
+                if (selectedPersons().length = 0) {
+                    Notification.error("No interviewers selected! Tick the checkboxes before proceeding.")
+                } else {
 
 
-                });
-                if (!valid) {
                     _.each(selectedPersons(), function (person) {
-                        person.slotList = angular.copy(person.rootSlotList);
+                        if (!person.changesPending) {
+                            person.rootSlotList = angular.copy(person.slotList);
+                        }
                         scheduledSlots = [];
-                    })
+
+                        if (person.changesPending) {
+                            person.slotList = angular.copy(person.rootSlotList);
+                        }
+                        if (mode() === "init") {
+                            max = 1;
+                        } else {
+
+                            max = 3;
+                        }
+
+                        for (var i = 0; i < max; i++) {
+                            newSlot = that.findSlotById(person.slotList, slotId + i, day);
+                            if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
+                                valid = false;
+                            }
+                            if (slotId + i <= maxSlot && valid) {
+                                that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
+                            }
+                        }
+
+
+                    });
+                    if (!valid) {
+                        _.each(selectedPersons(), function (person) {
+                            person.slotList = angular.copy(person.rootSlotList);
+                            scheduledSlots = [];
+                        });
+                        Notification.error("Invalid slots selected.")
+                    }
                 }
             };
         };
 
         this.createInterview = function (slotsTimes, selectedPersons, candidate) {
-
-            if (scheduledSlots.length <= 3) {
+            if (selectedPersons().length === 0) {
+                Notification.error("No interviewers selected! Tick the checkboxes before proceeding.")
+            } else if (scheduledSlots.length === 1 || scheduledSlots.length === 3) {
                 var outlookObject = {};
                 outlookObject.interviewers = _.map(selectedPersons(), function (obj) {
                     return {
@@ -125,8 +134,9 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
                 return outlookObject;
             } else {
-                return false;
+                Notification.error("No slots selected!");
             }
+
 
         };
 
