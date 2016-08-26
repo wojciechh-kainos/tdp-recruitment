@@ -58,7 +58,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
 
         this.tripleSlotChange = function (maxSlot, selectedPersons) {
             return function (slot, slotId, day, person) {
-                var newSlot, valid = true;
+                var newSlot, mode, max, valid = true;
                 _.each(selectedPersons(), function (person) {
                     if (!person.changesPending) {
                         person.rootSlotList = angular.copy(person.slotList);
@@ -70,25 +70,23 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     }
 
                     if (selectedPersons().length === 1) {
-                        newSlot = that.findSlotById(person.slotList, slotId, day);
+                        mode = "init";
+                        max = 1;
+                    } else {
+                        mode = "full";
+                        max = 3;
+                    }
+
+                    for (var i = 0; i < max; i++) {
+                        newSlot = that.findSlotById(person.slotList, slotId + i, day);
                         if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                             valid = false;
                         }
-                        if (slotId <= maxSlot && valid) {
-                            that.changeSlotTypeCycleThrough(newSlot, slotId, day, person, "init");
-                        }
-                    } else {
-
-                        for (var i = 0; i < 3; i++) {
-                            newSlot = that.findSlotById(person.slotList, slotId + i, day);
-                            if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
-                                valid = false;
-                            }
-                            if (slotId + i <= maxSlot && valid) {
-                                that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, "full");
-                            }
+                        if (slotId + i <= maxSlot && valid) {
+                            that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode);
                         }
                     }
+
 
                 });
                 if (!valid) {
