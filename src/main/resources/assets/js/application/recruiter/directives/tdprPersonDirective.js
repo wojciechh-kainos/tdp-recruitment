@@ -4,6 +4,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             restrict: 'AE',
             templateUrl: '/html/partials/recruiter/tdpr-directive-person.html',
             scope: {
+                pairingMode: '=',
                 personData: '=',
                 slotsTimes: '=',
                 days: '=',
@@ -13,7 +14,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 discardSlotChanges: '&'
             },
             link: function (scope, element, attributes) {
-                scope.note = scope.personData.noteList ? '"' + scope.personData.noteList[0].description + '"': 'none';
+                scope.note = scope.personData.noteList ? '"' + scope.personData.noteList[0].description + '"' : 'none';
 
                 scope.getSlot = function (slotNumber, day) {
                     return scope.personData.slotList.find(function (slot) {
@@ -21,7 +22,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     });
                 };
                 scope.getClass = function () {
-                    return scope.slotsTimes.length < 10  ? 'cell-size-' + scope.slotsTimes.length : '';
+                    return scope.slotsTimes.length < 10 ? 'cell-size-' + scope.slotsTimes.length : '';
                 };
             }
         }

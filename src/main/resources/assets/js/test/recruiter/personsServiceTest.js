@@ -94,5 +94,16 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprPersonsSe
                 $httpBackend.flush();
             });
         });
+
+        describe('resendActivationLink', function () {
+            it('should return updated person on success', function () {
+                $httpBackend.expectPUT('/api/person/' + 2 + '/resendActivationLink').respond(HttpStatusCodes.ok);
+
+                service.resendActivationLink(person).then(function (response) {
+                    expect(response.status).toEqual(HttpStatusCodes.ok);
+                });
+                $httpBackend.flush();
+            });
+        });
     })
 });
