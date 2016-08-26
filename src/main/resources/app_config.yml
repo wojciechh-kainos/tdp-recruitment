@@ -12,13 +12,12 @@ database:
   driverClass: org.postgresql.Driver
 
   # the username
-  user: tdp
+  user: dawidkw
 
-  # the password
-  password: tdp
+
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost/tdprecruitment
+  url: jdbc:postgresql://localhost/dawidkw
 
   # any properties specific to your JDBC driver:
   properties:

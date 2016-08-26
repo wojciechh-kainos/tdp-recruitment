@@ -7,10 +7,34 @@
         <hr>
         <job-check-boxes></job-check-boxes>
         <hr>
+        <div ng-show="isRecruiter">
+            <div class="form-group">
+                <label class="control-label col-md-6 text-xs-left">First name:</label>
+                <div class="ui-select col-md-6">
+                    <input class="form-control" type="text" ng-model="person.firstName">
+                    </input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6 text-xs-left">Last name:</label>
+                <div class="ui-select col-md-6">
+                    <input class="form-control" type="text" ng-model="person.lastName">
+                    </input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6 text-xs-left">Email:</label>
+                <div class="ui-select col-md-6">
+                    <input class="form-control" type="text" ng-model="person.email">
+                    </input>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-md-6 text-xs-left">Band level:</label>
             <div class="ui-select col-md-6">
-                <select class="form-control" ng-model="person.bandLevel" ng-options="key as value for (key, value) in BandLevelEnum">
+                <select class="form-control" ng-model="person.bandLevel"
+                        ng-options="key as value for (key, value) in BandLevelEnum">
                 </select>
             </div>
         </div>
@@ -18,29 +42,32 @@
             <label class="control-label col-md-6">Default starting hour (8:00-10:00):</label>
             <div class="col-md-4">
                 <input class="form-control" type="time" name="defaultStartHour" ng-model="person.defaultStartHour"
-                       placeholder="HH:mm:ss" min="08:00:00" max="10:00:00" required />
+                       placeholder="HH:mm:ss" min="08:00:00" max="10:00:00" required/>
             </div>
             <div class="form-group error-container">
                 <span class="col-md-6" ng-show="detailsForm.defaultStartHour.$error.time">Invalid. </span>
-                <span class="col-md-6" ng-show="detailsForm.defaultStartHour.$error.min || detailsForm.defaultStartHour.$error.max">Values between 8:00 and 10:00!</span>
+                <span class="col-md-6"
+                      ng-show="detailsForm.defaultStartHour.$error.min || detailsForm.defaultStartHour.$error.max">Values between 8:00 and 10:00!</span>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-6">Default finishing hour (16:00-18:00):</label>
             <div class="col-md-4">
                 <input class="form-control" type="time" name="defaultFinishHour" ng-model="person.defaultFinishHour"
-                       placeholder="HH:mm:ss" min="16:00:00" max="18:00:00" required />
+                       placeholder="HH:mm:ss" min="16:00:00" max="18:00:00" required/>
             </div>
             <div class="form-group error-container">
                 <span class="col-md-6" ng-show="detailsForm.defaultFinishHour.$error.time">Invalid. </span>
-                <span class="col-md-6" ng-show="detailsForm.defaultFinishHour.$error.min || detailsForm.defaultFinishHour.$error.max">Values between 16:00 and 18:00!</span>
+                <span class="col-md-6"
+                      ng-show="detailsForm.defaultFinishHour.$error.min || detailsForm.defaultFinishHour.$error.max">Values between 16:00 and 18:00!</span>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-6">Change password:</label>
             <input class="col-md-2 details-checkbox" type="checkbox" ng-model="changePasswordChecked">
         </div>
-        <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect" password="password"></new-password>
+        <new-password ng-show="changePasswordChecked" are-passwords-correct="arePasswordsCorrect"
+                      password="password"></new-password>
         <div class="center btn-wrapper">
             <input class="btn btn-primary" type="button" value="Save Changes" ng-click="updateDetails()">
             <input class="btn btn-default" type="button" value="Cancel" ng-click="goHome()" ng-hide="isRecruiter">

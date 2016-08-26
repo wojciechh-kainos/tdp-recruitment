@@ -22,15 +22,17 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
             spyOn(personService, 'updatePersonDetails').and.returnValue(updatePersonDeferred.promise);
 
-            spyOn($state, 'go');
-
-            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
+            tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['isUserAuthorized', 'getCurrentUser']);
             tdprAuthService.getCurrentUser.and.returnValue({});
+            tdprAuthService.isUserAuthorized.and.returnValue(true);
+
+            spyOn($state, 'go');
 
             $controller('tdprInterviewerDetailsController', {
                 $scope: $scope,
                 BandLevelEnum: {},
                 tdprPersonService: personService,
+                tdprAuthService: tdprAuthService,
                 Notification: Notification,
                 $stateParams: {id: personId},
                 $state: $state,
