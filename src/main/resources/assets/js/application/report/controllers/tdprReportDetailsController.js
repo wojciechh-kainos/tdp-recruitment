@@ -6,6 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window, FileSaver, Blob) {
 
         $scope.DateFormat = DateFormat;
+        $scope.reportsElements = [];
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},
@@ -80,5 +81,11 @@ define(['angular', 'application/report/tdprReportModule'
             return reportsForCSV;
         }
 
-    })
+        $scope.isTableEmpty = function () {
+          var reportsElements = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+          reportsElements = $filter('personNameFilter')(reportsElements, $scope.personNameFilterValue);
+
+          return reportsElements.length === 0;
+        };
+    });
 });

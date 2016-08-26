@@ -195,3 +195,7 @@ h2 {
 .m-t-3 {
     margin-top: 10px;
 }
+
+.no-content {
+  font-size: 20px;
+}
