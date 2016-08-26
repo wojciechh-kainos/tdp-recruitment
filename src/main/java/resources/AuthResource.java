@@ -39,7 +39,11 @@ public class AuthResource {
 	public Person login(Person person) throws AuthenticationException {
 		Optional<Person> authenticatedUser = authenticator.authenticate(new BasicCredentials(person.getEmail(), person.getPassword()));
 		if (authenticatedUser.isPresent()) {
-			return authenticatedUser.get();
+			if(authenticatedUser.get().getActive()) {
+				return authenticatedUser.get();
+			} else {
+				throw new WebApplicationException(Response.Status.FORBIDDEN);
+			}
 		} else {
 			logger.warn("Login refused with email => {} ",person.getEmail());
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
