@@ -45,6 +45,10 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function updateDate() {
+            if($stateParams.relativeDayNumber != 0){
+                $scope.relativeDayNumber = $stateParams.relativeDayNumber;
+                $stateParams.relativeDayNumber = 0;
+            }
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat); // monday
             endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat); // friday
             $scope.displayedStartDate = replaceDashesWithDots(startDate);
