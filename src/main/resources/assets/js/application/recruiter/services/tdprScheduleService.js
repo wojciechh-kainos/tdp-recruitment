@@ -164,7 +164,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                     return response;
                 },
                 function (error) {
-                    error.message = "Sending failed."
+                    error.message = "Sending invitations failed."
                 }
             );
         }
