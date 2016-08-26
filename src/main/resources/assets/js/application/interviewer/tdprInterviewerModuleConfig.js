@@ -14,8 +14,7 @@ define(['angular'
                 abstract: true,
                 params : {
                     isRecruiter : false,
-                    personName : '',
-                    relativeDayNumber: 0
+                    personName : ''
                 },
                 resolve: {
                     isUserAuthenticated: function(tdprAuthService, Notification, $q, $location) {

@@ -5,9 +5,8 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
-        $scope.offset = $state.params.offset; //WeekNavigateEnum.current;
         $scope.params = $state.params;
-        $scope.days = tdprDateService.getWeekWithOffset($scope.offset);
+        $scope.days = tdprDateService.getCurrentWeek();
         $scope.slotsTimes = slotsTimes;
         $scope.selectSlotsTimes = slotsTimes;
         $scope.persons = persons;
@@ -35,6 +34,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
         $scope.displayedStartDate = $scope.days[0];
         $scope.displayedEndDate = $scope.days[4];
 
+        $scope.offset = WeekNavigateEnum.current;
 
         $scope.changeWeek = function (offset) {
 
