@@ -6,9 +6,14 @@ import com.google.inject.Provides;
 import com.google.inject.ProvisionException;
 import org.hibernate.SessionFactory;
 
-public class TdpRecruitmentModule extends AbstractModule{
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class TdpRecruitmentModule extends AbstractModule {
 
     private SessionFactory sessionFactory;
+
+    private ExecutorService executorService;
 
     @Provides
     SessionFactory providesSessionFactory() {
@@ -27,6 +32,24 @@ public class TdpRecruitmentModule extends AbstractModule{
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Provides
+    ExecutorService providesExecutorService(TdpRecruitmentApplicationConfiguration config) {
+        if (executorService == null) {
+            synchronized (this) {
+                if (executorService == null) {
+                    executorService = Executors.newFixedThreadPool(config.getThreadPoolSize());
+                }
+            }
+        }
+
+        return executorService;
+    }
+
+    @Provides
+    TdpRecruitmentEmailConfiguration providesTdpRecruitmentEmailConfiguration(TdpRecruitmentApplicationConfiguration config) {
+        return config.getSmtpConfig();
     }
 
     @Override

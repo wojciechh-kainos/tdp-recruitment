@@ -52,3 +52,4 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprRecruiter
         })
     })
 });
+
