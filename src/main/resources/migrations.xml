@@ -30,5 +30,4 @@
     <include file="changelogs/US-55_noteForRecruitersInCandidateListTable.xml"/>
     <include file="changelogs/removeNulls.xml"/>
     <include file="changelogs/addPasswords.xml"/>
-    <include file="changelogs/deleteInitialData.xml"/>
 </databaseChangeLog>
