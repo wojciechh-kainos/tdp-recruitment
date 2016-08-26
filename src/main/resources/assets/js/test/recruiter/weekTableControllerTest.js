@@ -16,9 +16,9 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
         var updateSlotsDeferred;
         var fetchPersonsDeferred;
         var WeekNavigateEnum = {
-            previous : -1,
-            next : 1,
-            current : 0
+            previous: -1,
+            next: 1,
+            current: 0
         };
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
@@ -127,16 +127,16 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
             it('should call dateService with correct offset', function () {
                 $scope.offset = WeekNavigateEnum.current;
-               $scope.changeWeek(WeekNavigateEnum.previous);
-               $scope.changeWeek(WeekNavigateEnum.previous);
-               $scope.changeWeek(WeekNavigateEnum.previous);
+                $scope.changeWeek(WeekNavigateEnum.previous);
+                $scope.changeWeek(WeekNavigateEnum.previous);
+                $scope.changeWeek(WeekNavigateEnum.previous);
 
-               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-1);
-               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-2);
-               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-3);
-               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(4);
-               expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
-           });
+                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-1);
+                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-2);
+                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-3);
+                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(4);
+                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
+            });
         });
 
         describe('changeSlotSubmitChanges', function () {
