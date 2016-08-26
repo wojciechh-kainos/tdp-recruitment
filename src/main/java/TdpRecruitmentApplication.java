@@ -3,8 +3,6 @@ import auth.TdpRecruitmentAuthenticator;
 import auth.TdpRecruitmentAuthorizer;
 import auth.TdpRecruitmentPasswordStore;
 import auth.TdpRecruitmentUnauthorizedHandler;
-import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
-
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import configuration.TdpRecruitmentApplicationConfiguration;
 import configuration.TdpRecruitmentCacheConfiguration;
