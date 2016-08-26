@@ -48,8 +48,9 @@
         </div>
     </div>
 
+    <div class="no-content" ng-show="isTableEmpty()"><p><span class ="glyphicon glyphicon-info-sign"></span> No records to display</p></div>
     <div class="availabilities-table-container">
-        <table id="availabilities-table">
+        <table id="availabilities-table" ng-hide="isTableEmpty()">
             <thead>
             <tr>
                 <td></td>
