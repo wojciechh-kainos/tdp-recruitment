@@ -98,6 +98,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                         _.each(selectedPersons(), function (person) {
                             person.slotList = angular.copy(person.rootSlotList);
                             scheduledSlots = [];
+                            person.changesPending = false;
                         });
                         Notification.error("Invalid slots selected.")
                     }
