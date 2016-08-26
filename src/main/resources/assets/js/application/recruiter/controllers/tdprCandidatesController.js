@@ -1,6 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService', 'application/recruiter/services/tdprRecruiterNoteService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits, $filter) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
         $scope.recruiterNotes = recruiterNotes;
@@ -184,6 +184,14 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
                 }, function (response) {
                     Notification.error(response);
                 });
+        };
+
+        $scope.isTableEmpty = function () {
+          var candidates = $filter('filterByRecruiter')($scope.candidates, $scope.currentRecruiter)
+          if (candidates.length === 0)
+            return false;
+          else
+            return true;
         };
     });
 });
