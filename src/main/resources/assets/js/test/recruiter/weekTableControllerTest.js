@@ -68,14 +68,13 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
                 $q = _$q_;
                 Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
-                tdprDateService = jasmine.createSpyObj('tdprDateService', ['getCurrentWeek', 'getWeekWithOffset']);
+                tdprDateService = jasmine.createSpyObj('tdprDateService', ['getWeekWithOffset']);
                 tdprPersonsService = jasmine.createSpyObj('tdprPersonsService', ['fetchPersonsWithSlotsForDates']);
                 tdprRecruiterSlotsService = jasmine.createSpyObj('tdprRecruiterSlotsService', ['updateSlots']);
                 tdprScheduleService = jasmine.createSpyObj('tdprScheduleService', ['changeSlotTypeCycleThrough', 'changeSlotDiscardChanges']);
 
                 updateSlotsDeferred = $q.defer();
                 fetchPersonsDeferred = $q.defer();
-                tdprDateService.getCurrentWeek.and.returnValue([{}, {}, {}, {}, {}]); // five empty objects representing days
                 tdprDateService.getWeekWithOffset.and.returnValue([{}, {}, {}, {}, {}]); // five empty objects representing days
                 tdprRecruiterSlotsService.updateSlots.and.returnValue(updateSlotsDeferred.promise);
                 tdprPersonsService.fetchPersonsWithSlotsForDates.and.returnValue(fetchPersonsDeferred.promise);
@@ -114,6 +113,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
 
         describe('changeWeek', function () {
             it('should call dateService with correct offset', function () {
+                $scope.offset = WeekNavigateEnum.current;
                 $scope.changeWeek(WeekNavigateEnum.next);
                 $scope.changeWeek(WeekNavigateEnum.next);
                 $scope.changeWeek(WeekNavigateEnum.next);
@@ -121,11 +121,12 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(1);
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(2);
                 expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(3);
-                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(3);
+                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(4);
                 expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
             });
 
             it('should call dateService with correct offset', function () {
+                $scope.offset = WeekNavigateEnum.current;
                $scope.changeWeek(WeekNavigateEnum.previous);
                $scope.changeWeek(WeekNavigateEnum.previous);
                $scope.changeWeek(WeekNavigateEnum.previous);
@@ -133,7 +134,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-1);
                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-2);
                expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledWith(-3);
-               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(3);
+               expect(tdprDateService.getWeekWithOffset).toHaveBeenCalledTimes(4);
                expect(tdprPersonsService.fetchPersonsWithSlotsForDates).toHaveBeenCalledTimes(3);
            });
         });
