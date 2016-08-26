@@ -6,6 +6,7 @@ define(['angular', 'application/report/tdprReportModule'
     tdprReportModule.controller("tdprReportDetailsController", function ($scope, $state, $filter, tdprReportService, tdprReportDateService, tdprReportCsvDataService, DateFormat, Notification, $window, FileSaver, Blob) {
 
         $scope.DateFormat = DateFormat;
+        $scope.reportsElements = [];
 
         $scope.columnMap = {
             'person.lastName': {reverse: true, columnName: "Person"},

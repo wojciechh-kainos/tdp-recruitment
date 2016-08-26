@@ -40,5 +40,9 @@ define(['application/recruiter/tdprRecruiterModule', 'application/constants/tdpr
             return $http.put("/api/person/" + person.id + "/switchAccountStatus");
         };
 
+        this.resendActivationLink = function (person) {
+            return $http.put("/api/person/" + person.id + "/resendActivationLink");
+        };
+
     })
 });

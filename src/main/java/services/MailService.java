@@ -1,22 +1,26 @@
 package services;
 
 import com.google.inject.Inject;
-import configuration.TdpRecruitmentApplicationConfiguration;
+import configuration.TdpRecruitmentEmailConfiguration;
+
+import javax.mail.Message;
+import java.util.concurrent.ExecutorService;
 
 public class MailService {
 
-    private final TdpRecruitmentApplicationConfiguration applicationConfiguration;
+    private final ExecutorService executor;
+
+    private final TdpRecruitmentEmailConfiguration emailConfiguration;
 
     @Inject
-    public MailService(TdpRecruitmentApplicationConfiguration config) {
-        this.applicationConfiguration = config;
+    public MailService(TdpRecruitmentEmailConfiguration config, ExecutorService executor) {
+        this.emailConfiguration = config;
+        this.executor = executor;
     }
 
-
-    public void sendEmail(String recipient,String activationLink) {
-        MailingThread mt = new MailingThread(applicationConfiguration, recipient, activationLink);
-        mt.start();
+    public void sendEmail(Message message) {
+        MailingTask mailingTask = new MailingTask(emailConfiguration, message);
+        executor.execute(mailingTask);
     }
-
 
 }

@@ -30,14 +30,21 @@ public class PersonDao extends AbstractDAO<Person>{
     }
 
     public List<Person> findAllActive(){
-        return namedQuery("Person.findAllActive").list();
+        return list(namedQuery("Person.findAllActive"));
     }
 
     public List<Person> findAll(){
-        return namedQuery("Person.findAll").list();
+        return list(namedQuery("Person.findAll"));
     }
 
-    public List<Person> findByEmail(String email) { return namedQuery("Person.findByEmail").setParameter("email", email).list(); }
+    public List<Person> findAllRecruiters(){
+        Criteria criteria = criteria()
+                .add(Restrictions.eq("admin", true))
+                .add(Restrictions.eq("active", true));
+        return list(criteria);
+    }
+
+    public List<Person> findByEmail(String email) { return list(namedQuery("Person.findByEmail").setParameter("email", email)); }
 
     public void update(Person person){currentSession().update(person);}
 
