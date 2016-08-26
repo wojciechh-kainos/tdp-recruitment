@@ -5,6 +5,7 @@ import dao.CandidateDao;
 import domain.Candidate;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,6 +23,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -31,6 +33,7 @@ public class CandidateResource {
     }
 
     @GET
+    @RolesAllowed("recruiter")
     @Path("/all")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -39,6 +42,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
@@ -48,6 +52,7 @@ public class CandidateResource {
     }
 
     @PUT
+    @RolesAllowed("recruiter")
     @Path("/{candidate_id}/deactivate")
     @Produces(MediaType.APPLICATION_JSON)
     @UnitOfWork
