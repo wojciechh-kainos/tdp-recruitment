@@ -27,5 +27,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
             $scope.order = !$scope.order;
         }
 
+        $scope.resendActivationLink = function( person ) {
+            tdprPersonsService.resendActivationLink(person).then(function () {
+                Notification.success("Activation link successfully sent to: " + person.firstName + " " + person.lastName);
+            }, function () {
+                Notification.error("Something went wrong with sending the activation link!");
+            })
+        }
+
     });
 });
