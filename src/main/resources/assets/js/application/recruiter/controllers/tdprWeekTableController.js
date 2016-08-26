@@ -122,6 +122,11 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
             };
 
             $scope.changeSlotDiscardChanges = tdprScheduleService.changeSlotDiscardChanges;
-        }
-    );
+
+          $scope.isTableEmpty = function () {
+            var persons =  $filter('jobProfileFilter')($scope.persons, $scope.currentJobProfile);
+            return persons.length === 0;
+          };
+
+        });
 });

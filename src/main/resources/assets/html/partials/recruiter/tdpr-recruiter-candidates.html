@@ -44,8 +44,8 @@
             </select>
         </div>
     </div>
-
-    <div class="row options">
+    <div class="no-content" ng-show="isTableEmpty()"><p><span class ="glyphicon glyphicon-info-sign"></span>  No records to display</p></div>
+    <div class="row options" ng-hide="isTableEmpty()">
         <div class="col-md-9 col-md-offset-2">
             <table id="report-table">
                 <thead class="column-heading">
