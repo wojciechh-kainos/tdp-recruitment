@@ -131,12 +131,12 @@ public class PersonResourceTest {
 
     @Test
     public void testGetRecruiters() {
-        when(mockPersonDao.findAll()).thenReturn(stubPersonDB);
+        when(mockPersonDao.findAllRecruiters()).thenReturn(stubPersonDB);
 
         Response result = resource.getRecruiters();
 
         assertEquals(Response.Status.OK.getStatusCode(), result.getStatus());
-        verify(mockPersonDao, times(1)).findAll();
+        verify(mockPersonDao, times(1)).findAllRecruiters();
     }
 
     @Test
