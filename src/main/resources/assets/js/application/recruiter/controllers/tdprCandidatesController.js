@@ -188,10 +188,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
 
         $scope.isTableEmpty = function () {
           var candidates = $filter('filterByRecruiter')($scope.candidates, $scope.currentRecruiter)
-          if (candidates.length === 0)
-            return false;
-          else
-            return true;
+          return candidates.length === 0;
         };
     });
 });

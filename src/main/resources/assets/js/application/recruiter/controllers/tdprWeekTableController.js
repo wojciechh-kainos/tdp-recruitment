@@ -90,10 +90,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
 
         $scope.isTableEmpty = function () {
           var persons =  $filter('jobProfileFilter')($scope.persons, $scope.currentJobProfile);
-          if (persons.length === 0)
-            return false;
-          else
-            return true;
+          return persons.length === 0;
         };
     });
 });

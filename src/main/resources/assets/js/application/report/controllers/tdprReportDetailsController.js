@@ -80,5 +80,11 @@ define(['angular', 'application/report/tdprReportModule'
             return reportsForCSV;
         }
 
-    })
+        $scope.isTableEmpty = function () {
+          var reportsElements = $filter('jobProfileFilter')($scope.reportsElements, $scope.checkedProfiles);
+          reportsElements = $filter('personNameFilter')(reportsElements, $scope.personNameFilterValue);
+
+          return reportsElements.length === 0;
+        };
+    });
 });

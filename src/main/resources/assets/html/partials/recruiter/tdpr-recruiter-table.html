@@ -33,8 +33,8 @@
         <button class="button navigation" ng-click="refreshPersonsData()">Clear</button>
     </form>
 
-    <div class="no-content" ng-hide="isTableEmpty()"><p><span class ="glyphicon glyphicon-info-sign"></span> No pairs found in this week.</p></div>
-    <div class="availabilities-table-container" ng-show="isTableEmpty()">
+    <div class="no-content" ng-show="isTableEmpty()"><p><span class ="glyphicon glyphicon-info-sign"></span> No records to display</p></div>
+    <div class="availabilities-table-container" ng-hide="isTableEmpty()">
         <table id="availabilities-table">
             <thead>
             <tr>
