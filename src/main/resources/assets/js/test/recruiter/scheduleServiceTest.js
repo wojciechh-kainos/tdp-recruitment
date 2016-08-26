@@ -7,6 +7,7 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
         var person;
         var AvailabilityEnum;
         var tdprScheduleService;
+        var Notification;
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
@@ -59,9 +60,15 @@ define(['angular', 'angularMocks', 'application/recruiter/services/tdprScheduleS
                 "type": AvailabilityEnum.available.name,
                 "changed": true
             };
+            Notification = jasmine.createSpyObj('Notification', ['success', 'error']);
+
 
             module(function ($provide) {
                 $provide.value('AvailabilityEnum', AvailabilityEnum);
+            });
+
+            module(function ($provide) {
+                $provide.value('Notification', Notification);
             });
 
             module(function ($provide) {
