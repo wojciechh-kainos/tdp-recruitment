@@ -2,6 +2,7 @@ package servicesTests;
 
 import domain.Candidate;
 import domain.Person;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +18,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InterviewTest {
@@ -40,6 +43,8 @@ public class InterviewTest {
         organizer.setEmail("organizer@example.com");
 
         interviewee = new Candidate();
+        interviewee.setFirstName("Hanna");
+        interviewee.setLastName("Wanna");
         interviewee.setPosition("position");
 
         interviewer1 = new Person();
@@ -70,7 +75,10 @@ public class InterviewTest {
 
     @Test
     public void testCreateMessageShouldSetMessageSubject() throws MessagingException {
-        assertEquals("Should set message subject with job position", message.getSubject(), "Interview - " + interviewee.getPosition());
+        assertThat("Should set message subject with name and job position", message.getSubject(),
+                allOf(containsString(interviewee.getFirstName()),
+                        containsString(interviewee.getLastName()),
+                        containsString(interviewee.getPosition())));
     }
 
     @Test
