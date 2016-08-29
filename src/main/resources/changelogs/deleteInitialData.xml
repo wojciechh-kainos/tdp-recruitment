@@ -30,10 +30,22 @@
             <changeSetExecuted id="Issue142-deleteInitialData-recruiter_note" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
         </preConditions>
 
-        <delete tableName="person">
-            <where>
-                email!='recruiter@test'
-            </where>
-        </delete>
+        <delete tableName="person"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-addMichelle">
+        <preConditions>
+            <changeSetExecuted id="Issue142-deleteInitialData-persons" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+        </preConditions>
+
+        <insert tableName="person">
+            <column name="email" value="m.kowalik@kainos.com"/>
+            <column name="first_name" value="Michalina"/>
+            <column name="last_name" value="Kowalik"/>
+            <column name="password" value="sha1:64000:18:LSdCOgUOs+YzpmVzmshLHPbN2qNqvXGm:2EaqRqOpQBWY85HF+24zxa+s"/>
+            <column name="admin" value="true"/>
+            <column name="active" value="true"/>
+            <column name="band_level" value="1"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
