@@ -61,7 +61,7 @@ public class Interview {
         this.message = message;
     }
 
-    public MimeMultipart createInvitation() throws MessagingException {
+    private MimeMultipart createInvitation() throws MessagingException {
         MimeMultipart body = new MimeMultipart("alternative");
         BodyPart textContent = new MimeBodyPart();
         BodyPart calendarPart = new MimeBodyPart();
@@ -79,7 +79,7 @@ public class Interview {
         return body;
     }
 
-    public String createCalendarEvent() {
+    private String createCalendarEvent() {
         String template = "";
         UUID eventUUID = UUID.randomUUID(); //should this be random?
         SimpleDateFormat iCalDate = new SimpleDateFormat("yyyyMMdd'T'HHmm'00Z'");
@@ -104,7 +104,14 @@ public class Interview {
     }
 
     private String parseSubject(){
-        return "Interview" + (interviewee.getPosition() != null? (" - " + interviewee.getPosition()) : "");
+        if (interviewee == null) {
+            return "Interview";
+        }
+
+        String template = "Interview - {{fname}} {{lname}} ({{position}})";
+        return template.replace("{{fname}}", interviewee.getFirstName())
+                .replace("{{lname}}", interviewee.getLastName())
+                .replace("{{position}}", interviewee.getPosition());
     }
 
     private String parseOrganizer() {
