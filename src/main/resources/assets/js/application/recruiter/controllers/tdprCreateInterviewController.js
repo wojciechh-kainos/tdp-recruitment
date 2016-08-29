@@ -6,7 +6,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
 
         $scope.interview = $stateParams.data;
-        $scope.interview.message = "Hi, I scheduled an interview for you.";
         $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
 
         $scope.scheduleInterview = function () {
@@ -27,7 +26,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                 Notification.success('Interview scheduled');
                     $state.go('tdpr.recruiter.home');
             }).catch(function (error) {
-                Notification.error(status.message);
+                Notification.error(error.message);
             })
 
 
