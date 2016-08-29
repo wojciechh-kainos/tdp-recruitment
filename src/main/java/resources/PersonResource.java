@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.ActivationLink;
 import services.MailService;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -42,7 +43,7 @@ public class PersonResource {
     private ActivationLink activationLink;
     private final TdpRecruitmentPasswordStore passwordStore;
     private SimpleDateFormat formatter = new SimpleDateFormat(TdpConstants.DATE_FORMAT);
- 	private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonResource.class);
 
     @Inject
     public PersonResource(PersonDao personDao, SlotDao slotDao, MailService mailService, NoteDao noteDao, TdpRecruitmentPasswordStore passwordStore, ActivationLink activationLink) {
@@ -93,8 +94,8 @@ public class PersonResource {
         persons.forEach(p -> {
             Optional<Note> note = noteDao.getByPersonIdAndDate(p.getId(), start);
 
-            if(note.isPresent()) {
-                if(!note.get().getDescription().isEmpty()) {
+            if (note.isPresent()) {
+                if (!note.get().getDescription().isEmpty()) {
                     p.setNoteList(Arrays.asList(note.get()));
                 }
             }
@@ -118,7 +119,7 @@ public class PersonResource {
     public Note getNote(@PathParam("personId") Long personId,
                         @QueryParam("date") String startDate) throws ParseException {
         Date date = formatter.parse(startDate);
-        Optional<Note> note = noteDao.getByPersonIdAndDate(personId,date);
+        Optional<Note> note = noteDao.getByPersonIdAndDate(personId, date);
 
         return note.orElseThrow(() -> {
             logger.warn("Note not found with person id => {}", personId.toString());
@@ -131,7 +132,7 @@ public class PersonResource {
     @Path("/updateNote")
     @Consumes(MediaType.APPLICATION_JSON)
     @UnitOfWork
-    public Response createOrUpdate(Note note){
+    public Response createOrUpdate(Note note) {
         noteDao.createOrUpdate(note);
         return Response.status(Response.Status.ACCEPTED).entity(note).build();
     }
@@ -140,7 +141,7 @@ public class PersonResource {
     @PermitAll
     @Path("/{id}")
     @UnitOfWork
-    public Person getPersonById(@PathParam("id") Long id){
+    public Person getPersonById(@PathParam("id") Long id) {
         Optional<Person> person = personDao.getById(id);
         return person.orElseThrow(() -> {
             logger.warn("Person with id => {} not found", id.toString());
@@ -156,8 +157,12 @@ public class PersonResource {
     public Response updatePerson(Person newPerson) throws TdpRecruitmentPasswordStore.CannotPerformOperationException {
         Optional<Person> user = personDao.getById(newPerson.getId());
         if (!user.isPresent()) {
-            logger.warn("Person with id => {} not found",newPerson.getId().toString());
+            logger.warn("Person with id => {} not found", newPerson.getId().toString());
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        if (!personDao.findByEmail(newPerson.getEmail()).isEmpty()) {
+            logger.warn("Email => {}  is already in use", newPerson.getEmail());
+            return Response.status(Response.Status.CONFLICT).build();
         }
         Person person = user.get();
         person.setFirstName(newPerson.getFirstName());
@@ -170,9 +175,10 @@ public class PersonResource {
         person.setBandLevel(newPerson.getBandLevel());
         person.setDefaultStartHour(newPerson.getDefaultStartHour());
         person.setDefaultFinishHour(newPerson.getDefaultFinishHour());
-        if(newPerson.getPassword() != null) {
+        if (newPerson.getPassword() != null) {
             person.setPassword(passwordStore.createHash(newPerson.getPassword()));
         }
+
         return Response.ok(person).build();
     }
 
@@ -183,12 +189,11 @@ public class PersonResource {
     public Response switchAccountStatus(@PathParam("id") Long id) {
 
         Optional<Person> person = personDao.getById(id);
-        if(person.isPresent()) {
-        person.get().setActive(!person.get().getActive());
+        if (person.isPresent()) {
+            person.get().setActive(!person.get().getActive());
 
             return Response.ok().build();
-        }
-        else{
+        } else {
             logger.warn("Person with id => {} not found", id.toString());
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -209,7 +214,7 @@ public class PersonResource {
     public Response resendActivationLink(@PathParam("id") Long id) {
 
         Optional<Person> person = personDao.getById(id);
-        if(person.isPresent()) {
+        if (person.isPresent()) {
             String token = UUID.randomUUID().toString();
             person.get().setActivationCode(token);
             try {
@@ -219,7 +224,7 @@ public class PersonResource {
                 throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
             }
             return Response.status(Response.Status.OK).build();
-        }else {
+        } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
