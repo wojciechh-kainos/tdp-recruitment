@@ -60,11 +60,15 @@ define(['angular'
         }
      }
 
-     function getPersonDetails(tdprPersonService, $stateParams, $state){
+     function getPersonDetails(tdprPersonService, $stateParams, $state, $q){
          return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {
              return response;
          }, function () {
-             $state.go('tdpr.404');
+            if(response.status !== 401) {
+                $state.go('tdpr.404');
+            } else {
+                $q.reject();
+            }
          });
      }
 
