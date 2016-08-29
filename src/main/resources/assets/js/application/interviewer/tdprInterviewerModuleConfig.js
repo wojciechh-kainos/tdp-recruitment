@@ -18,18 +18,11 @@ define(['angular'
                     relativeDayNumber: 0
                 },
                 resolve: {
-                    isUserAuthenticated: function(tdprAuthService, Notification, $q, $state, $timeout) {
-                        var deferred = $q.defer();
-                        $timeout(function() {
-                            if (!tdprAuthService.isUserLoggedIn()) {
-                                Notification.error('You need to sign in to view this page.');
-                                $state.go('tdpr.login');
-                                deferred.reject();
-                            } else {
-                                deferred.resolve();
-                            }
-                        });
-                        return deferred.promise;
+                    isUserAuthenticated: function(tdprAuthService, Notification, $state) {
+                        if (!tdprAuthService.isUserLoggedIn()) {
+                            Notification.error('You need to sign in to view this page.');
+                            $state.go('tdpr.login');
+                        }
                     }
                 }
             }).state("tdpr.interviewer.home", {
@@ -60,7 +53,7 @@ define(['angular'
           });
         });
 
-     function isUserAuthorized(tdprAuthService, Notification, $q, $location, $stateParams) {
+     function isUserAuthorized(tdprAuthService, Notification, $stateParams) {
         if (tdprAuthService.isUserAuthorized("interviewer") && tdprAuthService.getCurrentUser().id != $stateParams.id) {
             Notification.error('You dont have permissions to view this page.');
             $state.go('tdpr.interviewer.home', {id: tdprAuthService.getCurrentUser().id});

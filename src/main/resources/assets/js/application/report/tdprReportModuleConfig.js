@@ -22,30 +22,17 @@ define(['angular'
                     }
                 },
                  resolve: {
-                     isUserAuthenticated: function(tdprAuthService, Notification, $q, $state, $timeout) {
-                         var deferred = $q.defer();
-                         $timeout(function() {
-                             if (!tdprAuthService.isUserLoggedIn()) {
-                                 Notification.error('You need to sign in to view this page.');
-                                 $state.go('tdpr.login');
-                                 deferred.reject();
-                             } else {
-                                 deferred.resolve();
-                             }
-                         });
-                         return deferred.promise;
+                     isUserAuthenticated: function(tdprAuthService, Notification, $state) {
+                        if (!tdprAuthService.isUserLoggedIn()) {
+                            Notification.error('You need to sign in to view this page.');
+                            $state.go('tdpr.login');
+                        }
                      },
-                     isUserAuthorized: function(tdprAuthService, Notification, $q, $state, $location) {
-                         var deferred = $q.defer();
-
-                         if(tdprAuthService.isUserAuthorized("recruiter")) {
-                             deferred.resolve();
-                         } else {
-                             Notification.error('You do not have permissions to view this page.');
-                             deferred.reject();
-                         }
-
-                         return deferred.promise;
+                     isUserAuthorized: function(tdprAuthService, Notification, $state) {
+                        if(!tdprAuthService.isUserAuthorized("recruiter")) {
+                            Notification.error('You do not have permissions to view this page.');
+                            $state.go('tdpr.interviewer.home', {id: user.id});
+                        }
                      }
                  }
             })
