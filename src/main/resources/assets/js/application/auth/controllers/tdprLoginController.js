@@ -9,7 +9,11 @@ define(['angular', 'application/auth/tdprAuthModule', 'application/auth/services
                         $state.go('tdpr.interviewer.home', {id: user.id});
                    }
                 }, function (response) {
-                    Notification.error("Wrong email or password.");
+                    if(response.status === 401) {
+                        Notification.error("Wrong email or password.");
+                    } else if (response.status === 403) {
+                        Notification.error("Your account has been disabled.");
+                    }
                 });
         };
     });
