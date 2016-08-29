@@ -1,6 +1,5 @@
 define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
     tdprCommonModule.filter('localeOrderBy', function () {
-    .filter("localeOrderBy", [function () {
         return function (array, sortPredicate, reverseOrder) {
             if (!Array.isArray(array)) return array;
             if (!sortPredicate) return array;
@@ -37,4 +36,5 @@ define(['application/common/tdprCommonModule'], function (tdprCommonModule) {
 
             return arrayCopy;
         }
-    }]);
+    });
+});
