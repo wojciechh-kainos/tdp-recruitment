@@ -6,22 +6,22 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
         $scope.viewingMyDetails = tdprAuthService.getCurrentUser().id == $stateParams.id;
         $scope.isRecruiter = tdprAuthService.isUserAuthorized('recruiter');
         function init() {
-                $scope.person = person;
-                $scope.person.token = undefined;
-                $scope.person.bandLevel = $scope.person.bandLevel.toString();
+            $scope.person = person;
+            $scope.person.token = undefined;
+            $scope.person.bandLevel = $scope.person.bandLevel.toString();
 
-                if ($scope.person.defaultStartHour) {
-                    var startHour = $scope.person.defaultStartHour.split(':');
-                    $scope.person.defaultStartHour = new Date(1970, 0, 1, startHour[0], startHour[1], startHour[2]);
-                }
-                if ($scope.person.defaultFinishHour) {
-                    var finishHour = $scope.person.defaultFinishHour.split(':');
-                    $scope.person.defaultFinishHour = new Date(1970, 0, 1, finishHour[0], finishHour[1], finishHour[2]);
-                }
+            if ($scope.person.defaultStartHour) {
+                var startHour = $scope.person.defaultStartHour.split(':');
+                $scope.person.defaultStartHour = new Date(1970, 0, 1, startHour[0], startHour[1], startHour[2]);
+            }
+            if ($scope.person.defaultFinishHour) {
+                var finishHour = $scope.person.defaultFinishHour.split(':');
+                $scope.person.defaultFinishHour = new Date(1970, 0, 1, finishHour[0], finishHour[1], finishHour[2]);
+            }
         }
 
         $scope.updateDetails = function () {
-            if($scope.changePasswordChecked && (!$scope.arePasswordsCorrect)){
+            if ($scope.changePasswordChecked && (!$scope.arePasswordsCorrect)) {
                 return Notification.error("Changes not saved! Password field incorrect!");
             }
             var person = angular.copy($scope.person);
@@ -34,9 +34,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                 Notification.success('Details updated!');
 
                 $scope.goHome();
-            }, function (response){
+            }, function (response) {
                 Notification.error('Details were not updated!');
-                if(response.status == 409){
+                if (response.status === 409) {
                     Notification.error('Email is already in use.');
                 }
             });
