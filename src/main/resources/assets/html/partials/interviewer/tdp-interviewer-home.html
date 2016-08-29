@@ -6,7 +6,7 @@
     <hr>
     <div id="date-container">
         <button class="button navigation " ng-click="showPreviousWeek()">Previous week</button>
-        <span class="navigation">{{displayedStartDate}} - {{displayedEndDate}}</span>
+        <span class="navigation">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigation " ng-click="showNextWeek()">Next week</button>
     </div>
 
