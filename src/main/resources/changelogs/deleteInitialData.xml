@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots">
+        <delete tableName="slot"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-notes">
+        <delete tableName="note"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-candidates">
+        <delete tableName="candidate"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-recruiter_note">
+        <delete tableName="recruiter_note"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-persons">
+        <preConditions>
+            <changeSetExecuted id="Issue142-deleteInitialData-slots" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue142-deleteInitialData-notes" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue142-deleteInitialData-candidates" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue142-deleteInitialData-recruiter_note" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+        </preConditions>
+
+        <delete tableName="person"></delete>
+    </changeSet>
+
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-addMichelle">
+        <preConditions>
+            <changeSetExecuted id="Issue142-deleteInitialData-persons" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+        </preConditions>
+
+        <insert tableName="person">
+            <column name="email" value="m.kowalik@kainos.com"/>
+            <column name="first_name" value="Michalina"/>
+            <column name="last_name" value="Kowalik"/>
+            <column name="password" value="sha1:64000:18:LSdCOgUOs+YzpmVzmshLHPbN2qNqvXGm:2EaqRqOpQBWY85HF+24zxa+s"/>
+            <column name="admin" value="true"/>
+            <column name="active" value="true"/>
+            <column name="band_level" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
