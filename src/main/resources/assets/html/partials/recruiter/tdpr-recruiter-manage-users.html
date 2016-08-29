@@ -8,10 +8,10 @@
             </thead>
             <tr ng-repeat="p in persons | orderBy: 'lastName':order">
                 <td>
-                    <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : p.id, personName : p.firstName + ' ' + p.lastName})">
-                        {{ p.firstName + " " + p.lastName }}
-                        </a>
-                    </td>
+                    <a ui-sref="tdpr.interviewer.home({isRecruiter : true, id : p.id, personName : p.firstName + ' ' + p.lastName})" uib-tooltip="Show availabilities">
+                        {{ p.firstName + " " + p.lastName }} <a ui-sref="tdpr.interviewer.details({isRecruiter: true, id: p.id, personName: p.firstName + ' ' + p.lastName})"><span class="glyphicon glyphicon-pencil" uib-tooltip="Edit personal details"></span></a>
+                    </a>
+                </td>
                 <td>
                     <button class ="btn btn-primary" ng-click="managePerson( p )" ng-class="{'btn-danger': p.active}">
                         <span ng-if="p.active">disable account</span>
@@ -19,7 +19,6 @@
                     </button>
                     <button class ="btn btn-primary" ng-click="resendActivationLink( p )">Resend activation link</button>
                 </td>
-                </a>
             </tr>
         </table>
     </div>

@@ -12,11 +12,10 @@
             <div ng-hide="user.isRecruiter">
                 <a class="navbar-text navbar-link" ui-sref="tdpr.interviewer.home({id: user.id})">Your availability</a>
                 <a class="navbar-text navbar-link" ui-sref="tdpr.interviewer.details({id: user.id})">Personal details</a>
-
             </div>
         </div>
         <div class="login navbar-right" ng-show="userLoggedIn">
-            <p class="navbar-text">Hello, {{user.firstName}} {{user.lastName}} </p>
+            <p class="navbar-text">Hello, <a class="navbar-link" tooltip-placement="bottom" uib-tooltip="Personal details" ui-sref="tdpr.interviewer.details({id: user.id})">{{user.firstName}} {{user.lastName}}</a></p>
             <a class="navbar-text navbar-link" ng-click="logout()">Sign out</a>
         </div>
         <div class="login navbar-right" ng-show="!userLoggedIn">

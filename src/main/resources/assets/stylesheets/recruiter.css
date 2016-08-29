@@ -159,3 +159,7 @@
 .form-text-area {
     height: 150px !important;
 }
+
+textarea[name=note] {
+    resize: none;
+}

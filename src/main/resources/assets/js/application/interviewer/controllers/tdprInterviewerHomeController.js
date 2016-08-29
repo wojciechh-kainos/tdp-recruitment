@@ -11,6 +11,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.mousedown = false;
         $scope.isRecruiter = $state.params.isRecruiter;
         $scope.personName = $state.params.personName;
+        $scope.viewingMyDetails = tdprAuthService.getCurrentUser().id == $stateParams.id;
         $scope.editNote = true;
 
         var note;
@@ -36,10 +37,6 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             return isCurrentOrFutureWeek() || $scope.isRecruiter;
         }
 
-        function replaceDashesWithDots(string) {
-            return string.replace(/-/g, '.'); // ie. 15-07-1410 -> 15.07.1410
-        }
-
         function removeSecondsFromTime(string) {
             return string.slice(0, 5); // i.e. 10:30:00 -> 10:30
         }
@@ -51,8 +48,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
             startDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber), DateFormat); // monday
             endDate = $filter('date')(getDayOfTheWeek(new Date(), $scope.relativeDayNumber + 4), DateFormat); // friday
-            $scope.displayedStartDate = replaceDashesWithDots(startDate);
-            $scope.displayedEndDate = replaceDashesWithDots(endDate);
+            $scope.displayedStartDate = startDate;
+            $scope.displayedEndDate = endDate;
         }
 
         $scope.getSlots = function (personId) {
@@ -282,7 +279,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     return $scope.AvailabilityEnum[type].className;
                 }
             }
-        }
+        };
 
         $scope.noteHasChanged = function (){
             $scope.hasNoteChanged = true;
