@@ -34,8 +34,11 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                 Notification.success('Details updated!');
 
                 $scope.goHome();
-            }, function (){
+            }, function (response){
                 Notification.error('Details were not updated!');
+                if(response.status == 409){
+                    Notification.error('Email is already in use.');
+                }
             });
         };
 
