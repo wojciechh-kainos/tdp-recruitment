@@ -6,151 +6,34 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots-1">
-        <sql>
-            DELETE FROM slot USING person
-            WHERE person=person.id
-            AND
-            (person.email='a@a.com' OR
-             person.email='b@b.com' OR
-             person.email='c@c.com' OR
-             person.email='d@d.com' OR
-             person.email='e@e.com' OR
-             person.email='f@f.com' OR
-             person.email='g@g.com' OR
-             person.email='h@h.com' OR
-             person.email='i@i.com' OR
-             person.email='j@j.com' OR
-             person.email='aaa@aaa.com' OR
-             person.email='bbb@bbb.com' OR
-             person.email='ccc@ccc.com' OR
-             person.email='recruiter1@r.com' OR
-             person.email='recruiter2@r.com'
-            )
-        </sql>
-    </changeSet>
-
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots-2">
-        <delete tableName="slot">
-            <where>
-                person=1 OR person=9 OR person=10 OR person=11 OR person=12 OR person=13
-            </where>
-        </delete>
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-slots">
+        <delete tableName="slot"></delete>
     </changeSet>
 
     <changeSet author="radoslawl" id="Issue142-deleteInitialData-notes">
-        <sql>
-            DELETE FROM note USING person
-            WHERE person=person.id
-            AND
-            (person.email='a@a.com' OR
-            person.email='b@b.com' OR
-            person.email='c@c.com' OR
-            person.email='d@d.com' OR
-            person.email='e@e.com' OR
-            person.email='f@f.com' OR
-            person.email='g@g.com' OR
-            person.email='h@h.com' OR
-            person.email='i@i.com' OR
-            person.email='j@j.com' OR
-            person.email='aaa@aaa.com' OR
-            person.email='bbb@bbb.com' OR
-            person.email='ccc@ccc.com' OR
-            person.email='recruiter1@r.com' OR
-            person.email='recruiter2@r.com'
-            )
-        </sql>
+        <delete tableName="note"></delete>
     </changeSet>
 
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-candidates-1">
-        <delete tableName="candidate">
-            <where>
-                (first_name='Jan' AND last_name='Kowalski') OR
-                (first_name='Michał' AND last_name='Król') OR
-                (first_name='Anna' AND last_name='Nowak') OR
-                (first_name='Andrzej' AND last_name='Rybak') OR
-                (first_name='Kazimierz' AND last_name='Wielki')
-            </where>
-        </delete>
-    </changeSet>
-
-    <changeSet author="radoslawl" id="Issue142-deleteInitialData-candidates-2">
-        <sql>
-            DELETE FROM candidate USING person
-            WHERE recruiter=person.id
-            AND
-            (person.email='a@a.com' OR
-            person.email='b@b.com' OR
-            person.email='c@c.com' OR
-            person.email='d@d.com' OR
-            person.email='e@e.com' OR
-            person.email='f@f.com' OR
-            person.email='g@g.com' OR
-            person.email='h@h.com' OR
-            person.email='i@i.com' OR
-            person.email='j@j.com' OR
-            person.email='aaa@aaa.com' OR
-            person.email='bbb@bbb.com' OR
-            person.email='ccc@ccc.com' OR
-            person.email='recruiter1@r.com' OR
-            person.email='recruiter2@r.com'
-            )
-        </sql>
+    <changeSet author="radoslawl" id="Issue142-deleteInitialData-candidates">
+        <delete tableName="candidate"></delete>
     </changeSet>
 
     <changeSet author="radoslawl" id="Issue142-deleteInitialData-recruiter_note">
-        <sql>
-            DELETE FROM recruiter_note USING person
-            WHERE recruiter=person.id
-            AND
-            (person.email='a@a.com' OR
-            person.email='b@b.com' OR
-            person.email='c@c.com' OR
-            person.email='d@d.com' OR
-            person.email='e@e.com' OR
-            person.email='f@f.com' OR
-            person.email='g@g.com' OR
-            person.email='h@h.com' OR
-            person.email='i@i.com' OR
-            person.email='j@j.com' OR
-            person.email='aaa@aaa.com' OR
-            person.email='bbb@bbb.com' OR
-            person.email='ccc@ccc.com' OR
-            person.email='recruiter1@r.com' OR
-            person.email='recruiter2@r.com'
-            )
-        </sql>
+        <delete tableName="recruiter_note"></delete>
     </changeSet>
 
     <changeSet author="radoslawl" id="Issue142-deleteInitialData-persons">
         <preConditions>
-            <changeSetExecuted id="Issue142-deleteInitialData-slots-1" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-slots-2" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue142-deleteInitialData-slots" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
             <changeSetExecuted id="Issue142-deleteInitialData-notes" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-candidates-1" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
-            <changeSetExecuted id="Issue142-deleteInitialData-candidates-2" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
+            <changeSetExecuted id="Issue142-deleteInitialData-candidates" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
             <changeSetExecuted id="Issue142-deleteInitialData-recruiter_note" author="radoslawl" changeLogFile="changelogs/deleteInitialData.xml"></changeSetExecuted>
         </preConditions>
 
         <delete tableName="person">
             <where>
-                email='a@a.com' OR
-                email='b@b.com' OR
-                email='c@c.com' OR
-                email='d@d.com' OR
-                email='e@e.com' OR
-                email='f@f.com' OR
-                email='g@g.com' OR
-                email='h@h.com' OR
-                email='i@i.com' OR
-                email='j@j.com' OR
-                email='recruiter1@r.com' OR
-                email='recruiter2@r.com' OR
-                email='aaa@aaa.com' OR
-                email='bbb@bbb.com' OR
-                email='ccc@ccc.com'
+                email!='recruiter@test'
             </where>
         </delete>
     </changeSet>
-
 </databaseChangeLog>
