@@ -39,7 +39,7 @@ define(['angular'
                 }
 
             });
-        $httpProvider.interceptors.push(function($q,$injector, $location){
+        $httpProvider.interceptors.push(function($q, $location){
               return {
                   'responseError': function(response) {
                       if (response.status === 401) {
