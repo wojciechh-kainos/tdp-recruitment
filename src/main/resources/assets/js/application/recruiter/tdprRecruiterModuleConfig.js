@@ -20,6 +20,7 @@ define(['angular'
     , 'application/common/directives/tdprJobProfileDirective'
     , 'application/common/directives/tdprNewPasswordDirective'
     , 'application/auth/services/tdprAuthService'
+    , 'application/common/filters/tdprLocaleOrderByFilter'
 ], function (angular, tdprRecruiterModule) {
 
     tdprRecruiterModule.config(function ($stateProvider) {
