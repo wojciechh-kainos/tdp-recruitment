@@ -159,6 +159,10 @@ public class PersonResource {
             logger.warn("Person with id => {} not found",newPerson.getId().toString());
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        if(!personDao.findByEmail(newPerson.getEmail()).isEmpty()){
+            logger.warn("Email => {}  is already in use",newPerson.getEmail());
+            return Response.status(Response.Status.CONFLICT).build();
+        }
         Person person = user.get();
         person.setFirstName(newPerson.getFirstName());
         person.setLastName(newPerson.getLastName());
