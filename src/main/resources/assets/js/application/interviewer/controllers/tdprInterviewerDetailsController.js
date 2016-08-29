@@ -34,6 +34,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule'], function (a
                 Notification.success('Details updated!');
 
                 $scope.goHome();
+            }, function (){
+                Notification.error('Details were not updated!');
             });
         };
 
