@@ -160,7 +160,7 @@ public class PersonResource {
             logger.warn("Person with id => {} not found", newPerson.getId().toString());
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if (!personDao.findByEmail(newPerson.getEmail()).isEmpty()) {
+        if (!personDao.findByEmail(newPerson.getEmail()).isEmpty() && !newPerson.getEmail().equals(user.get().getEmail())) {
             logger.warn("Email => {}  is already in use", newPerson.getEmail());
             return Response.status(Response.Status.CONFLICT).build();
         }
