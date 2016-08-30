@@ -67,7 +67,7 @@ define(['angular'
             if(response.status !== 401) {
                 $state.go('tdpr.404');
             } else {
-                $q.reject();
+                return $q.reject();
             }
          });
      }
