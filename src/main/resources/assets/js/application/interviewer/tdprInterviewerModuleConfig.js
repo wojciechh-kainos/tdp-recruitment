@@ -7,7 +7,7 @@ define(['angular'
 , 'application/common/directives/tdprJobProfileCheckboxDirective'
 , 'application/common/directives/tdprNewPasswordDirective'],
  function (angular, tdprInterviewerModule) {
-   tdprInterviewerModule.config(function ($stateProvider, $urlRouterProvider) {
+   tdprInterviewerModule.config(function ($stateProvider) {
           $stateProvider
             .state("tdpr.interviewer", {
                 url: "/interviewer",
@@ -63,7 +63,7 @@ define(['angular'
      function getPersonDetails(tdprPersonService, $stateParams, $state, $q){
          return tdprPersonService.getPersonDetails($stateParams.id).then( function (response) {
              return response;
-         }, function () {
+         }, function (response) {
             if(response.status !== 401) {
                 $state.go('tdpr.404');
             } else {

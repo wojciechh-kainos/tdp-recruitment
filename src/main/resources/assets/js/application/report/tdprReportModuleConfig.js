@@ -7,7 +7,7 @@ define(['angular'
     , 'application/report/filters/tdprReportByPersonNameFilter'
 ], function (angular, tdprReportModule) {
 
-    tdprReportModule.config(function ($stateProvider, $urlRouterProvider) {
+    tdprReportModule.config(function ($stateProvider) {
         $stateProvider
             .state("tdpr.report", {
                 abstract: true,
@@ -31,7 +31,7 @@ define(['angular'
                      isUserAuthorized: function(tdprAuthService, Notification, $state) {
                         if(!tdprAuthService.isUserAuthorized("recruiter")) {
                             Notification.error('You do not have permissions to view this page.');
-                            $state.go('tdpr.interviewer.home', {id: user.id});
+                            $state.go('tdpr.login');
                         }
                      }
                  }

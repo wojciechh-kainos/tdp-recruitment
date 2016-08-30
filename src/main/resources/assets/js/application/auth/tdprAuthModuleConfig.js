@@ -18,9 +18,9 @@ define(['angular'
                         if(tdprAuthService.isUserLoggedIn()) {
                             tdprAuthService.validateSession().then(function() {
                                 if(tdprAuthService.getCurrentUser().isRecruiter) {
-                                    $location.path('/candidates');
+                                    $state.go('tdpr.recruiter.candidates');
                                 } else {
-                                    $location.path('/interviewer/' + tdprAuthService.getCurrentUser().id + '/home');
+                                    $state.go('tdpr.interviewer.home', {id: tdprAuthService.getCurrentUser().id});
                                 }
                             }, function() {
                                 Notification.error('Your session has expired. Please log in.');
