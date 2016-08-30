@@ -8,18 +8,12 @@ define(['angular'
             .state("tdpr", {
                 abstract: true,
                 resolve: {
-                    validateSession: function(tdprAuthService, $location, $q, Notification) {
+                    validateSession: function(tdprAuthService, Notification, $state) {
                         tdprAuthService.checkCookies();
 
                         if(tdprAuthService.isUserLoggedIn()) {
-                            tdprAuthService.validateSession().then(function() {
-                                if(tdprAuthService.getCurrentUser().isRecruiter) {
-                                    $location.path('/candidates');
-                                } else {
-                                    $location.path('/interviewer/' + tdprAuthService.getCurrentUser().id + '/home');
-                                }
-                            }, function() {
-                                $location.path('/login');
+                            tdprAuthService.validateSession().catch(function() {
+                                $state.go('tdpr.login');
                                 Notification.error('Your session has expired. Please log in.');
                             });
                         }

@@ -3,7 +3,7 @@ define(['angular'
     , 'application/auth/controllers/tdprLoginController'
     , 'application/auth/controllers/tdprActivateController'
 ], function (angular, tdprAuthModule) {
-    tdprAuthModule.config(function ($stateProvider) {
+    tdprAuthModule.config(function ($stateProvider, $httpProvider) {
         $stateProvider
             .state("tdpr.login", {
                 url: "/login",
@@ -14,23 +14,18 @@ define(['angular'
                     }
                 },
                 resolve: {
-                   isUserLoggedIn: function(tdprAuthService, $q, $state, $timeout) {
-                        var deferred = $q.defer();
-                        $timeout(function() {
-                            if(tdprAuthService.isUserLoggedIn()) {
+                   isUserLoggedIn: function(tdprAuthService, $state, $location, Notification) {
+                        if(tdprAuthService.isUserLoggedIn()) {
+                            tdprAuthService.validateSession().then(function() {
                                 if(tdprAuthService.getCurrentUser().isRecruiter) {
                                     $state.go('tdpr.recruiter.candidates');
-                                    deferred.reject();
                                 } else {
                                     $state.go('tdpr.interviewer.home', {id: tdprAuthService.getCurrentUser().id});
-                                    deferred.reject();
                                 }
-                            } else {
-                                deferred.resolve();
-                            }
-                        });
-
-                        return deferred.promise;
+                            }, function() {
+                                Notification.error('Your session has expired. Please log in.');
+                            });
+                        }
                     }
                 }
             })
@@ -44,7 +39,19 @@ define(['angular'
                 }
 
             });
+        $httpProvider.interceptors.push(function($q, $location){
+              return {
+                  'responseError': function(response) {
+                      if (response.status === 401) {
+                          $location.path('/login');
+                      }
+                      return $q.reject(response);
+                  }
+              };
+          });
+
     });
+
 
     return tdprAuthModule;
 });
