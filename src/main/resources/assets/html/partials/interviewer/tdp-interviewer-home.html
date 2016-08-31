@@ -4,12 +4,20 @@
     <h4 id="description">Click on slots to change availability</h4>
 
     <hr>
+    <div>
+        <button class="btn btn-lg btn-primary uppercase" id="discard-btn" type="button" ng-click="discardChanges()">discard changes</button>
+        <button class="btn btn-lg btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
+    </div>
+    <div>
+        <button class="btn btn-primary uppercase" id="back-to-interview-btn" type="button" ng-show="isRecruiter" ng-click="goBackToRecruiterView()">back to recruiter view</button>
+    </div>
+    <hr>
+
     <div id="date-container">
         <button class="button navigation " ng-click="showPreviousWeek()">Previous week</button>
         <span class="navigation">{{displayedStartDate | date: 'dd.MM.yyyy'}} - {{displayedEndDate | date: 'dd.MM.yyyy'}}</span>
         <button class="button navigation " ng-click="showNextWeek()">Next week</button>
     </div>
-
     <div class="legend">
         <label><input type="radio" ng-model="currentType" value="{{::AvailabilityEnum.available.id}}"/>
             <span class="{{::AvailabilityEnum.available.className}} legend-block"></span> Available</label>
@@ -61,13 +69,6 @@
                         <button class="button-note" type="button" ng-click="getNoteFromPreviousWeek()">Get note from previous week</button>
                 </div>
             </div>
-            <hr>
-            <div>
-                <button class="btn btn-primary uppercase" id="back-to-interview-btn" type="button" ng-show="isRecruiter" ng-click="goBackToRecruiterView()">back to recruiter view</button>
-                <button class="btn btn-primary uppercase" id="discard-btn" type="button" ng-click="discardChanges()">discard changes</button>
-                <button class="btn btn-primary uppercase" type="button" ng-click="updateSlots()">submit changes</button>
-            </div>
-            <hr>
         </div>
     </div>
 </div>
