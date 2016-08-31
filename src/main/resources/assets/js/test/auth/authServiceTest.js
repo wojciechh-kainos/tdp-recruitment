@@ -22,7 +22,7 @@ define(['angular', 'angularMocks', 'application/auth/services/tdprAuthService'],
 
 
         describe('When logging in with valid credentials', function () {
-            it('should set cookie with username and token', function () {
+            it('should set cookie with email and token', function () {
 
                 $httpBackend.expectPOST('/api/auth/login', {email: 'validUserEmail', password: 'validPassword'}).respond(200, {email: 'validUserEmail', token:'token'});
 
@@ -39,8 +39,8 @@ define(['angular', 'angularMocks', 'application/auth/services/tdprAuthService'],
         describe('When logging in with invalid credentials', function () {
             it('should return error message', function () {
 
-                $httpBackend.expectPOST('/api/auth/login', {email: 'invalidUsername', password: 'invalidPassword'}).respond(400, {});
-                service.login('invalidUsername', 'invalidPassword').then(function(result) {
+                $httpBackend.expectPOST('/api/auth/login', {email: 'invalidEmail', password: 'invalidPassword'}).respond(400, {});
+                service.login('invalidEmail', 'invalidPassword').then(function(result) {
                      expect(result.token).not.toBeDefined();
                  });
 
