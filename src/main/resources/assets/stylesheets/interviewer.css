@@ -143,6 +143,17 @@ button {
     color: white;
 }
 
+#back-to-interview-btn {
+    margin-top:15px;
+    background: transparent;
+    color: #286090;
+}
+
+#back-to-interview-btn:hover {
+    background: #286090;
+    color: white;
+}
+
 .uppercase {
     text-transform: uppercase;
 }
