@@ -4,9 +4,17 @@
     <h1 class="h1-header" ng-show="!viewingMyDetails">Personal details of {{personName}}</h1>
 
     <form class="interviewer-form center" id="details-form" name="detailsForm" role="form">
-        <hr>
-        <job-check-boxes></job-check-boxes>
-        <hr>
+        <div ng-show="isRecruiter">
+            <div class="form-group">
+                <label class="control-label col-md-6">Recruiter:</label>
+                <input class="col-md-2 details-checkbox" type="checkbox" ng-model="person.admin">
+            </div>
+            <hr>
+        </div>
+        <div ng-hide="person.admin">
+            <job-check-boxes></job-check-boxes>
+            <hr>
+        </div>
         <div ng-show="isRecruiter">
             <div class="form-group">
                 <label class="control-label col-md-6 text-xs-left">First name:</label>
