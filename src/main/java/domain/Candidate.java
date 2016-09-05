@@ -40,6 +40,9 @@ public class Candidate {
 
     private String note;
 
+    @Column(name="interview_type")
+    private String interviewType;
+
     @NotNull
     @Column(name="is_deleted")
     private Boolean isDeleted;
@@ -102,5 +105,13 @@ public class Candidate {
 
     public void setRecruiter(Person recruiter) {
         this.recruiter = recruiter;
+    }
+
+    public String getInterviewType() {
+        return interviewType;
+    }
+
+    public void setInterviewType(String interviewType) {
+        this.interviewType = interviewType;
     }
 }
