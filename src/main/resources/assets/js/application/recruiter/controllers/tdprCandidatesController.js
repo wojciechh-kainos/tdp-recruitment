@@ -1,6 +1,6 @@
 define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
     , 'application/recruiter/services/tdprCandidatesService', 'application/recruiter/services/tdprRecruiterNoteService'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits, $filter) {
+    tdprRecruiterModule.controller("tdprCandidatesController", function ($scope, tdprCandidatesService, tdprRecruiterNoteService, candidates, recruiters, recruiterNotes, ngDialog, Notification, tdprAuthService, RecruiterNotesLimits, $filter, InterviewType) {
         $scope.candidates = candidates;
         $scope.recruiters = recruiters;
         $scope.recruiterNotes = recruiterNotes;
@@ -11,6 +11,7 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
         $scope.candidate.isDeleted = false;
         $scope.limitedAmount = 10;
         $scope.limitAmounts = RecruiterNotesLimits;
+        $scope.interviewTypes = InterviewType;
         var popUp;
         var popUpForDelete;
         var defaultLimitValue = 35;
@@ -94,7 +95,8 @@ define(['angular', 'ngDialog', 'application/recruiter/tdprRecruiterModule'
             'recruiter.lastName': {reverse: true, columnName: "Recruiter"},
             'lastName': {reverse: true, columnName: "Candidate"},
             'position': {reverse: true, columnName: "Position"},
-            'note': {reverse: true, columnName: "Note"}
+            'note': {reverse: true, columnName: "Note"},
+            'interviewType': {reverse: true, columnName: "Interview type"}
         };
 
         $scope.deleteCandidate = function (candidate) {
