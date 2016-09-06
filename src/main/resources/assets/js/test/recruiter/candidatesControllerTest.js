@@ -20,6 +20,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
         var fetchRecruiterNotesDeferred;
         var createRecruiterNoteDeferred;
         var RecruiterNotesLimits;
+        var InterviewType;
 
         beforeEach(angular.mock.module('tdprRecruiterModule'));
 
@@ -85,6 +86,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
 
             RecruiterNotesLimits = [10, 25, 50, 100, 1000];
 
+            InterviewType = ["Init", "Full"];
+
             ngDialog = {
                 open: function () {
                     return {
@@ -108,7 +111,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprCandid
                 recruiterNotes: recruiterNotes,
                 ngDialog: ngDialog,
                 Notification: Notification,
-                RecruiterNotesLimits: RecruiterNotesLimits
+                RecruiterNotesLimits: RecruiterNotesLimits,
+                InterviewType: InterviewType
             });
         }));
 
