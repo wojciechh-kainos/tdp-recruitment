@@ -163,3 +163,7 @@
 textarea[name=note] {
     resize: none;
 }
+
+.note{
+    width: 300px;
+}

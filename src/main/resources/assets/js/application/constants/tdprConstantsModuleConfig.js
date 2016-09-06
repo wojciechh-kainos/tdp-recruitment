@@ -62,7 +62,8 @@ define(['angular'
         conflict : 409
         })
         .constant('RecruiterNotesLimits', [10, 25, 50, 100, 1000])
-        .constant('InterviewType', ["Init", "Full"]);
+        .constant('InterviewType', ["Init", "Full"])
+    ;
 
     return tdprConstantsModule;
 });
