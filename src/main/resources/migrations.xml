@@ -31,4 +31,5 @@
     <include file="changelogs/removeNulls.xml"/>
     <include file="changelogs/addPasswords.xml"/>
     <include file="changelogs/deleteInitialData.xml"/>
+    <include file="changelogs/Issue193_addInterviewType.xml"/>
 </databaseChangeLog>

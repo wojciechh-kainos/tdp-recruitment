@@ -30,13 +30,23 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <label class="col-md-4 control-label">Recruiter:</label>
             <div class="col-md-8">
                 <div class="ui-select">
                     <select class="form-control" ng-model="candidate.recruiter"
                             ng-options="recruiter.lastName for recruiter in recruiters track by recruiter.id">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Type:</label>
+            <div class="col-md-8">
+                <div class="ui-select">
+                    <select class="form-control" ng-model="candidate.interviewType"
+                            ng-options="type for type in interviewTypes">
                     </select>
                 </div>
             </div>
