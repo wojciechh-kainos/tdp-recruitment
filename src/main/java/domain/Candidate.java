@@ -40,8 +40,9 @@ public class Candidate {
 
     private String note;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="interview_type")
-    private String interviewType;
+    private InterviewType interviewType;
 
     @NotNull
     @Column(name="is_deleted")
@@ -107,11 +108,11 @@ public class Candidate {
         this.recruiter = recruiter;
     }
 
-    public String getInterviewType() {
+    public InterviewType getInterviewType() {
         return interviewType;
     }
 
-    public void setInterviewType(String interviewType) {
+    public void setInterviewType(InterviewType interviewType) {
         this.interviewType = interviewType;
     }
 }
