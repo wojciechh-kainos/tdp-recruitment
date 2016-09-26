@@ -10,20 +10,14 @@ import domain.Note;
 import domain.Person;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
-
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.mail.MessagingException;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.ActivationLink;
 import services.MailService;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.mail.MessagingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -165,6 +159,7 @@ public class PersonResource {
             return Response.status(Response.Status.CONFLICT).build();
         }
         Person person = user.get();
+        person.setAdmin(newPerson.getAdmin() || false);
         person.setFirstName(newPerson.getFirstName());
         person.setLastName(newPerson.getLastName());
         person.setEmail(newPerson.getEmail());
