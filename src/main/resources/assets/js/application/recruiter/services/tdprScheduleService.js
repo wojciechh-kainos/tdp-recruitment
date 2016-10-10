@@ -128,6 +128,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 outlookObject.organizer = "";
                 outlookObject.start = getDateTime(day, startSlot.startTime);
                 outlookObject.end = getDateTime(day, endSlot.endTime);
+                outlookObject.type = scheduledSlots[0].type;
 
                 outlookObject.newSlots = scheduledSlots;
 
