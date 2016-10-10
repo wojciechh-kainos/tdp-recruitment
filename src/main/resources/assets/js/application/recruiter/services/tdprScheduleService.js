@@ -87,7 +87,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                                 valid = false;
                             }
-                            if (slotId + 2 <= maxSlot && valid) {
+                            if ((slotId + max - 1) <= maxSlot && valid) {
                                 that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
                             }
                         }
@@ -128,6 +128,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 outlookObject.organizer = "";
                 outlookObject.start = getDateTime(day, startSlot.startTime);
                 outlookObject.end = getDateTime(day, endSlot.endTime);
+                outlookObject.type = scheduledSlots[0].type;
 
                 outlookObject.newSlots = scheduledSlots;
 

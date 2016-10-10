@@ -28,6 +28,7 @@ public class Interview {
     private Candidate interviewee;
     private String room;
     private String message;
+    private String type;
     private static final Logger logger = LoggerFactory.getLogger(Interview.class);
 
     public Interview() {
@@ -61,12 +62,16 @@ public class Interview {
         this.message = message;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     private MimeMultipart createInvitation() throws MessagingException {
         MimeMultipart body = new MimeMultipart("alternative");
         BodyPart textContent = new MimeBodyPart();
         BodyPart calendarPart = new MimeBodyPart();
 
-        if(message != null) {
+        if (message != null) {
             textContent.setContent(message, "text/plain; charset=utf-8");
             body.addBodyPart(textContent);
         }
@@ -103,15 +108,11 @@ public class Interview {
                 .replace("{{dtstamp}}", now);
     }
 
-    private String parseSubject(){
-        if (interviewee == null) {
-            return "Interview";
-        }
+    private String parseSubject() {
+        if (interviewee == null) return type;
 
-        String template = "Interview - {{fname}} {{lname}} ({{position}})";
-        return template.replace("{{fname}}", interviewee.getFirstName())
-                .replace("{{lname}}", interviewee.getLastName())
-                .replace("{{position}}", interviewee.getPosition());
+        return String.join(" ", type, "-", interviewee.getFirstName(),
+                interviewee.getLastName(), "(" + interviewee.getPosition() + ")");
     }
 
     private String parseOrganizer() {

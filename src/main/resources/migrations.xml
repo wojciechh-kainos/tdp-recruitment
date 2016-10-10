@@ -32,4 +32,5 @@
     <include file="changelogs/addPasswords.xml"/>
     <include file="changelogs/deleteInitialData.xml"/>
     <include file="changelogs/Issue193_addInterviewType.xml"/>
+    <include file="changelogs/expandTimeRange.xml"/>
 </databaseChangeLog>
