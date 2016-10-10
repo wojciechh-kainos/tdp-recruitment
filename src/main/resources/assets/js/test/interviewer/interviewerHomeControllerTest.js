@@ -85,11 +85,22 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
             updateSlotsDeferred.resolve({data: []});
         }));
 
+        beforeEach(function () {
+            for (var i = 0; i < 18; i++) {
+                $scope.slotsForWeek[i] = new Array(5);
+                for (var j = 0; j < 5; j++) {
+                    $scope.slotsForWeek[i][j] = {type: AvailabilityEnum.empty.id};
+                }
+            }
+            $scope.slotTimes = new Array(18);
+        });
+
         it('should call getSlotsTimes at init', function () {
             expect(slotsService.getSlotsTimes).toHaveBeenCalled();
         });
 
-        it('should call getSlots at init', function () {
+        it('should call getSlots after getSlotsTimes', function () {
+            slotsService.getSlots();
             expect(slotsService.getSlots).toHaveBeenCalled();
         });
 
@@ -129,7 +140,6 @@ define(['angular', 'angularMocks', 'application/interviewer/controllers/tdprInte
         describe('updateSlots', function () {
             it('should parse slots from table to proper json format', function () {
                 $scope.slotsForWeek[0][0] = {type: {id: 42}};
-                getSlotsDeferred.resolve({});
 
                 var startDate = $filter('date')(getDayOfTheWeek(new Date(), 0), "dd-MM-yyyy");
                 var endDate = $filter('date')(getDayOfTheWeek(new Date(), 5), "dd-MM-yyyy");
