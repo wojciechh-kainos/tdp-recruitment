@@ -87,7 +87,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                             if (!angular.isUndefined(newSlot) && (newSlot.type === AvailabilityEnum.full.name || newSlot.type === AvailabilityEnum.init.name)) {
                                 valid = false;
                             }
-                            if (slotId + 2 <= maxSlot && valid) {
+                            if ((slotId + max - 1) <= maxSlot && valid) {
                                 that.changeSlotTypeCycleThrough(newSlot, slotId + i, day, person, mode());
                             }
                         }
