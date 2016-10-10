@@ -10,18 +10,12 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
 
         $scope.scheduleInterview = function () {
 
-            var updateRequests = [];
-            $stateParams.data.interviewers.forEach(function (interviewer) {
-                updateRequests.push(tdprRecruiterSlotsService.updateSlots(interviewer.slots));
-                delete interviewer.slots; //no need for sending slots second time
-            });
-
             tdprScheduleService.sendInvitations($scope.interview).then(function(){
                 var interviewee = $scope.interview.interviewee;
                 interviewee.note = scheduleNote() + interviewee.note;
                 return tdprCandidatesService.updateCandidate(interviewee);
             }).then(function () {
-                return $q.all(updateRequests);
+                return tdprRecruiterSlotsService.updateSlots($scope.interview.newSlots)
             }).then(function () {
                 Notification.success('Interview scheduled');
                     $state.go('tdpr.recruiter.home');
