@@ -5,7 +5,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         $scope.hasNoteChanged = false;
         $scope.hasSlotChanged = false;
         $scope.relativeDayNumber = 0;
-        $scope.slotsForWeek = new Array(18);
+        $scope.slotsForWeek = [];
         $scope.AvailabilityEnum = AvailabilityEnum;
         $scope.currentType = AvailabilityEnum.available.id;
         $scope.mousedown = false;
@@ -21,9 +21,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         var endDate;
 
         $scope.clearTable = function () {
-            for (var i = 0; i < $scope.slotsForWeek.length; i++) {
+            for (var i = 0; i < $scope.slotTimes.length; i++) {
                 $scope.slotsForWeek[i] = new Array(5);
-                for (var j = 0; j < $scope.slotsForWeek[i].length; j++) {
+                for (var j = 0; j < 5; j++) {
                     $scope.slotsForWeek[i][j] = {type: AvailabilityEnum.empty.id};
                 }
             }
@@ -42,7 +42,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
         }
 
         function updateDate() {
-            if($stateParams.relativeDayNumber && $stateParams.relativeDayNumber != 0){
+            if ($stateParams.relativeDayNumber && $stateParams.relativeDayNumber != 0) {
                 $scope.relativeDayNumber = $stateParams.relativeDayNumber;
                 $stateParams.relativeDayNumber = 0;
             }
@@ -54,16 +54,13 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
         $scope.getSlots = function (personId) {
             tdprSlotsService.getSlots(startDate, endDate, personId).then(function (response) {
-                for (var slot in response.data) {
-                    $scope.slotsForWeek[response.data[slot].number - 1][new Date(response.data[slot].day).getDay() - 1].type = String(AvailabilityEnum[response.data[slot].type].id);
-                }
+                response.data.forEach(function (slot) {
+                    $scope.slotsForWeek[slot.number - 1][new Date(slot.day).getDay() - 1].type = String(AvailabilityEnum[slot.type].id);
+                })
             });
         };
 
-        activate();
-
         function activate() {
-            $scope.clearTable();
             updateDate();
             tdprSlotsService.getSlotsTimes().then(function (response) {
                 for (var i = 0; i < response.data.length; i++) {
@@ -71,14 +68,18 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
                     var endTime = removeSecondsFromTime(response.data[i].endTime);
                     $scope.slotTimes.push(startTime + "-" + endTime);
                 }
+            }).then(function () {
+                $scope.clearTable();
+                $scope.temporaryContent = "";
+                $scope.getSlots(id);
             });
-            $scope.temporaryContent = "";
 
-            $scope.getSlots(id);
             getNote(id, startDate);
         }
-        
-        var relativeDayNumberToOffset = function(){
+
+        activate();
+
+        var relativeDayNumberToOffset = function () {
             return $scope.relativeDayNumber / 7;
         };
 
@@ -107,8 +108,8 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             $scope.hasSlotChanged = true;
         };
 
-       $scope.showPreviousWeek = function() {
-             if(!verifyNoUnsavedChanges()){
+        $scope.showPreviousWeek = function () {
+            if (!verifyNoUnsavedChanges()) {
                 return;
             }
 
@@ -120,9 +121,9 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
 
             getNote(id, startDate);
 
-           if (!isEligibleToEdit()) {
-               disableNoteEditing()
-           }
+            if (!isEligibleToEdit()) {
+                disableNoteEditing()
+            }
         };
 
         $scope.showNextWeek = function () {
@@ -281,7 +282,7 @@ define(['angular', 'application/interviewer/tdprInterviewerModule', 'application
             }
         };
 
-        $scope.noteHasChanged = function (){
+        $scope.noteHasChanged = function () {
             $scope.hasNoteChanged = true;
         }
     });
