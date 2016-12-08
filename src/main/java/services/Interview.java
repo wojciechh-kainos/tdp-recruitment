@@ -46,6 +46,10 @@ public class Interview {
         this.organizer = organizer;
     }
 
+    public Person getOrganizer() {
+        return organizer;
+    }
+
     public void setStart(Date start) {
         this.start = start;
     }

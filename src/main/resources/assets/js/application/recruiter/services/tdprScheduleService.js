@@ -1,5 +1,5 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.service('tdprScheduleService', ['$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', 'Notification', function ($http, dateFilter, AvailabilityEnum, DateFormat, Notification) {
+    tdprRecruiterModule.service('tdprScheduleService', ['$filter', '$http', 'dateFilter', 'AvailabilityEnum', 'DateFormat', 'Notification', function ($filter, $http, dateFilter, AvailabilityEnum, DateFormat, Notification) {
         var that = this;
         var scheduledSlots = [];
         this.changeSlotType = function (slot, slotId, day, person, changeTo, mode) {
@@ -124,11 +124,17 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
                 var endSlot = _.find(slotsTimes, {id: _.maxBy(scheduledSlots, 'number').number});
                 var day = scheduledSlots[0].day;
 
-                outlookObject.interviewee = candidate;
+
+
                 outlookObject.organizer = "";
                 outlookObject.start = getDateTime(day, startSlot.startTime);
                 outlookObject.end = getDateTime(day, endSlot.endTime);
                 outlookObject.type = scheduledSlots[0].type;
+
+                var newNote = scheduleNote(outlookObject);
+                candidate.note = newNote + candidate.note;
+                outlookObject.interviewee = candidate;
+                outlookObject.message = newNote;
 
                 outlookObject.newSlots = scheduledSlots;
 
@@ -149,6 +155,13 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'], function (angul
             date.setMinutes(parts[1]);
             date.setSeconds(parts[2]);
             return date;
+        }
+
+        function scheduleNote(interview) {
+            var day = $filter('date')(interview.start, 'yyyy-MM-dd');
+            var startHour = $filter('date')(interview.start, 'HH:mm');
+            var endHour = $filter('date')(interview.end, 'HH:mm');
+            return 'Scheduled: ' + day + ' ' + startHour + ' - ' + endHour + '\n';
         }
 
         this.changeSlotTypeCycleThrough = function (slot, slotId, day, person, mode) {

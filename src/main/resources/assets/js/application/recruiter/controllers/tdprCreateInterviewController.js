@@ -5,26 +5,27 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                   tdprCandidatesService, $state, $q, $filter, Notification) {
 
 
-        $scope.interview = $stateParams.data;
-        $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
+            $scope.interview = $stateParams.data;
+            $scope.interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
+            $scope.interview.message = scheduleNote();
 
-        $scope.scheduleInterview = function () {
+            $scope.scheduleInterview = function () {
 
-            tdprScheduleService.sendInvitations($scope.interview).then(function(){
-                var interviewee = $scope.interview.interviewee;
-                interviewee.note = scheduleNote() + interviewee.note;
-                return tdprCandidatesService.updateCandidate(interviewee);
-            }).then(function () {
-                return tdprRecruiterSlotsService.updateSlots($scope.interview.newSlots)
-            }).then(function () {
-                Notification.success('Interview scheduled');
+                tdprScheduleService.sendInvitations($scope.interview).then(function () {
+                    var interviewee = $scope.interview.interviewee;
+                    interviewee.note = scheduleNote() + interviewee.note;
+                    return tdprCandidatesService.updateCandidate(interviewee);
+                }).then(function () {
+                    return tdprRecruiterSlotsService.updateSlots($scope.interview.newSlots)
+                }).then(function () {
+                    Notification.success('Interview scheduled');
                     $state.go('tdpr.recruiter.home');
-            }).catch(function (error) {
-                Notification.error(error.message);
-            })
+                }).catch(function (error) {
+                    Notification.error(error.message);
+                })
 
 
-        };
+            };
 
             function scheduleNote() {
                 var day = $filter('date')($scope.interview.start, 'yyyy-MM-dd');
@@ -32,5 +33,5 @@ define(['angular', 'application/recruiter/tdprRecruiterModule'
                 var endHour = $filter('date')($scope.interview.end, 'HH:mm');
                 return 'Scheduled: ' + day + ' ' + startHour + ' - ' + endHour + '\n';
             }
-    });
+        });
 });
