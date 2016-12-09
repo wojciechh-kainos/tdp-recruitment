@@ -3,8 +3,6 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
     tdprRecruiterModule.controller("tdprWeekTableController", function ($filter, $scope, tdprPersonsService, tdprDateService, persons, slotsTimes, tdprAuthService, tdprCandidatesService, $q,
                                                                         Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
 
-            var that = this;
-
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
         $scope.offset = $state.params.offset;
@@ -52,8 +50,7 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
 
                 tdprScheduleService.sendInvitations(interview).then(function () {
-                    var interviewee = interview.interviewee;
-                    return tdprCandidatesService.updateCandidate(interviewee);
+                    return tdprCandidatesService.updateCandidate(interview.interviewee);
                 }).then(function () {
                     var promises = interview.interviewers.map(function(interviewer){
                         return tdprRecruiterSlotsService.updateSlots(interviewer.slots)
