@@ -36,7 +36,7 @@ public class MailingTask implements Runnable {
         try {
             transport = session.getTransport("smtp");
             transport.connect(host, port, from, password);
-            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.sendMessage(msg, msg.getFrom());
         } catch (Exception e) {
             logger.warn("Mailing error  => {}", e.getMessage());
         } finally {

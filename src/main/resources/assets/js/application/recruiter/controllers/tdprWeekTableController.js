@@ -1,9 +1,7 @@
 define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/recruiter/services/tdprRecruiterSlotsService', 'application/recruiter/services/tdprScheduleService', 'application/recruiter/services/tdprRecruiterViewPairsOfInterviewersService'
 ], function (angular, tdprRecruiterModule) {
-    tdprRecruiterModule.controller("tdprWeekTableController", function ($scope, tdprPersonsService, tdprDateService, persons, slotsTimes,
-                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, $filter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
-
-            var that = this;
+    tdprRecruiterModule.controller("tdprWeekTableController", function ($filter, $scope, tdprPersonsService, tdprDateService, persons, slotsTimes, tdprAuthService, tdprCandidatesService, $q,
+                                                                        Notification, tdprRecruiterSlotsService, AvailabilityEnum, WeekNavigateEnum, dateFilter, tdprScheduleService, tdprRecruiterViewPairsOfInterviewersService, $state) {
 
         $scope.WeekNavigateEnum = WeekNavigateEnum;
 
@@ -43,15 +41,28 @@ define(['angular', 'application/recruiter/tdprRecruiterModule', 'application/rec
                 $scope.pairingMode = false;
                 $scope.changeSlotTypeCycleThrough = tdprScheduleService.changeSlotTypeCycleThrough;
                 $scope.refreshPersonsData();
+                $scope.params = {};
             };
 
             $scope.createInterview = function () {
-                var data = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params.candidate);
-                if (data) {
-                    $state.go("tdpr.recruiter.createInterview",
-                        {data: data});
+                var interview = tdprScheduleService.createInterview(slotsTimes, getSelectedPersons, $scope.params.candidate);
 
-                }
+                interview.organizer = angular.copy(tdprAuthService.getCurrentUser());
+
+                tdprScheduleService.sendInvitations(interview).then(function () {
+                    return tdprCandidatesService.updateCandidate(interview.interviewee);
+                }).then(function () {
+                    var promises = interview.interviewers.map(function(interviewer){
+                        return tdprRecruiterSlotsService.updateSlots(interviewer.slots)
+                    });
+                    return $q.all(promises)
+                }).then(function () {
+                    Notification.success('Interview scheduled');
+                }).catch(function (error) {
+                    Notification.error(error.message);
+                });
+                $scope.interviewOff();
+
             };
 
         $scope.getPairs = function(){

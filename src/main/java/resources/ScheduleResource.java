@@ -45,7 +45,9 @@ public class ScheduleResource {
             Message msg = interview.createMessage();
             for (Person recruiter : recruiters) {
                 try {
-                    msg.addRecipient(Message.RecipientType.CC, new InternetAddress(recruiter.getEmail()));
+                    if (!recruiter.getEmail().equals(interview.getOrganizer().getEmail())) {
+                        msg.addRecipient(Message.RecipientType.CC, new InternetAddress(recruiter.getEmail()));
+                    }
                 } catch (AddressException e) {
                     logger.warn("Address parsing error  => {}", e.getMessage());
                 }

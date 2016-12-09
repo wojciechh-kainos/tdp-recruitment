@@ -6,7 +6,6 @@ define(['angular'
     , 'application/recruiter/services/tdprSlotsTimesService'
     , 'application/recruiter/controllers/tdprCandidatesController'
     , 'application/recruiter/controllers/tdprAddPersonController'
-    , 'application/recruiter/controllers/tdprCreateInterviewController'
     , 'application/recruiter/services/tdprPersonsService'
     , 'application/recruiter/services/tdprCandidatesService'
     , 'application/recruiter/services/tdprDateService'
@@ -103,18 +102,7 @@ define(['angular'
                         controller: "tdprManageUsersController"
                     }
                 }
-            }).state("tdpr.recruiter.createInterview", {
-            url: "/create-event",
-            views: {
-                "main@recruiter": {
-                    templateUrl: "html/partials/recruiter/tdpr-recruiter-create-interview.html",
-                    controller: "tdprCreateEventController"
-                }
-            },
-            params: {
-                data: null
-            }
-        });
+            });
     });
 
     return tdprRecruiterModule;

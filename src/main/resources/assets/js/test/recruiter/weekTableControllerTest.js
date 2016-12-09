@@ -12,6 +12,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
         var tdprRecruiterSlotsService;
         var tdprScheduleService;
         var tdprPersonsService;
+        var tdprAuthService;
 
         var updateSlotsDeferred;
         var fetchPersonsDeferred;
@@ -72,6 +73,7 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                 tdprPersonsService = jasmine.createSpyObj('tdprPersonsService', ['fetchPersonsWithSlotsForDates']);
                 tdprRecruiterSlotsService = jasmine.createSpyObj('tdprRecruiterSlotsService', ['updateSlots']);
                 tdprScheduleService = jasmine.createSpyObj('tdprScheduleService', ['tripleSlotChange', 'changeSlotTypeCycleThrough', 'changeSlotDiscardChanges']);
+                tdprAuthService = jasmine.createSpyObj('tdprAuthService', ['getCurrentUser']);
 
                 updateSlotsDeferred = $q.defer();
                 fetchPersonsDeferred = $q.defer();
@@ -89,7 +91,8 @@ define(['angular', 'angularMocks', 'application/recruiter/controllers/tdprWeekTa
                     tdprRecruiterSlotsService: tdprRecruiterSlotsService,
                     AvailabilityEnum: AvailabilityEnum,
                     WeekNavigateEnum: WeekNavigateEnum,
-                    tdprScheduleService: tdprScheduleService
+                    tdprScheduleService: tdprScheduleService,
+                    tdprAuthService: tdprAuthService
                 });
             })
         );
